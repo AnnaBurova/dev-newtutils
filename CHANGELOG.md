@@ -1,4 +1,4 @@
-# Changelog for *NewtUtils*
+# Changelog for *NewtUtils* (NewtCode)
 
 All notable changes to this project are documented here.
 This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PATCH`).
