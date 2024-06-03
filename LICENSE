@@ -19,3 +19,23 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+# -----------------------------------------------------------------------------
+
+This project uses components from the Python standard library,
+licensed under the Python Software Foundation License (PSF License):
+https://docs.python.org/3/license.html
+https://docs.python.org/3/library/index.html
+
+- __future__ — Future statement definitions
+
+- sys — System-specific parameters and functions
+
+# -----------------------------------------------------------------------------
+
+This project uses the following third-party libraries:
+
+- Colorama (BSD 3-Clause License)
+  Copyright (c) 2010-2026 Jonathan Hartley & Arnon Yaari
+  https://github.com/tartley/colorama
+  https://pypi.org/project/colorama/

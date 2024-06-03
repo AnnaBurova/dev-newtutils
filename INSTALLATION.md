@@ -8,6 +8,7 @@ dev-newtutils/         # Root repository
 ├── src/
 │   └── newtutils/     # Main Python package (module source)
 │       ├── __init__.py
+│       ├── console.py
 │       └── (other files)
 │
 ├── CHANGELOG.md       # Version history and release notes
@@ -147,4 +148,12 @@ After installation, **NewtUtils** can be imported from anywhere:
 ```python
 # Import the main package (recommended - exports common functions)
 import newtutils as Newt
+
+# Or import specific modules
+import newtutils.console as NewtCons
+
+# Usage examples:
+Newt.error_msg("Something went wrong", stop=False)
+Newt.console.error_msg("Something went wrong", stop=False)
+NewtCons.error_msg("Something went wrong", stop=False)
 ```

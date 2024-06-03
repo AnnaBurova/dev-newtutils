@@ -46,7 +46,12 @@ for better IDE support and code clarity.
 
 ## Dependencies
 
-All modules rely only on the Python Standard Library.
+This project uses the following third-party libraries:
+
+- [NewtUtils](https://github.com/AnnaBurova/dev-newtutils)
+- [Colorama](https://github.com/tartley/colorama) (BSD 3-Clause License)
+
+All other modules rely only on the Python Standard Library.
 
 For more details on dependencies, see the [LICENSE](LICENSE) file.
 

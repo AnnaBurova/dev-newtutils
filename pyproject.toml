@@ -15,9 +15,12 @@ authors = [
 ]
 
 dependencies = [
+  "colorama>=0.4.6",
 ]
 
 keywords = [
+  "newtutils",
+  "console",
 ]
 
 classifiers = [
