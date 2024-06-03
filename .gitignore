@@ -27,3 +27,6 @@ Thumbs.db
 node_modules/
 __pycache__/
 *.egg-info/
+/htmlcov/
+.coverage
+/.pytest_cache/
