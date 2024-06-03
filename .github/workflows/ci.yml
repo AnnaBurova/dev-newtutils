@@ -38,4 +38,4 @@ jobs:
         run: pip install ".[test]"
 
       - name: Run tests with coverage
-        run: pytest -v --cov=newtutils --cov-report=term-missing
+        run: pytest -vv --cov=newtutils --cov-report=term-missing
