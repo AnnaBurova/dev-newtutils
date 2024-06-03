@@ -50,7 +50,7 @@ def error_msg(
     message = "\n".join(str(arg) for arg in args)
 
     output = (
-        f"\n{Style.BRIGHT}{Fore.RED}"
+        f"{Style.BRIGHT}{Fore.RED}\n"
         f"Location: {location}\n"
         f"::: ERROR :::\n"
         f"{message}\n"
