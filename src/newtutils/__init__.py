@@ -27,6 +27,6 @@ __all__ = [
 
 __version__ = "0.1.0"
 __author__ = "Anna Burova <burova.anna+git@gmail.com>"
-__description__ = "Development configuration utilities"
+__description__ = "NewtUtils is a collection of utility functions for common programming tasks."
 __license__ = "MIT"
 __url__ = "https://github.com/AnnaBurova/dev-newtutils"
