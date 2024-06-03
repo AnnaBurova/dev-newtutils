@@ -116,7 +116,7 @@ To make VS Code recognize the local package:
     ```json
     {
         "python.analysis.extraPaths": [
-            "D:/VS_Code/dev-newtutils"
+            "./dev-newtutils/src",
         ]
     }
     ```
