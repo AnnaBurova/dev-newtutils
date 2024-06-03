@@ -39,3 +39,13 @@ This project uses the following third-party libraries:
   Copyright (c) 2010-2026 Jonathan Hartley & Arnon Yaari
   https://github.com/tartley/colorama
   https://pypi.org/project/colorama/
+
+- PyTest (MIT License)
+  Copyright (c) 2004-2026 Holger Krekel
+  https://github.com/pytest-dev/pytest
+  https://pypi.org/project/pytest/
+
+- PyTest-Cov (MIT License)
+  Copyright (c) 2010-2026 Marc Schlaich and Ionel Cristian Maries
+  https://github.com/pytest-dev/pytest-cov
+  https://pypi.org/project/pytest-cov/

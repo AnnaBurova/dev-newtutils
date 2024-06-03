@@ -11,6 +11,10 @@ dev-newtutils/         # Root repository
 │       ├── console.py
 │       └── (other files)
 │
+├── tests/             # Manual and automated test scripts
+│   ├── TESTING.md     # Test documentation and instructions
+│   └── (other test scripts)
+│
 ├── CHANGELOG.md       # Version history and release notes
 ├── CONTRIBUTING.md    # Guidelines for contributors
 ├── INSTALLATION.md    # Installation and development setup guide (current file)
