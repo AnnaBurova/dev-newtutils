@@ -3,31 +3,50 @@
 ## Project Structure
 
 ```
-dev-newtutils/         # Root repository
+dev-newtutils/            # Root repository
 │
 ├── src/
-│   └── newtutils/     # Main Python package (module source)
+│   └── newtutils/        # Main Python package (module source)
 │       ├── __init__.py
 │       ├── console.py
+│       ├── utility.py
+│       ├── files.py
+│       ├── sql.py
+│       ├── network.py
 │       └── (other files)
 │
-├── tests/             # Manual and automated test scripts
-│   ├── TESTING.md     # Test documentation and instructions
-│   ├── __init__.py    # Marks tests as a package
-│   ├── helpers.py     # Helper functions
+├── tests/                # Manual and automated test scripts
+│   ├── output/           # Test output logs
+│   │   ├── venv_test_module_1.txt
+│   │   ├── venv_test_module_2.txt
+│   │   ├── venv_test_module_3.txt
+│   │   ├── venv_test_module_4.txt
+│   │   └── (other test logs)
+│   │
+│   ├── TESTING.md        # Test documentation and instructions
+│   ├── _update_venv.ps1  # (Optional) Updates packages in virtual environments
+│   ├── _run_tests.sh     # (Optional) Test runner batch script
+│   ├── __init__.py       # Marks tests as a package
+│   ├── helpers.py        # Helper functions for tests
 │   ├── test_console.py
+│   ├── test_utility.py
+│   ├── test_files.py
+│   ├── test_sql.py
+│   ├── test_network.py
 │   └── (other test scripts)
 │
-├── CHANGELOG.md       # Version history and release notes
-├── CONTRIBUTING.md    # Guidelines for contributors
-├── INSTALLATION.md    # Installation and development setup guide (current file)
-├── LICENSE            # License file
-├── pyproject.toml     # Build system configuration and project metadata
-├── requirements.txt   # Project dependencies
-└── README.md          # Project overview and usage instructions
+├── CHANGELOG.md          # Version history and release notes
+├── CONTRIBUTING.md       # Guidelines for contributors
+├── INSTALLATION.md       # Installation and development setup guide (current file)
+├── LICENSE               # License file
+├── pyproject.toml        # Build system configuration and project metadata
+├── requirements.txt      # Project dependencies
+└── README.md             # Project overview and usage instructions
 ```
 
 ## Requirements
+
+NewtUtils supports the following Python versions:
 
 - Python 3.14
 - Python 3.13
@@ -48,14 +67,14 @@ Installation should be done directly from the project folder.
 
 ### Regular Local Installation (Static Copy)
 
-Installs a copy of the package.
+Install a copy of the package.
 Recommended when you only want to use the project, not actively edit its source code.
 Safe for non-admin users.
 
 - `--user` installs into the user's personal environment.
 
 ```bash
-# Navigate to project directory
+# Navigate to the project directory
 $ cd dev-newtutils/
 
 # Install dependencies first (if requirements.txt exists)
@@ -69,14 +88,27 @@ $ python -m pip install .
 
 ### Editable Local Installation (Recommended for Development)
 
-Links the library directly to the working folder.
-Any code changes in `dev-newtutils/src/newtutils/` will take effect immediately.
-No reinstall needed.
-
-- `--editable` or `-e` links the project folder directly for live development.
+To update all configured development virtual environments
+and install the test dependencies from the test group,
+use the PowerShell helper script:
 
 ```bash
-# Navigate to project directory
+$ ./dev-newtutils/tests/_update_venv.ps1
+```
+
+Recommended when you want to use and test the project.
+
+Alternatively, install the package in editable mode manually.
+
+This links the project source folder directly to the Python environment.
+Changes made in `dev-newtutils/src/newtutils/` take effect immediately.
+No reinstallation is required after each edit.
+
+- `--editable` or `-e` creates a link to the local project
+instead of copying its files into the environment.
+
+```bash
+# Navigate to the project directory
 $ cd dev-newtutils/
 
 # Install dependencies first (if requirements.txt exists)
@@ -101,14 +133,14 @@ import os
 from pathlib import Path
 
 # Adjust this path to the actual project location
-proj_root = os.path.join("D:", "VS_Code", "dev-newtutils")
+proj_root = os.path.join("D:\\", "VS_Code", "dev-newtutils", "src")
 # Or use one of these formats:
-proj_root = Path("D:/") / "VS_Code" / "dev-newtutils"
-proj_root = "D:/VS_Code/dev-newtutils"
-proj_root = r"D:\VS_Code\dev-newtutils"
+proj_root = Path("D:/") / "VS_Code" / "dev-newtutils" / "src"
+proj_root = "D:/VS_Code/dev-newtutils/src"
+proj_root = r"D:\VS_Code\dev-newtutils\src"
 
-if proj_root not in sys.path:
-    sys.path.append(proj_root)
+if str(proj_root) not in sys.path:
+    sys.path.append(str(proj_root))
 
 import newtutils as Newt
 ```
@@ -158,6 +190,10 @@ import newtutils as Newt
 
 # Or import specific modules
 import newtutils.console as NewtCons
+import newtutils.utility as NewtUtil
+import newtutils.files as NewtFiles
+import newtutils.sql as NewtSQL
+import newtutils.network as NewtNet
 
 # Usage examples:
 Newt.error_msg("Something went wrong", stop=False)
