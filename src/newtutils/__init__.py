@@ -7,6 +7,10 @@ NewtUtils is a collection of utility functions for common programming tasks by N
 
 Modules:
     console: Console input/output operations
+    utility: General purpose utilities
+    files: File system operations
+    sql: Database operations
+    network: Network request handling
 """
 
 # ===== Imports from modules ========================================== ======= =================== ====================

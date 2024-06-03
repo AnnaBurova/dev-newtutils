@@ -1,0 +1,11 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- D:\VS_Code\.venv314\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\VS_Code\dev-newtutils
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 1 item
+
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [100%]
+
+============================== 1 passed ==============================

@@ -21,6 +21,15 @@ dependencies = [
 keywords = [
   "newtutils",
   "console",
+  "utility",
+  "files",
+  "sql",
+  "network",
+  "helpers",
+  "validation",
+  "sorting",
+  "database",
+  "sqlite",
 ]
 
 classifiers = [
