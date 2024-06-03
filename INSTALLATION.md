@@ -13,6 +13,9 @@ dev-newtutils/         # Root repository
 │
 ├── tests/             # Manual and automated test scripts
 │   ├── TESTING.md     # Test documentation and instructions
+│   ├── __init__.py    # Marks tests as a package
+│   ├── helpers.py     # Helper functions
+│   ├── test_console.py
 │   └── (other test scripts)
 │
 ├── CHANGELOG.md       # Version history and release notes
