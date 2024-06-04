@@ -16,7 +16,7 @@ Test example:
             self,
             capsys: pytest.CaptureFixture[str]
             ) -> None:
-        newt_print_function_name()
+        func_name = newt_print_function_name()
 
         with pytest.raises(SystemExit) as exc_info:
             # TODO
@@ -31,7 +31,7 @@ Test example:
         # newt_print_captured(captured, False)
 
         assert (
-            "Function: test_function_example\n"
+            f"Function: {func_name}\n"
             f"{'-' * 72}"
             "\n"
         ) == captured.out
