@@ -27,6 +27,8 @@ class TestFormatValueToStr:
             self,
             capsys: pytest.CaptureFixture[str]
             ) -> None:
+        """Ensure NewtCons.format_value_to_str() returns a string for various types."""
+
         newt_print_function_name()
 
         example_list: list[object] = [
