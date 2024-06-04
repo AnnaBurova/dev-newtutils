@@ -34,9 +34,7 @@ def error_msg(
             One or more messages to print.
         location (str):
             Name of the function or module where the error occurred.<br>
-            Defaults to "Unknown".<br>
-            Code:
-            location=f"{__file__} > {__name__}"
+            Defaults to "Unknown".
         stop (bool):
             If True, the program terminates with exit code 1 after printing.<br>
             Defaults to True.
@@ -45,6 +43,15 @@ def error_msg(
         SystemExit:
             If `stop=True`.
             Always exits with code 1.
+
+    Examples:
+        ```
+        NewtCons.error_msg(
+            "Test error",
+            location=f"{__file__} > {__name__}",
+            stop=False
+        )
+        ```
     """
 
     message = "\n".join(str(arg) for arg in args)
