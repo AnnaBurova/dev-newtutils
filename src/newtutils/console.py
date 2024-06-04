@@ -17,6 +17,45 @@ import sys
 
 from colorama import Fore, Style
 
+import newtutils._intern as INTERN
+
+
+def format_value_to_str(
+        value: object
+        ) -> str:
+    """ ## Convert a supported value to a formatted string representation.
+
+    Formats various data types into consistent string output.
+    Special handling for sets converts them to sorted
+    comma-separated values wrapped in curly braces.
+
+    Args:
+        value (object):
+            The value to convert to string.
+            Can be any supported type including sets, which receive special formatting.
+
+    Returns:
+        out (str):
+            String representation of the input value.
+            Sets are formatted as `{item1, item2, ...}` with items sorted lexicographically.
+
+    Examples:
+        ```
+        >>> NewtCons.format_value_to_str({3, 1, 2})
+        "{1, 2, 3}"
+        >>> NewtCons.format_value_to_str(["hello"])
+        "['hello']"
+        >>> NewtCons.format_value_to_str(42)
+        "42"
+        ```
+    """
+
+    if INTERN.is_supported_set(value):
+        items = ", ".join(format_value_to_str(item) for item in sorted(value, key=str))
+        return "{" + items + "}"
+
+    return str(value)
+
 
 def error_msg(
         *args: str,
