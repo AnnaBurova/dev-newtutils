@@ -93,7 +93,7 @@ def error_msg(
         ```
     """
 
-    message = "\n".join(str(arg) for arg in args)
+    message = "\n".join(format_value_to_str(arg) for arg in args)
 
     output = (
         f"{Style.BRIGHT}{Fore.RED}\n"
