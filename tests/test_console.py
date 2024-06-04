@@ -139,3 +139,41 @@ class TestErrorMsg:
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
         # assert "::: ERROR :::" not in captured.err
+
+
+    def test_error_msg_with_location(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        """Ensure NewtCons.error_msg() displays the specified location."""
+        func_name = newt_print_function_name()
+
+        NewtCons.error_msg(
+            "Test error",
+            location=f"{__name__} > {func_name}",
+            stop=False
+        )
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert (
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        ) == captured.out
+
+        assert (
+            "\x1b[1m\x1b[31m"
+            "\nLocation: tests.test_console > test_error_msg_with_location"
+            "\n::: ERROR :::"
+            "\nTest error"
+            "\n\x1b[0m"
+            "\n"
+        ) == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        # assert "::: ERROR :::" not in captured.err
