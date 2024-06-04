@@ -58,7 +58,7 @@ def format_value_to_str(
 
 
 def error_msg(
-        *args: str,
+        *args: object,
         location: str = "Unknown",
         stop: bool = True
         ) -> None:
@@ -69,7 +69,7 @@ def error_msg(
     that require structured visual feedback in the console.
 
     Args:
-        *args (str):
+        *args (object):
             One or more messages to print.
         location (str):
             Name of the function or module where the error occurred.<br>
