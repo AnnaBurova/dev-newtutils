@@ -18,18 +18,31 @@ Test example:
             ) -> None:
         newt_print_function_name()
 
-        NewtCons.error_msg("Test error", stop=False)
+        with pytest.raises(SystemExit) as exc_info:
+            # TODO
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
+
+        # TODO
 
         captured = capsys.readouterr()
         newt_print_captured(captured)
+        # newt_print_captured(captured, False)
 
         assert (
-            "Function: test_error_msg_without_stop\n"
+            "Function: test_function_example\n"
             f"{'-' * 72}"
             "\n"
         ) == captured.out
 
         assert (
+            "\x1b[1m\x1b[31m"
+            "\nLocation: Unknown"
+            "\n::: ERROR :::"
+            "\nTest error"
+            "\n\x1b[0m"
+            "\n"
         ) == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 1
