@@ -4,9 +4,10 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collecting ... collected 2 items
+collecting ... collected 3 items
 
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 50%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [100%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 33%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 66%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [100%]
 
-============================== 2 passed ==============================
+============================== 3 passed ==============================

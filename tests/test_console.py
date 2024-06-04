@@ -61,6 +61,7 @@ class TestErrorMsg:
             self,
             capsys: pytest.CaptureFixture[str]
             ) -> None:
+        """Ensure NewtCons.error_msg() stops execution with exit code 1."""
         newt_print_function_name()
 
         with pytest.raises(SystemExit) as exc_info:
@@ -95,3 +96,44 @@ class TestErrorMsg:
         # assert "::: ERROR :::" not in captured.err
         assert "This line will not be printed" not in captured.out
         assert "This line will not be printed" not in captured.err
+
+
+    def test_error_msg_multiple_args(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        """Ensure NewtCons.error_msg() displays multiple error messages."""
+        newt_print_function_name()
+
+        NewtCons.error_msg(
+            "Error 1",
+            "Error 2",
+            "Error 3",
+            stop=False
+        )
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert (
+            "Function: test_error_msg_multiple_args\n"
+            f"{'-' * 72}"
+            "\n"
+        ) == captured.out
+
+        assert (
+            "\x1b[1m\x1b[31m"
+            "\nLocation: Unknown"
+            "\n::: ERROR :::"
+            "\nError 1"
+            "\nError 2"
+            "\nError 3"
+            "\n\x1b[0m"
+            "\n"
+        ) == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        # assert "::: ERROR :::" not in captured.err
