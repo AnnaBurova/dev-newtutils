@@ -6,6 +6,7 @@ Created on 2024-06
 Comprehensive unit tests for newtutils.console module.
 
 Tests cover:
+    - TestFormatValueToStr
     - TestErrorMsg
 """
 
@@ -16,6 +17,52 @@ from .helpers import (
     newt_print_captured,
 )
 import newtutils.console as NewtCons
+
+
+class TestFormatValueToStr:
+    """ Tests for format_value_to_str function. """
+
+
+    def test_format_value_to_str_types(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        newt_print_function_name()
+
+        example_list: list[object] = [
+            "hello",
+            42,
+            3.14,
+            False,
+            ["hello", "hi", 42],
+            ("hello", "hi", 42, ),
+            {"hello": 42, "hi": 3.14},
+            {3, 1, 2},
+            frozenset({3, 1, 2}),
+            None,
+        ]
+        for example_input in example_list:
+            print()
+            if example_input == {3, 1, 2}:
+                print("input    =  {3, 1, 2}")
+            else:
+                print("input    = ", repr(example_input))
+            print("intype   = ", type(example_input))
+            example_output = NewtCons.format_value_to_str(example_input)
+            print("output   = ", repr(example_output))
+            print("outtype  = ", type(example_output))
+            assert isinstance(example_output, str)
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
 class TestErrorMsg:
