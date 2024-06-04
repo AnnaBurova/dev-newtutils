@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collecting ... collected 1 item
+collecting ... collected 2 items
 
 test_console.py::TestErrorMsg::test_error_msg_without_stop 
 ======================================================================== START
@@ -21,5 +21,21 @@ Test error
 
 ======================================================================== END
 PASSED
+test_console.py::TestErrorMsg::test_error_msg_with_stop 
+======================================================================== START
+===================================================== captured.out =====
+Function: test_error_msg_with_stop
+------------------------------------------------------------------------
+exc_info: 1
 
-============================== 1 passed ==============================
+===================================================== captured.err =====
+[1m[31m
+Location: Unknown
+::: ERROR :::
+Test error
+[0m
+
+======================================================================== END
+PASSED
+
+============================== 2 passed ==============================
