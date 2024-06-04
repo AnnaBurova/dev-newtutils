@@ -4,8 +4,68 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collecting ... collected 4 items
+collecting ... collected 5 items
 
+test_console.py::TestFormatValueToStr::test_format_value_to_str_types 
+======================================================================== START
+===================================================== captured.out =====
+Function: test_format_value_to_str_types
+------------------------------------------------------------------------
+
+input    =  'hello'
+intype   =  <class 'str'>
+output   =  'hello'
+outtype  =  <class 'str'>
+
+input    =  42
+intype   =  <class 'int'>
+output   =  '42'
+outtype  =  <class 'str'>
+
+input    =  3.14
+intype   =  <class 'float'>
+output   =  '3.14'
+outtype  =  <class 'str'>
+
+input    =  False
+intype   =  <class 'bool'>
+output   =  'False'
+outtype  =  <class 'str'>
+
+input    =  ['hello', 'hi', 42]
+intype   =  <class 'list'>
+output   =  "['hello', 'hi', 42]"
+outtype  =  <class 'str'>
+
+input    =  ('hello', 'hi', 42)
+intype   =  <class 'tuple'>
+output   =  "('hello', 'hi', 42)"
+outtype  =  <class 'str'>
+
+input    =  {'hello': 42, 'hi': 3.14}
+intype   =  <class 'dict'>
+output   =  "{'hello': 42, 'hi': 3.14}"
+outtype  =  <class 'str'>
+
+input    =  {3, 1, 2}
+intype   =  <class 'set'>
+output   =  '{1, 2, 3}'
+outtype  =  <class 'str'>
+
+input    =  {3, 1, 2}
+intype   =  <class 'frozenset'>
+output   =  '{1, 2, 3}'
+outtype  =  <class 'str'>
+
+input    =  None
+intype   =  <class 'NoneType'>
+output   =  'None'
+outtype  =  <class 'str'>
+
+===================================================== captured.err =====
+(no stderr captured)
+======================================================================== END
+PASSED
 test_console.py::TestErrorMsg::test_error_msg_without_stop 
 ======================================================================== START
 ===================================================== captured.out =====
@@ -70,4 +130,4 @@ Test error
 ======================================================================== END
 PASSED
 
-============================== 4 passed ==============================
+============================== 5 passed ==============================
