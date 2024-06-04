@@ -28,7 +28,7 @@ class TestErrorMsg:
             ) -> None:
         """Ensure NewtCons.error_msg() prints an error without stopping execution."""
 
-        newt_print_function_name()
+        func_name = newt_print_function_name()
 
         NewtCons.error_msg("Test error", stop=False)
 
@@ -36,7 +36,7 @@ class TestErrorMsg:
         newt_print_captured(captured, False)
 
         assert (
-            "Function: test_error_msg_without_stop\n"
+            f"Function: {func_name}\n"
             f"{'-' * 72}"
             "\n"
         ) == captured.out
@@ -62,7 +62,8 @@ class TestErrorMsg:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.error_msg() stops execution with exit code 1."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         with pytest.raises(SystemExit) as exc_info:
             NewtCons.error_msg("Test error")
@@ -74,7 +75,7 @@ class TestErrorMsg:
         newt_print_captured(captured, False)
 
         assert (
-            "Function: test_error_msg_with_stop\n"
+            f"Function: {func_name}\n"
             f"{'-' * 72}"
             "\nexc_info: 1"
             "\n"
@@ -103,7 +104,8 @@ class TestErrorMsg:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.error_msg() displays multiple error messages."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         NewtCons.error_msg(
             "Error 1",
@@ -116,7 +118,7 @@ class TestErrorMsg:
         newt_print_captured(captured, False)
 
         assert (
-            "Function: test_error_msg_multiple_args\n"
+            f"Function: {func_name}\n"
             f"{'-' * 72}"
             "\n"
         ) == captured.out

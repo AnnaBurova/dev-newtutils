@@ -60,7 +60,7 @@ from _pytest.capture import CaptureResult
 
 
 def newt_print_function_name(
-        ) -> None:
+        ) -> str:
     """ Print name of the current function. """
 
     frame = inspect.currentframe()
@@ -73,6 +73,8 @@ def newt_print_function_name(
     print(f"Function: {func_name}")
 
     print("-"*72)
+
+    return func_name
 
 
 def newt_print_captured(
