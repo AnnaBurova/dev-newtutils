@@ -14,16 +14,16 @@ from __future__ import annotations
 from typing import TypeGuard
 
 SupportedTypes = (
-    str
+      None
+    | bool
+    | str
     | int
     | float
-    | bool
-    | list[object]
     | tuple[object, ...]
+    | list[object]
     | dict[object, object]
     | set[object]
     | frozenset[object]
-    | None
 )
 
 
