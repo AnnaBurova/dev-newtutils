@@ -3,7 +3,7 @@ platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collected 6 items
+collected 7 items
 
 test_console.py 
 ======================================================================== START
@@ -173,5 +173,134 @@ output  =  True
 (no stderr captured)
 ======================================================================== END
 .
+======================================================================== START
+===================================================== captured.out =====
+Function: test_validate_value_incorrect_types_without_stop
+------------------------------------------------------------------------
 
-============================== 6 passed ==============================
+input     =  None
+intype    =  <class 'NoneType'>
+testtype  =  <class 'bool'>
+output    =  False
+
+input     =  False
+intype    =  <class 'bool'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+input     =  'hello'
+intype    =  <class 'str'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+input     =  42
+intype    =  <class 'int'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+input     =  3.14
+intype    =  <class 'float'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+input     =  ('hello', 'hi', 42)
+intype    =  <class 'tuple'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+input     =  ['hello', 'hi', 42]
+intype    =  <class 'list'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+input     =  {'hello': 42, 'hi': 3.14}
+intype    =  <class 'dict'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+input     =  {3, 1, 2}
+intype    =  <class 'set'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+input     =  {3, 1, 2}
+intype    =  <class 'frozenset'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+===================================================== captured.err =====
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: None
+Received type: <class 'NoneType'>
+Expected type: <class 'bool'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: False
+Received type: <class 'bool'>
+Expected type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: hello
+Received type: <class 'str'>
+Expected type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: 42
+Received type: <class 'int'>
+Expected type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: 3.14
+Received type: <class 'float'>
+Expected type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: ('hello', 'hi', 42)
+Received type: <class 'tuple'>
+Expected type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: ['hello', 'hi', 42]
+Received type: <class 'list'>
+Expected type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: {'hello': 42, 'hi': 3.14}
+Received type: <class 'dict'>
+Expected type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: {1, 2, 3}
+Received type: <class 'set'>
+Expected type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: {1, 2, 3}
+Received type: <class 'frozenset'>
+Expected type: <class 'NoneType'>
+[0m
+
+======================================================================== END
+.
+
+============================== 7 passed ==============================

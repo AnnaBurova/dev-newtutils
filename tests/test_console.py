@@ -251,3 +251,41 @@ class TestValidateValue:
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
         assert "::: ERROR :::" not in captured.err
+
+
+    def test_validate_value_incorrect_types_without_stop(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        """Ensure NewtCons.validate_value() rejects incorrect types without stopping."""
+        newt_print_function_name()
+
+        for example_input in EXAMPLE_LIST:
+            print()
+            if example_input == {3, 1, 2}:
+                print("input     =  {3, 1, 2}")
+            else:
+                print("input     = ", repr(example_input))
+            print("intype    = ", type(example_input))
+
+            testing_type = type(None)
+            if example_input is None:
+                testing_type = bool
+            print("testtype  = ", testing_type)
+
+            example_output = NewtCons.validate_value(
+                example_input,
+                testing_type,
+                stop = False
+            )
+            print("output    = ", example_output)
+            assert example_output is False
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert captured.err.count("\n::: ERROR :::\n") == len(EXAMPLE_LIST)
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        # assert "::: ERROR :::" not in captured.err

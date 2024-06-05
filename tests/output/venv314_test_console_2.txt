@@ -4,13 +4,14 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collecting ... collected 6 items
+collecting ... collected 7 items
 
-test_console.py::TestFormatValueToStr::test_format_value_to_str_types PASSED [ 16%]
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 33%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 50%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 66%]
-test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 83%]
-test_console.py::TestValidateValue::test_validate_value_correct_types PASSED [100%]
+test_console.py::TestFormatValueToStr::test_format_value_to_str_types PASSED [ 14%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 28%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 42%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 57%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 71%]
+test_console.py::TestValidateValue::test_validate_value_correct_types PASSED [ 85%]
+test_console.py::TestValidateValue::test_validate_value_incorrect_types_without_stop PASSED [100%]
 
-============================== 6 passed ==============================
+============================== 7 passed ==============================
