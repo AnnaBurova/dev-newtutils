@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collected 5 items
+collected 6 items
 
 test_console.py 
 ======================================================================== START
@@ -124,5 +124,54 @@ Test error
 
 ======================================================================== END
 .
+======================================================================== START
+===================================================== captured.out =====
+Function: test_validate_value_correct_types
+------------------------------------------------------------------------
 
-============================== 5 passed ==============================
+input   =  None
+intype  =  <class 'NoneType'>
+output  =  True
+
+input   =  False
+intype  =  <class 'bool'>
+output  =  True
+
+input   =  'hello'
+intype  =  <class 'str'>
+output  =  True
+
+input   =  42
+intype  =  <class 'int'>
+output  =  True
+
+input   =  3.14
+intype  =  <class 'float'>
+output  =  True
+
+input   =  ('hello', 'hi', 42)
+intype  =  <class 'tuple'>
+output  =  True
+
+input   =  ['hello', 'hi', 42]
+intype  =  <class 'list'>
+output  =  True
+
+input   =  {'hello': 42, 'hi': 3.14}
+intype  =  <class 'dict'>
+output  =  True
+
+input   =  {3, 1, 2}
+intype  =  <class 'set'>
+output  =  True
+
+input   =  {3, 1, 2}
+intype  =  <class 'frozenset'>
+output  =  True
+
+===================================================== captured.err =====
+(no stderr captured)
+======================================================================== END
+.
+
+============================== 6 passed ==============================
