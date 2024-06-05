@@ -15,6 +15,7 @@ import pytest
 
 from .helpers import (
     EXAMPLE_LIST,
+    EMPTY_LIST,
     newt_print_function_name,
     newt_print_captured,
 )

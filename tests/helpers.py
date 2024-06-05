@@ -89,6 +89,29 @@ EXAMPLE_LIST: list[object] = [
     frozenset({3, 1, 2}),
 ]
 
+EMPTY_LIST: list[object] = [
+    # None
+    None,
+    # bool
+    False,
+    # str
+    "",
+    # int
+    0,
+    # float
+    0.0,
+    # tuple[object, ...]
+    tuple(),
+    # list[object]
+    list(),
+    # dict[object, object]
+    dict(),
+    # set[object]
+    set(),
+    # frozenset[object]
+    frozenset(),
+]
+
 
 def newt_print_function_name(
         ) -> str:
