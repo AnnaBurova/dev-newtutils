@@ -4,15 +4,16 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collecting ... collected 8 items
+collecting ... collected 9 items
 
-test_console.py::TestFormatValueToStr::test_format_value_to_str_types PASSED [ 12%]
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 25%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 37%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 50%]
-test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 62%]
-test_console.py::TestValidateValue::test_validate_value_correct_types PASSED [ 75%]
-test_console.py::TestValidateValue::test_validate_value_incorrect_types_without_stop PASSED [ 87%]
-test_console.py::TestValidateValue::test_validate_value_incorrect_types_with_stop_and_location PASSED [100%]
+test_console.py::TestFormatValueToStr::test_format_value_to_str_types PASSED [ 11%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 22%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 33%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 44%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 55%]
+test_console.py::TestValidateValue::test_validate_value_correct_types PASSED [ 66%]
+test_console.py::TestValidateValue::test_validate_value_incorrect_types_without_stop PASSED [ 77%]
+test_console.py::TestValidateValue::test_validate_value_incorrect_types_with_stop_and_location PASSED [ 88%]
+test_console.py::TestValidateValue::test_validate_value_empty_without_stop PASSED [100%]
 
-============================== 8 passed ==============================
+============================== 9 passed ==============================

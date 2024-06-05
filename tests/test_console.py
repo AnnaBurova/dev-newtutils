@@ -335,3 +335,34 @@ class TestValidateValue:
         # assert "::: ERROR :::" not in captured.err
         assert "This line will not be printed" not in captured.out
         assert "This line will not be printed" not in captured.err
+
+
+    def test_validate_value_empty_without_stop(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        """Ensure NewtCons.validate_value() rejects empty values without stopping when non-empty validation is enabled."""
+        newt_print_function_name()
+
+        for example_input in EMPTY_LIST:
+            print()
+            print("input   = ", repr(example_input))
+            print("intype  = ", type(example_input))
+
+            example_output = NewtCons.validate_value(
+                example_input,
+                type(example_input),
+                check_non_empty = True,
+                stop = False
+            )
+            print("output  = ", example_output)
+            assert example_output is False
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert captured.err.count("\n::: ERROR :::\n") == len(EMPTY_LIST)
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        # assert "::: ERROR :::" not in captured.err

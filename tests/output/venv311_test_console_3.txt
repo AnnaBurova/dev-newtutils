@@ -3,7 +3,7 @@ platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collected 8 items
+collected 9 items
 
 test_console.py 
 ======================================================================== START
@@ -431,5 +431,124 @@ Expected type: <class 'NoneType'>
 
 ======================================================================== END
 .
+======================================================================== START
+===================================================== captured.out =====
+Function: test_validate_value_empty_without_stop
+------------------------------------------------------------------------
 
-============================== 8 passed ==============================
+input   =  None
+intype  =  <class 'NoneType'>
+output  =  False
+
+input   =  False
+intype  =  <class 'bool'>
+output  =  False
+
+input   =  ''
+intype  =  <class 'str'>
+output  =  False
+
+input   =  0
+intype  =  <class 'int'>
+output  =  False
+
+input   =  0.0
+intype  =  <class 'float'>
+output  =  False
+
+input   =  ()
+intype  =  <class 'tuple'>
+output  =  False
+
+input   =  []
+intype  =  <class 'list'>
+output  =  False
+
+input   =  {}
+intype  =  <class 'dict'>
+output  =  False
+
+input   =  set()
+intype  =  <class 'set'>
+output  =  False
+
+input   =  frozenset()
+intype  =  <class 'frozenset'>
+output  =  False
+
+===================================================== captured.err =====
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: None
+Type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: False
+Type: <class 'bool'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 
+Type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 0
+Type: <class 'int'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 0.0
+Type: <class 'float'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: ()
+Type: <class 'tuple'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: []
+Type: <class 'list'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: {}
+Type: <class 'dict'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: {}
+Type: <class 'set'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : is_empty
+::: ERROR :::
+Value must not be empty
+Value: {}
+Type: <class 'frozenset'>
+[0m
+
+======================================================================== END
+.
+
+============================== 9 passed ==============================
