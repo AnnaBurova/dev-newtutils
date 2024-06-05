@@ -144,9 +144,9 @@ def validate_value(
             Type checking uses exact `type()` matches to avoid bool/int confusion.
         check_non_empty (bool):
             If True, also validate that the value is not empty.<br>
+            Defaults to False.<br>
             Supported types:
-            None, bool, str, int, float, tuple, list, dict, set, frozenset.<br>
-            Defaults to False.
+            None, bool, str, int, float, tuple, list, dict, set, frozenset.
         location (str):
             Additional location context for error reporting.<br>
             Automatically prepended with function path.<br>
