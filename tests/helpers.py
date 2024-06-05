@@ -21,6 +21,12 @@ Test example:
             ) -> None:
         func_name = newt_print_function_name()
 
+        NewtCons.error_msg(
+            "Test error",
+            location=f"{__name__} > {func_name}",
+            stop=False
+        )
+
         with pytest.raises(SystemExit) as exc_info:
             # TODO
             print("This line will not be printed")
