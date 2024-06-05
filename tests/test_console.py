@@ -289,3 +289,46 @@ class TestValidateValue:
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
         # assert "::: ERROR :::" not in captured.err
+
+
+    def test_validate_value_incorrect_types_with_stop_and_location(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        """Ensure NewtCons.validate_value() stops on incorrect types with a location."""
+        func_name = newt_print_function_name()
+
+        for example_input in EXAMPLE_LIST:
+            print()
+            if example_input == {3, 1, 2}:
+                print("input     =  {3, 1, 2}")
+            else:
+                print("input     = ", repr(example_input))
+            print("intype    = ", type(example_input))
+
+            testing_type = type(None)
+            if example_input is None:
+                testing_type = bool
+            print("testtype  = ", testing_type)
+
+            with pytest.raises(SystemExit) as exc_info:
+                NewtCons.validate_value(
+                    example_input,
+                    testing_type,
+                    location=f"{__name__} > {func_name}",
+                    stop = True
+                )
+                print("This line will not be printed")
+            assert exc_info.value.code == 1
+            print("exc_info  = ", exc_info.value.code)
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert captured.err.count("\n::: ERROR :::\n") == len(EXAMPLE_LIST)
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        # assert "::: ERROR :::" not in captured.err
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
