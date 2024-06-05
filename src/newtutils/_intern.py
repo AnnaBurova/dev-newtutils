@@ -4,9 +4,15 @@ Created on 2024-06
 @author: NewtCode Anna Burova
 
 Functions:
-    def is_supported_set(
+    def is_supported_type(
         value: object,
-        ) -> TypeGuard[set[SupportedTypes] | frozenset[SupportedTypes]]
+        ) -> TypeGuard[
+              tuple[SupportedTypes, ...]
+            | list[SupportedTypes]
+            | dict[str, SupportedTypes]
+            | set[SupportedTypes]
+            | frozenset[SupportedTypes]
+        ]
 """
 
 from __future__ import annotations
@@ -27,9 +33,15 @@ SupportedTypes = (
 )
 
 
-def is_supported_set(
+def is_supported_type(
         value: object,
-        ) -> TypeGuard[set[SupportedTypes] | frozenset[SupportedTypes]]:
+        ) -> TypeGuard[
+              tuple[SupportedTypes, ...]
+            | list[SupportedTypes]
+            | dict[str, SupportedTypes]
+            | set[SupportedTypes]
+            | frozenset[SupportedTypes]
+        ]:
     """ ## Check if a value is a set or frozenset containing supported types.
 
     Type guard function that narrows the type of `value` from `object` to
@@ -49,18 +61,14 @@ def is_supported_set(
     Raises:
         TypeError:
             If `value` cannot be checked with isinstance (rare edge cases).
-
-    Examples:
-        ```
-        >>> INTERN.is_supported_set({1, 2, 3})
-        True
-        >>> INTERN.is_supported_set(frozenset(["a", "b"]))
-        True
-        >>> INTERN.is_supported_set([1, 2, 3])
-        False
-        >>> INTERN.is_supported_set("not a set")
-        False
-        ```
     """
 
-    return isinstance(value, (set, frozenset))
+    is_type = isinstance(value, (
+        tuple,
+        list,
+        dict,
+        set,
+        frozenset,
+    ))
+
+    return is_type

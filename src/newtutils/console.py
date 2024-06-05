@@ -50,7 +50,10 @@ def format_value_to_str(
         ```
     """
 
-    if INTERN.is_supported_set(value):
+    if (
+        INTERN.is_supported_type(value)
+        and isinstance(value, (set, frozenset))
+    ):
         items = ", ".join(format_value_to_str(item) for item in sorted(value, key=str))
         return "{" + items + "}"
 
