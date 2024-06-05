@@ -12,6 +12,13 @@ Functions:
         location: str = "Unknown",
         stop: bool = True
         ) -> None
+    def validate_value(
+        value: object,
+        expected_type: type | tuple[type, ...],
+        check_non_empty: bool = False,
+        location: str = "",
+        stop: bool = True
+        ) -> bool
 """
 
 from __future__ import annotations
@@ -113,3 +120,176 @@ def error_msg(
 
     if stop:
         raise SystemExit(1)
+
+
+def validate_value(
+        value: object,
+        expected_type: type | tuple[type, ...],
+        check_non_empty: bool = False,
+        location: str = "",
+        stop: bool = True
+        ) -> bool:
+    """ ## Validate that a given value matches the expected types.
+
+    Checks whether a value conforms to the expected type or tuple of allowed types.
+    If `check_non_empty` is enabled, also
+    validates that the value is not empty according to type-specific rules.
+    Reports errors via `error_msg()` and can terminate execution if validation fails.
+
+    Args:
+        value (object):
+            The value to validate.
+        expected_type (type | tuple[type, ...]):
+            The expected type or tuple of allowed types.<br>
+            Type checking uses exact `type()` matches to avoid bool/int confusion.
+        check_non_empty (bool):
+            If True, also validate that the value is not empty.<br>
+            Supported types:
+            None, bool, str, int, float, tuple, list, dict, set, frozenset.<br>
+            Defaults to False.
+        location (str):
+            Additional location context for error reporting.<br>
+            Automatically prepended with function path.<br>
+            Defaults to empty string.
+        stop (bool):
+            If True, stops execution after reporting the error.<br>
+            If False, reports the error but continues execution.<br>
+            Defaults to True.
+
+    Returns:
+        out (bool):
+            True if the value matches the expected type
+            and passes non-empty check (if enabled),<br>
+            otherwise False.
+
+    Raises:
+        SystemExit:
+            If an error occurs and `stop=True`.
+            Terminates with code 1.
+
+    Examples:
+        ```
+        result = NewtCons.validate_value(
+            42,
+            int | (str, int,),
+            check_non_empty = True,
+            location=f"{__file__} > {__name__}",
+            stop = False
+        )
+        ```
+    """
+
+    if location:
+        location = str(location) + " > "
+    location += "Newt.console.validate_value"
+
+    value_content = format_value_to_str(value)
+
+    # Normalize to tuple for uniform check
+    expected = expected_type if isinstance(expected_type, tuple) else (expected_type,)
+
+    if type(value) not in expected:
+        error_msg(
+            f"Value: {value_content}",
+            f"Received type: {type(value)}",
+            f"Expected type: {expected_type}",
+            location=location + " : type(value) is not expected_type",
+            stop=stop
+        )
+
+        return False
+
+    is_empty = False
+    if check_non_empty:
+
+        # Use exact type checks instead of isinstance() to avoid bool being treated as int.
+        # bool is a subclass of int, so isinstance(True, int) is True.
+
+        if (
+            value is None
+            and expected_type is type(None)
+        ):
+            is_empty = True
+
+        elif (
+            type(value) is bool
+            and bool in expected
+        ):
+            is_empty = value is False
+
+        elif (
+            type(value) is str
+            and str in expected
+        ):
+            is_empty = value.strip() == ""
+
+        elif (
+            type(value) is int
+            and int in expected
+        ):
+            is_empty = value == 0
+
+        elif (
+            type(value) is float
+            and float in expected
+        ):
+            is_empty = value == 0.0
+
+        elif (
+            INTERN.is_supported_type(value)
+            and type(value) is tuple
+            and tuple in expected
+        ):
+            is_empty = len(value) == 0
+
+        elif (
+            INTERN.is_supported_type(value)
+            and type(value) is list
+            and list in expected
+        ):
+            is_empty = len(value) == 0
+
+        elif (
+            INTERN.is_supported_type(value)
+            and type(value) is dict
+            and dict in expected
+        ):
+            is_empty = len(value) == 0
+
+        elif (
+            INTERN.is_supported_type(value)
+            and type(value) is set
+            and set in expected
+        ):
+            is_empty = len(value) == 0
+
+        elif (
+            INTERN.is_supported_type(value)
+            and type(value) is frozenset
+            and frozenset in expected
+        ):
+            is_empty = len(value) == 0
+
+        else:
+            error_msg(
+                "This type is not supported.",
+                f"Value: {value_content}",
+                f"Type: {type(value)}",
+                location=location + " : check_non_empty",
+                stop=stop
+            )
+
+            return False
+
+    if is_empty:
+        error_msg(
+            "Value must not be empty",
+            f"Value: {value_content}",
+            f"Type: {type(value)}",
+            location=location + " : is_empty",
+            stop=stop
+        )
+
+        return False
+
+    return True
