@@ -12,6 +12,16 @@ test_console.py::TestFormatValueToStr::test_format_value_to_str_types
 Function: test_format_value_to_str_types
 ------------------------------------------------------------------------
 
+input    =  None
+intype   =  <class 'NoneType'>
+output   =  'None'
+outtype  =  <class 'str'>
+
+input    =  False
+intype   =  <class 'bool'>
+output   =  'False'
+outtype  =  <class 'str'>
+
 input    =  'hello'
 intype   =  <class 'str'>
 output   =  'hello'
@@ -27,19 +37,14 @@ intype   =  <class 'float'>
 output   =  '3.14'
 outtype  =  <class 'str'>
 
-input    =  False
-intype   =  <class 'bool'>
-output   =  'False'
+input    =  ('hello', 'hi', 42)
+intype   =  <class 'tuple'>
+output   =  "('hello', 'hi', 42)"
 outtype  =  <class 'str'>
 
 input    =  ['hello', 'hi', 42]
 intype   =  <class 'list'>
 output   =  "['hello', 'hi', 42]"
-outtype  =  <class 'str'>
-
-input    =  ('hello', 'hi', 42)
-intype   =  <class 'tuple'>
-output   =  "('hello', 'hi', 42)"
 outtype  =  <class 'str'>
 
 input    =  {'hello': 42, 'hi': 3.14}
@@ -55,11 +60,6 @@ outtype  =  <class 'str'>
 input    =  {3, 1, 2}
 intype   =  <class 'frozenset'>
 output   =  '{1, 2, 3}'
-outtype  =  <class 'str'>
-
-input    =  None
-intype   =  <class 'NoneType'>
-output   =  'None'
 outtype  =  <class 'str'>
 
 ===================================================== captured.err =====
