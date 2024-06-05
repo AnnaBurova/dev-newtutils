@@ -13,6 +13,7 @@ Tests cover:
 import pytest
 
 from .helpers import (
+    EXAMPLE_LIST,
     newt_print_function_name,
     newt_print_captured,
 )
@@ -31,19 +32,7 @@ class TestFormatValueToStr:
 
         newt_print_function_name()
 
-        example_list: list[object] = [
-            "hello",
-            42,
-            3.14,
-            False,
-            ["hello", "hi", 42],
-            ("hello", "hi", 42, ),
-            {"hello": 42, "hi": 3.14},
-            {3, 1, 2},
-            frozenset({3, 1, 2}),
-            None,
-        ]
-        for example_input in example_list:
+        for example_input in EXAMPLE_LIST:
             print()
             if example_input == {3, 1, 2}:
                 print("input    =  {3, 1, 2}")

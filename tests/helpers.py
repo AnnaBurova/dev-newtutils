@@ -3,6 +3,9 @@ Created on 2024-06
 
 @author: NewtCode Anna Burova
 
+Constants:
+    EXAMPLE_LIST (list)
+
 Functions:
     def newt_print_function_name(
         ) -> None
@@ -54,9 +57,31 @@ Test example:
         assert "This line will not be printed" not in captured.err
 """
 
-
 import inspect
 from _pytest.capture import CaptureResult
+
+EXAMPLE_LIST: list[object] = [
+    # None
+    None,
+    # bool
+    False,
+    # str
+    "hello",
+    # int
+    42,
+    # float
+    3.14,
+    # tuple[object, ...]
+    ("hello", "hi", 42, ),
+    # list[object]
+    ["hello", "hi", 42],
+    # dict[object, object]
+    {"hello": 42, "hi": 3.14},
+    # set[object]
+    {3, 1, 2},
+    # frozenset[object]
+    frozenset({3, 1, 2}),
+]
 
 
 def newt_print_function_name(
