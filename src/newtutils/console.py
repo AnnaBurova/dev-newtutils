@@ -270,8 +270,9 @@ def validate_value(
         ):
             is_empty = len(value) == 0
 
-        else:
+        else:  # pragma: no cover
             error_msg(
+                "Found unknown error_msg: (found? write test!)",  # TODO
                 "This type is not supported.",
                 f"Value: {value_content}",
                 f"Type: {type(value)}",
