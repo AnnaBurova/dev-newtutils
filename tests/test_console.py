@@ -131,7 +131,7 @@ class TestErrorMsg:
 
         assert captured.err.count("\n::: ERROR :::\n") == 1
 
-        # # Expected absence of result
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
         # assert "::: ERROR :::" not in captured.err
         assert "This line will not be printed" not in captured.out
@@ -226,6 +226,7 @@ class TestValidateValue:
             self,
             capsys: pytest.CaptureFixture[str]
             ) -> None:
+        """Ensure NewtCons.validate_value() accepts values of their matching types."""
         newt_print_function_name()
 
         for example_input in EXAMPLE_LIST:
@@ -235,6 +236,7 @@ class TestValidateValue:
             else:
                 print("input   = ", repr(example_input))
             print("intype  = ", type(example_input))
+
             example_output = NewtCons.validate_value(example_input, type(example_input))
             print("output  = ", example_output)
             assert example_output is True
