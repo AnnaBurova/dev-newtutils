@@ -104,6 +104,7 @@ class TestErrorMsg:
 
         func_name = newt_print_function_name()
 
+        exc_info = 0
         with pytest.raises(SystemExit) as exc_info:
             NewtCons.error_msg("Test error")
             print("This line will not be printed")
@@ -311,6 +312,7 @@ class TestValidateValue:
                 testing_type = bool
             print("testtype  = ", testing_type)
 
+            exc_info = 0
             with pytest.raises(SystemExit) as exc_info:
                 NewtCons.validate_value(
                     example_input,
