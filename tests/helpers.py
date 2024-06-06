@@ -5,10 +5,11 @@ Created on 2024-06
 
 Constants:
     EXAMPLE_LIST (list)
+    EMPTY_LIST (list)
 
 Functions:
     def newt_print_function_name(
-        ) -> None
+        ) -> str
     def newt_print_captured(
         captured: CaptureResult[str],
         print_full_captured: bool = True
