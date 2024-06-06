@@ -92,6 +92,10 @@ def error_msg(
             If True, the program terminates with exit code 1 after printing.<br>
             Defaults to True.
 
+    Returns:
+        out (None):
+            The function does not return a value.
+
     Raises:
         SystemExit:
             If `stop=True`.
