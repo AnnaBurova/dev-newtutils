@@ -417,3 +417,38 @@ class TestCheckWorkspaceLocation:
         # Expected absence of result
         assert captured.out.count("::: ERROR :::") == 0
         assert captured.err.count("::: ERROR :::") == 0
+
+
+    def test_check_workspace_location_no_match(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        # Todo
+        newt_print_function_name()
+
+        change_variable = False
+
+        workspace_dir = "/home/user/project"
+        expected_dir = "/home/user"
+
+        print()
+        print(repr(workspace_dir), "==", repr(expected_dir))
+
+        exc_info = 0
+        with pytest.raises(SystemExit) as exc_info:
+            NewtCons.check_workspace_location(workspace_dir, expected_dir)
+            change_variable = True
+        assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert len(captured.out) == 172
+        assert len(captured.err) == 215
+
+        assert captured.err.count("::: ERROR :::") == 1
+
+        # Expected absence of result
+        assert change_variable is False
+        assert captured.out.count("::: ERROR :::") == 0

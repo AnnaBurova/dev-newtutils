@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collected 12 items
+collected 13 items
 
 test_console.py 
 ======================================================================== START
@@ -635,5 +635,24 @@ Function: test_check_workspace_location_match
 (no stderr captured)
 ======================================================================== END
 .
+======================================================================== START
+===================================================== captured.out =====
+Function: test_check_workspace_location_no_match
+------------------------------------------------------------------------
 
-============================= 12 passed ==============================
+'/home/user/project' == '/home/user'
+exc_info: 1
+
+===================================================== captured.err =====
+[1m[31m
+Location: Newt.console.check_workspace_location : workspace_dir != expected_dir
+::: ERROR :::
+Current directory does not match the expected directory.
+Current: /home/user/project
+Expected: /home/user
+[0m
+
+======================================================================== END
+.
+
+============================= 13 passed ==============================
