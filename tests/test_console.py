@@ -320,7 +320,7 @@ class TestValidateValue:
             example_output = NewtCons.validate_value(
                 example_input,
                 testing_type,
-                stop = False
+                stop=False
             )
             print("output    = ", example_output)
             assert example_output is False
@@ -361,7 +361,7 @@ class TestValidateValue:
                     example_input,
                     testing_type,
                     location=f"{__name__} > {func_name}",
-                    stop = True
+                    stop=True
                 )
                 print("This line will not be printed")
             assert exc_info.value.code == 1
@@ -394,8 +394,8 @@ class TestValidateValue:
             example_output = NewtCons.validate_value(
                 example_input,
                 type(example_input),
-                check_non_empty = True,
-                stop = False
+                check_non_empty=True,
+                stop=False
             )
             print("output  = ", example_output)
             assert example_output is False

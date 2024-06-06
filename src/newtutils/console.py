@@ -236,9 +236,9 @@ def validate_value(
         result = NewtCons.validate_value(
             42,
             int | (str, int,),
-            check_non_empty = True,
+            check_non_empty=True,
             location=f"{__file__} > {__name__}",
-            stop = False
+            stop=False
         )
         ```
     """
@@ -403,7 +403,7 @@ def check_workspace_location(
 
     validate_value(
         workspace_dir, str,
-        check_non_empty = True,
+        check_non_empty=True,
         location=location+" : workspace_dir"
     )
 
@@ -412,7 +412,7 @@ def check_workspace_location(
 
     validate_value(
         expected_dir, str,
-        check_non_empty = True,
+        check_non_empty=True,
         location=location+" : expected_dir"
     )
 
