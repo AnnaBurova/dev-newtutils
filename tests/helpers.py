@@ -28,6 +28,7 @@ Test example:
             stop=False
         )
 
+        exc_info = 0
         with pytest.raises(SystemExit) as exc_info:
             # TODO
             print("This line will not be printed")
