@@ -23,11 +23,16 @@ Functions:
         location: str = "",
         stop: bool = True
         ) -> bool
+    def check_workspace_location(
+        workspace_dir: str | Path,
+        expected_dir: str | Path
+        ) -> None
 """
 
 from __future__ import annotations
 
 import sys
+from pathlib import Path
 
 from colorama import Fore, Style
 
@@ -353,3 +358,70 @@ def validate_value(
         return False
 
     return True
+
+
+def check_workspace_location(
+        workspace_dir: str | Path,
+        expected_dir: str | Path
+        ) -> None:
+    """ ## Check that the actual workspace directory matches the expected directory.
+
+    Converts both directory values to strings using `format_value_to_str()`.
+    Compares the resulting strings directly, without resolving paths or normalizing their spelling.
+    If they match, reports success using `success_msg()`.
+    Otherwise, reports an error using `error_msg()`.
+
+    Args:
+        workspace_dir (str | Path):
+            The actual project directory to check.
+        expected_dir (str | Path):
+            The required project directory.
+
+    Returns:
+        out (None):
+            The function does not return a value.
+
+    Raises:
+        SystemExit:
+            If directories do not match.
+            Terminates with code 1.
+
+    Examples:
+        ```python
+        SCRIPT_DIR = Path(__file__).resolve().parent
+        WORKSPACE_DIR = (SCRIPT_DIR / ".." / "..").resolve()
+        EXPECTED_DIR = Path("D:/") / "VS_Code"
+        NewtCons.check_workspace_location(WORKSPACE_DIR, EXPECTED_DIR)
+        NewtCons.success_msg("=====  END  =====", add_symbols=True)
+        ```
+    """
+
+    location = "Newt.console.check_workspace_location"
+
+    workspace_str = format_value_to_str(workspace_dir)
+    validate_value(
+        workspace_str, str,
+        check_non_empty = True,
+        location=location+" : workspace_dir"
+    )
+
+    expected_str = format_value_to_str(expected_dir)
+    validate_value(
+        expected_str, str,
+        check_non_empty = True,
+        location=location+" : expected_dir"
+    )
+
+    if workspace_str == expected_str:
+        success_msg(
+            "===== START =====",
+            add_symbols=True
+        )
+        return None
+
+    error_msg(
+        "Current directory does not match the expected directory.",
+        f"Current: {workspace_dir}",
+        f"Expected: {expected_dir}",
+        location=location+" : workspace_str != expected_str"
+    )

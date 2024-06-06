@@ -21,6 +21,7 @@ from .console import (
     error_msg,
     success_msg,
     validate_value,
+    check_workspace_location,
 )
 
 # ===== Metadata ====================================================== ======= =================== ====================
@@ -31,6 +32,7 @@ __all__ = [
     "error_msg",
     "success_msg",
     "validate_value",
+    "check_workspace_location",
 ]
 
 # ===== Project ======================================================= ======= =================== ====================

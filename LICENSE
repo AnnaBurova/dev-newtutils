@@ -32,6 +32,7 @@ https://docs.python.org/3/library/index.html
 - sys — System-specific parameters and functions
 - inspect — Inspect live objects
 - typing — Support for type hints
+- pathlib — Object-oriented filesystem paths
 
 # -----------------------------------------------------------------------------
 
