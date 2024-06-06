@@ -55,7 +55,7 @@ def format_value_to_str(
             Other types use standard string conversion.
 
     Examples:
-        ```
+        ```python
         >>> NewtCons.format_value_to_str({3, 1, 2})
         '{1, 2, 3}'
         ```
@@ -102,7 +102,7 @@ def error_msg(
             Terminates with code 1.
 
     Examples:
-        ```
+        ```python
         NewtCons.error_msg(
             "Test error",
             location=f"{__file__} > {__name__}",
@@ -135,7 +135,6 @@ def success_msg(
     Displays one or more messages in bright green color using **Colorama**.
     It is intended for CLI tools and debugging utilities
     that require structured visual feedback in the console.
-    Default message is " ✅  Successfully!  ✅ "
 
     Args:
         *args (object):
@@ -150,10 +149,14 @@ def success_msg(
             The function does not return a value.
 
     Examples:
-        ```
+        ```python
         >>> success_msg()
+        " ✅  Successfully!  ✅ "
         >>> success_msg("File saved successfully.", add_symbols=True)
+        " ✅  File saved successfully.  ✅ "
         >>> success_msg("Files saved.", "Upload completed.")
+        "Files saved."
+        "Upload completed."
         ```
     """
 
@@ -220,7 +223,7 @@ def validate_value(
             Terminates with code 1.
 
     Examples:
-        ```
+        ```python
         result = NewtCons.validate_value(
             42,
             int | (str, int,),
