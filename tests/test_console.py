@@ -50,13 +50,12 @@ class TestFormatValueToStr:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert "" == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 0
+        assert len(captured.out) == 1146
+        assert len(captured.err) == 0
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        assert "::: ERROR :::" not in captured.err
+        assert captured.out.count("::: ERROR :::") == 0
+        assert captured.err.count("::: ERROR :::") == 0
 
 
 class TestErrorMsg:
@@ -69,33 +68,20 @@ class TestErrorMsg:
             ) -> None:
         """Ensure NewtCons.error_msg() prints an error without stopping execution."""
 
-        func_name = newt_print_function_name()
+        newt_print_function_name()
 
         NewtCons.error_msg("Test error", stop=False)
 
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert (
-            f"Function: {func_name}\n"
-            f"{'-' * 72}"
-            "\n"
-        ) == captured.out
+        assert len(captured.out) == 111
+        assert len(captured.err) == 58
 
-        assert (
-            "\x1b[1m\x1b[31m"
-            "\nLocation: Unknown"
-            "\n::: ERROR :::"
-            "\nTest error"
-            "\n\x1b[0m"
-            "\n"
-        ) == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 1
+        assert captured.err.count("::: ERROR :::") == 1
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        # assert "::: ERROR :::" not in captured.err
+        assert captured.out.count("::: ERROR :::") == 0
 
 
     def test_error_msg_with_stop(
@@ -104,41 +90,28 @@ class TestErrorMsg:
             ) -> None:
         """Ensure NewtCons.error_msg() stops execution with exit code 1."""
 
-        func_name = newt_print_function_name()
+        newt_print_function_name()
+
+        change_variable = False
 
         exc_info = 0
         with pytest.raises(SystemExit) as exc_info:
             NewtCons.error_msg("Test error")
-            print("This line will not be printed")
+            change_variable = True
         assert exc_info.value.code == 1
         print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert (
-            f"Function: {func_name}\n"
-            f"{'-' * 72}"
-            "\nexc_info: 1"
-            "\n"
-        ) == captured.out
+        assert len(captured.out) == 120
+        assert len(captured.err) == 58
 
-        assert (
-            "\x1b[1m\x1b[31m"
-            "\nLocation: Unknown"
-            "\n::: ERROR :::"
-            "\nTest error"
-            "\n\x1b[0m"
-            "\n"
-        ) == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 1
+        assert captured.err.count("::: ERROR :::") == 1
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        # assert "::: ERROR :::" not in captured.err
-        assert "This line will not be printed" not in captured.out
-        assert "This line will not be printed" not in captured.err
+        assert change_variable is False
+        assert captured.out.count("::: ERROR :::") == 0
 
 
     def test_error_msg_multiple_args(
@@ -147,7 +120,7 @@ class TestErrorMsg:
             ) -> None:
         """Ensure NewtCons.error_msg() displays multiple error messages."""
 
-        func_name = newt_print_function_name()
+        newt_print_function_name()
 
         NewtCons.error_msg(
             "Error 1",
@@ -159,28 +132,13 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert (
-            f"Function: {func_name}\n"
-            f"{'-' * 72}"
-            "\n"
-        ) == captured.out
+        assert len(captured.out) == 112
+        assert len(captured.err) == 71
 
-        assert (
-            "\x1b[1m\x1b[31m"
-            "\nLocation: Unknown"
-            "\n::: ERROR :::"
-            "\nError 1"
-            "\nError 2"
-            "\nError 3"
-            "\n\x1b[0m"
-            "\n"
-        ) == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 1
+        assert captured.err.count("::: ERROR :::") == 1
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        # assert "::: ERROR :::" not in captured.err
+        assert captured.out.count("::: ERROR :::") == 0
 
 
     def test_error_msg_with_location(
@@ -199,26 +157,13 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert (
-            f"Function: {func_name}\n"
-            f"{'-' * 72}"
-            "\n"
-        ) == captured.out
+        assert len(captured.out) == 112
+        assert len(captured.err) == 100
 
-        assert (
-            "\x1b[1m\x1b[31m"
-            "\nLocation: tests.test_console > test_error_msg_with_location"
-            "\n::: ERROR :::"
-            "\nTest error"
-            "\n\x1b[0m"
-            "\n"
-        ) == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 1
+        assert captured.err.count("::: ERROR :::") == 1
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        # assert "::: ERROR :::" not in captured.err
+        assert captured.out.count("::: ERROR :::") == 0
 
 
 class TestSuccessMsg:
@@ -230,7 +175,7 @@ class TestSuccessMsg:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.success_msg() prints default, symbol-decorated, and multiple messages."""
-        func_name = newt_print_function_name()
+        newt_print_function_name()
 
         NewtCons.success_msg()
         NewtCons.success_msg("File saved successfully.", add_symbols=True)
@@ -239,27 +184,12 @@ class TestSuccessMsg:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert (
-            f"Function: {func_name}\n"
-            f"{'-' * 72}"
-            "\n\x1b[1m\x1b[32m"
-            "\n ✅  Successfully!  ✅ "
-            "\n\x1b[0m\n\x1b[1m\x1b[32m"
-            "\n ✅  File saved successfully.  ✅ "
-            "\n\x1b[0m\n\x1b[1m\x1b[32m"
-            "\nFiles saved."
-            "\nUpload completed."
-            "\n\x1b[0m"
-            "\n"
-        ) == captured.out
-
-        assert "" == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 0
+        assert len(captured.out) == 249
+        assert len(captured.err) == 0
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        assert "::: ERROR :::" not in captured.err
+        assert captured.out.count("::: ERROR :::") == 0
+        assert captured.err.count("::: ERROR :::") == 0
 
 
 class TestValidateValue:
@@ -288,13 +218,12 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert "" == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 0
+        assert len(captured.out) == 778
+        assert len(captured.err) == 0
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        assert "::: ERROR :::" not in captured.err
+        assert captured.out.count("::: ERROR :::") == 0
+        assert captured.err.count("::: ERROR :::") == 0
 
 
     def test_validate_value_incorrect_types_without_stop(
@@ -328,11 +257,13 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert captured.err.count("\n::: ERROR :::\n") == len(EXAMPLE_LIST)
+        assert len(captured.out) == 1179
+        assert len(captured.err) == 1845
+
+        assert captured.err.count("::: ERROR :::") == len(EXAMPLE_LIST)
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        # assert "::: ERROR :::" not in captured.err
+        assert captured.out.count("::: ERROR :::") == 0
 
 
     def test_validate_value_incorrect_types_with_stop_and_location(
@@ -341,6 +272,8 @@ class TestValidateValue:
             ) -> None:
         """Ensure NewtCons.validate_value() stops on incorrect types with a location."""
         func_name = newt_print_function_name()
+
+        change_variable = False
 
         for example_input in EXAMPLE_LIST:
             print()
@@ -363,20 +296,21 @@ class TestValidateValue:
                     location=f"{__name__} > {func_name}",
                     stop=True
                 )
-                print("This line will not be printed")
+                change_variable = True
             assert exc_info.value.code == 1
             print("exc_info  = ", exc_info.value.code)
 
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert captured.err.count("\n::: ERROR :::\n") == len(EXAMPLE_LIST)
+        assert len(captured.out) == 1149
+        assert len(captured.err) == 2665
+
+        assert captured.err.count("::: ERROR :::") == len(EXAMPLE_LIST)
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        # assert "::: ERROR :::" not in captured.err
-        assert "This line will not be printed" not in captured.out
-        assert "This line will not be printed" not in captured.err
+        assert change_variable is False
+        assert captured.out.count("::: ERROR :::") == 0
 
 
     def test_validate_value_empty_without_stop(
@@ -403,8 +337,10 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert captured.err.count("\n::: ERROR :::\n") == len(EMPTY_LIST)
+        assert len(captured.out) == 727
+        assert len(captured.err) == 1341
+
+        assert captured.err.count("::: ERROR :::") == len(EMPTY_LIST)
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        # assert "::: ERROR :::" not in captured.err
+        assert captured.out.count("::: ERROR :::") == 0

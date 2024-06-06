@@ -20,7 +20,10 @@ Test example:
             self,
             capsys: pytest.CaptureFixture[str]
             ) -> None:
+        # TODO
         func_name = newt_print_function_name()
+
+        change_variable = False
 
         NewtCons.error_msg(
             "Test error",
@@ -31,38 +34,25 @@ Test example:
         exc_info = 0
         with pytest.raises(SystemExit) as exc_info:
             # TODO
-            print("This line will not be printed")
+            change_variable = True
         assert exc_info.value.code == 1
         print("exc_info:", exc_info.value.code)
 
         # TODO
 
         captured = capsys.readouterr()
-        newt_print_captured(captured)
+        newt_print_captured(captured)  # TODO
         # newt_print_captured(captured, False)
 
-        assert (
-            f"Function: {func_name}\n"
-            f"{'-' * 72}"
-            "\n"
-        ) == captured.out
+        assert len(captured.out) == 0
+        assert len(captured.err) == 0
 
-        assert (
-            "\x1b[1m\x1b[31m"
-            "\nLocation: Unknown"
-            "\n::: ERROR :::"
-            "\nTest error"
-            "\n\x1b[0m"
-            "\n"
-        ) == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 1
+        assert captured.err.count("::: ERROR :::") == len(variable)
 
         # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        assert "::: ERROR :::" not in captured.err
-        assert "This line will not be printed" not in captured.out
-        assert "This line will not be printed" not in captured.err
+        assert change_variable is False
+        assert captured.out.count("::: ERROR :::") == 0
+        assert captured.err.count("::: ERROR :::") == 0
 """
 
 import inspect
@@ -157,4 +147,10 @@ def newt_print_captured(
     print("="*72+" END")
 
     if print_full_captured:
+        print()
         print(captured)
+        print()
+        print("len(captured):     ", len(captured) == 2)
+        print("len(captured.out): ", len(captured.out))
+        print("len(captured.err): ", len(captured.err))
+        print()
