@@ -5,6 +5,22 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## [0.5.0] Function success_msg in module Console
+
+**Date:** 2024-06-06
+
+### Added
+
+- Add `success_msg()` to the console and package-level APIs
+to print one or more formatted messages in bright green to standard output,
+with optional check marks via `add_symbols=True`.
+
+### Notes
+
+- Calling `success_msg()` with an empty message prints ` ✅  Successfully!  ✅ ` automatically.
+
+---
+
 ## [0.4.0] Function validate_value in module Console
 
 **Date:** 2024-06-06
