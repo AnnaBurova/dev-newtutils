@@ -3,8 +3,8 @@ platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collected 11 items
+collected 12 items
 
-test_console.py ...........                                              [100%]
+test_console.py ............                                             [100%]
 
-============================= 11 passed ==============================
+============================= 12 passed ==============================

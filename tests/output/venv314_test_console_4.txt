@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collecting ... collected 11 items
+collecting ... collected 12 items
 
 test_console.py::TestFormatValueToStr::test_format_value_to_str_types 
 ======================================================================== START
@@ -629,5 +629,23 @@ Expected type: <class 'str'>
 
 ======================================================================== END
 PASSED
+test_console.py::TestCheckWorkspaceLocation::test_check_workspace_location_match 
+======================================================================== START
+===================================================== captured.out =====
+Function: test_check_workspace_location_match
+------------------------------------------------------------------------
 
-============================= 11 passed ==============================
+'/home/user/project' == '/home/user/project'
+[1m[32m
+ ✅  ===== START =====  ✅ 
+[0m
+[1m[32m
+ ✅  =====  END  =====  ✅ 
+[0m
+
+===================================================== captured.err =====
+(no stderr captured)
+======================================================================== END
+PASSED
+
+============================= 12 passed ==============================
