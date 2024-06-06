@@ -10,6 +10,7 @@ Tests cover:
     - TestErrorMsg
     - TestSuccessMsg
     - TestValidateValue
+    - TestCheckWorkspaceLocation
 """
 
 import pytest
@@ -343,4 +344,50 @@ class TestValidateValue:
         assert captured.err.count("::: ERROR :::") == len(EMPTY_LIST)
 
         # Expected absence of result
+        assert captured.out.count("::: ERROR :::") == 0
+
+
+class TestCheckWorkspaceLocation:
+    """ Tests for check_workspace_location function. """
+
+
+    def test_check_workspace_location_invalid_args(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        """Ensure NewtCons.check_workspace_location() exits with code 1 for invalid arguments."""
+        newt_print_function_name()
+
+        change_variable = False
+
+        folder_combinations: list[tuple[int | str, ...]] = [
+            ("", "/home/user/project",),
+            (123, "/home/user/project",),
+            ("/home/user/project", "",),
+            ("/home/user/project", 123,),
+        ]
+
+        for combo in folder_combinations:
+            workspace_dir, expected_dir = combo
+
+            print()
+            print(repr(workspace_dir), "==", repr(expected_dir))
+
+            exc_info = 0
+            with pytest.raises(SystemExit) as exc_info:
+                NewtCons.check_workspace_location(workspace_dir, expected_dir)  # type: ignore
+                change_variable = True
+            assert exc_info.value.code == 1
+            print("exc_info:", exc_info.value.code)
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert len(captured.out) == 288
+        assert len(captured.err) == 824
+
+        assert captured.err.count("::: ERROR :::") == len(folder_combinations)
+
+        # Expected absence of result
+        assert change_variable is False
         assert captured.out.count("::: ERROR :::") == 0
