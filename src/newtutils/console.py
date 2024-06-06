@@ -12,6 +12,10 @@ Functions:
         location: str = "Unknown",
         stop: bool = True
         ) -> None
+    def success_msg(
+        *args: object,
+        add_symbols: bool = False
+        ) -> None
     def validate_value(
         value: object,
         expected_type: type | tuple[type, ...],
