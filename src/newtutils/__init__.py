@@ -19,6 +19,7 @@ Modules:
 from .console import (
     format_value_to_str,
     error_msg,
+    success_msg,
     validate_value,
 )
 
@@ -28,6 +29,7 @@ __all__ = [
     # ----- Console --------------------------------------------------- ------- ------------------- --------------------
     "format_value_to_str",
     "error_msg",
+    "success_msg",
     "validate_value",
 ]
 

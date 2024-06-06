@@ -126,6 +126,54 @@ def error_msg(
         raise SystemExit(1)
 
 
+def success_msg(
+        *args: object,
+        add_symbols: bool = False
+        ) -> None:
+    """ ## Print a formatted success message.
+
+    Displays one or more messages in bright green color using **Colorama**.
+    It is intended for CLI tools and debugging utilities
+    that require structured visual feedback in the console.
+    Default message is " ✅  Successfully!  ✅ "
+
+    Args:
+        *args (object):
+            One or more messages to print.
+        add_symbols (bool):
+            If True, wraps the entire message in check mark symbols.<br>
+            Automatically enabled if the message is empty.<br>
+            Defaults to False.
+
+    Returns:
+        out (None):
+            The function does not return a value.
+
+    Examples:
+        ```
+        >>> success_msg()
+        >>> success_msg("File saved successfully.", add_symbols=True)
+        >>> success_msg("Files saved.", "Upload completed.")
+        ```
+    """
+
+    message = "\n".join(format_value_to_str(arg) for arg in args)
+
+    if not message:
+        add_symbols = True
+        message = "Successfully!"
+
+    if add_symbols:
+        message = f" ✅  {message}  ✅ "
+
+    output = (
+        f"{Style.BRIGHT}{Fore.GREEN}\n"
+        f"{message}\n"
+        f"{Style.RESET_ALL}"
+    )
+    print(output)
+
+
 def validate_value(
         value: object,
         expected_type: type | tuple[type, ...],
