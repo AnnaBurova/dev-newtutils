@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collecting ... collected 9 items
+collecting ... collected 10 items
 
 test_console.py::TestFormatValueToStr::test_format_value_to_str_types 
 ======================================================================== START
@@ -127,6 +127,26 @@ Location: tests.test_console > test_error_msg_with_location
 Test error
 [0m
 
+======================================================================== END
+PASSED
+test_console.py::TestSuccessMsg::test_success_msg_different_options 
+======================================================================== START
+===================================================== captured.out =====
+Function: test_success_msg_different_options
+------------------------------------------------------------------------
+[1m[32m
+ ✅  Successfully!  ✅ 
+[0m
+[1m[32m
+ ✅  File saved successfully.  ✅ 
+[0m
+[1m[32m
+Files saved.
+Upload completed.
+[0m
+
+===================================================== captured.err =====
+(no stderr captured)
 ======================================================================== END
 PASSED
 test_console.py::TestValidateValue::test_validate_value_correct_types 
@@ -560,4 +580,4 @@ Type: <class 'frozenset'>
 ======================================================================== END
 PASSED
 
-============================== 9 passed ==============================
+============================= 10 passed ==============================

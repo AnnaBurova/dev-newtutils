@@ -8,6 +8,7 @@ Comprehensive unit tests for newtutils.console module.
 Tests cover:
     - TestFormatValueToStr
     - TestErrorMsg
+    - TestSuccessMsg
     - TestValidateValue
 """
 
@@ -218,6 +219,47 @@ class TestErrorMsg:
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
         # assert "::: ERROR :::" not in captured.err
+
+
+class TestSuccessMsg:
+    """ Tests for success_msg function. """
+
+
+    def test_success_msg_different_options(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        """Ensure NewtCons.success_msg() prints default, symbol-decorated, and multiple messages."""
+        func_name = newt_print_function_name()
+
+        NewtCons.success_msg()
+        NewtCons.success_msg("File saved successfully.", add_symbols=True)
+        NewtCons.success_msg("Files saved.", "Upload completed.")
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert (
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n\x1b[1m\x1b[32m"
+            "\n ✅  Successfully!  ✅ "
+            "\n\x1b[0m\n\x1b[1m\x1b[32m"
+            "\n ✅  File saved successfully.  ✅ "
+            "\n\x1b[0m\n\x1b[1m\x1b[32m"
+            "\nFiles saved."
+            "\nUpload completed."
+            "\n\x1b[0m"
+            "\n"
+        ) == captured.out
+
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
 class TestValidateValue:
