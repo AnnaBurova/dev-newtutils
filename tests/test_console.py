@@ -341,7 +341,7 @@ class TestValidateValue:
             self,
             capsys: pytest.CaptureFixture[str]
             ) -> None:
-        """Ensure NewtCons.validate_value() rejects empty values without stopping when non-empty validation is enabled."""
+        """Ensure NewtCons.validate_value() rejects empty values without stopping."""
         newt_print_function_name()
 
         for example_input in EMPTY_LIST:
