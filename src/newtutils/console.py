@@ -398,21 +398,25 @@ def check_workspace_location(
 
     location = "Newt.console.check_workspace_location"
 
-    workspace_str = format_value_to_str(workspace_dir)
+    if isinstance(workspace_dir, Path):
+        workspace_dir = format_value_to_str(workspace_dir)
+
     validate_value(
-        workspace_str, str,
+        workspace_dir, str,
         check_non_empty = True,
         location=location+" : workspace_dir"
     )
 
-    expected_str = format_value_to_str(expected_dir)
+    if isinstance(expected_dir, Path):
+        expected_dir = format_value_to_str(expected_dir)
+
     validate_value(
-        expected_str, str,
+        expected_dir, str,
         check_non_empty = True,
         location=location+" : expected_dir"
     )
 
-    if workspace_str == expected_str:
+    if workspace_dir == expected_dir:
         success_msg(
             "===== START =====",
             add_symbols=True
@@ -423,5 +427,5 @@ def check_workspace_location(
         "Current directory does not match the expected directory.",
         f"Current: {workspace_dir}",
         f"Expected: {expected_dir}",
-        location=location+" : workspace_str != expected_str"
+        location=location+" : workspace_dir != expected_dir"
     )
