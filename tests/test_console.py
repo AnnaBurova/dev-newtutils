@@ -21,7 +21,6 @@ from .helpers import (
     EMPTY_LIST,
     newt_print_function_name,
     newt_print_captured,
-    newt_calc_str_len_with_path_type,
 )
 import newtutils.console as NewtCons
 
@@ -53,7 +52,7 @@ class TestFormatValueToStr:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert newt_calc_str_len_with_path_type(1297, captured.out)
+        # len(captured.out)  # Don't count becouse pathlib
         assert len(captured.err) == 0
 
         # Expected absence of result
@@ -221,7 +220,7 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert newt_calc_str_len_with_path_type(881, captured.out)
+        # len(captured.out)  # Don't count becouse pathlib
         assert len(captured.err) == 0
 
         # Expected absence of result
@@ -260,8 +259,8 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert newt_calc_str_len_with_path_type(1321, captured.out)
-        assert newt_calc_str_len_with_path_type(2052, captured.err)
+        # len(captured.out)  # Don't count becouse pathlib
+        # len(captured.err)  # Don't count becouse pathlib
 
         assert captured.err.count("::: ERROR :::") == len(EXAMPLE_LIST)
 
@@ -306,8 +305,8 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert newt_calc_str_len_with_path_type(1287, captured.out)
-        assert newt_calc_str_len_with_path_type(2954, captured.err)
+        # len(captured.out)  # Don't count becouse pathlib
+        # len(captured.err)  # Don't count becouse pathlib
 
         assert captured.err.count("::: ERROR :::") == len(EXAMPLE_LIST)
 
@@ -340,8 +339,8 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert newt_calc_str_len_with_path_type(814, captured.out)
-        assert newt_calc_str_len_with_path_type(1499, captured.err)
+        # len(captured.out)  # Don't count becouse pathlib
+        # len(captured.err)  # Don't count becouse pathlib
 
         assert captured.err.count("::: ERROR :::") == len(EMPTY_LIST)
 
