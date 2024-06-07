@@ -44,7 +44,13 @@ Test example:
         newt_print_captured(captured)  # TODO
         # newt_print_captured(captured, False)
 
-        assert len(captured.out) == 0
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) == min_captured_out_len
         assert len(captured.err) == 0
 
         assert captured.err.count("::: ERROR :::") == len(variable)

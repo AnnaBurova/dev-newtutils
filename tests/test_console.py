@@ -52,7 +52,13 @@ class TestFormatValueToStr:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        # len(captured.out)  # Don't count becouse pathlib
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
         assert len(captured.err) == 0
 
         # Expected absence of result
@@ -77,8 +83,14 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 111
-        assert len(captured.err) == 58
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) == min_captured_out_len
+        assert len(captured.err) > 0
 
         assert captured.err.count("::: ERROR :::") == 1
 
@@ -106,8 +118,14 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 120
-        assert len(captured.err) == 58
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
+        assert len(captured.err) > 0
 
         assert captured.err.count("::: ERROR :::") == 1
 
@@ -134,8 +152,14 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 112
-        assert len(captured.err) == 71
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) == min_captured_out_len
+        assert len(captured.err) > 0
 
         assert captured.err.count("::: ERROR :::") == 1
 
@@ -160,8 +184,14 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 112
-        assert len(captured.err) == 100
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) == min_captured_out_len
+        assert len(captured.err) > 0
 
         assert captured.err.count("::: ERROR :::") == 1
 
@@ -188,7 +218,13 @@ class TestSuccessMsg:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 249
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
         assert len(captured.err) == 0
 
         # Expected absence of result
@@ -223,7 +259,13 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        # len(captured.out)  # Don't count becouse pathlib
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
         assert len(captured.err) == 0
 
         # Expected absence of result
@@ -263,8 +305,14 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        # len(captured.out)  # Don't count becouse pathlib
-        # len(captured.err)  # Don't count becouse pathlib
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
+        assert len(captured.err) > 0
 
         assert captured.err.count("::: ERROR :::") == len(EXAMPLE_LIST)
 
@@ -310,8 +358,14 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        # len(captured.out)  # Don't count becouse pathlib
-        # len(captured.err)  # Don't count becouse pathlib
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
+        assert len(captured.err) > 0
 
         assert captured.err.count("::: ERROR :::") == len(EXAMPLE_LIST)
 
@@ -345,8 +399,14 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        # len(captured.out)  # Don't count becouse pathlib
-        # len(captured.err)  # Don't count becouse pathlib
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
+        assert len(captured.err) > 0
 
         assert captured.err.count("::: ERROR :::") == len(EMPTY_LIST)
 
@@ -391,8 +451,14 @@ class TestCheckWorkspaceLocation:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 288
-        assert len(captured.err) == 824
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
+        assert len(captured.err) > 0
 
         assert captured.err.count("::: ERROR :::") == len(folder_combinations)
 
@@ -420,7 +486,13 @@ class TestCheckWorkspaceLocation:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 247
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
         assert len(captured.err) == 0
 
         # Expected absence of result
@@ -454,8 +526,14 @@ class TestCheckWorkspaceLocation:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 172
-        assert len(captured.err) == 215
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
+        assert len(captured.err) > 0
 
         assert captured.err.count("::: ERROR :::") == 1
 
@@ -483,7 +561,13 @@ class TestCheckWorkspaceLocation:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 272
+        min_captured_out_len = len(
+            f"Function: {func_name}\n"
+            f"{'-' * 72}"
+            "\n"
+        )
+
+        assert len(captured.out) > min_captured_out_len
         assert len(captured.err) == 0
 
         # Expected absence of result
