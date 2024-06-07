@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "newtutils"
-version = "0.6.0"
+version = "0.6.1"
 description = "A collection of utility functions for common programming tasks."
 readme = "README.md"
 requires-python = ">=3.10"

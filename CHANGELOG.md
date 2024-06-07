@@ -5,6 +5,22 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## [0.6.1] Fix bad testing on Linux
+
+**Date:** 2024-06-07
+
+### Changed
+
+- Change console-output tests to avoid fixed output-length assertions
+that vary across platforms and `pathlib` implementations.
+
+### Notes
+
+- Test validation now relies on stable output content and error counts
+instead of environment-dependent string lengths.
+
+---
+
 ## [0.6.0] Function check_workspace_location in module Console
 
 **Date:** 2024-06-07
