@@ -5,6 +5,31 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## [0.6.0] Function check_workspace_location in module Console
+
+**Date:** 2024-06-07
+
+### Added
+
+- Add `check_workspace_location()` to the console and package-level APIs
+to compare workspace and expected directories supplied as strings or `Path` objects.
+- Add a success message for matching directories
+and error reporting with `SystemExit(1)` for mismatches or invalid arguments.
+
+### Changed
+
+- Change `validate_value()` error output for unsupported non-empty checks
+to remove the internal debugging message.
+
+### Notes
+
+- `check_workspace_location()` compares path strings directly without resolving or normalizing them;
+normalize paths before calling it when equivalent spellings should match.
+- Empty or whitespace-only strings are rejected,
+but `Path("")` converts to `"."` and is not treated as empty.
+
+---
+
 ## [0.5.0] Function success_msg in module Console
 
 **Date:** 2024-06-06
