@@ -35,7 +35,7 @@ class TestFormatValueToStr:
             ) -> None:
         """Ensure NewtCons.format_value_to_str() returns a string for various types."""
 
-        newt_print_function_name()
+        func_name = newt_print_function_name()
 
         for example_input in EXAMPLE_LIST:
             print()
@@ -70,7 +70,7 @@ class TestErrorMsg:
             ) -> None:
         """Ensure NewtCons.error_msg() prints an error without stopping execution."""
 
-        newt_print_function_name()
+        func_name = newt_print_function_name()
 
         NewtCons.error_msg("Test error", stop=False)
 
@@ -92,7 +92,7 @@ class TestErrorMsg:
             ) -> None:
         """Ensure NewtCons.error_msg() stops execution with exit code 1."""
 
-        newt_print_function_name()
+        func_name = newt_print_function_name()
 
         change_variable = False
 
@@ -122,7 +122,7 @@ class TestErrorMsg:
             ) -> None:
         """Ensure NewtCons.error_msg() displays multiple error messages."""
 
-        newt_print_function_name()
+        func_name = newt_print_function_name()
 
         NewtCons.error_msg(
             "Error 1",
@@ -148,6 +148,7 @@ class TestErrorMsg:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.error_msg() displays the specified location."""
+
         func_name = newt_print_function_name()
 
         NewtCons.error_msg(
@@ -177,7 +178,8 @@ class TestSuccessMsg:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.success_msg() prints default, symbol-decorated, and multiple messages."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         NewtCons.success_msg()
         NewtCons.success_msg("File saved successfully.", add_symbols=True)
@@ -203,7 +205,8 @@ class TestValidateValue:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.validate_value() accepts values of their matching types."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         for example_input in EXAMPLE_LIST:
             print()
@@ -233,7 +236,8 @@ class TestValidateValue:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.validate_value() rejects incorrect types without stopping."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         for example_input in EXAMPLE_LIST:
             print()
@@ -273,6 +277,7 @@ class TestValidateValue:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.validate_value() stops on incorrect types with a location."""
+
         func_name = newt_print_function_name()
 
         change_variable = False
@@ -320,7 +325,8 @@ class TestValidateValue:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.validate_value() rejects empty values without stopping."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         for example_input in EMPTY_LIST:
             print()
@@ -357,7 +363,8 @@ class TestCheckWorkspaceLocation:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.check_workspace_location() exits with code 1 for invalid arguments."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         change_variable = False
 
@@ -399,7 +406,8 @@ class TestCheckWorkspaceLocation:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.check_workspace_location() confirms workspace and expected paths match."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         workspace_dir = "/home/user/project"
 
@@ -425,7 +433,8 @@ class TestCheckWorkspaceLocation:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.check_workspace_location() exits with code 1 when workspace and expected paths differ."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         change_variable = False
 
@@ -460,7 +469,8 @@ class TestCheckWorkspaceLocation:
             capsys: pytest.CaptureFixture[str]
             ) -> None:
         """Ensure NewtCons.check_workspace_location() confirms matching paths provided as Path objects."""
-        newt_print_function_name()
+
+        func_name = newt_print_function_name()
 
         workspace_dir = Path("/home") / "user" / "project"
 
