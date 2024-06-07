@@ -7,7 +7,7 @@
 [![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/)
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v0.6.1-orange.svg)](https://github.com/AnnaBurova/dev-newtutils)
+[![Version](https://img.shields.io/badge/version-v0.6.2-orange.svg)](https://github.com/AnnaBurova/dev-newtutils)
 
 NewtUtils is a collection of utility functions for common programming tasks.
 

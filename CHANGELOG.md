@@ -5,6 +5,23 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## [0.6.2] Fix bad testing on Linux
+
+**Date:** 2024-06-07
+
+### Changed
+
+- Change console-output tests to use minimum expected lengths and presence checks
+instead of fixed output lengths,
+making them resilient to platform-dependent `pathlib` representations.
+
+### Notes
+
+- Test assertions now verify stable behavior, such as expected output, error presence,
+and error-message counts, without depending on exact output size across environments.
+
+---
+
 ## [0.6.1] Fix bad testing on Linux
 
 **Date:** 2024-06-07

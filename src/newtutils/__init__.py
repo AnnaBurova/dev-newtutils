@@ -37,7 +37,7 @@ __all__ = [
 
 # ===== Project ======================================================= ======= =================== ====================
 
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 __author__ = "Anna Burova <burova.anna+git@gmail.com>"
 __description__ = "NewtUtils is a collection of utility functions for common programming tasks."
 __license__ = "MIT"
