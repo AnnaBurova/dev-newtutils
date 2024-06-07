@@ -21,6 +21,7 @@ from .helpers import (
     EMPTY_LIST,
     newt_print_function_name,
     newt_print_captured,
+    newt_calc_str_len_with_path_type,
 )
 import newtutils.console as NewtCons
 
@@ -52,7 +53,7 @@ class TestFormatValueToStr:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 1146
+        assert newt_calc_str_len_with_path_type(1297, captured.out)
         assert len(captured.err) == 0
 
         # Expected absence of result
@@ -220,7 +221,7 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 778
+        assert newt_calc_str_len_with_path_type(881, captured.out)
         assert len(captured.err) == 0
 
         # Expected absence of result
@@ -259,8 +260,8 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 1179
-        assert len(captured.err) == 1845
+        assert newt_calc_str_len_with_path_type(1321, captured.out)
+        assert newt_calc_str_len_with_path_type(2052, captured.err)
 
         assert captured.err.count("::: ERROR :::") == len(EXAMPLE_LIST)
 
@@ -305,8 +306,8 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 1149
-        assert len(captured.err) == 2665
+        assert newt_calc_str_len_with_path_type(1287, captured.out)
+        assert newt_calc_str_len_with_path_type(2954, captured.err)
 
         assert captured.err.count("::: ERROR :::") == len(EXAMPLE_LIST)
 
@@ -339,8 +340,8 @@ class TestValidateValue:
         captured = capsys.readouterr()
         newt_print_captured(captured, False)
 
-        assert len(captured.out) == 727
-        assert len(captured.err) == 1341
+        assert newt_calc_str_len_with_path_type(814, captured.out)
+        assert newt_calc_str_len_with_path_type(1499, captured.err)
 
         assert captured.err.count("::: ERROR :::") == len(EMPTY_LIST)
 

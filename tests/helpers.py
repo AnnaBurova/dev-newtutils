@@ -44,6 +44,8 @@ Test example:
         newt_print_captured(captured)  # TODO
         # newt_print_captured(captured, False)
 
+        assert newt_calc_str_len_with_path_type(0, captured.out)
+        assert newt_calc_str_len_with_path_type(0, captured.err)
         assert len(captured.out) == 0
         assert len(captured.err) == 0
 
@@ -159,3 +161,24 @@ def newt_print_captured(
         print("len(captured.out): ", len(captured.out))
         print("len(captured.err): ", len(captured.err))
         print()
+
+
+def newt_calc_str_len_with_path_type(
+        expected_len: int,
+        captured_out: str
+        ) -> bool:
+    """ Calculate output length after normalizing Path type representation lengths. """
+
+    path_type_text = str(type(Path(".")))
+    path_type_length = len(path_type_text)
+    path_type_count = captured_out.count(path_type_text)
+
+    REFERENCE_PATH_TYPE_LENGTH = 29
+
+    normalized_output_length = (
+        len(captured_out)
+        - path_type_count * path_type_length
+        + path_type_count * REFERENCE_PATH_TYPE_LENGTH
+    )
+
+    return normalized_output_length == expected_len
