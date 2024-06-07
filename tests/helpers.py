@@ -57,6 +57,7 @@ Test example:
 
 import inspect
 from _pytest.capture import CaptureResult
+from pathlib import Path
 
 EXAMPLE_LIST: list[object] = [
     # None
@@ -79,6 +80,8 @@ EXAMPLE_LIST: list[object] = [
     {3, 1, 2},
     # frozenset[object]
     frozenset({3, 1, 2}),
+    # pathlib
+    Path("/home") / "user" / "project",
 ]
 
 EMPTY_LIST: list[object] = [
@@ -102,6 +105,8 @@ EMPTY_LIST: list[object] = [
     set(),
     # frozenset[object]
     frozenset(),
+    # pathlib
+    Path(""),
 ]
 
 

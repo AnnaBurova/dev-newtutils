@@ -61,6 +61,11 @@ intype   =  <class 'frozenset'>
 output   =  '{1, 2, 3}'
 outtype  =  <class 'str'>
 
+input    =  WindowsPath('/home/user/project')
+intype   =  <class 'pathlib.WindowsPath'>
+output   =  '\\home\\user\\project'
+outtype  =  <class 'str'>
+
 ===================================================== captured.err =====
 (no stderr captured)
 ======================================================================== END
@@ -188,6 +193,10 @@ input   =  {3, 1, 2}
 intype  =  <class 'frozenset'>
 output  =  True
 
+input   =  WindowsPath('/home/user/project')
+intype  =  <class 'pathlib.WindowsPath'>
+output  =  True
+
 ===================================================== captured.err =====
 (no stderr captured)
 ======================================================================== END
@@ -244,6 +253,11 @@ output    =  False
 
 input     =  {3, 1, 2}
 intype    =  <class 'frozenset'>
+testtype  =  <class 'NoneType'>
+output    =  False
+
+input     =  WindowsPath('/home/user/project')
+intype    =  <class 'pathlib.WindowsPath'>
 testtype  =  <class 'NoneType'>
 output    =  False
 
@@ -316,6 +330,13 @@ Location: Newt.console.validate_value : type(value) is not expected_type
 ::: ERROR :::
 Value: {1, 2, 3}
 Received type: <class 'frozenset'>
+Expected type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: \home\user\project
+Received type: <class 'pathlib.WindowsPath'>
 Expected type: <class 'NoneType'>
 [0m
 
@@ -376,6 +397,11 @@ intype    =  <class 'frozenset'>
 testtype  =  <class 'NoneType'>
 exc_info  =  1
 
+input     =  WindowsPath('/home/user/project')
+intype    =  <class 'pathlib.WindowsPath'>
+testtype  =  <class 'NoneType'>
+exc_info  =  1
+
 ===================================================== captured.err =====
 [1m[31m
 Location: tests.test_console > test_validate_value_incorrect_types_with_stop_and_location > Newt.console.validate_value : type(value) is not expected_type
@@ -447,6 +473,13 @@ Value: {1, 2, 3}
 Received type: <class 'frozenset'>
 Expected type: <class 'NoneType'>
 [0m
+[1m[31m
+Location: tests.test_console > test_validate_value_incorrect_types_with_stop_and_location > Newt.console.validate_value : type(value) is not expected_type
+::: ERROR :::
+Value: \home\user\project
+Received type: <class 'pathlib.WindowsPath'>
+Expected type: <class 'NoneType'>
+[0m
 
 ======================================================================== END
 .
@@ -493,6 +526,10 @@ output  =  False
 
 input   =  frozenset()
 intype  =  <class 'frozenset'>
+output  =  False
+
+input   =  WindowsPath('.')
+intype  =  <class 'pathlib.WindowsPath'>
 output  =  False
 
 ===================================================== captured.err =====
@@ -565,6 +602,13 @@ Location: Newt.console.validate_value : is_empty
 Value must not be empty
 Value: {}
 Type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_value : check_non_empty
+::: ERROR :::
+This type is not supported.
+Value: .
+Type: <class 'pathlib.WindowsPath'>
 [0m
 
 ======================================================================== END
