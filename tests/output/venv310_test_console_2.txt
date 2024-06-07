@@ -4,20 +4,21 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collecting ... collected 13 items
+collecting ... collected 14 items
 
 test_console.py::TestFormatValueToStr::test_format_value_to_str_types PASSED [  7%]
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 15%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 23%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 30%]
-test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 38%]
-test_console.py::TestSuccessMsg::test_success_msg_different_options PASSED [ 46%]
-test_console.py::TestValidateValue::test_validate_value_correct_types PASSED [ 53%]
-test_console.py::TestValidateValue::test_validate_value_incorrect_types_without_stop PASSED [ 61%]
-test_console.py::TestValidateValue::test_validate_value_incorrect_types_with_stop_and_location PASSED [ 69%]
-test_console.py::TestValidateValue::test_validate_value_empty_without_stop PASSED [ 76%]
-test_console.py::TestCheckWorkspaceLocation::test_check_workspace_location_invalid_args PASSED [ 84%]
-test_console.py::TestCheckWorkspaceLocation::test_check_workspace_location_match PASSED [ 92%]
-test_console.py::TestCheckWorkspaceLocation::test_check_workspace_location_no_match PASSED [100%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 14%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 21%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 28%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 35%]
+test_console.py::TestSuccessMsg::test_success_msg_different_options PASSED [ 42%]
+test_console.py::TestValidateValue::test_validate_value_correct_types PASSED [ 50%]
+test_console.py::TestValidateValue::test_validate_value_incorrect_types_without_stop PASSED [ 57%]
+test_console.py::TestValidateValue::test_validate_value_incorrect_types_with_stop_and_location PASSED [ 64%]
+test_console.py::TestValidateValue::test_validate_value_empty_without_stop PASSED [ 71%]
+test_console.py::TestCheckWorkspaceLocation::test_check_workspace_location_invalid_args PASSED [ 78%]
+test_console.py::TestCheckWorkspaceLocation::test_check_workspace_location_match PASSED [ 85%]
+test_console.py::TestCheckWorkspaceLocation::test_check_workspace_location_no_match PASSED [ 92%]
+test_console.py::TestCheckWorkspaceLocation::test_check_workspace_location_path PASSED [100%]
 
-============================= 13 passed ==============================
+============================= 14 passed ==============================

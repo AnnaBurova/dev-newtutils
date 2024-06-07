@@ -14,6 +14,7 @@ Tests cover:
 """
 
 import pytest
+from pathlib import Path
 
 from .helpers import (
     EXAMPLE_LIST,
@@ -423,7 +424,7 @@ class TestCheckWorkspaceLocation:
             self,
             capsys: pytest.CaptureFixture[str]
             ) -> None:
-        # Todo
+        """Ensure NewtCons.check_workspace_location() exits with code 1 when workspace and expected paths differ."""
         newt_print_function_name()
 
         change_variable = False
@@ -452,3 +453,29 @@ class TestCheckWorkspaceLocation:
         # Expected absence of result
         assert change_variable is False
         assert captured.out.count("::: ERROR :::") == 0
+
+
+    def test_check_workspace_location_path(
+            self,
+            capsys: pytest.CaptureFixture[str]
+            ) -> None:
+        """Ensure NewtCons.check_workspace_location() confirms matching paths provided as Path objects."""
+        newt_print_function_name()
+
+        workspace_dir = Path("/home") / "user" / "project"
+
+        print()
+        print(repr(workspace_dir), "==", repr(workspace_dir))
+        NewtCons.check_workspace_location(workspace_dir, workspace_dir)
+
+        NewtCons.success_msg("=====  END  =====", add_symbols=True)
+
+        captured = capsys.readouterr()
+        newt_print_captured(captured, False)
+
+        assert len(captured.out) == 272
+        assert len(captured.err) == 0
+
+        # Expected absence of result
+        assert captured.out.count("::: ERROR :::") == 0
+        assert captured.err.count("::: ERROR :::") == 0
