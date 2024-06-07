@@ -1,6 +1,6 @@
 # dev-newtutils
 
-![CI](https://github.com/AnnaBurova/dev-newtutils/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/AnnaBurova/dev-newtutils/actions/workflows/ci.yml/badge.svg?branch=main)
 [![Python](https://img.shields.io/badge/python-3.14-blue.svg)](https://www.python.org/)
 [![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
 [![Python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
