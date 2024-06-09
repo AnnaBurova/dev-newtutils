@@ -7,8 +7,6 @@ maintainable, and technically justified.
 
 Please read this guide before opening an issue or pull request.
 
----
-
 ## Project Standards
 
 Contributions should be:
@@ -21,8 +19,6 @@ Contributions should be:
 
 Contributions may be declined if they add noise, unnecessary abstraction,
 speculative features, or low-value cleanup.
-
----
 
 ## Contribution Types
 
@@ -37,8 +33,6 @@ Contributions are welcome when they:
 If a contribution creates more review burden than project value,
 it is likely to be closed.
 
----
-
 ## Before Opening a Pull Request
 
 For anything non-trivial, open an issue or discussion first if you wish to:
@@ -50,8 +44,6 @@ For anything non-trivial, open an issue or discussion first if you wish to:
 - affect multiple modules.
 
 Small, obvious fixes may be submitted directly as pull requests.
-
----
 
 ## Branch Naming
 
@@ -74,8 +66,6 @@ feature-sql-parser
 docs-update-installation
 ```
 
----
-
 ## Commit Messages
 
 Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
@@ -97,8 +87,6 @@ Rules:
 - Make commits atomic: one logical change per commit.
 - Do not mix refactoring, formatting, and behavior changes in one commit.
 
----
-
 ## Pull Request Rules
 
 Every pull request should:
@@ -118,8 +106,6 @@ Pull requests may be closed without merge if they are:
 - missing tests without justification;
 - based on subjective cleanup rather than a concrete need;
 - generated mechanically and not meaningfully reviewed by the author.
-
----
 
 ## Testing
 
@@ -144,14 +130,12 @@ Minimum expectations:
 
 Run tests before submitting:
 
-```bash
+```sh
 pytest tests/
 ```
 
 If additional commands are required in this repository,
 document them in the pull request.
-
----
 
 ## Code Quality Expectations
 
@@ -187,8 +171,6 @@ Not acceptable:
 - changes that increase complexity without measurable benefit;
 - code that does not match surrounding style and design choices.
 
----
-
 ## Documentation Changes
 
 Documentation contributions are welcome
@@ -203,8 +185,6 @@ Good documentation changes:
 
 Documentation-only pull requests may be rejected if they are
 verbose, generic, redundant, or disconnected from the real project.
-
----
 
 ## Security and Secrets
 
@@ -221,8 +201,6 @@ with sensitive details.
 Report it privately through the appropriate project contact method.
 Check for email or other contact information in the [AUTHORS](AUTHORS) file.
 
----
-
 ## Review and Merge Policy
 
 All contributions are reviewed before merge.
@@ -233,8 +211,6 @@ Maintainers reserve the right to reject contributions
 that do not fit the project, even if they are technically functional.
 
 Opening a pull request does not guarantee merge.
-
----
 
 ## Contributor Checklist
 
@@ -248,8 +224,6 @@ Before opening a pull request, make sure you have:
 - updated docs when behavior changed;
 - removed debug code and temporary files;
 - verified that no secrets or local artifacts are included.
-
----
 
 ## Final Notes
 
