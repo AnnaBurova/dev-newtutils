@@ -1,3 +1,9 @@
+```text
+Author: NewtCode Anna Burova
+Created: 2024-06
+Updated: 2026-11
+```
+
 # Contributing to NewtCode
 
 Thank you for your interest in contributing to NewtCode.
