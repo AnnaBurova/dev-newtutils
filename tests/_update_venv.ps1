@@ -1,34 +1,71 @@
-$projectPath = "D:\VS_Code\dev-newtutils"
-$venvRoot = "D:\VS_Code"
+#!/usr/bin/env pwsh
 
-Set-Location $projectPath
+<#
+Author: NewtCode Anna Burova
+Created: 2024-06
+Updated: 2026-11
 
-$venvironments = @(
-    "venv310"
-    "venv311"
-    "venv312"
-    "venv313"
-    "venv314"
+Run:
+& 'D:\VS_Code\dev-newtutils\tests\_update_venv.ps1'
+
+Install the project in editable mode with test dependencies in each virtual environment.
+#>
+
+# ===================================================================== ======= =================== ====================
+
+# Directory containing virtual environments
+$WorkspaceDirectory = "D:\VS_Code"
+
+$Environments = @(
+    ".venv315"
+    ".venv314"
+    ".venv313"
+    ".venv312"
+    ".venv311"
 )
 
-foreach ($venv in $venvironments) {
+# --------------------------------------------------------------------- ------- ------------------- --------------------
+
+# Directory containing this script and one level above the tests/ directory.
+$ProjectDirectory = Split-Path -Path $PSScriptRoot -Parent
+# D:\VS_Code\dev-newtutils
+
+Set-Location -LiteralPath $ProjectDirectory
+
+Write-Host ""
+
+# --------------------------------------------------------------------- ------- ------------------- --------------------
+
+if (Get-Command deactivate -ErrorAction SilentlyContinue) {
+
+    Write-Host "Deactivating virtual environment..."
+
+    deactivate
+
     Write-Host ""
-    Write-Host ""
+}
 
-    $venvPath = Join-Path $venvRoot ".$venv"
-    $python = Join-Path $venvPath "Scripts\python.exe"
+# --------------------------------------------------------------------- ------- ------------------- --------------------
 
-    if (-not (Test-Path -LiteralPath $python -PathType Leaf)) {
-        Write-Warning "Skipping ${venv}: Python not found"
-        continue
-    }
+foreach ($Environment in $Environments) {
 
-    Write-Host "Installing package and test dependencies in $venv"
+    $PythonPath = Join-Path `
+        -Path $WorkspaceDirectory `
+        -ChildPath "$Environment\Scripts\python.exe"
 
-    & $python -m pip install -e ".[test]"
+    Write-Host "`nInstalling project and test dependencies in $Environment..."
+
+    & $PythonPath -m pip install -e ".[test]"
 
     if ($LASTEXITCODE -ne 0) {
-        Write-Warning "Installation failed in $venv"
-        continue
+        throw "Failed to install project in $Environment. Exit code: $LASTEXITCODE"
     }
 }
+
+# --------------------------------------------------------------------- ------- ------------------- --------------------
+
+Set-Location -LiteralPath $WorkspaceDirectory
+
+Write-Host ""
+
+# ===================================================================== ======= =================== ====================
