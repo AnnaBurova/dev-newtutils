@@ -1,6 +1,11 @@
-# 🦎 `NewtCode` Module NewtUtils
+# 🦎 `NewtCode` Module Newt
 
 ## 📖 Overview
+
+## Dependencies
+
+- [Colorama](https://pypi.org/project/colorama/) - used for cross-platform colored terminal output.  
+  Licensed under the [BSD License](https://github.com/tartley/colorama/blob/master/LICENSE.txt).
 
 ## 🧩 Planned Additions
 
