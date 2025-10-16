@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "newtutils"
+version = "0.1.0"
+description = "A collection of developer utilities and helpers by Newt."
+authors = [
+  { name = "Anna Burova", email = "burova.anna+newt@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+dependencies = [
+  "colorama>=0.4.6"
+]
+
+[project.urls]
+homepage = "https://github.com/AnnaBurova/dev-newtutils"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["newtutils"]

@@ -1,1 +1,6 @@
 # TODO List
+
+- Separate old Module into chunks
+- Make sure each function has correct documentation
+- Make sure each function WORKS
+- Add some possibility to create LOGs
