@@ -1,0 +1,164 @@
+# ──────────────────────────────────────────────────
+# GITATTRIBUTES
+# ──────────────────────────────────────────────────
+# Details per file setting:
+#   text ─ These files should be normalized (CRLF => LF).
+#   binary ─ These files are binary and should be left untouched.
+
+# Note: binary is a macro for -text -diff.
+
+# ──────────────────────────────────────────────────
+# AUTO-DETECT
+# ──────────────────────────────────────────────────
+
+# This will handle all files NOT defined below.
+
+*  text=auto  eol=lf  diff=text
+
+# ──────────────────────────────────────────────────
+# DOCUMENTATION
+# ──────────────────────────────────────────────────
+
+AUTHORS  text  eol=lf  diff=text
+CHANGELOG  text  eol=lf  diff=text
+CONTRIBUTING  text  eol=lf  diff=text
+COPYRIGHT  text  eol=lf  diff=text
+INSTALL  text  eol=lf  diff=markdown
+LICENSE  text  eol=lf  diff=text
+README  text  eol=lf  diff=markdown
+TODO  text  eol=lf  diff=text
+*.md  text  eol=lf  diff=markdown
+*.txt  text  eol=lf  diff=text
+
+# ──────────────────────────────────────────────────
+# TRANSLATION
+# ──────────────────────────────────────────────────
+
+*.strings  text  eol=lf  diff=text
+
+# ──────────────────────────────────────────────────
+# CONFIGS
+# ──────────────────────────────────────────────────
+
+.editorconfig  text  eol=lf  diff=text
+.gitattributes  text  eol=lf  diff=git
+.gitconfig  text  eol=lf  diff=gitconfig
+.gitignore  text  eol=lf  diff=git
+.htaccess  text  eol=lf  diff=apache
+.htpasswd  text  eol=lf  diff=text
+*.conf  text  eol=lf  diff=text
+*.config  text  eol=lf  diff=text
+*.npmignore  text  eol=lf  diff=text
+*.sqbpro  text  eol=lf  diff=xml
+*.sublime-settings  text  eol=lf  diff=json
+*.yaml  text  eol=lf  diff=yaml
+*.yml  text  eol=lf  diff=yaml
+
+# ──────────────────────────────────────────────────
+# SOURCE CODE
+# ──────────────────────────────────────────────────
+
+*.bat  text  eol=lf  diff=bat
+*.css  text  eol=lf  diff=css
+*.csv  text  eol=lf  diff=csv
+*.inc  text  eol=lf  diff=text
+*.ini  text  eol=lf  diff=ini
+*.js  text  eol=lf  diff=javascript
+*.json  text  eol=lf  diff=json
+*.less  text  eol=lf  diff=css
+*.php  text  eol=lf  diff=php
+*.py  text  eol=lf  diff=python
+*.sass  text  eol=lf  diff=css
+*.scss  text  eol=lf  diff=css
+*.sh  text  eol=lf  diff=sh
+*.sql  text  eol=lf  diff=sql
+*.ts  text  eol=lf  diff=typescript
+*.xml  text  eol=lf  diff=xml
+
+# ──────────────────────────────────────────────────
+# TEMPLATES
+# ──────────────────────────────────────────────────
+
+*.ejs  text  eol=lf  diff=html
+*.html  text  eol=lf  diff=html
+
+# ──────────────────────────────────────────────────
+# GRAPHICS
+# ──────────────────────────────────────────────────
+
+# All listed graphics formats are treated as binary for merge purposes except SVG, which is text.
+*.svg  text  eol=lf  diff=xml
+# Compressed SVG files (.svgz) are treated as binary because they cannot be diffed or normalized.
+*.svgz  binary
+
+# Adobe Illustrator
+*.ai  binary
+*.eps  binary
+
+# Adobe Photoshop
+*.psb  binary
+*.psd  binary
+
+*.bmp  binary
+*.gif  binary
+*.ico  binary
+*.jpeg  binary
+*.jpg  binary
+*.pdf  binary
+*.png  binary
+*.webp  binary
+
+# ──────────────────────────────────────────────────
+# AUDIO
+# ──────────────────────────────────────────────────
+
+*.m4a  binary
+*.mp3  binary
+*.ogg  binary
+
+# ──────────────────────────────────────────────────
+# VIDEO
+# ──────────────────────────────────────────────────
+
+*.3gp  binary
+*.3gpp  binary
+*.m4v  binary
+*.mov  binary
+*.mp4  binary
+*.mpeg  binary
+*.mpg  binary
+*.webm  binary
+
+# ──────────────────────────────────────────────────
+# ARCHIVES
+# ──────────────────────────────────────────────────
+
+*.7z  binary
+*.bin  binary
+*.gz  binary
+*.rar  binary
+*.tar  binary
+*.zip  binary
+
+# ──────────────────────────────────────────────────
+# DATABASES
+# ──────────────────────────────────────────────────
+
+*.db  binary
+
+# ──────────────────────────────────────────────────
+# FONTS
+# ──────────────────────────────────────────────────
+
+*.eot  binary
+*.otf  binary
+*.ttf  binary
+*.woff  binary
+*.woff2  binary
+
+# ──────────────────────────────────────────────────
+# EXECUTABLES
+# ──────────────────────────────────────────────────
+
+*.exe  binary
+*.pyc  binary
