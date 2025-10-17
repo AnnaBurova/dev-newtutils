@@ -95,11 +95,24 @@ Once installed, **NewtUtils** can be imported into any Python project as a stand
 Example:
 
 ```python
+# WORKS ONLY WITH CORRECT __init__.py
+# Examples of importing functions directly from the package (requires re-export in __init__.py)
+
 from newtutils import error_msg
-from newtutils.console import error_msg, log_info
-from newtutils.console import error_msg as err
+error_msg("Error1", stop=False)
 import newtutils as Newt
-import newtutils.console as console
+Newt.error_msg("Error4", stop=False)
+Newt.console.error_msg("Error5", stop=False)
+```
+
+```python
+# Direct import from the submodule (does not depend on __init__.py)
+# Alternative ways to access the same function directly from 'newtutils.console'
+
+from newtutils.console import error_msg as err
+err("Error2", stop=False)
+import newtutils.console as Newt_console
+Newt_console.error_msg("Error3", stop=False)
 ```
 
 If the module is not installed system-wide but is available locally, add its path dynamically at runtime:
