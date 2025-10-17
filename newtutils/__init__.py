@@ -7,13 +7,17 @@ NewtUtils - A collection of developer utilities and helpers by Newt.
 """
 
 from .console import error_msg
-from .utility import sorting_ids
+from .utility import (
+    sorting_ids,
+    sorting_dict_by_keys,
+)
 
 __all__ = [
     "error_msg",
     "sorting_ids",
+    "sorting_dict_by_keys",
     ]
 
 __author__ = "NewtCode Anna Burova"
 __description__ = "NewtUtils - A collection of developer utilities and helpers by Newt."
-__version__ = "0.1.2"
+__version__ = "0.1.3"
