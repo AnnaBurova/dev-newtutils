@@ -4,13 +4,11 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 """
 
-# from newtutils.console import error_msg
-from newtutils import error_msg
 import newtutils as Newt
 
 # Test 1: just print error without stopping
 print("Test 1: error_msg without stop")
-error_msg("This is a test error message", stop=False)
+Newt.error_msg("This is a test error message", stop=False)
 print("This line will be printed")
 
 print()
@@ -29,7 +27,7 @@ print()
 # Test 3: error_msg with stop=True (will exit the program)
 try:
     print("Test 3: error_msg with stop=True default")
-    error_msg("This error will stop the program")  # This will exit
+    Newt.error_msg("This error will stop the program")  # This will exit
     print("This line will not be printed")
 except SystemExit as e:
     print(f"Caught SystemExit with code: {e.code}")
