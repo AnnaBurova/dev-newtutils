@@ -6,6 +6,7 @@ Created on 2025-10
 
 from colorama import Fore, Style
 
+
 def error_msg(*args: object, stop: bool = True) -> None:
     """
     Print error messages in red to the console and optionally stop the program.
