@@ -2,6 +2,14 @@
 Created on 2025-10
 
 @author: NewtCode Anna Burova
+
+Functions:
+    _divider() -> None
+    error_msg(
+        *args: object,
+        location: str = "Unknown",
+        stop: bool = True
+        ) -> None
 """
 
 from colorama import Fore, Style
