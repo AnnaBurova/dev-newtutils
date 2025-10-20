@@ -2,70 +2,145 @@
 Created on 2025-10
 
 @author: NewtCode Anna Burova
+
+Functions:
+    def validate_input(
+        value: object,
+        expected_type: type | tuple[type, ...],
+        location: str
+        ) -> bool
+    def sorting_ids(
+        json_input: list[object]
+        ) -> list[int | str]
+    def sorting_dict_by_keys(
+        data: list[dict[str, object]],
+        *keys: str,
+        reverse: bool = False
+        ) -> list[dict[str, object]]
 """
 
-from typing import List, Dict, Any
+import newtutils.console as NewtCons
 
 
-def sorting_ids(json_input: List[Any]) -> List[Any]:
+def validate_input(
+        value: object,
+        expected_type: type | tuple[type, ...],
+        location: str
+        ) -> bool:
     """
-    Remove duplicates from a list and return the sorted result.
+    Validate that a given value matches the expected type.
 
-    This function accepts a list of values, removes any duplicate entries,
-    and returns a new list sorted in ascending order.
+    If validation fails, an error message is printed using Newt.error_msg()
+    but the program continues to run.
 
-    Parameters:
-        json_input (List[Any]):
-            A list of items which can be of any type that supports comparison.
+    Args:
+        value (object):
+            The input value to validate.
+        expected_type (type | tuple[type, ...]):
+            The expected data type or tuple of types.
+        location (str):
+            The name of the function performing validation.
 
     Returns:
-        json_output (List[Any]):
-            A new list containing unique items from `json_input`,
-            sorted in ascending order.
+        bool:
+            True if the value matches the expected type, otherwise False.
     """
 
-    json_unique = list(set(json_input))
+    if not isinstance(value, expected_type):
+        NewtCons.error_msg(
+            f"Expected {expected_type}, got {type(value)}",
+            location=location,
+            stop=False
+        )
+        return False
+    return True
 
-    # json_output = sorted(json_unique)
-    strs = sorted(x for x in json_unique if isinstance(x, str))
-    ints = sorted(x for x in json_unique if isinstance(x, int))
 
-    json_output = strs + ints
+def sorting_ids(
+        json_input: list
+        ) -> list[int | str]:
+    """
+    Remove duplicates from a list and return a sorted result.
 
-    return json_output
+    This function accepts a list of comparable values, removes any
+    duplicate entries, and returns a new list sorted in ascending order.
+    Strings are listed first, followed by integers.
+
+    Args:
+        json_input (list[object]):
+            A list of items that support comparison.
+
+    Returns:
+        list[int | str]:
+            A new list containing unique items from `json_input`,
+            sorted alphabetically (strings) and numerically (integers).
+    """
+
+    if not validate_input(json_input, list, "Newt.utility.sorting_ids"):
+        return []
+
+    try:
+        # Remove duplicates
+        unique_values = set(json_input)
+
+        # Separate by type for deterministic ordering
+        str_values = sorted(x for x in unique_values if isinstance(x, str))
+        int_values = sorted(x for x in unique_values if isinstance(x, int))
+
+        # Combine strings first, then integers
+        json_output = str_values + int_values
+
+        return json_output
+
+    except Exception as e_:
+        NewtCons.error_msg(f"sorting_ids: Unexpected error: {e_}", stop=False)
+        return []
 
 
 def sorting_dict_by_keys(
-    data: List[Dict[str, Any]],
-    *keys: str,
-    reverse: bool = False
-) -> List[Dict[str, Any]]:
+        data: list[dict[str, object]],
+        *keys: str,
+        reverse: bool = False
+        ) -> list[dict[str, object]]:
     """
     Sort a list of dictionaries by one or more keys.
-    Dictionaries missing a key are placed at the end.
 
-    Parameters:
-        data (List[Dict[str, Any]]):
+    Dictionaries missing a sorting key are placed at the end.
+
+    Args:
+        data (list[dict[str, object]]):
             The list of dictionaries to sort.
         *keys (str):
-            Keys to sort by, in priority order.
-        reverse (bool): by default False
-            If True, sort in descending order.
+            One or more dictionary keys to sort by, in priority order.
+        reverse (bool, optional):
+            If True, sort in descending order. Defaults to False.
 
     Returns:
-        List[Dict[str, Any]]
-            A new list sorted by the given keys. Dictionaries missing a key
-            are placed at the end.
+        list[dict[str, object]]:
+            A new list sorted by the specified keys,
+            with dictionaries missing a key placed at the end.
     """
 
-    def sort_key(d: Dict[str, Any]):
-        result = []
+    if not validate_input(data, list, "Newt.utility.sorting_dict_by_keys"):
+        return []
 
-        for key in keys:
-            value = d.get(key, None)
-            # None goes to the end
-            result.append((value is None, value))
+    if not all(isinstance(d, dict) for d in data):
+        NewtCons.error_msg("sorting_dict_by_keys: Expected a list of dicts", stop=False)
+        return []
 
-        return tuple(result)
+    if not all(isinstance(k, str) for k in keys):
+        NewtCons.error_msg("sorting_dict_by_keys: Keys must be strings", stop=False)
+        return data
 
-    return sorted(data, key=sort_key, reverse=reverse)
+    try:
+        def sort_key(d: dict[str, object]) -> tuple[object, ...]:
+            """
+            Generate a sorting key that places missing values (None) at the end.
+            """
+            return tuple((d.get(k) is None, d.get(k)) for k in keys)
+
+        return sorted(data, key=sort_key, reverse=reverse)
+
+    except Exception as e:
+        NewtCons.error_msg(f"sorting_dict_by_keys: Unexpected error: {e}", stop=False)
+        return data
