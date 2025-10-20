@@ -7,7 +7,17 @@ Created on 2025-10
 from colorama import Fore, Style
 
 
-def error_msg(*args: object, stop: bool = True) -> None:
+def _divider() -> None:
+    """Print a visual divider between tests."""
+
+    print("\n" + "-" * 50 + "\n")
+
+
+def error_msg(
+        *args: object,
+        location: str = "Unknown",
+        stop: bool = True
+        ) -> None:
     """
     Print error messages in red to the console and optionally stop the program.
 
@@ -28,6 +38,7 @@ def error_msg(*args: object, stop: bool = True) -> None:
     message = "\n".join(str(arg) for arg in args)
 
     print(Style.BRIGHT, Fore.RED)
+    print("Location:", location)
     print("::: ERROR :::")
     print(message)
     print(Style.RESET_ALL)

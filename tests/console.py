@@ -12,7 +12,7 @@ The tests cover:
 3. Error with `stop=True` that triggers SystemExit.
 """
 
-import newtutils as Newt
+import newtutils.console as Newt
 
 
 def test_error_without_stop() -> None:
@@ -22,7 +22,7 @@ def test_error_without_stop() -> None:
 
     print("Test 1: error_msg without stop")
     Newt.error_msg("This is a test error message", stop=False)
-    print("This line will be printed\n")
+    print("This line will be printed")
 
 
 def test_multiline_error_without_stop() -> None:
@@ -35,9 +35,10 @@ def test_multiline_error_without_stop() -> None:
         "This is a test error message",
         "This is a test error message",
         "This is a test error message",
+        location=__file__,
         stop=False,
     )
-    print("This line will be printed\n")
+    print("This line will be printed")
 
 
 def test_error_with_stop() -> None:
@@ -45,7 +46,7 @@ def test_error_with_stop() -> None:
     Test error message with stop=True (should raise SystemExit).
     """
 
-    print("Test 3: error_msg with stop=True default")
+    print("Test 3: error_msg with stop=True default (should raise SystemExit)")
 
     try:
         Newt.error_msg("This error will stop the program")  # Expected to exit
@@ -58,10 +59,15 @@ def test_error_with_stop() -> None:
         print(f"Caught other exception: {e}")
 
     finally:
-        print("Program continues after catching SystemExit\n")
+        print("Program continues after catching SystemExit")
 
 
 if __name__ == "__main__":
+    """Run all tests in sequence."""
+    Newt._divider()
     test_error_without_stop()
+    Newt._divider()
     test_multiline_error_without_stop()
+    Newt._divider()
     test_error_with_stop()
+    Newt._divider()
