@@ -2,8 +2,6 @@
 Created on 2025-10
 
 @author: NewtCode Anna Burova
-
-NewtUtils - A collection of developer utilities and helpers by Newt.
 """
 
 from .console import error_msg
