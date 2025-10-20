@@ -1,0 +1,36 @@
+
+--------------------------------------------------
+
+Test 1: error_msg without stop
+[1m [31m
+Location Unknown
+::: ERROR :::
+This is a test error message
+[0m
+This line will be printed
+
+--------------------------------------------------
+
+Test 2: multiline error_msg without stop
+[1m [31m
+Location d:\VS_Code\dev-newtutils\tests\console.py
+::: ERROR :::
+This is a test error message
+This is a test error message
+This is a test error message
+[0m
+This line will be printed
+
+--------------------------------------------------
+
+Test 3: error_msg with stop=True default (should raise SystemExit)
+[1m [31m
+Location Unknown
+::: ERROR :::
+This error will stop the program
+[0m
+Caught SystemExit with code: 1
+Program continues after catching SystemExit
+
+--------------------------------------------------
+
