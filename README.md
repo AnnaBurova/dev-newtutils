@@ -38,10 +38,10 @@ Example usage:
 
 ```python
 from newtutils.console import error_msg
-from newtutils.utility import sorting_ids
+from newtutils.utility import sorting_list
 
 error_msg("Example error", stop=False)
-print(sorting_ids(["z", 2, "a", 1, 1]))
+print(sorting_list(["z", 2, "a", 1, 1]))
 ```
 
 ---

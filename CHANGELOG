@@ -20,7 +20,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 ### ✨ Added
 
 * Basic module setup for `newtutils.utility`.
-* `sorting_ids()` — removes duplicates and sorts strings before integers.
+* `sorting_list()` — removes duplicates and sorts strings before integers.
   * Includes validation through `validate_input()`.
 
 ---

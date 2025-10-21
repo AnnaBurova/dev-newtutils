@@ -12,14 +12,14 @@ Created on 2025-10
 from .console import error_msg
 from .utility import (
     validate_input,
-    sorting_ids,
+    sorting_list,
     sorting_dict_by_keys,
 )
 
 __all__ = [
     "error_msg",
     "validate_input",
-    "sorting_ids",
+    "sorting_list",
     "sorting_dict_by_keys",
 ]
 

@@ -1,3 +1,4 @@
+
 --------------------------------------------------
 
 Test 1: error_msg without stop
@@ -32,3 +33,4 @@ Caught SystemExit with code: 1
 Program continues after catching SystemExit
 
 --------------------------------------------------
+

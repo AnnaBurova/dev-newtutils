@@ -8,7 +8,7 @@ from the `newtutils` package.
 
 The tests cover:
 1. validate_input with various inputs.
-2. sorting_ids with various inputs.
+2. sorting_list with various inputs.
 3. sorting_dict_by_keys with different key combinations.
 """
 
@@ -46,27 +46,27 @@ def test_validate_input() -> None:
     print("Input: [1,2,3], expected (dict, set) >", result)
 
 
-def test_sorting_ids() -> None:
+def test_sorting_list() -> None:
     """
-    Test sorting_ids with different input types.
+    Test sorting_list with different input types.
     """
 
-    print("Test 2: sorting_ids with different input types")
+    print("Test 2: sorting_list with different input types")
 
     numbers_input = [3, 1, 2, 3]
-    numbers_output = NewtUtil.sorting_ids(numbers_input)
+    numbers_output = NewtUtil.sorting_list(numbers_input)
     print("Numbers:")
     print(f"Input: {numbers_input}")
     print(f"Output: {numbers_output}")
 
     words_input = ["b", "a", "b"]
-    words_output = NewtUtil.sorting_ids(words_input)
+    words_output = NewtUtil.sorting_list(words_input)
     print("Words:")
     print(f"Input: {words_input}")
     print(f"Output: {words_output}")
 
     mixed_input = ["f", 4, "a", 2, "b", 1, "a"]
-    mixed_output = NewtUtil.sorting_ids(mixed_input)
+    mixed_output = NewtUtil.sorting_list(mixed_input)
     print("Mixed:")
     print(f"Input: {mixed_input}")
     print(f"Output: {mixed_output}")
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     NewtCons._divider()
     test_validate_input()
     NewtCons._divider()
-    test_sorting_ids()
+    test_sorting_list()
     NewtCons._divider()
     test_sorting_dict_by_keys()
     NewtCons._divider()

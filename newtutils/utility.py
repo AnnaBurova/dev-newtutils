@@ -9,7 +9,7 @@ Functions:
         expected_type: type | tuple[type, ...],
         location: str
         ) -> bool
-    def sorting_ids(
+    def sorting_list(
         json_input: list
         ) -> list[int | str]
     def sorting_dict_by_keys(
@@ -56,7 +56,7 @@ def validate_input(
     return True
 
 
-def sorting_ids(
+def sorting_list(
         json_input: list
         ) -> list[int | str]:
     """
@@ -76,7 +76,7 @@ def sorting_ids(
             sorted alphabetically (strings) and numerically (integers).
     """
 
-    if not validate_input(json_input, list, "Newt.utility.sorting_ids"):
+    if not validate_input(json_input, list, "Newt.utility.sorting_list"):
         return []
 
     try:
@@ -93,7 +93,7 @@ def sorting_ids(
         return json_output
 
     except Exception as e_:
-        NewtCons.error_msg(f"sorting_ids: Unexpected error: {e_}", stop=False)
+        NewtCons.error_msg(f"sorting_list: Unexpected error: {e_}", stop=False)
         return []
 
 
