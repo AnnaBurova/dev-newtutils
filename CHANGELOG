@@ -5,6 +5,22 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## v0.1.4 — 2025-10-21
+
+### ✨ Added
+
+- `files.py`: new module providing read/write helpers for text, JSON, and CSV files.
+
+### 🛠️ Improved
+
+- Added full docstrings for all functions in `files.py` following Google-style format.
+- Unified metadata across project files (`__init__.py`, `pyproject.toml`).
+
+### 🐞 Fixed
+- Minor consistency fixes in `utility.py` and documentation updates in `INSTALL.md`.
+
+---
+
 ## v0.1.3 — 2025-10-20
 
 ### ✨ Added
