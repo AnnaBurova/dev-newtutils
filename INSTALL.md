@@ -9,20 +9,26 @@ This guide explains how to set up, install, and use **NewtUtils** — a collecti
 ```
 dev-newtutils/         # Root repository
 │
-├── newtutils/         # Module package
+├── newtutils/         # Main Python package (module source)
 │   ├── __init__.py
 │   ├── console.py
+│   ├── files.py
 │   ├── utility.py
 │   └── (other utility files)
 │
-├── tests/             # Test files
+├── tests/             # Manual and automated test scripts
+│   ├── _list.sh       # Optional helper script to list or run tests
 │   ├── console.py
+│   ├── files.py
 │   ├── utility.py
 │   └── (other test files)
 │
-├── LICENSE            # License file
-├── README.md          # Project description
-└── pyproject.toml     # Build and metadata configuration
+├── CHANGELOG          # Version history and release notes
+├── CONTRIBUTING.md    # Guidelines for contributors
+├── INSTALL.md         # Installation and development setup guide
+├── LICENSE            # License file (MIT)
+├── README.md          # Project overview and usage instructions
+└── pyproject.toml     # Build system configuration and project metadata
 ```
 
 ---

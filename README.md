@@ -17,6 +17,7 @@ The project uses clean, documented, and predictable function behavior.
 - 🖥️ **Console tools** — styled error messages, clean visual dividers
 - 🧮 **Validation helpers** — safe type checking with non-blocking feedback
 - 📑 **Sorting utilities** — deterministic and stable multi-key sorting
+- 🗂️ **File utilities** — simple read/write support for text, JSON, and CSV
 - 🧠 **Error-tolerant design** — no data loss even during exceptions
 
 ---
