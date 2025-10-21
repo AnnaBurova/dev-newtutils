@@ -50,11 +50,11 @@ print(sorting_list(["z", 2, "a", 1, 1]))
 ## 📋 Development Notes
 
 * Planned features and future improvements: see [TODO](TODO)
-* Version history and updates: see [CHANGELOG](CHANGELOG)
+* Version history and updates: see [CHANGELOG](CHANGELOG.md)
 
 ## 🪪 License
 
 - [COPYRIGHT](COPYRIGHT) — Copyright information for original and included materials.
 - [LICENSE](LICENSE) — The license governing the use of this repository (MIT).
 - [AUTHORS](AUTHORS) — List of contributors and credit for external resources.
-- [CONTRIBUTING](CONTRIBUTING) — Guidelines for contributing to this repository.
+- [CONTRIBUTING](CONTRIBUTING.md) — Guidelines for contributing to this repository.

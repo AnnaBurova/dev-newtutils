@@ -23,7 +23,7 @@ dev-newtutils/         # Root repository
 │   ├── utility.py
 │   └── (other test files)
 │
-├── CHANGELOG          # Version history and release notes
+├── CHANGELOG.md       # Version history and release notes
 ├── CONTRIBUTING.md    # Guidelines for contributors
 ├── INSTALL.md         # Installation and development setup guide
 ├── LICENSE            # License file (MIT)

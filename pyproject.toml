@@ -36,7 +36,7 @@ classifiers = [
 homepage = "https://github.com/AnnaBurova/dev-newtutils"
 repository = "https://github.com/AnnaBurova/dev-newtutils"
 issues = "https://github.com/AnnaBurova/dev-newtutils/issues"
-changelog = "https://github.com/AnnaBurova/dev-newtutils/blob/main/CHANGELOG"
+changelog = "https://github.com/AnnaBurova/dev-newtutils/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 where = ["."]

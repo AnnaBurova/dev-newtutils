@@ -18,7 +18,7 @@ To keep this repository clean, consistent, and easy to maintain, please follow t
 You can contribute by:
 
 * 🧠 **Improving code** — adding features, fixing bugs, or refactoring.
-* 📝 **Updating documentation** — improving `README.md`, `INSTALL.md`, or `CHANGELOG`.
+* 📝 **Updating documentation** — improving `README.md`, `INSTALL.md`, or `CHANGELOG.md`.
 * ⚙️ **Improving configuration** — updating `.editorconfig`, `.gitattributes`, or build settings.
 * 🧪 **Enhancing tests** — adding new test cases under `tests/`.
 
@@ -91,7 +91,7 @@ When adding new functionality:
 This project follows **Semantic Versioning (SemVer)**.
 
 * Update `__version__` in `newtutils/__init__.py` and `pyproject.toml` together.
-* Document all changes in [CHANGELOG](CHANGELOG).
+* Document all changes in [CHANGELOG](CHANGELOG.md).
 * Use GitHub Releases to create new versions (`v0.x.x` tags).
 
 Example release message:
