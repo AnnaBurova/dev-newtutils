@@ -45,6 +45,8 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### ✨ Added
 
+* Start of the *NewtUtils* module.
+* Basic folder and configuration structure for `pyproject.toml`.
 * Basic module setup for `newtutils.console`.
 * `error_msg()` — unified error output using **Colorama** for cross-platform colored console messages.
 
@@ -55,5 +57,3 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 ### 🧩 Initial Setup
 
 * Repository initialization (`.gitignore`, `.gitattributes`).
-* Start of the *NewtUtils* module.
-* Basic folder and configuration structure for `pyproject.toml`.
