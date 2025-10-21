@@ -1,0 +1,30 @@
+--------------------------------------------------
+
+Setup test directory: D:\VS_Code\dev-newtutils\tests\files_data
+
+--------------------------------------------------
+
+Test 1: Text file operations
+Initial content: 'Hello\nWorld!\n'
+After append: 'Hello\nWorld!\nAppended line\n'
+
+--------------------------------------------------
+
+Test 2: JSON file operations
+Loaded JSON: {'name': 'NewtCode', 'version': 0.1, 'features': ['json', 'csv', 'text']}
+
+--------------------------------------------------
+
+Test 3: CSV file operations
+Loaded CSV: [['Name', 'Age', 'Language'], ['Anna', '30', 'Python'], ['John', '28', 'Go']]
+
+--------------------------------------------------
+
+
+--- CLEANUP ---
+Deleting D:\VS_Code\dev-newtutils\tests\files_data\example.csv
+Deleting D:\VS_Code\dev-newtutils\tests\files_data\example.json
+Deleting D:\VS_Code\dev-newtutils\tests\files_data\example.txt
+Removed test directory: D:\VS_Code\dev-newtutils\tests\files_data
+
+--------------------------------------------------
