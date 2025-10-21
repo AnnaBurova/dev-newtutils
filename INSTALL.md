@@ -1,6 +1,6 @@
-# Creating the NewtUtils Python Module
+# 🧰 Installing and Developing the NewtUtils Module
 
-This guide describes how to structure, configure, and test the **NewtUtils** Python module.
+This guide explains how to set up, install, and use **NewtUtils** — a collection of developer utilities by *NewtCode*.
 
 ---
 
@@ -9,13 +9,15 @@ This guide describes how to structure, configure, and test the **NewtUtils** Pyt
 ```
 dev-newtutils/         # Root repository
 │
-├── newtutils/         # Python package
+├── newtutils/         # Module package
 │   ├── __init__.py
 │   ├── console.py
+│   ├── utility.py
 │   └── (other utility files)
 │
-├── tests/             # Folder for tests
+├── tests/             # Test files
 │   ├── console.py
+│   ├── utility.py
 │   └── (other test files)
 │
 ├── LICENSE            # License file
@@ -25,52 +27,69 @@ dev-newtutils/         # Root repository
 
 ---
 
-## 2. Configuring `pyproject.toml`
+## 2. `pyproject.toml` Overview
 
-The `pyproject.toml` file defines build tools, dependencies, and metadata.
+The `pyproject.toml` file defines how the package is built and installed.
 
-* `requires-python` specifies the minimum supported Python version.
-* `dependencies` lists all required packages.
-* `tool.setuptools.packages.find` ensures the package folder is correctly recognized during installation.
+Key fields:
 
----
-
-## 3. Configuring `__init__.py`
-
-To make the module accessible and maintain clean imports:
-
-* Import only selected functions or classes intended for external use.
-* Include metadata such as `__author__`, `__description__`, and `__version__`.
+* `requires-python` — the minimum supported Python version.
+* `dependencies` — required third-party libraries.
+* `[tool.setuptools.packages.find]` — tells setuptools where to find your package.
 
 ---
 
-## 4. Installing NewtUtils Locally
+## 3. `__init__.py` Setup
 
-To install **NewtUtils** in *editable mode* (so changes are applied immediately):
+Keep `__init__.py` minimal and clean.
 
-1. Open PowerShell or any terminal.
-2. Navigate to the repository folder.
-3. Run the installation command:
+Example:
+
+```python
+from .console import error_msg
+from .utility import (
+    validate_input,
+    sorting_ids,
+    sorting_dict_by_keys,
+)
+
+__author__ = "Name"
+__version__ = "0.0.0"
+__description__ = "Description"
+```
+
+---
+
+## 4. Local Installation (Editable Mode)
+
+To make code changes available immediately without reinstalling:
 
 ```powershell
 cd D:\VS_Code\dev-newtutils
 C:/ProgramData/anaconda3/python.exe -m pip install --user -e .
 ```
 
+**Explanation:**
+
 * `-m pip` ensures that pip runs within the chosen Python environment.
-* `--user` installs the module for the current account (no administrator rights required).
-* `-e .` installs in **editable mode**, enabling immediate access to any code changes within `newtutils/`.
+* `--user` — install for the current user only (no admin rights needed).
+* `-e .` — install in *editable mode* (links directly to your source folder).
+* You can now import `newtutils` in any project, and edits will take effect instantly.
+
+To uninstall later:
+
+```powershell
+pip uninstall newtutils
+```
 
 ---
 
-## 5. VS Code Configuration for Local Python Modules
+## 5. VS Code Configuration
 
-When working in **VS Code**, local modules such as `newtutils` can be recognized automatically with the following setup:
+To help VS Code (and Pylance) detect your local package:
 
-1. Open the project folder in VS Code.
-2. Create the `.vscode` directory inside the project (if not already present).
-3. Inside `.vscode`, create or edit the `settings.json` file.
-4. Add the configuration below:
+1. Create `.vscode/settings.json` inside your project.
+2. Add:
 
 ```json
 {
@@ -81,44 +100,59 @@ When working in **VS Code**, local modules such as `newtutils` can be recognized
 }
 ```
 
-5. Save the file and reload VS Code
-(`Ctrl + Shift + P` → `Developer: Reload Window`).
-
-Pylance will now correctly resolve imports from `newtutils`.
+Reload VS Code (`Ctrl + Shift + P` > "Developer: Reload Window").
 
 ---
 
-## 6. Using the Module in Other Projects
+## 6. Using NewtUtils in Other Projects
 
-Once installed, **NewtUtils** can be imported into any Python project as a standard module.
-
-Example:
+Once installed (even in editable mode), you can import it anywhere:
 
 ```python
 # WORKS ONLY WITH CORRECT __init__.py
 # Examples of importing functions directly from the package (requires re-export in __init__.py)
 
 from newtutils import error_msg
-error_msg("Error1", stop=False)
+error_msg("Something went wrong", stop=False)
+
 import newtutils as Newt
-Newt.error_msg("Error4", stop=False)
-Newt.console.error_msg("Error5", stop=False)
+Newt.error_msg("Something went wrong", stop=False)
 ```
+
+Alternative imports:
 
 ```python
 # Direct import from the submodule (does not depend on __init__.py)
 # Alternative ways to access the same function directly from 'newtutils.console'
 
+import newtutils as Newt
+Newt.console.error_msg("Something went wrong", stop=False)
+
 from newtutils.console import error_msg as err
-err("Error2", stop=False)
+err("Something went wrong", stop=False)
+
 import newtutils.console as Newt_console
-Newt_console.error_msg("Error3", stop=False)
+Newt_console.error_msg("Something went wrong", stop=False)
 ```
 
-If the module is not installed system-wide but is available locally, add its path dynamically at runtime:
+If you prefer not to install at all, just add the path at runtime:
 
 ```python
 import sys
 sys.path.append(r"D:\VS_Code\dev-newtutils")
 from newtutils.console import error_msg
+```
+
+---
+
+## 7. Updating the Package
+
+Because the package is installed in editable mode,
+any file changes under `newtutils/` are applied immediately — no reinstall needed.
+
+If you modify the project metadata (e.g., version or dependencies) in `pyproject.toml`,
+re-run the install command:
+
+```powershell
+python -m pip install -e .
 ```

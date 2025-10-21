@@ -1,12 +1,43 @@
-v0.1.3 - 2025-10-18
-  - sorting_dict_by_keys()
-v0.1.2 - 2025-10-18
-  - sorting_ids()
-v0.1.1 - 2025-10-17
-  - Modul Setup
-  - error_msg()
-    - with colorama
-v0.1.0 - 2025-10-16
-  - .gitignore
-  - .gitattributes
-  - Start setup
+# 🧾 Changelog — *NewtUtils (NewtCode)*
+
+All notable changes to this project are documented here.
+This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PATCH`).
+
+---
+
+## v0.1.3 — 2025-10-20
+
+### ✨ Added
+
+* `sorting_dict_by_keys()` — sort lists of dictionaries by one or more keys.
+  * Handles missing keys safely.
+  * Supports ascending and descending order.
+
+---
+
+## v0.1.2 — 2025-10-18
+
+### ✨ Added
+
+* Basic module setup for `newtutils.utility`.
+* `sorting_ids()` — removes duplicates and sorts strings before integers.
+  * Includes validation through `validate_input()`.
+
+---
+
+## v0.1.1 — 2025-10-17
+
+### ✨ Added
+
+* Basic module setup for `newtutils.console`.
+* `error_msg()` — unified error output using **Colorama** for cross-platform colored console messages.
+
+---
+
+## v0.1.0 — 2025-10-16
+
+### 🧩 Initial Setup
+
+* Repository initialization (`.gitignore`, `.gitattributes`).
+* Start of the *NewtUtils* module.
+* Basic folder and configuration structure for `pyproject.toml`.

@@ -15,10 +15,28 @@ license = { file = "LICENSE" }
 dependencies = [
   "colorama>=0.4.6"
 ]
+keywords = ["utilities", "console", "validation", "sorting", "helpers", "newtutils"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Utilities",
+]
 
 [project.urls]
 homepage = "https://github.com/AnnaBurova/dev-newtutils"
+repository = "https://github.com/AnnaBurova/dev-newtutils"
+issues = "https://github.com/AnnaBurova/dev-newtutils/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["newtutils"]
+exclude = ["tests", "tests.*"]

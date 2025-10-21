@@ -10,7 +10,7 @@ Functions:
         location: str
         ) -> bool
     def sorting_ids(
-        json_input: list[object]
+        json_input: list
         ) -> list[int | str]
     def sorting_dict_by_keys(
         data: list[dict[str, object]],

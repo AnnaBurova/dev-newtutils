@@ -4,8 +4,8 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
-    _divider() -> None
-    error_msg(
+    def _divider() -> None
+    def error_msg(
         *args: object,
         location: str = "Unknown",
         stop: bool = True
