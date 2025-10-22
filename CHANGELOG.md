@@ -5,55 +5,82 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
-## v0.1.4 — 2025-10-21
+## 🏷️ v0.1.4 — Utility `Files`
+
+**Date**: 2025-10-21
 
 ### ✨ Added
 
-- `files.py`: new module providing read/write helpers for text, JSON, and CSV files.
+- New module: `files.py` — read/write helpers for **text**, **JSON**, and **CSV** files.
 
 ### 🛠️ Improved
 
-- Added full docstrings for all functions in `files.py` following Google-style format.
+- Added complete Google-style docstrings for all file functions.
 - Unified metadata across project files (`__init__.py`, `pyproject.toml`).
+- Updated documentation (`INSTALL.md`, `README.md`, `LICENSE`).
 
-### 🐞 Fixed
-- Minor consistency fixes in `utility.py` and documentation updates in `INSTALL.md`.
+### 🧩 Integration
+
+- Exported file utilities to package root — now accessible via:
+
+  ```python
+  import newtutils as Newt
+  Newt.save_json_to_file("data.json", {...})
+  ```
 
 ---
 
-## v0.1.3 — 2025-10-20
+## 🏷️ v0.1.3 — Dictionary sorting utilities
+
+**Date:** 2025-10-20
 
 ### ✨ Added
 
-* `sorting_dict_by_keys()` — sort lists of dictionaries by one or more keys.
-  * Handles missing keys safely.
-  * Supports ascending and descending order.
+- Added `sorting_dict_by_keys()` — sort lists of dictionaries by one or more keys.
+
+  - Handles missing keys safely.
+  - Supports ascending and descending order.
+
+### 🛠️ Improved
+
+- Documentation updates and metadata cleanup.
+- Organized project files for clarity and consistency.
 
 ---
 
-## v0.1.2 — 2025-10-18
+## 🏷️ v0.1.2 — Validation and list sorting
+
+**Date:** 2025-10-18
 
 ### ✨ Added
 
-* Basic module setup for `newtutils.utility`.
-* `sorting_list()` — removes duplicates and sorts strings before integers.
-  * Includes validation through `validate_input()`.
+- Introduced `newtutils.utility` module.
+- Added `sorting_list()` — removes duplicates and sorts strings before integers.
+- Added `validate_input()` — validates input types with safe error feedback.
 
 ---
 
-## v0.1.1 — 2025-10-17
+## 🏷️ v0.1.1 — Console utilities
+
+**Date:** 2025-10-17
 
 ### ✨ Added
 
-* Start of the *NewtUtils* module.
-* Basic folder and configuration structure for `pyproject.toml`.
-* Basic module setup for `newtutils.console`.
-* `error_msg()` — unified error output using **Colorama** for cross-platform colored console messages.
+- Start of the *NewtUtils* module.
+- Added `newtutils.console` with `error_msg()` for unified error output.
+  - Uses **Colorama** for cross-platform colored messages.
+- Added base configuration (`pyproject.toml`, module layout).
 
 ---
 
-## v0.1.0 — 2025-10-16
+## 🏷️ v0.1.0 — Initial setup
+
+**Date:** 2025-10-16
 
 ### 🧩 Initial Setup
 
-* Repository initialization (`.gitignore`, `.gitattributes`).
+- Created project structure (`.gitignore`, `.gitattributes`).
+- Initialized the *NewtUtils* repository.
+- Prepared the foundation for future modules and documentation.
+
+> 🪄 *The very first commit of the NewtUtils project.*
