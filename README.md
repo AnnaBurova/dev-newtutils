@@ -1,4 +1,4 @@
-# 🦎 NewtUtils — Developer Utilities by NewtCode
+# 🦎 NewtUtils — Developer Utilities by `NewtCode`
 
 A lightweight Python toolkit providing reusable **console**, **validation**, and **sorting** utilities for developers.
 
@@ -33,28 +33,20 @@ All other functions use only Python’s standard library.
 
 ## 🚀 Getting Started
 
-Follow the [Installation Guide](INSTALL.md) for setup and editable installation details.
-
-Example usage:
-
-```python
-from newtutils.console import error_msg
-from newtutils.utility import sorting_list
-
-error_msg("Example error", stop=False)
-print(sorting_list(["z", 2, "a", 1, 1]))
-```
+- [Installation Guide](INSTALL.md) — for setup instructions and configurations.
 
 ---
 
 ## 📋 Development Notes
 
-* Planned features and future improvements: see [TODO](TODO)
-* Version history and updates: see [CHANGELOG](CHANGELOG.md)
+- [TODO list](TODO) — Planned improvements
+- [CHANGELOG](CHANGELOG.md) — Version history
+- [CONTRIBUTING](CONTRIBUTING.md) — Style and contribution rules
+
+---
 
 ## 🪪 License
 
 - [COPYRIGHT](COPYRIGHT) — Copyright information for original and included materials.
 - [LICENSE](LICENSE) — The license governing the use of this repository (MIT).
-- [AUTHORS](AUTHORS) — List of contributors and credit for external resources.
-- [CONTRIBUTING](CONTRIBUTING.md) — Guidelines for contributing to this repository.
+- [AUTHORS](AUTHORS) — List of contributors and credits for external resources.
