@@ -23,7 +23,7 @@ SOFTWARE.
 ================================================================================
 
 This project uses components from the Python standard library,
-licensed under the Python Software Foundation License:
+licensed under the [Python Software Foundation License](https://docs.python.org/3/license.html):
 - sys, os
 - csv, json
 
