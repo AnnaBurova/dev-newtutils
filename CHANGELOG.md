@@ -5,7 +5,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
-## 🏷️ v0.1.4 — Utility `Files`
+## 🏷️ v0.1.4 — Files utilities
 
 **Date**: 2025-10-21
 
@@ -19,18 +19,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - Unified metadata across project files (`__init__.py`, `pyproject.toml`).
 - Updated documentation (`INSTALL.md`, `README.md`, `LICENSE`).
 
-### 🧩 Integration
-
-- Exported file utilities to package root — now accessible via:
-
-  ```python
-  import newtutils as Newt
-  Newt.save_json_to_file("data.json", {...})
-  ```
-
 ---
 
-## 🏷️ v0.1.3 — Dictionary sorting utilities
+## 🏷️ v0.1.3 — Sorting utilities
 
 **Date:** 2025-10-20
 
