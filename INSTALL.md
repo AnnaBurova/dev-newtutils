@@ -11,16 +11,12 @@ dev-newtutils/         # Root repository
 │
 ├── newtutils/         # Main Python package (module source)
 │   ├── __init__.py
-│   ├── console.py
 │   ├── files.py
-│   ├── utility.py
 │   └── (other utility files)
 │
 ├── tests/             # Manual and automated test scripts
 │   ├── _list.sh       # Optional helper script to list or run tests
-│   ├── console.py
 │   ├── files.py
-│   ├── utility.py
 │   └── (other test files)
 │
 ├── CHANGELOG.md       # Version history and release notes
@@ -56,7 +52,6 @@ from .console import error_msg
 from .utility import (
     validate_input,
     sorting_list,
-    sorting_dict_by_keys,
 )
 
 __author__ = "Name"
