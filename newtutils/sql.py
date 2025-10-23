@@ -25,9 +25,9 @@ Functions:
     def sql_update_rows(
         database: str,
         table: str,
-        data: dict[str, object],
-        where: str,
-        params: tuple | None = None
+        set_data: dict[str, object],
+        where_condition: str,
+        where_params: tuple | None = None
         ) -> int
     def export_sql_query_to_csv(
         database: str,
@@ -232,9 +232,9 @@ def sql_insert_row(
 def sql_update_rows(
         database: str,
         table: str,
-        data: dict[str, object],
-        where: str,
-        params: tuple | None = None
+        set_data: dict[str, object],
+        where_condition: str,
+        where_params: tuple | None = None
         ) -> int:
     """
     Update existing rows in a table based on a WHERE condition.
@@ -244,12 +244,12 @@ def sql_update_rows(
             Path to the SQLite database file.
         table (str):
             Table name.
-        data (dict[str, object]):
+        set_data (dict[str, object]):
             Column-value pairs to update.
-        where (str):
+        where_condition (str):
             WHERE condition
             (e.g., "id = ? AND name = ?").
-        params (tuple | None, optional):
+        where_params (tuple | None, optional):
             Parameters for the WHERE clause.
             Defaults to None.
 
@@ -259,19 +259,19 @@ def sql_update_rows(
             Returns 0 if an error occurs or no rows were inserted.
     """
 
-    if not data:
+    if not set_data:
         NewtCons.error_msg(
             "Empty data",
-            location="Newt.sql.update_rows",
+            location="Newt.sql.sql_update_rows",
             stop=False
             )
         return 0
 
-    set_clause = ", ".join([f"{k} = ?" for k in data])
-    values = tuple(data.values()) + (params or ())
-    query = f"UPDATE {table} SET {set_clause} WHERE {where}"
+    set_clause = ", ".join([f"{k} = ?" for k in set_data])
+    params = tuple(set_data.values()) + (where_params or ())
+    query = f"UPDATE {table} SET {set_clause} WHERE {where_condition}"
 
-    result = sql_execute_query(database, query, values)
+    result = sql_execute_query(database, query, params)
     return result if isinstance(result, int) else 0
 
 
