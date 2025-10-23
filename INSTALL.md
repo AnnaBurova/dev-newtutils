@@ -4,7 +4,7 @@ This guide explains how to set up, install, and use **NewtUtils** — a collecti
 
 ---
 
-## 1. Project Structure
+## Project Structure
 
 ```
 dev-newtutils/         # Root repository
@@ -29,7 +29,7 @@ dev-newtutils/         # Root repository
 
 ---
 
-## 2. `pyproject.toml` Overview
+## `pyproject.toml` Overview
 
 The `pyproject.toml` file defines how the package is built and installed.
 
@@ -41,7 +41,7 @@ Key fields:
 
 ---
 
-## 3. `__init__.py` Setup
+## `__init__.py` Setup
 
 Keep `__init__.py` minimal and clean.
 
@@ -61,7 +61,7 @@ __description__ = "Description"
 
 ---
 
-## 4. Local Installation (Editable Mode)
+## Local Installation (Editable Mode)
 
 To make code changes available immediately without reinstalling:
 
@@ -85,7 +85,7 @@ pip uninstall newtutils
 
 ---
 
-## 5. VS Code Configuration
+## VS Code Configuration
 
 To help VS Code (and Pylance) detect your local package:
 
@@ -105,7 +105,7 @@ Reload VS Code (`Ctrl + Shift + P` > "Developer: Reload Window").
 
 ---
 
-## 6. Using NewtUtils in Other Projects
+## Using NewtUtils in Other Projects
 
 Once installed (even in editable mode), you can import it anywhere:
 
@@ -146,7 +146,7 @@ from newtutils.console import error_msg
 
 ---
 
-## 7. Updating the Package
+## Updating the Package
 
 Because the package is installed in editable mode,
 any file changes under `newtutils/` are applied immediately — no reinstall needed.
