@@ -20,7 +20,7 @@ Functions:
     def sql_insert_row(
         database: str,
         table: str,
-        data: dict[str, object]
+        data: dict[str, object] | list[dict[str, object]]
         ) -> int
     def sql_update_rows(
         database: str,
@@ -181,18 +181,20 @@ def sql_select_rows(
 def sql_insert_row(
         database: str,
         table: str,
-        data: dict[str, object]
+        data: dict[str, object] | list[dict[str, object]]
         ) -> int:
     """
-    Insert a new row into a given table.
+    Insert one or multiple rows into a given table.
 
     Args:
         database (str):
             Path to the SQLite database file.
         table (str):
             Table name.
-        data (dict[str, object]):
-            Column-value pairs to insert.
+        data (dict[str, object] | list[dict[str, object]]):
+            A single dictionary
+            or a list of dictionaries
+            containing column-value pairs to insert.
 
     Returns:
         int:
@@ -203,16 +205,27 @@ def sql_insert_row(
     if not data:
         NewtCons.error_msg(
             "Empty data",
-            location="Newt.sql.insert_row",
+            location="Newt.sql.sql_insert_row",
             stop=False
             )
         return 0
 
-    columns = ", ".join(data.keys())
-    placeholders = ", ".join(["?"] * len(data))
+    # Normalize input to list[dict]
+    if isinstance(data, dict):
+        data = [data]
+
+    # Build SQL template
+    columns = ", ".join(data[0].keys())
+    placeholders = ", ".join(["?"] * len(data[0]))
+    params = [tuple(row.values()) for row in data]
+
     query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
 
-    result = sql_execute_query(database, query, tuple(data.values()))
+    if len(params) == 1:
+        result = sql_execute_query(database, query, params[0])
+    else:
+        result = sql_execute_query(database, query, params)
+
     return result if isinstance(result, int) else 0
 
 
