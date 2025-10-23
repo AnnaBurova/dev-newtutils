@@ -6,8 +6,7 @@ Created on 2025-10
 Functions:
     def validate_input(
         value: object,
-        expected_type: type | tuple[type, ...],
-        location: str
+        expected_type: type | tuple[type, ...]
         ) -> bool
     def sorting_list(
         json_input: list
@@ -24,13 +23,12 @@ import newtutils.console as NewtCons
 
 def validate_input(
         value: object,
-        expected_type: type | tuple[type, ...],
-        location: str
+        expected_type: type | tuple[type, ...]
         ) -> bool:
     """
     Validate that a given value matches the expected type.
 
-    If validation fails, an error message is printed using Newt.error_msg()
+    If validation fails, an error message is printed using NewtCons.error_msg()
     but the program continues to run.
 
     Args:
@@ -38,8 +36,6 @@ def validate_input(
             The input value to validate.
         expected_type (type | tuple[type, ...]):
             The expected data type or tuple of types.
-        location (str):
-            The name of the function performing validation.
 
     Returns:
         bool:
@@ -49,7 +45,7 @@ def validate_input(
     if not isinstance(value, expected_type):
         NewtCons.error_msg(
             f"Expected {expected_type}, got {type(value)}",
-            location=location,
+            location="Newt.utility.validate_input",
             stop=False
         )
         return False
@@ -76,7 +72,7 @@ def sorting_list(
             sorted alphabetically (strings) and numerically (integers).
     """
 
-    if not validate_input(json_input, list, "Newt.utility.sorting_list"):
+    if not validate_input(json_input, list):
         return []
 
     try:
@@ -92,8 +88,12 @@ def sorting_list(
 
         return json_output
 
-    except Exception as e_:
-        NewtCons.error_msg(f"sorting_list: Unexpected error: {e_}", stop=False)
+    except Exception as e:
+        NewtCons.error_msg(
+            f"Exception: {e}",
+            location="Newt.utility.sorting_list",
+            stop=False
+            )
         return []
 
 
@@ -121,15 +121,23 @@ def sorting_dict_by_keys(
             with dictionaries missing a key placed at the end.
     """
 
-    if not validate_input(data, list, "Newt.utility.sorting_dict_by_keys"):
+    if not validate_input(data, list):
         return []
 
     if not all(isinstance(d, dict) for d in data):
-        NewtCons.error_msg("sorting_dict_by_keys: Expected a list of dicts", stop=False)
+        NewtCons.error_msg(
+            "Expected a list of dicts",
+            location="Newt.utility.sorting_dict_by_keys",
+            stop=False
+            )
         return []
 
     if not all(isinstance(k, str) for k in keys):
-        NewtCons.error_msg("sorting_dict_by_keys: Keys must be strings", stop=False)
+        NewtCons.error_msg(
+            "Keys must be strings",
+            location="Newt.utility.sorting_dict_by_keys",
+            stop=False
+            )
         return data
 
     try:
@@ -142,5 +150,9 @@ def sorting_dict_by_keys(
         return sorted(data, key=sort_key, reverse=reverse)
 
     except Exception as e:
-        NewtCons.error_msg(f"sorting_dict_by_keys: Unexpected error: {e}", stop=False)
+        NewtCons.error_msg(
+            f"Exception: {e}",
+            location="Newt.utility.sorting_dict_by_keys",
+            stop=False
+            )
         return data
