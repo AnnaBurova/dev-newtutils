@@ -132,8 +132,8 @@ Newt.console.error_msg("Something went wrong", stop=False)
 from newtutils.console import error_msg as err
 err("Something went wrong", stop=False)
 
-import newtutils.console as Newt_console
-Newt_console.error_msg("Something went wrong", stop=False)
+import newtutils.console as NewtCons
+NewtCons.error_msg("Something went wrong", stop=False)
 ```
 
 If you prefer not to install at all, just add the path at runtime:
