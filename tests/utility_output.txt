@@ -1,20 +1,27 @@
 --------------------------------------------------
 
 Test 1: validate_input basic tests
-Input: 123, expected int > True
+Input: 123, expected int
+Output:  True
+
+Input: 'hello', expected int
 [1m [31m
-Location: test_validate_input() : str > int
+Location: Newt.utility.validate_input
 ::: ERROR :::
 Expected <class 'int'>, got <class 'str'>
 [0m
-Input: 'hello', expected int > False
-Input: 3.14, expected (int, float) > True
+Output:  False
+
+Input: 3.14, expected (int, float)
+Output:  True
+
+Input: [1,2,3], expected (dict, set)
 [1m [31m
-Location: test_validate_input() : list > (dict, set)
+Location: Newt.utility.validate_input
 ::: ERROR :::
 Expected (<class 'dict'>, <class 'set'>), got <class 'list'>
 [0m
-Input: [1,2,3], expected (dict, set) > False
+Output:  False
 
 --------------------------------------------------
 

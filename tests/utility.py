@@ -26,24 +26,27 @@ def test_validate_input() -> None:
     print("Test 1: validate_input basic tests")
 
     # Test: correct type
-    result = NewtUtil.validate_input(123, int,
-        "test_validate_input() : int > int")
-    print("Input: 123, expected int >", result)
+    print("Input: 123, expected int")
+    result = NewtUtil.validate_input(123, int)
+    print("Output: ", result)
+    print()
 
     # Test: incorrect type
-    result = NewtUtil.validate_input("hello", int,
-        "test_validate_input() : str > int")
-    print("Input: 'hello', expected int >", result)
+    print("Input: 'hello', expected int")
+    result = NewtUtil.validate_input("hello", int)
+    print("Output: ", result)
+    print()
 
     # Test: multiple allowed types
-    result = NewtUtil.validate_input(3.14, (int, float),
-        "test_validate_input() : float > (int, float)")
-    print("Input: 3.14, expected (int, float) >", result)
+    print("Input: 3.14, expected (int, float)")
+    result = NewtUtil.validate_input(3.14, (int, float))
+    print("Output: ", result)
+    print()
 
     # Test: invalid type again (should trigger error_msg)
-    result = NewtUtil.validate_input([1, 2, 3], (dict, set),
-        "test_validate_input() : list > (dict, set)")
-    print("Input: [1,2,3], expected (dict, set) >", result)
+    print("Input: [1,2,3], expected (dict, set)")
+    result = NewtUtil.validate_input([1, 2, 3], (dict, set))
+    print("Output: ", result)
 
 
 def test_sorting_list() -> None:
