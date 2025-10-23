@@ -29,18 +29,28 @@ def error_msg(
     """
     Print error messages in red to the console and optionally stop the program.
 
-    This function prints one or more messages in bright red color using colorama.
-    It can be used for CLI tools, scripts, or any console-based feedback.
+    This function displays one or more messages in bright red color using Colorama.
+    It is designed for CLI tools, scripts, and any console-based feedback system.
+    The `location` argument helps identify where the error originated.
 
-    Parameters:
-        *args (object): One or more messages or objects to print.
-        stop (bool): by default True.
+    Args:
+        *args (object):
+            One or more messages or objects to print.
+        location (str, optional):
+            Name of the function or module where the error occurred.
+            Defaults to "Unknown".
+            Example: "Newt.files.read_csv_from_file"
+        stop (bool, optional):
+            If True, the program terminates with exit code 1 after printing.
+            Defaults to True.
 
     Returns:
         None
 
     Raises:
-        SystemExit: If stop=True, terminates the program with exit code 1.
+        SystemExit:
+            Raised if stop=True,
+            terminating the program with exit code 1.
     """
 
     message = "\n".join(str(arg) for arg in args)
