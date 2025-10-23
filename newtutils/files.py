@@ -7,6 +7,9 @@ Functions:
     def _ensure_dir_exists(
         file_path: str
         ) -> None
+    def _check_file_exists(
+        file_path: str
+        ) -> bool
     def _normalize_newlines(
         text: str
         ) -> str
@@ -67,6 +70,37 @@ def _ensure_dir_exists(
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
 
+def _check_file_exists(
+        file_path: str
+        ) -> bool:
+    """
+    Check whether a file exists at the given path.
+
+    This internal helper verifies that a file is present and accessible.
+    If the file does not exist, it reports the issue using
+    NewtCons.error_msg() without stopping the program.
+
+    Args:
+        file_path (str):
+            Full path to the file to verify.
+
+    Returns:
+        bool:
+            True if the file exists,
+            otherwise False.
+    """
+
+    if os.path.exists(file_path):
+        return True
+
+    NewtCons.error_msg(
+        f"File not found: {file_path}",
+        location="Newt.files._check_file_exists",
+        stop=False
+    )
+    return False
+
+
 def _normalize_newlines(
         text: str
         ) -> str:
@@ -110,7 +144,7 @@ def read_text_from_file(
             if the file is not found or an error occurs during reading.
     """
 
-    if not os.path.exists(file_name):
+    if not _check_file_exists(file_name):
         return ""
 
     try:
@@ -119,8 +153,8 @@ def read_text_from_file(
 
     except Exception as e:
         NewtCons.error_msg(
-            f"read_text_from_file: {e}",
-            location=file_name,
+            f"Exception: {e}",
+            location="Newt.files.read_text_from_file",
             stop=False
             )
         return ""
@@ -163,8 +197,8 @@ def save_text_to_file(
 
     except Exception as e:
         NewtCons.error_msg(
-            f"save_text_to_file: {e}",
-            location=file_name,
+            f"Exception: {e}",
+            location="Newt.files.save_text_to_file",
             stop=False
             )
 
@@ -192,7 +226,7 @@ def read_json_from_file(
             or an empty list if the file is missing or invalid.
     """
 
-    if not os.path.exists(file_name):
+    if not _check_file_exists(file_name):
         return []
 
     try:
@@ -201,8 +235,8 @@ def read_json_from_file(
 
     except Exception as e:
         NewtCons.error_msg(
-            f"read_json_from_file: {e}",
-            location=file_name,
+            f"Exception: {e}",
+            location="Newt.files.read_json_from_file",
             stop=False
             )
         return []
@@ -242,8 +276,8 @@ def save_json_to_file(
 
     except Exception as e:
         NewtCons.error_msg(
-            f"save_json_to_file: {e}",
-            location=file_name,
+            f"Exception: {e}",
+            location="Newt.files.save_json_to_file",
             stop=False
             )
 
@@ -277,7 +311,7 @@ def read_csv_from_file(
             or an error occurs during reading.
     """
 
-    if not os.path.exists(file_name):
+    if not _check_file_exists(file_name):
         return []
 
     try:
@@ -286,8 +320,8 @@ def read_csv_from_file(
 
     except Exception as e:
         NewtCons.error_msg(
-            f"read_csv_from_file: {e}",
-            location=file_name,
+            f"Exception: {e}",
+            location="Newt.files.read_csv_from_file",
             stop=False
             )
         return []
@@ -334,7 +368,7 @@ def save_csv_to_file(
 
     except Exception as e:
         NewtCons.error_msg(
-            f"save_csv_to_file: {e}",
-            location=file_name,
+            f"Exception: {e}",
+            location="Newt.files.save_csv_to_file",
             stop=False
             )
