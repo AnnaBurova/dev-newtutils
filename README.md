@@ -19,6 +19,7 @@ The project uses clean, documented, and predictable function behavior.
 - 📑 **Sorting utilities** — deterministic and stable multi-key sorting
 - 🗂️ **File utilities** — simple read/write support for text, JSON, and CSV
 - 🧠 **Error-tolerant design** — no data loss even during exceptions
+- 🗄️ **SQL utilities** — execute, select, insert, update, and export queries safely
 
 ---
 

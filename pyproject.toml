@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "newtutils"
-version = "0.1.4"
+version = "0.1.5"
 description = "A collection of developer utilities and helpers by NewtCode."
 authors = [
   { name = "Anna Burova", email = "burova.anna+newt@gmail.com" }
@@ -15,7 +15,10 @@ license = { file = "LICENSE" }
 dependencies = [
   "colorama>=0.4.6"
 ]
-keywords = ["utilities", "console", "validation", "files", "sorting", "helpers", "newtutils"]
+keywords = [
+  "utilities", "console", "validation", "files", "sorting",
+  "sql", "database", "sqlite", "helpers", "newtutils"
+]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",

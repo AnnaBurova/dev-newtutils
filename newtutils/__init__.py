@@ -21,6 +21,13 @@ from .files import (
     read_json_from_file, save_json_to_file,
     read_csv_from_file, save_csv_to_file,
 )
+from .sql import (
+    sql_execute_query,
+    sql_select_rows,
+    sql_insert_row,
+    sql_update_rows,
+    export_sql_query_to_csv,
+)
 
 __all__ = [
     # Console
@@ -33,6 +40,12 @@ __all__ = [
     "read_text_from_file", "save_text_to_file",
     "read_json_from_file", "save_json_to_file",
     "read_csv_from_file", "save_csv_to_file",
+    # SQL
+    "sql_execute_query",
+    "sql_select_rows",
+    "sql_insert_row",
+    "sql_update_rows",
+    "export_sql_query_to_csv",
 ]
 
 __author__: str = "NewtCode Anna Burova"
@@ -40,6 +53,6 @@ __description__: str = (
     "NewtUtils — A collection of developer utilities and helpers "
     "for console messaging and structured data handling."
 )
-__version__: str = "0.1.4"
+__version__: str = "0.1.5"
 __license__: str = "MIT"
 __url__: str = "https://github.com/AnnaBurova/dev-newtutils"
