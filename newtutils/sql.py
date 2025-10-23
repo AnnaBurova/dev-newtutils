@@ -4,6 +4,9 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
+    def db_delayed_close(
+        database: str
+        ) -> bool
     def sql_execute_query(
         database: str,
         query: str,
@@ -36,8 +39,48 @@ Functions:
 """
 
 import sqlite3
+import gc
 import newtutils.console as NewtCons
 import newtutils.files as NewtFiles
+
+
+def db_delayed_close(
+        database: str
+        ) -> bool:
+    """
+    Safely close a SQLite database connection and release all file handles.
+
+    This helper opens and closes the given SQLite database file to ensure that all pending transactions are committed
+    and the operating system releases the file lock completely.
+
+    Args:
+        database (str):
+            Path to the SQLite database file.
+
+    Returns:
+        bool:
+            True if the database was successfully closed and released,
+            otherwise False.
+    """
+
+    try:
+        conn = sqlite3.connect(database)
+        conn.commit()
+        conn.close()
+
+        # Force Python's garbage collector to immediately destroy any remaining SQLite connection or cursor objects that may still hold a file handle.
+        # This ensures that the database file is fully released by the operating system before deletion.
+        gc.collect()
+
+        return True
+
+    except Exception as e:
+        NewtCons.error_msg(
+            f"Exception: {e}",
+            location="Newt.sql.db_delayed_close",
+            stop=False
+        )
+        return False
 
 
 def sql_execute_query(
