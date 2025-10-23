@@ -10,7 +10,7 @@ Functions:
     def sql_execute_query(
         database: str,
         query: str,
-        params: tuple | None = None
+        params: tuple | list[tuple] | None = None
         ) -> list[dict] | int | None
     def sql_select_rows(
         database: str,
@@ -41,6 +41,7 @@ Functions:
 import sqlite3
 import gc
 import newtutils.console as NewtCons
+import newtutils.utility as NewtUtil
 import newtutils.files as NewtFiles
 
 
@@ -86,7 +87,7 @@ def db_delayed_close(
 def sql_execute_query(
         database: str,
         query: str,
-        params: tuple | None = None
+        params: tuple | list[tuple] | None = None
         ) -> list[dict] | int | None:
     """
     Execute a SQL query (SELECT, INSERT, UPDATE, or DELETE).
@@ -100,19 +101,21 @@ def sql_execute_query(
             Path to the SQLite database file.
         query (str):
             SQL query to execute.
-        params (tuple | None, optional):
-            Query parameters (if any).
+        params (tuple | list[tuple] | None, optional):
+            Query parameters (single or multiple sets).
+            Use a list of tuples for batch operations (executemany).
             Defaults to None.
 
     Returns:
         list[dict] | int | None:
-            For SELECT queries, a list of dictionaries representing rows.
-            For INSERT/UPDATE/DELETE, the number of affected rows.
+            For SELECT queries - a list of dictionaries representing rows.
+            For INSERT/UPDATE/DELETE - the number of affected rows.
             Returns None if an error occurs.
     """
 
-    if not NewtFiles._check_file_exists(database):
-        return None
+    # Ensure directory exists
+    NewtFiles._ensure_dir_exists(database)
+    result = None
 
     try:
         with sqlite3.connect(database) as conn:
@@ -120,22 +123,32 @@ def sql_execute_query(
             cursor = conn.cursor()
 
             if params:
-                cursor.execute(query, params)
-
+                # EXECUTEMANY - list of tuples
+                if isinstance(params, list):
+                    if NewtUtil.validate_input(params[0], tuple):
+                        cursor.executemany(query, params)
+                    else:
+                        raise TypeError("Invalid parameter format for executemany()")
+                # Normal single execution
+                else:
+                    cursor.execute(query, params)
             else:
                 cursor.execute(query)
 
             if query.strip().lower().startswith("select"):
-                return [dict(row) for row in cursor.fetchall()]
+                result = [dict(row) for row in cursor.fetchall()]
 
             else:
+                # DML/DLL
                 conn.commit()
-                return cursor.rowcount
+                result = cursor.rowcount
+
+        return result
 
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.sql.execute_query"
+            location="Newt.sql.sql_execute_query"
             )
         return None
 
