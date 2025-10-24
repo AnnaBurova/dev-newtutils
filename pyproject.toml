@@ -13,7 +13,8 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
 dependencies = [
-  "colorama>=0.4.6"
+  "colorama>=0.4.6",
+  "requests>=2.31.0"
 ]
 keywords = [
   "utilities", "console", "validation", "files", "sorting",
