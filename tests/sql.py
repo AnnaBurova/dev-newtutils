@@ -179,7 +179,7 @@ def cleanup_test_database(
         None
     """
 
-    print("\n--- CLEANUP ---")
+    print("--- CLEANUP ---")
 
     db_dir = os.path.dirname(db_path)
 

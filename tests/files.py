@@ -146,7 +146,7 @@ def cleanup_test_directory(
         None
     """
 
-    print("\n--- CLEANUP ---")
+    print("--- CLEANUP ---")
 
     for f in os.listdir(test_dir):
         file_path = os.path.join(test_dir, f)
