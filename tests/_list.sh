@@ -21,4 +21,9 @@ echo "d:/VS_Code/dev-newtutils/tests/files_output.txt"
 # & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/utility.py | Out-File utility_output.txt -Encoding utf8
 echo "d:/VS_Code/dev-newtutils/tests/utility_output.txt"
 
+# run sql.py and write pure UTF-8 + LF
+"C:/ProgramData/anaconda3/python.exe" "d:/VS_Code/dev-newtutils/tests/sql.py" > sql_output.txt
+# & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/sql.py | Out-File sql_output.txt -Encoding utf8
+echo "d:/VS_Code/dev-newtutils/tests/sql_output.txt"
+
 echo "✅ Done. Check if Files are saved with UTF-8 + LF"

@@ -1,0 +1,49 @@
+--------------------------------------------------
+
+Setup test database: D:\VS_Code\dev-newtutils\tests\sql_data\test.db
+Table creation result (-1=ok): -1
+
+--------------------------------------------------
+
+Test 1: Insert and Select operations
+Inserted rows: 3
+{'name': 'Apple', 'price': 1.5}
+{'name': 'Banana', 'price': 2.0}
+{'name': 'Cherry', 'price': 3.2}
+
+Inserted rows: 1
+{'name': 'Apple', 'price': 1.5}
+Inserted rows: 1
+{'name': 'Banana', 'price': 2.0}
+Inserted rows: 1
+{'name': 'Cherry', 'price': 3.2}
+
+Selected rows: 6
+{'id': 1, 'name': 'Apple', 'price': 1.5}
+{'id': 2, 'name': 'Banana', 'price': 2.0}
+{'id': 3, 'name': 'Cherry', 'price': 3.2}
+{'id': 4, 'name': 'Apple', 'price': 1.5}
+{'id': 5, 'name': 'Banana', 'price': 2.0}
+{'id': 6, 'name': 'Cherry', 'price': 3.2}
+
+--------------------------------------------------
+
+Test 2: Update operation
+Updated rows: 2
+After update: 2
+{'id': 2, 'name': 'Banana', 'price': 2.5}
+{'id': 5, 'name': 'Banana', 'price': 2.5}
+
+--------------------------------------------------
+
+Test 3: Export query to CSV
+CSV file created successfully: D:\VS_Code\dev-newtutils\tests\sql_data\items.csv
+
+--------------------------------------------------
+
+--- CLEANUP ---
+Deleting D:\VS_Code\dev-newtutils\tests\sql_data\test.db
+Deleting D:\VS_Code\dev-newtutils\tests\sql_data\items.csv
+Removed test directory: D:\VS_Code\dev-newtutils\tests\sql_data
+
+--------------------------------------------------

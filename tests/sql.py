@@ -189,7 +189,14 @@ def cleanup_test_database(
         if NewtSQL.db_delayed_close(db_path):
             os.remove(db_path)
 
-    if os.path.exists(db_dir) and not os.listdir(db_dir):
+    for f in os.listdir(db_dir):
+        file_path = os.path.join(db_dir, f)
+
+        if os.path.isfile(file_path):
+            print("Deleting", file_path)
+            os.remove(file_path)
+
+    if not os.listdir(db_dir):
         os.rmdir(db_dir)
         print("Removed test directory:", db_dir)
 
