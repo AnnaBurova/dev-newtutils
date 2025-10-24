@@ -1,17 +1,21 @@
-# 🧰 Installing and Developing the NewtUtils Module
+# ⚙️ Installing and Developing the NewtUtils Module
 
-This guide explains how to set up, install, and use **NewtUtils** — a collection of developer utilities by *NewtCode*.
+This guide explains how to install, use, update, and remove **NewtUtils** — a collection of developer utilities by *NewtCode*.
 
 ---
 
-## Project Structure
+## 🧱 Project Structure (for reference)
 
 ```
-dev-newtutils/         # Root repository
+dev-newtutils/
 │
-├── newtutils/         # Main Python package (module source)
+├── newtutils/         # Main Python package
 │   ├── __init__.py
+│   ├── console.py
+│   ├── utility.py
 │   ├── files.py
+│   ├── sql.py
+│   ├── network.py
 │   └── (other utility files)
 │
 ├── tests/             # Manual and automated test scripts
@@ -29,68 +33,97 @@ dev-newtutils/         # Root repository
 
 ---
 
-## `pyproject.toml` Overview
+## 📦 Requirements
 
-The `pyproject.toml` file defines how the package is built and installed.
-
-Key fields:
-
-* `requires-python` — the minimum supported Python version.
-* `dependencies` — required third-party libraries.
-* `[tool.setuptools.packages.find]` — tells setuptools where to find your package.
+- **Python 3.10 - 3.13**
+- **pip** or **conda** (Anaconda users supported)
+- Dependencies (installed automatically):
+  - `colorama` — for colored console output
+  - `requests` — for HTTP/network utilities
 
 ---
 
-## `__init__.py` Setup
+## 🧰 Local Installation Options (No PyPI)
 
-Keep `__init__.py` minimal and clean.
+Since **NewtUtils** is a local development library and not published on PyPI, installation should be done directly from your project folder.
 
-Example:
+### Option 🟢 — Regular local installation (static copy)
 
-```python
-from .console import error_msg
-from .utility import (
-    validate_input,
-    sorting_list,
-)
-
-__author__ = "Name"
-__version__ = "0.0.0"
-__description__ = "Description"
-```
-
----
-
-## Local Installation (Editable Mode)
-
-To make code changes available immediately without reinstalling:
+Installs a copy of the package.
 
 ```powershell
 cd D:\VS_Code\dev-newtutils
+
+python -m pip install --user .
+# OR for Anaconda
+C:/ProgramData/anaconda3/python.exe -m pip install --user .
+```
+
+> 🧩 Recommended when you only want to use **NewtUtils**, not actively edit its source code.
+
+> Safe for non-admin users.
+> `--user` — installs into your personal environment instead of `C:\ProgramData`.
+
+### Option 🔵 — Editable installation (recommended for development)
+
+Links the library directly to your working folder.
+Any code changes in `newtutils/` will take effect immediately.
+No reinstall needed.
+
+```powershell
+cd D:\VS_Code\dev-newtutils
+
+# Install in editable mode (user environment)
+python -m pip install --user -e .
+# OR for Anaconda
 C:/ProgramData/anaconda3/python.exe -m pip install --user -e .
 ```
 
-**Explanation:**
+> `--editable` or `-e` — link the project folder directly for live development
 
-* `-m pip` ensures that pip runs within the chosen Python environment.
-* `--user` — install for the current user only (no admin rights needed).
-* `-e .` — install in *editable mode* (links directly to your source folder).
-* You can now import `newtutils` in any project, and edits will take effect instantly.
+### Option 🟣 — Temporary usage (without installation)
 
-To uninstall later:
+If you just want to run or test functions directly from source:
 
-```powershell
-pip uninstall newtutils
+```python
+import sys
+import os
+newt_root = os.path.join("D:", "VS_Code", "dev-newtutils")
+if newt_root not in sys.path:
+  sys.path.append(newt_root)
+import newtutils as Newt
+```
+
+This approach doesn't install anything globally, it only extends your Python path for the current session.
+
+---
+
+## 📚 Usage Examples
+
+After installation (regular or editable), you can import **NewtUtils** anywhere:
+
+```python
+import newtutils as Newt
+import newtutils.console as NewtCons
+import newtutils.utility as NewtUtil
+import newtutils.files as NewtFiles
+import newtutils.sql as NewtSQL
+import newtutils.network as NewtNet
+
+Newt.error_msg("Something went wrong", stop=False)
+Newt.console.error_msg("Something went wrong", stop=False)
+NewtCons.error_msg("Something went wrong", stop=False)
 ```
 
 ---
 
-## VS Code Configuration
+## 🧿 VS Code + Anaconda Setup
 
-To help VS Code (and Pylance) detect your local package:
+To make VS Code recognize your local package:
 
-1. Create `.vscode/settings.json` inside your project.
-2. Add:
+1. Create or open `.vscode/settings.json`
+
+2. Add the following:
 
 ```json
 {
@@ -101,59 +134,22 @@ To help VS Code (and Pylance) detect your local package:
 }
 ```
 
-Reload VS Code (`Ctrl + Shift + P` > "Developer: Reload Window").
+3. Reload VS Code (`Ctrl + Shift + P` > "Developer: Reload Window").
 
 ---
 
-## Using NewtUtils in Other Projects
+## 🗑️ Uninstalling
 
-Once installed (even in editable mode), you can import it anywhere:
-
-```python
-# WORKS ONLY WITH CORRECT __init__.py
-# Examples of importing functions directly from the package (requires re-export in __init__.py)
-
-from newtutils import error_msg
-error_msg("Something went wrong", stop=False)
-
-import newtutils as Newt
-Newt.error_msg("Something went wrong", stop=False)
-```
-
-Alternative imports:
-
-```python
-# Direct import from the submodule (does not depend on __init__.py)
-# Alternative ways to access the same function directly from 'newtutils.console'
-
-import newtutils as Newt
-Newt.console.error_msg("Something went wrong", stop=False)
-
-from newtutils.console import error_msg as err
-err("Something went wrong", stop=False)
-
-import newtutils.console as NewtCons
-NewtCons.error_msg("Something went wrong", stop=False)
-```
-
-If you prefer not to install at all, just add the path at runtime:
-
-```python
-import sys
-sys.path.append(r"D:\VS_Code\dev-newtutils")
-from newtutils.console import error_msg
-```
-
----
-
-## Updating the Package
-
-Because the package is installed in editable mode,
-any file changes under `newtutils/` are applied immediately — no reinstall needed.
-
-If you modify the project metadata (e.g., version or dependencies) in `pyproject.toml`,
-re-run the install command:
+To remove the package completely:
 
 ```powershell
-python -m pip install -e .
+pip uninstall newtutils
+# OR for Anaconda global install (requires admin rights)
+C:/ProgramData/anaconda3/python.exe -m pip uninstall newtutils
+```
+
+If installed with `--user`, you can also manually delete:
+
+```
+%APPDATA%\Python\Python313\site-packages\newtutils*
 ```
