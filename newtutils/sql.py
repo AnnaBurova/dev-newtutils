@@ -303,7 +303,7 @@ def export_sql_query_to_csv(
     """
 
     try:
-        # Step 1: run query
+        # Step 1: run select query
         result = sql_select_rows(database, query, params)
 
         if not result:
@@ -314,11 +314,11 @@ def export_sql_query_to_csv(
                 )
             return False
 
-        # Step 2: extract headers and rows
+        # Step 2: extract headers and rows for CSV
         headers = list(result[0].keys())
         rows = [list(row.values()) for row in result]
 
-        # Step 3: save using files.py
+        # Step 3: save using newtutils/files.py
         NewtFiles.save_csv_to_file(csv_file, [headers] + rows, delimiter=delimiter)
 
         return True
