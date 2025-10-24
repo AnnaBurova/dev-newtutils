@@ -22,6 +22,7 @@ from .files import (
     read_csv_from_file, save_csv_to_file,
 )
 from .sql import (
+    db_delayed_close,
     sql_execute_query,
     sql_select_rows,
     sql_insert_row,
@@ -41,6 +42,7 @@ __all__ = [
     "read_json_from_file", "save_json_to_file",
     "read_csv_from_file", "save_csv_to_file",
     # SQL
+    "db_delayed_close",
     "sql_execute_query",
     "sql_select_rows",
     "sql_insert_row",
