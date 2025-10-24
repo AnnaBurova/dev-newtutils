@@ -1,7 +1,29 @@
 # 🧾 Changelog — *NewtUtils (NewtCode)*
 
-All notable changes to this project are documented here.
+All notable changes to this project are documented here.  
 This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PATCH`).
+
+---
+
+## 🏷️ v0.1.5 — SQL Utilities & Tests
+
+**Date:** 2025-10-24
+
+### ✨ Added
+
+- New module: `sql.py` — helper functions for SQLite operations:
+  - `sql_execute_query()`
+  - `sql_select_rows()`
+  - `sql_insert_row()`
+  - `sql_update_rows()`
+  - `export_sql_query_to_csv()`
+- New tests for `sql.py` ensuring stable query execution and CSV export.
+- Added `tests/sql_output.txt` for consistent test output validation.
+
+### 🛠️ Improved
+
+- Added `_check_file_exists()` in `files.py` for safe file validation.
+- Updated `__init__.py` to re-export SQL functions.
 
 ---
 
@@ -28,7 +50,6 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 ### ✨ Added
 
 - Added `sorting_dict_by_keys()` — sort lists of dictionaries by one or more keys.
-
   - Handles missing keys safely.
   - Supports ascending and descending order.
 
