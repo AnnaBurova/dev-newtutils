@@ -23,9 +23,11 @@ SOFTWARE.
 ================================================================================
 
 This project uses components from the Python standard library,
-licensed under the [Python Software Foundation License](https://docs.python.org/3/license.html):
-- sys, os
+licensed under the [Python Software Foundation License (PSF License)](https://docs.python.org/3/license.html):
+- sys, os, gc
 - csv, json
+- sqlite3 - included with Python under the PSF License;
+  the underlying SQLite engine is in the [Public Domain](https://sqlite.org/copyright.html).
 
 ================================================================================
 
