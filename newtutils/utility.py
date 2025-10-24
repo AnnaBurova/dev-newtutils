@@ -4,6 +4,9 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
+    def _beep_boop(
+        pause_s: float = 0.2
+        ) -> None
     def validate_input(
         value: object,
         expected_type: type | tuple[type, ...]
@@ -18,7 +21,45 @@ Functions:
         ) -> list[dict[str, object]]
 """
 
+import time
+import winsound
 import newtutils.console as NewtCons
+
+
+def _beep_boop(
+        pause_s: float = 0.2
+        ) -> None:
+    """
+    Play a short "beep-boop" sound notification on Windows systems.
+
+    This function uses the built-in winsound module to produce two tones:
+    a higher "beep" followed by a lower "boop".
+    Useful for alerts, debugging, or indicating user action is required.
+
+    Args:
+        pause_s (float, optional):
+            Delay between tones in seconds. Defaults to 0.2.
+
+    Returns:
+        None
+
+    Notes:
+        - Works only on Windows (winsound required).
+        - If an error occurs (e.g., no audio device), it is logged via NewtCons.error_msg().
+    """
+
+    try:
+        winsound.Beep(1200, 500)
+        time.sleep(pause_s)
+        winsound.Beep(800, 500)
+        time.sleep(1)
+
+    except Exception as e:
+        NewtCons.error_msg(
+            f"Exception: {e}",
+            location="Newt.utility._beep_boop",
+            stop=False
+        )
 
 
 def validate_input(
