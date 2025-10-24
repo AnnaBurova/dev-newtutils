@@ -24,16 +24,29 @@ SOFTWARE.
 
 This project uses components from the Python standard library,
 licensed under the [Python Software Foundation License (PSF License)](https://docs.python.org/3/license.html):
-- sys, os, gc
-- csv, json
+
+- sys - Python standard library
+- os - Python standard library
+- gc - Python standard library
+- csv - Python standard library
+- json - Python standard library
+- time - Python standard library
+- winsound - Python standard library (Windows-only module)
+
 - sqlite3 - included with Python under the PSF License;
   the underlying SQLite engine is in the [Public Domain](https://sqlite.org/copyright.html).
+  (the SQLite core code is released into the public domain by D. Richard Hipp)
 
 ================================================================================
 
 This project uses the following third-party libraries:
 
 - Colorama (BSD 3-Clause License)
-  Copyright (c) Jonathan Hartley & Arnon Yaari, 2013-2022
+  Copyright (c) 2010-2025 Jonathan Hartley & Arnon Yaari
   https://github.com/tartley/colorama
   https://pypi.org/project/colorama/
+
+- Requests (Apache License 2.0)
+  Copyright (c) 2011–2025 Kenneth Reitz & contributors
+  https://github.com/psf/requests
+  https://pypi.org/project/requests/
