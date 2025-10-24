@@ -1,14 +1,14 @@
 # 🦎 NewtUtils — Developer Utilities by `NewtCode`
 
-A lightweight Python toolkit providing reusable **console**, **validation**, and **sorting** utilities for developers.
+A lightweight, modular Python toolkit providing reusable utilities for **console**, **validation**, **sorting**, **files**, **SQL**, and **network** operations.
 
 ---
 
 ## 📖 Overview
 
-**NewtUtils** is designed as a small but extendable utility library to simplify common scripting and development tasks — such as structured console output, safe type validation, and flexible list or dictionary sorting.
+**NewtUtils** is designed as a small but extendable utility library to simplify common scripting and development tasks — such as structured console output, safe type validation, file management, SQL access, and API communication.
 
-The project uses clean, documented, and predictable function behavior.
+The project follows clean, documented, and predictable function behavior for maintainable and testable code.
 
 ---
 
@@ -20,21 +20,25 @@ The project uses clean, documented, and predictable function behavior.
 - 🗂️ **File utilities** — simple read/write support for text, JSON, and CSV
 - 🧠 **Error-tolerant design** — no data loss even during exceptions
 - 🗄️ **SQL utilities** — safe and simple SQLite operations (execute, select, insert, update, export)
+- 🌐 **Network utilities** — safe API requests and file downloading with retry logic
 
 ---
 
 ## ⚙️ Dependencies
 
 - [**Colorama**](https://pypi.org/project/colorama/) — cross-platform colored terminal output.  
-  Licensed under the [BSD License](https://github.com/tartley/colorama/blob/master/LICENSE.txt).
+  Licensed under the [BSD 3-Clause License](https://github.com/tartley/colorama/blob/master/LICENSE.txt).
 
-All other functions use only Python’s standard library.
+- [**Requests**](https://pypi.org/project/requests/) — HTTP library for API communication.  
+  Licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).
+
+All other modules rely only on the Python Standard Library.
 
 ---
 
 ## 🚀 Getting Started
 
-- [Installation Guide](INSTALL.md) — for setup instructions and configurations.
+- [Installation Guide](INSTALL.md) — setup instructions and configuration details.
 
 ---
 
