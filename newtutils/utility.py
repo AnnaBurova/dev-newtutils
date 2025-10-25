@@ -7,6 +7,10 @@ Functions:
     def _beep_boop(
         pause_s: float = 0.2
         ) -> None
+    def _retry_pause(
+        seconds: int = 5,
+        beep: bool = False
+        ) -> None
     def validate_input(
         value: object,
         expected_type: type | tuple[type, ...]
@@ -72,6 +76,52 @@ def _beep_boop(
             f"Exception: {e}",
             location="Newt.utility._beep_boop",
             stop=False
+        )
+
+
+def _retry_pause(
+        seconds: int = 5,
+        beep: bool = False
+        ) -> None:
+    """
+    Display a countdown timer and pause execution before retrying an operation.
+
+    This internal helper is primarily used by network-related functions
+    to wait between repeated attempts after a failed request.
+    It optionally plays an audible notification using NewtUtil.beep_boop().
+
+    Args:
+        seconds (int, optional):
+            Total wait time in seconds. Defaults to 5.
+        beep (bool, optional):
+            If True, plays a short "beep-boop" notification
+            before starting the countdown.
+            Defaults to False.
+
+    Returns:
+        None
+    """
+
+    if not isinstance(seconds, int) or seconds <= 0:
+        NewtCons.error_msg(
+            f"Invalid pause duration: {seconds}",
+            location="Newt.utility._retry_pause"
+        )
+        return
+
+    if beep:
+        _beep_boop()
+
+    print(f"Retrying in {seconds} seconds...")
+
+    try:
+        for i in range(seconds, 0, -1):
+            print(f"Time left: {i}s")
+            time.sleep(1)
+    except KeyboardInterrupt:
+        NewtCons.error_msg(
+            "Retry interrupted by user (Ctrl+C)",
+            location="Newt.utility._retry_pause"
         )
 
 
