@@ -117,6 +117,18 @@ def test_sorting_dict_by_keys() -> None:
     for item in dict_reverse:
         print(item)
 
+
+def test_beep_and_retry() -> None:
+    """
+    Test cross-platform safe beep and retry helpers.
+    """
+
+    print("Test 4: beep_boop() and _retry_pause()")
+    NewtUtil._beep_boop()
+    NewtUtil._retry_pause(7, beep=True)
+    print("✅ Test passed")
+
+
 if __name__ == "__main__":
     """Run all tests in sequence."""
     NewtCons._divider()
@@ -125,4 +137,6 @@ if __name__ == "__main__":
     test_sorting_list()
     NewtCons._divider()
     test_sorting_dict_by_keys()
+    NewtCons._divider()
+    test_beep_and_retry()
     NewtCons._divider()
