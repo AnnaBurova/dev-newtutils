@@ -214,3 +214,8 @@ if __name__ == "__main__":
     NewtCons._divider()
     cleanup_test_database(db_path)
     NewtCons._divider()
+
+    if not os.path.exists(os.path.dirname(db_path)):
+        print("✅ Database directory successfully cleaned up")
+    else:
+        print("⚠️ Directory not fully deleted:", os.path.dirname(db_path))

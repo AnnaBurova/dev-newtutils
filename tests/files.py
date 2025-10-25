@@ -173,3 +173,8 @@ if __name__ == "__main__":
     NewtCons._divider()
     cleanup_test_directory(test_dir)
     NewtCons._divider()
+
+    if not os.path.exists(test_dir):
+        print("✅ Test directory successfully cleaned up")
+    else:
+        print("⚠️ Directory not fully deleted:", test_dir)
