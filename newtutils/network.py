@@ -5,11 +5,12 @@ Created on 2025-10
 
 Functions:
     DEFAULT_HTTP_HEADERS: dict[str, str]
+        "User-Agent"
     def fetch_data_from_url(
         base_url: str,
         params: dict[str, object] | None = None,
         headers: dict[str, str] | None = None,
-        mode: str = "auto",  # "auto" / "alert" (auto) / "manual"
+        mode: str = "auto",
         timeout: int = 45,
         repeat_on_fail: bool = True
         ) -> str | None
@@ -183,12 +184,7 @@ def fetch_data_from_url(
         if not repeat_on_fail:
             return None
 
-        print("Retrying in 5 seconds...")
-        if beep_boop:
-            NewtUtil._beep_boop()
-        for i in range(5, 0, -1):
-            print(f"Time left: {i}s")
-            time.sleep(1)
+        NewtUtil._retry_pause(beep=beep_boop)
 
 
 def download_file_from_url(
@@ -294,8 +290,4 @@ def download_file_from_url(
         if not repeat_on_fail:
             return False
 
-        print("Retrying in 5 seconds...")
-        NewtUtil._beep_boop()
-        for i in range(5, 0, -1):
-            print(f"Time left: {i}s")
-            time.sleep(1)
+        NewtUtil._retry_pause(beep=True)
