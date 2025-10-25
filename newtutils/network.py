@@ -24,7 +24,6 @@ Functions:
 """
 
 import sys
-import time
 import requests
 import newtutils.console as NewtCons
 import newtutils.utility as NewtUtil
