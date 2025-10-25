@@ -97,7 +97,7 @@ def _check_file_exists(
             otherwise False.
     """
 
-    if os.path.exists(file_path):
+    if os.path.isfile(file_path):
         return True
 
     NewtCons.error_msg(
