@@ -24,6 +24,7 @@ Functions:
 """
 
 import sys
+import time
 import requests
 import newtutils.console as NewtCons
 import newtutils.utility as NewtUtil
@@ -108,16 +109,18 @@ def fetch_data_from_url(
 
     while True:
         try:
+            start_time = time.perf_counter()
             response = requests.get(
                 base_url,
                 params=params_to_send,
                 headers=headers,
                 timeout=timeout
                 )
+            elapsed = time.perf_counter() - start_time
             status = response.status_code
 
             print(f"Full URL: {response.url}")
-            print(f"Status: {status}")
+            print(f"Status: {status} | Response time: {elapsed:.3f} seconds")
 
             if status in (
                     200,  # Normal success
@@ -162,9 +165,11 @@ def fetch_data_from_url(
                     return None
 
         except requests.exceptions.ReadTimeout as e:
+            elapsed = time.perf_counter() - start_time
             NewtCons.error_msg(
                 f"ReadTimeout: {e}",
                 f"Timeout ({timeout}s) for {base_url}",
+                f"Request failed after {elapsed:.2f}s: {e}",
                 location="Newt.network.fetch_data_from_url",
                 stop=False
             )
@@ -172,7 +177,9 @@ def fetch_data_from_url(
                 NewtUtil._beep_boop()
 
         except requests.exceptions.RequestException as e:
+            elapsed = time.perf_counter() - start_time
             NewtCons.error_msg(
+                f"Request failed after {elapsed:.2f}s",
                 f"RequestException: {e}",
                 location="Newt.network.fetch_data_from_url",
                 stop=False
