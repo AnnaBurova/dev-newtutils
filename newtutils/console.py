@@ -4,7 +4,8 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
-    def _divider() -> None
+    def _divider(
+        ) -> None
     def error_msg(
         *args: object,
         location: str = "Unknown",
@@ -15,7 +16,8 @@ Functions:
 from colorama import Fore, Style
 
 
-def _divider() -> None:
+def _divider(
+        ) -> None:
     """Print a visual divider between tests."""
 
     print("\n" + "-" * 50 + "\n")
