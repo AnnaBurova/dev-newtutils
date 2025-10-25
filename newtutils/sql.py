@@ -64,6 +64,9 @@ def db_delayed_close(
             otherwise False.
     """
 
+    if not NewtFiles._check_file_exists(database):
+        return True
+
     try:
         conn = sqlite3.connect(database)
         conn.commit()
