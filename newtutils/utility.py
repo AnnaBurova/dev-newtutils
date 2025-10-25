@@ -21,8 +21,14 @@ Functions:
         ) -> list[dict[str, object]]
 """
 
+import os
 import time
-import winsound
+
+try:
+    import winsound
+except ImportError:
+    winsound = None
+
 import newtutils.console as NewtCons
 
 
@@ -47,6 +53,13 @@ def _beep_boop(
         - Works only on Windows (winsound required).
         - If an error occurs (e.g., no audio device), it is logged via NewtCons.error_msg().
     """
+
+    if os.name != "nt":
+        return
+
+    # Cross-platform safe beep.
+    if winsound is None:
+        return
 
     try:
         winsound.Beep(1200, 500)
