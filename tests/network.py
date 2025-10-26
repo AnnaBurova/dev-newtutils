@@ -49,4 +49,4 @@ if __name__ == "__main__":
     test_fetch_data_from_url_valid()
     NewtCons._divider()
 
-    print("✅ Test passed")
+    print("Test passed")
