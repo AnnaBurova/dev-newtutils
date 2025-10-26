@@ -31,4 +31,4 @@ echo "d:/VS_Code/dev-newtutils/tests/sql_output.txt"
 # & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/network.py | Out-File network_output.txt -Encoding utf8
 echo "d:/VS_Code/dev-newtutils/tests/network_output.txt"
 
-echo "✅ Done. Check if Files are saved with UTF-8 + LF"
+echo "Done. Check if Files are saved with UTF-8 + LF"

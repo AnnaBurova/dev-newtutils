@@ -32,3 +32,5 @@ Caught SystemExit with code: 1
 Program continues after catching SystemExit
 
 --------------------------------------------------
+
+Test passed

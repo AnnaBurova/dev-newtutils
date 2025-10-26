@@ -47,3 +47,6 @@ Deleting D:\VS_Code\dev-newtutils\tests\sql_data\items.csv
 Removed test directory: D:\VS_Code\dev-newtutils\tests\sql_data
 
 --------------------------------------------------
+
+Database directory successfully cleaned up
+Test passed
