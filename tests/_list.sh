@@ -26,4 +26,9 @@ echo "d:/VS_Code/dev-newtutils/tests/utility_output.txt"
 # & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/sql.py | Out-File sql_output.txt -Encoding utf8
 echo "d:/VS_Code/dev-newtutils/tests/sql_output.txt"
 
+# run network.py and write pure UTF-8 + LF
+"C:/ProgramData/anaconda3/python.exe" "d:/VS_Code/dev-newtutils/tests/network.py" > network_output.txt
+# & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/network.py | Out-File network_output.txt -Encoding utf8
+echo "d:/VS_Code/dev-newtutils/tests/network_output.txt"
+
 echo "✅ Done. Check if Files are saved with UTF-8 + LF"
