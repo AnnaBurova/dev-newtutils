@@ -71,3 +71,5 @@ if __name__ == "__main__":
     NewtCons._divider()
     test_error_with_stop()
     NewtCons._divider()
+
+    print("Test passed")

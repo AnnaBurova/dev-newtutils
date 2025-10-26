@@ -126,7 +126,6 @@ def test_beep_and_retry() -> None:
     print("Test 4: beep_boop() and _retry_pause()")
     NewtUtil._beep_boop()
     NewtUtil._retry_pause(7, beep=True)
-    print("Test passed")
 
 
 if __name__ == "__main__":
@@ -140,3 +139,5 @@ if __name__ == "__main__":
     NewtCons._divider()
     test_beep_and_retry()
     NewtCons._divider()
+
+    print("Test passed")

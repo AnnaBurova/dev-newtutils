@@ -178,3 +178,5 @@ if __name__ == "__main__":
         print("Test directory successfully cleaned up")
     else:
         print("Directory not fully deleted:", test_dir)
+
+    print("Test passed")

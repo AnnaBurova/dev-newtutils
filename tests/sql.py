@@ -219,3 +219,5 @@ if __name__ == "__main__":
         print("Database directory successfully cleaned up")
     else:
         print("Directory not fully deleted:", os.path.dirname(db_path))
+
+    print("Test passed")
