@@ -1,8 +1,12 @@
 """
 NewtUtils — A collection of developer utilities and helpers by NewtCode.
 
-This package provides console and data utilities designed for safe,
-human-readable feedback and reliable sorting operations.
+This package provides a set of high-level modules for:
+- Console output (colorized errors and structured feedback)
+- Utility helpers (validation, sorting, timing, beep notifications)
+- File handling (text, JSON, CSV)
+- SQLite operations
+- Network requests and file downloads
 
 Created on 2025-10
 
@@ -10,17 +14,25 @@ Created on 2025-10
 """
 
 # === Imports from modules ===
+
+# Console
 from .console import error_msg
+
+# Utility
 from .utility import (
     validate_input,
     sorting_list,
     sorting_dict_by_keys,
 )
+
+# Files
 from .files import (
     read_text_from_file, save_text_to_file,
     read_json_from_file, save_json_to_file,
     read_csv_from_file, save_csv_to_file,
 )
+
+# SQL
 from .sql import (
     db_delayed_close,
     sql_execute_query,
@@ -29,6 +41,14 @@ from .sql import (
     sql_update_rows,
     export_sql_query_to_csv,
 )
+
+# Network
+from .network import (
+    fetch_data_from_url,
+    download_file_from_url,
+)
+
+# === Metadata ===
 
 __all__ = [
     # Console
@@ -48,13 +68,16 @@ __all__ = [
     "sql_insert_row",
     "sql_update_rows",
     "export_sql_query_to_csv",
+    # Network
+    "fetch_data_from_url",
+    "download_file_from_url",
 ]
 
-__author__: str = "NewtCode Anna Burova"
-__description__: str = (
-    "NewtUtils — A collection of developer utilities and helpers "
-    "for console messaging and structured data handling."
+__version__ = "0.1.6"
+__author__ = "NewtCode Anna Burova"
+__description__ = (
+    "NewtUtils — A modular Python toolkit providing reusable utilities "
+    "for console messaging, file I/O, SQL, and network operations."
 )
-__version__: str = "0.1.5"
-__license__: str = "MIT"
-__url__: str = "https://github.com/AnnaBurova/dev-newtutils"
+__license__ = "MIT"
+__url__ = "https://github.com/AnnaBurova/dev-newtutils"
