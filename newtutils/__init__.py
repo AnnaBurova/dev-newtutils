@@ -1,16 +1,16 @@
 """
-NewtUtils — A collection of developer utilities and helpers by NewtCode.
-
-This package provides a set of high-level modules for:
-- Console output (colorized errors and structured feedback)
-- Utility helpers (validation, sorting, timing, beep notifications)
-- File handling (text, JSON, CSV)
-- SQLite operations
-- Network requests and file downloads
-
 Created on 2025-10
 
 @author: NewtCode Anna Burova
+
+NewtUtils - A collection of utility functions for common programming tasks by NewtCode.
+
+Modules:
+    console: Console input/output operations
+    utility: General purpose utilities
+    files: File system operations
+    sql: Database operations
+    network: Network request handling
 """
 
 # === Imports from modules ===

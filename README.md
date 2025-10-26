@@ -1,6 +1,6 @@
 # 🦎 NewtUtils — Developer Utilities by `NewtCode`
 
-A lightweight, modular Python toolkit providing reusable utilities for **console**, **validation**, **sorting**, **files**, **SQL**, and **network** operations.
+A collection of utility functions for common programming tasks.
 
 ---
 
