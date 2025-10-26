@@ -5,7 +5,32 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
-## 🏷️ v0.1.5 — SQL Utilities & Tests
+## 🏷️ v0.1.6 — Network Utilities
+
+**Date:** 2025-10-26
+
+### ✨ Added
+
+- New module: `network.py` — external HTTP and file-download utilities:
+  - `fetch_data_from_url()`
+  - `download_file_from_url()`
+- Added sound notification support (`NewtUtil._beep_boop()`).
+- Introduced interactive and automatic retry modes for unstable APIs.
+
+### 🧩 Dependencies
+
+- Added `requests` (Apache 2.0 License) for HTTP communication.
+
+### 🪪 License
+
+- Expanded license documentation to include:
+  - Python StdLib modules (`time`, `winsound`, `sqlite3`)
+  - Requests (Apache 2.0)
+  - Clarified SQLite Public Domain status.
+
+---
+
+## 🏷️ v0.1.5 — SQL Utilities
 
 **Date:** 2025-10-24
 
