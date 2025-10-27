@@ -40,29 +40,19 @@ def _beep_boop(
         pause_s: float = 0.2
         ) -> None:
     """
-    Play a short "beep-boop" sound notification on Windows systems.
+    Play a short "beep-boop" notification sound on Windows systems.
 
-    This function uses the built-in winsound module to produce two tones:
-    a higher "beep" followed by a lower "boop".
-    Useful for alerts, debugging, or indicating user action is required.
+    Produces two tones using the built-in `winsound` module:
+    a higher-pitched "beep" followed by a lower "boop".
+    Used for alerts or indicating that user attention is required.
 
     Args:
-        pause_s (float, optional):
+        pause_s (float):
             Delay between tones in seconds. Defaults to 0.2.
-
-    Returns:
-        None
-
-    Notes:
-        - Works only on Windows (winsound required).
-        - If an error occurs (e.g., no audio device), it is logged via NewtCons.error_msg().
     """
 
-    if os.name != "nt":
-        return
-
     # Cross-platform safe beep.
-    if winsound is None:
+    if os.name != "nt" or winsound is None:
         return
 
     try:
