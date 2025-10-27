@@ -74,22 +74,18 @@ def _retry_pause(
         beep: bool = False
         ) -> None:
     """
-    Display a countdown timer and pause execution before retrying an operation.
+    Display a countdown and pause before retrying an operation.
 
-    This internal helper is primarily used by network-related functions
-    to wait between repeated attempts after a failed request.
-    It optionally plays an audible notification using NewtUtil.beep_boop().
+    Used primarily by network-related functions
+    to wait between retry attempts after a failed request.
+    Optionally plays a short sound notification using `_beep_boop()`.
 
     Args:
-        seconds (int, optional):
+        seconds (int):
             Total wait time in seconds. Defaults to 5.
-        beep (bool, optional):
-            If True, plays a short "beep-boop" notification
-            before starting the countdown.
+        beep (bool):
+            If True, plays a "beep-boop" notification before the countdown.
             Defaults to False.
-
-    Returns:
-        None
     """
 
     if not isinstance(seconds, int) or seconds <= 0:
