@@ -47,6 +47,7 @@ import os
 import csv
 import json
 import newtutils.console as NewtCons
+import newtutils.utility as NewtUtil
 
 
 def _ensure_dir_exists(
@@ -128,6 +129,101 @@ def _normalize_newlines(
     """
 
     return text.replace("\r\n", "\n")
+
+
+def choose_file_from_folder(
+        folder_path: str
+        ) -> str | None:
+    """
+    Display files in a folder with numeric indices and let the user choose one.
+
+    The function lists all files from the specified directory, assigns each
+    a numeric index (starting from 1), and prompts the user to select one
+    by entering its number.
+
+    The user can enter a number corresponding to a file or 0 to cancel.
+    The function loops until a valid input is entered.
+
+    Args:
+        folder_path (str):
+            Path to the folder containing files.
+
+    Returns:
+        str | None:
+            The selected file name (without path)
+            or None if selection failed or cancelled.
+    """
+
+    # Validate folder path
+    if not NewtUtil.validate_input(folder_path, str):
+        return None
+
+    if not os.path.isdir(folder_path):
+        NewtCons.error_msg(
+            f"Folder not found: {folder_path}",
+            location="Newt.files.choose_file_from_folder",
+            stop=False
+        )
+        return None
+
+    # Get file list
+    try:
+        file_list = sorted([
+            f for f in os.listdir(folder_path)
+            if os.path.isfile(os.path.join(folder_path, f))
+        ])
+    except Exception as e:
+        NewtCons.error_msg(
+            f"Failed to list directory: {e}",
+            location="Newt.files.choose_file_from_folder",
+            stop=False
+        )
+        return None
+
+    if not file_list:
+        print("No files found in this folder.")
+        return None
+
+    # Display numbered list
+    print("\nAvailable files:", len(file_list))
+    for idx, name in enumerate(file_list, start=1):
+        print(f"{idx:>3}: {name}")
+    print("  0: Exit / Cancel")
+
+    # Loop until valid input
+    while True:
+        try:
+            choice = input("\nEnter file number (0 to exit): ").strip()
+
+            if choice == "0":
+                print("Selection cancelled.")
+                return None
+
+            if not choice.isdigit():
+                print("Invalid input. Please enter a number.")
+                continue
+
+            index = int(choice)
+
+            if 1 <= index <= len(file_list):
+                selected_file = file_list[index - 1]
+                print(f"Selected file: {selected_file}\n")
+                return selected_file
+
+            else:
+                print("Number out of range. Try again.")
+
+        except KeyboardInterrupt:
+            print("\nSelection cancelled by user.")
+            return None
+
+        except Exception as e:
+            NewtCons.error_msg(
+                f"Exception: {e}",
+                location="Newt.files.choose_file_from_folder",
+                stop=False
+            )
+            return None
 
 
 # === TEXT ===
