@@ -18,7 +18,12 @@ from colorama import Fore, Style
 
 def _divider(
         ) -> None:
-    """Print a visual divider between tests."""
+    """
+    Print a visual divider between console sections.
+
+    This helper function displays a horizontal line to visually separate blocks of console output.
+    Primarily used for readability in testing and debugging logs.
+    """
 
     print("\n" + "-" * 50 + "\n")
 
@@ -29,30 +34,28 @@ def error_msg(
         stop: bool = True
         ) -> None:
     """
-    Print error messages in red to the console and optionally stop the program.
+    Print error messages in red and optionally terminate the program.
 
     This function displays one or more messages in bright red color using Colorama.
-    It is designed for CLI tools, scripts, and any console-based feedback system.
-    The `location` argument helps identify where the error originated.
+    It is intended for CLI tools and debugging utilities
+    that require structured visual feedback in the console.
+    The `location` parameter identifies where the error originated.
 
     Args:
         *args (object):
             One or more messages or objects to print.
-        location (str, optional):
+        location (str):
             Name of the function or module where the error occurred.
             Defaults to "Unknown".
-            Example: "Newt.files.read_csv_from_file"
-        stop (bool, optional):
+            Example:
+                Newt.files.read_csv_from_file
+        stop (bool):
             If True, the program terminates with exit code 1 after printing.
             Defaults to True.
 
-    Returns:
-        None
-
     Raises:
         SystemExit:
-            Raised if stop=True,
-            terminating the program with exit code 1.
+            Raised if `stop=True`, terminating the program with exit code 1.
     """
 
     message = "\n".join(str(arg) for arg in args)
