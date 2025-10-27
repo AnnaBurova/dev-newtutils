@@ -329,18 +329,30 @@ def read_json_from_file(
             or an empty list if the file is missing or invalid.
     """
 
+    if not NewtUtil.validate_input(file_name, str):
+        return []
+
     if not _check_file_exists(file_name):
         return []
 
     try:
         with open(file_name, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+
+        # Normalize output to always be a list of dicts
+        if isinstance(data, dict) or isinstance(data, list):
+            return data
+        else:
+            NewtCons.error_msg(
+                f"Unexpected JSON structure: {type(data)}",
+                location="Newt.files.read_json_from_file"
+            )
+            return []
 
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.files.read_json_from_file",
-            stop=False
+            location="Newt.files.read_json_from_file"
             )
         return []
 
