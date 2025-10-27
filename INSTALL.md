@@ -90,7 +90,7 @@ import sys
 import os
 newt_root = os.path.join("D:", "VS_Code", "dev-newtutils")
 if newt_root not in sys.path:
-  sys.path.append(newt_root)
+    sys.path.append(newt_root)
 import newtutils as Newt
 ```
 
