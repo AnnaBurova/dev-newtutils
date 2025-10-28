@@ -13,7 +13,8 @@ Functions:
         ) -> None
     def validate_input(
         value: object,
-        expected_type: type | tuple[type, ...]
+        expected_type: type | tuple[type, ...],
+        stop: bool = True
         ) -> bool
     def sorting_list(
         json_input: list
@@ -113,32 +114,43 @@ def _retry_pause(
 
 def validate_input(
         value: object,
-        expected_type: type | tuple[type, ...]
+        expected_type: type | tuple[type, ...],
+        stop: bool = True
         ) -> bool:
     """
     Validate that a given value matches the expected type.
 
-    If validation fails, an error message is printed using NewtCons.error_msg()
-    but the program continues to run.
+    If the value does not match the expected type,
+    logs an error message using `NewtCons.error_msg()`.
+    The function can optionally stop execution depending on the `stop` flag.
 
     Args:
         value (object):
-            The input value to validate.
+            The value to validate.
         expected_type (type | tuple[type, ...]):
-            The expected data type or tuple of types.
+            The expected type or tuple of allowed types.
+        stop (bool):
+            If True, stops execution after logging the error.
+            If False, logs the error but continues execution.
+            Defaults to True.
 
     Returns:
-        bool:
+        out (bool):
             True if the value matches the expected type, otherwise False.
+
+    Raises:
+        SystemExit:
+            Raised when `stop=True` and the value type is invalid.
     """
 
     if not isinstance(value, expected_type):
         NewtCons.error_msg(
             f"Expected {expected_type}, got {type(value)}",
             location="Newt.utility.validate_input",
-            stop=False
+            stop=stop
         )
         return False
+
     return True
 
 
