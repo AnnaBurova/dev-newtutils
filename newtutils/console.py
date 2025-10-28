@@ -63,7 +63,7 @@ def error_msg(
             Name of the function or module where the error occurred.
             Defaults to "Unknown".
             Example:
-                Newt.files.read_csv_from_file
+            Newt.console.error_msg
         stop (bool):
             If True, the program terminates with exit code 1 after printing.
             Defaults to True.
