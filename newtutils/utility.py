@@ -4,9 +4,6 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
-    def _beep_boop(
-        pause_s: float = 0.2
-        ) -> None
     def _retry_pause(
         seconds: int = 5,
         beep: bool = False
@@ -22,48 +19,9 @@ Functions:
         ) -> list[dict[str, object]]
 """
 
-import os
 import time
 
-try:
-    import winsound
-except ImportError:
-    winsound = None
-
 import newtutils.console as NewtCons
-
-
-def _beep_boop(
-        pause_s: float = 0.2
-        ) -> None:
-    """
-    Play a short "beep-boop" notification sound on Windows systems.
-
-    Produces two tones using the built-in `winsound` module:
-    a higher-pitched "beep" followed by a lower "boop".
-    Used for alerts or indicating that user attention is required.
-
-    Args:
-        pause_s (float):
-            Delay between tones in seconds. Defaults to 0.2.
-    """
-
-    # Cross-platform safe beep.
-    if os.name != "nt" or winsound is None:
-        return
-
-    try:
-        winsound.Beep(1200, 500)
-        time.sleep(pause_s)
-        winsound.Beep(800, 500)
-        time.sleep(1)
-
-    except Exception as e:
-        NewtCons.error_msg(
-            f"Exception: {e}",
-            location="Newt.utility._beep_boop",
-            stop=False
-        )
 
 
 def _retry_pause(
@@ -93,7 +51,7 @@ def _retry_pause(
         return
 
     if beep:
-        _beep_boop()
+        NewtCons._beep_boop()
 
     print(f"Retrying in {seconds} seconds...")
 

@@ -16,9 +16,19 @@ Functions:
         expected_type: type | tuple[type, ...],
         stop: bool = True
         ) -> bool
+    def _beep_boop(
+        pause_s: float = 0.2
+        ) -> None
 """
 
+import os
+import time
 from colorama import Fore, Style
+
+try:
+    import winsound
+except ImportError:
+    winsound = None
 
 
 def _divider(
@@ -116,3 +126,37 @@ def validate_input(
         return False
 
     return True
+
+
+def _beep_boop(
+        pause_s: float = 0.2
+        ) -> None:
+    """
+    Play a short "beep-boop" notification sound on Windows systems.
+
+    Produces two tones using the built-in `winsound` module:
+    a higher-pitched "beep" followed by a lower "boop".
+    Used for alerts or indicating that user attention is required.
+
+    Args:
+        pause_s (float):
+            Delay between tones in seconds.
+            Defaults to 0.2.
+    """
+
+    # Cross-platform safe beep.
+    if os.name != "nt" or winsound is None:
+        return
+
+    try:
+        winsound.Beep(1200, 500)
+        time.sleep(pause_s)
+        winsound.Beep(800, 500)
+        time.sleep(1)
+
+    except Exception as e:
+        error_msg(
+            f"Exception: {e}",
+            location="Newt.console._beep_boop",
+            stop=False
+        )
