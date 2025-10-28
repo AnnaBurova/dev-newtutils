@@ -11,11 +11,6 @@ Functions:
         seconds: int = 5,
         beep: bool = False
         ) -> None
-    def validate_input(
-        value: object,
-        expected_type: type | tuple[type, ...],
-        stop: bool = True
-        ) -> bool
     def sorting_list(
         json_input: list,
         stop: bool = True
@@ -113,48 +108,6 @@ def _retry_pause(
         )
 
 
-def validate_input(
-        value: object,
-        expected_type: type | tuple[type, ...],
-        stop: bool = True
-        ) -> bool:
-    """
-    Validate that a given value matches the expected type.
-
-    If the value does not match the expected type,
-    logs an error message using `NewtCons.error_msg()`.
-    The function can optionally stop execution depending on the `stop` flag.
-
-    Args:
-        value (object):
-            The value to validate.
-        expected_type (type | tuple[type, ...]):
-            The expected type or tuple of allowed types.
-        stop (bool):
-            If True, stops execution after logging the error.
-            If False, logs the error but continues execution.
-            Defaults to True.
-
-    Returns:
-        out (bool):
-            True if the value matches the expected type, otherwise False.
-
-    Raises:
-        SystemExit:
-            Raised when `stop=True` and the value type is invalid.
-    """
-
-    if not isinstance(value, expected_type):
-        NewtCons.error_msg(
-            f"Expected {expected_type}, got {type(value)}",
-            location="Newt.utility.validate_input",
-            stop=stop
-        )
-        return False
-
-    return True
-
-
 def sorting_list(
         json_input: list,
         stop: bool = True
@@ -190,7 +143,7 @@ def sorting_list(
             Raised when `stop=True` and the input contains invalid data types.
     """
 
-    if not validate_input(json_input, list, stop=stop):
+    if not NewtCons.validate_input(json_input, list, stop=stop):
         return []
 
     try:
@@ -246,7 +199,7 @@ def sorting_dict_by_keys(
             with entries missing those keys placed at the end.
     """
 
-    if not validate_input(data, list):
+    if not NewtCons.validate_input(data, list):
         return []
 
     if not all(isinstance(d, dict) for d in data):

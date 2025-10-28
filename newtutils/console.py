@@ -11,6 +11,11 @@ Functions:
         location: str = "Unknown",
         stop: bool = True
         ) -> None
+    def validate_input(
+        value: object,
+        expected_type: type | tuple[type, ...],
+        stop: bool = True
+        ) -> bool
 """
 
 from colorama import Fore, Style
@@ -68,3 +73,46 @@ def error_msg(
 
     if stop:
         raise SystemExit(1)
+
+
+def validate_input(
+        value: object,
+        expected_type: type | tuple[type, ...],
+        stop: bool = True
+        ) -> bool:
+    """
+    Validate that a given value matches the expected type.
+
+    If the value does not match the expected type,
+    logs an error message using `NewtCons.error_msg()`.
+    The function can optionally stop execution depending on the `stop` flag.
+
+    Args:
+        value (object):
+            The value to validate.
+        expected_type (type | tuple[type, ...]):
+            The expected type or tuple of allowed types.
+        stop (bool):
+            If True, stops execution after logging the error.
+            If False, logs the error but continues execution.
+            Defaults to True.
+
+    Returns:
+        out (bool):
+            True if the value matches the expected type,
+            otherwise False.
+
+    Raises:
+        SystemExit:
+            Raised when `stop=True` and the value type is invalid.
+    """
+
+    if not isinstance(value, expected_type):
+        error_msg(
+            f"Expected {expected_type}, got {type(value)}",
+            location="Newt.console.validate_input",
+            stop=stop
+        )
+        return False
+
+    return True

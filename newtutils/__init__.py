@@ -16,11 +16,13 @@ Modules:
 # === Imports from modules ===
 
 # Console
-from .console import error_msg
+from .console import (
+    error_msg,
+    validate_input,
+)
 
 # Utility
 from .utility import (
-    validate_input,
     sorting_list,
     sorting_dict_by_keys,
 )
@@ -53,8 +55,8 @@ from .network import (
 __all__ = [
     # Console
     "error_msg",
-    # Utility
     "validate_input",
+    # Utility
     "sorting_list",
     "sorting_dict_by_keys",
     # Files
