@@ -17,8 +17,9 @@ Functions:
         stop: bool = True
         ) -> bool
     def sorting_list(
-        json_input: list
-        ) -> list[int | str]
+        json_input: list,
+        stop: bool = True
+        ) -> list[str | int]
     def sorting_dict_by_keys(
         data: list[dict[str, object]],
         *keys: str,
@@ -155,47 +156,69 @@ def validate_input(
 
 
 def sorting_list(
-        json_input: list
-        ) -> list[int | str]:
+        json_input: list,
+        stop: bool = True
+        ) -> list[str | int]:
     """
     Remove duplicates from a list and return a sorted result.
 
-    This function accepts a list of comparable values, removes any
-    duplicate entries, and returns a new list sorted in ascending order.
-    Strings are listed first, followed by integers.
+    The function accepts a list containing only strings and integers,
+    removes duplicate entries, and returns all unique items in ascending order:
+    1. Strings (sorted alphabetically)
+    2. Integers (sorted numerically)
+
+    If the list contains elements of other types,
+    an error message is logged using `NewtCons.error_msg()`.
+    The function stops execution if `stop=True`.
 
     Args:
-        json_input (list[object]):
-            A list of items that support comparison.
+        json_input (list):
+            The input list to process.
+            Must contain only `str` or `int` values.
+        stop (bool):
+            If True, stops execution when invalid data is detected.
+            If False, logs the error and returns an empty list.
+            Defaults to True.
 
     Returns:
-        list[int | str]:
-            A new list containing unique items from `json_input`,
+        out (list[str | int]):
+            Unique elements from the input list,
             sorted alphabetically (strings) and numerically (integers).
+
+    Raises:
+        SystemExit:
+            Raised when `stop=True` and the input contains invalid data types.
     """
 
-    if not validate_input(json_input, list):
+    if not validate_input(json_input, list, stop=stop):
         return []
 
     try:
+        # Validate all elements
+        if not all(isinstance(x, (str, int)) for x in json_input):
+            NewtCons.error_msg(
+                f"json_input must have only str and int types: {json_input}",
+                location="Newt.utility.sorting_list",
+                stop=stop
+            )
+            return []
+
         # Remove duplicates
         unique_values = set(json_input)
 
-        # Separate by type for deterministic ordering
-        str_values = sorted(x for x in unique_values if isinstance(x, str))
-        int_values = sorted(x for x in unique_values if isinstance(x, int))
+        # Separate by type and sort
+        str_values = sorted([x for x in unique_values if isinstance(x, str)])
+        int_values = sorted([x for x in unique_values if isinstance(x, int)])
 
-        # Combine strings first, then integers
-        json_output = str_values + int_values
-
-        return json_output
+        # Strings first, then integers
+        return str_values + int_values
 
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
             location="Newt.utility.sorting_list",
-            stop=False
-            )
+            stop=stop
+        )
         return []
 
 
