@@ -230,20 +230,20 @@ def sorting_dict_by_keys(
     """
     Sort a list of dictionaries by one or more keys.
 
-    Dictionaries missing a sorting key are placed at the end.
+    Missing or None-valued keys are placed at the end of the result.
 
     Args:
         data (list[dict[str, object]]):
             The list of dictionaries to sort.
         *keys (str):
-            One or more dictionary keys to sort by, in priority order.
-        reverse (bool, optional):
+            One or more keys to sort by, in priority order.
+        reverse (bool):
             If True, sort in descending order. Defaults to False.
 
     Returns:
-        list[dict[str, object]]:
+        out (list[dict[str, object]]):
             A new list sorted by the specified keys,
-            with dictionaries missing a key placed at the end.
+            with entries missing those keys placed at the end.
     """
 
     if not validate_input(data, list):
@@ -251,24 +251,22 @@ def sorting_dict_by_keys(
 
     if not all(isinstance(d, dict) for d in data):
         NewtCons.error_msg(
-            "Expected a list of dicts",
-            location="Newt.utility.sorting_dict_by_keys",
-            stop=False
-            )
+            "Expected a list of dictionaries",
+            location="Newt.utility.sorting_dict_by_keys"
+        )
         return []
 
     if not all(isinstance(k, str) for k in keys):
         NewtCons.error_msg(
             "Keys must be strings",
-            location="Newt.utility.sorting_dict_by_keys",
-            stop=False
-            )
+            location="Newt.utility.sorting_dict_by_keys"
+        )
         return data
 
     try:
         def sort_key(d: dict[str, object]) -> tuple[object, ...]:
             """
-            Generate a sorting key that places missing values (None) at the end.
+            Generate a sorting key that moves missing values to the end.
             """
             return tuple((d.get(k) is None, d.get(k)) for k in keys)
 
@@ -279,5 +277,5 @@ def sorting_dict_by_keys(
             f"Exception: {e}",
             location="Newt.utility.sorting_dict_by_keys",
             stop=False
-            )
+        )
         return data
