@@ -128,7 +128,7 @@ def sql_execute_query(
             if params:
                 # EXECUTEMANY - list of tuples
                 if isinstance(params, list):
-                    if NewtUtil.validate_input(params[0], tuple):
+                    if NewtCons.validate_input(params[0], tuple):
                         cursor.executemany(query, params)
                     else:
                         raise TypeError("Invalid parameter format for executemany()")

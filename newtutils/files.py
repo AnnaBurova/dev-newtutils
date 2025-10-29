@@ -155,7 +155,7 @@ def choose_file_from_folder(
     """
 
     # Validate folder path
-    if not NewtUtil.validate_input(folder_path, str):
+    if not NewtCons.validate_input(folder_path, str):
         return None
 
     if not os.path.isdir(folder_path):
@@ -329,7 +329,7 @@ def read_json_from_file(
             or an empty list if the file is missing or invalid.
     """
 
-    if not NewtUtil.validate_input(file_name, str):
+    if not NewtCons.validate_input(file_name, str):
         return []
 
     if not _check_file_exists(file_name):

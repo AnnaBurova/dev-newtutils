@@ -91,12 +91,12 @@ def fetch_data_from_url(
             The response text if successful, otherwise None.
     """
 
-    if not NewtUtil.validate_input(base_url, str):
+    if not NewtCons.validate_input(base_url, str):
         return None
 
     params_to_send = None
     if params is not None:
-        if not NewtUtil.validate_input(params, dict):
+        if not NewtCons.validate_input(params, dict):
             return None
 
         # Ensure params are in a requests-compatible form (mapping of str->str)
@@ -144,7 +144,7 @@ def fetch_data_from_url(
                     stop=False
                 )
                 if beep_boop:
-                    NewtUtil._beep_boop()
+                    NewtCons._beep_boop()
 
                 # MANUAL DECISION MODE
                 if mode == "manual":
@@ -174,7 +174,7 @@ def fetch_data_from_url(
                 stop=False
             )
             if beep_boop:
-                NewtUtil._beep_boop()
+                NewtCons._beep_boop()
 
         except requests.exceptions.RequestException as e:
             elapsed = time.perf_counter() - start_time
@@ -185,12 +185,12 @@ def fetch_data_from_url(
                 stop=False
             )
             if beep_boop:
-                NewtUtil._beep_boop()
+                NewtCons._beep_boop()
 
         if not repeat_on_fail:
             return None
 
-        NewtUtil._retry_pause(beep=beep_boop)
+        NewtCons._retry_pause(beep=beep_boop)
 
 
 def download_file_from_url(
@@ -228,10 +228,10 @@ def download_file_from_url(
             otherwise False.
     """
 
-    if not NewtUtil.validate_input(file_url, str):
+    if not NewtCons.validate_input(file_url, str):
         return False
 
-    if not NewtUtil.validate_input(save_path, str):
+    if not NewtCons.validate_input(save_path, str):
         return False
 
     # Assign safe default headers
@@ -274,7 +274,7 @@ def download_file_from_url(
                     location="Newt.network.download_file_from_url",
                     stop=False
                 )
-                NewtUtil._beep_boop()
+                NewtCons._beep_boop()
 
         except requests.exceptions.ReadTimeout as e:
             NewtCons.error_msg(
@@ -283,7 +283,7 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtUtil._beep_boop()
+            NewtCons._beep_boop()
 
         except requests.exceptions.RequestException as e:
             NewtCons.error_msg(
@@ -291,9 +291,9 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtUtil._beep_boop()
+            NewtCons._beep_boop()
 
         if not repeat_on_fail:
             return False
 
-        NewtUtil._retry_pause(beep=True)
+        NewtCons._retry_pause(beep=True)
