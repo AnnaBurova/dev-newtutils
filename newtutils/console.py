@@ -152,6 +152,13 @@ def _beep_boop(
     if os.name != "nt" or winsound is None:
         return
 
+    if not isinstance(pause_s, (int, float)) or pause_s < 0:
+        error_msg(
+            f"Invalid pause duration: {pause_s}",
+            location="Newt.console._beep_boop"
+        )
+        return
+
     try:
         winsound.Beep(1200, 500)
         time.sleep(pause_s)
