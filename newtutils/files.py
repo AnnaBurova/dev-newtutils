@@ -78,18 +78,18 @@ def _check_file_exists(
         file_path: str
         ) -> bool:
     """
-    Check whether a file exists at the given path.
+    Check whether a file exists at the specified path.
 
-    This internal helper verifies that a file is present and accessible.
-    If the file does not exist, it reports the issue using
-    NewtCons.error_msg() without stopping the program.
+    Verifies file existence and accessibility.
+    If missing, logs an error message
+    via `NewtCons.error_msg()` without stopping execution.
 
     Args:
         file_path (str):
             Full path to the file to verify.
 
     Returns:
-        bool:
+        out (bool):
             True if the file exists,
             otherwise False.
     """
