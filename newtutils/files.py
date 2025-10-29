@@ -228,19 +228,18 @@ def read_text_from_file(
         file_name: str
         ) -> str:
     """
-    Read text content from a file.
+    Read UTF-8 text content from a file.
 
-    This function opens a text file in UTF-8 encoding and returns its content.
-    If the file does not exist or cannot be read, an empty string is returned.
+    Opens a text file and returns its content.
+    Returns an empty string if the file does not exist or cannot be read.
 
     Args:
         file_name (str):
-            The full path to the text file to read.
+            Full path to the text file.
 
     Returns:
-        str:
-            The text content of the file, or an empty string
-            if the file is not found or an error occurs during reading.
+        out (str):
+            Text content of the file, or an empty string if reading fails.
     """
 
     if not _check_file_exists(file_name):
@@ -255,7 +254,7 @@ def read_text_from_file(
             f"Exception: {e}",
             location="Newt.files.read_text_from_file",
             stop=False
-            )
+        )
         return ""
 
 
