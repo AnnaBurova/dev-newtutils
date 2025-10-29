@@ -264,28 +264,28 @@ def save_text_to_file(
         append: bool = False
         ) -> None:
     """
-    Write text content to a file.
+    Write or append text content to a UTF-8 file.
 
-    This function writes or appends text to a UTF-8 encoded file.
-    If necessary, the target directory is automatically created.
-    Newline characters are normalized to Unix-style (`\n`) for consistency.
+    Automatically creates the target directory if it does not exist.
+    All newline characters are normalized to Unix-style (`\\n`).
 
     Args:
         file_name (str):
-            The full path to the file where the text will be written.
+            Full path to the target file.
         text (str):
-            The text content to write to the file.
-        append (bool, optional):
-            If True, appends the text to the existing file instead of overwriting it.
+            Text content to write.
+        append (bool):
+            If True, appends instead of overwriting.
             Defaults to False.
 
     Returns:
-        None
+        out (None):
+            No return value.
+            Writes text to file.
     """
 
     _ensure_dir_exists(file_name)
     text = _normalize_newlines(text)
-
     mode = "a" if append else "w"
 
     try:
@@ -298,7 +298,7 @@ def save_text_to_file(
             f"Exception: {e}",
             location="Newt.files.save_text_to_file",
             stop=False
-            )
+        )
 
 
 # === JSON ===
