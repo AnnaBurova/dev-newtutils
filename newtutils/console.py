@@ -19,6 +19,10 @@ Functions:
     def _beep_boop(
         pause_s: float = 0.2
         ) -> None
+    def _retry_pause(
+        seconds: int = 5,
+        beep: bool = False
+        ) -> None
 """
 
 import os
@@ -159,4 +163,48 @@ def _beep_boop(
             f"Exception: {e}",
             location="Newt.console._beep_boop",
             stop=False
+        )
+
+
+def _retry_pause(
+        seconds: int = 5,
+        beep: bool = False
+        ) -> None:
+    """
+    Display a countdown and pause before retrying an operation.
+
+    Used primarily by network-related functions
+    to wait between retry attempts after a failed request.
+    Optionally plays a short sound notification using `_beep_boop()`.
+
+    Args:
+        seconds (int):
+            Total wait time in seconds.
+            Defaults to 5.
+        beep (bool):
+            If True, plays a "beep-boop" notification before the countdown.
+            Defaults to False.
+    """
+
+    if not isinstance(seconds, int) or seconds <= 0:
+        error_msg(
+            f"Invalid pause duration: {seconds}",
+            location="Newt.console._retry_pause"
+        )
+        return
+
+    if beep:
+        _beep_boop()
+
+    print(f"Retrying in {seconds} seconds...")
+
+    try:
+        for i in range(seconds, 0, -1):
+            print(f"Time left: {i}s")
+            time.sleep(1)
+
+    except KeyboardInterrupt:
+        error_msg(
+            "Retry interrupted by user (Ctrl+C)",
+            location="Newt.console._retry_pause"
         )

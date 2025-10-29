@@ -4,10 +4,6 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
-    def _retry_pause(
-        seconds: int = 5,
-        beep: bool = False
-        ) -> None
     def sorting_list(
         json_input: list,
         stop: bool = True
@@ -19,51 +15,7 @@ Functions:
         ) -> list[dict[str, object]]
 """
 
-import time
-
 import newtutils.console as NewtCons
-
-
-def _retry_pause(
-        seconds: int = 5,
-        beep: bool = False
-        ) -> None:
-    """
-    Display a countdown and pause before retrying an operation.
-
-    Used primarily by network-related functions
-    to wait between retry attempts after a failed request.
-    Optionally plays a short sound notification using `_beep_boop()`.
-
-    Args:
-        seconds (int):
-            Total wait time in seconds. Defaults to 5.
-        beep (bool):
-            If True, plays a "beep-boop" notification before the countdown.
-            Defaults to False.
-    """
-
-    if not isinstance(seconds, int) or seconds <= 0:
-        NewtCons.error_msg(
-            f"Invalid pause duration: {seconds}",
-            location="Newt.utility._retry_pause"
-        )
-        return
-
-    if beep:
-        NewtCons._beep_boop()
-
-    print(f"Retrying in {seconds} seconds...")
-
-    try:
-        for i in range(seconds, 0, -1):
-            print(f"Time left: {i}s")
-            time.sleep(1)
-    except KeyboardInterrupt:
-        NewtCons.error_msg(
-            "Retry interrupted by user (Ctrl+C)",
-            location="Newt.utility._retry_pause"
-        )
 
 
 def sorting_list(
