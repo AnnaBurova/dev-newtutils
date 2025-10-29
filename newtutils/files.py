@@ -56,16 +56,12 @@ def _ensure_dir_exists(
     """
     Ensure that the directory for a given file path exists.
 
-    This function checks whether the directory part of the given file path exists
-    and creates it if necessary.
-    It does not modify or create the file itself.
+    Creates the target directory if it does not exist.
+    The function does not create or modify the file itself.
 
     Args:
         file_path (str):
-            Full path to the file (including the file name).
-
-    Returns:
-        None
+            Full path to the target file (including the file name).
     """
 
     dir_path = os.path.dirname(file_path)
