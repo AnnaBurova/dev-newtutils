@@ -115,6 +115,7 @@ def sorting_dict_by_keys(
     if not all(isinstance(d, dict) for d in data):
         NewtCons.error_msg(
             "Expected a list of dictionaries",
+            data,
             location="Newt.utility.sorting_dict_by_keys"
         )
         return []
@@ -122,9 +123,10 @@ def sorting_dict_by_keys(
     if not all(isinstance(k, str) for k in keys):
         NewtCons.error_msg(
             "Keys must be strings",
+            keys,
             location="Newt.utility.sorting_dict_by_keys"
         )
-        return data
+        return []
 
     try:
         def sort_key(d: dict[str, object]) -> tuple[object, ...]:
