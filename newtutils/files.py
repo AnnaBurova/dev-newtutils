@@ -307,21 +307,20 @@ def read_json_from_file(
         file_name: str
         ) -> list | dict:
     """
-    Read JSON data from a file.
+    Read and parse JSON data from a file.
 
-    This function reads and parses JSON data from a UTF-8 encoded file.
-    If the file does not exist or cannot be parsed, an empty list is returned.
-    The function automatically handles both JSON arrays and objects.
+    Opens and deserializes JSON content from a UTF-8 encoded file.
+    Supports both list and dict structures.
+    Returns an empty list if the file is missing or invalid.
 
     Args:
         file_name (str):
-            The full path to the JSON file to read.
+            Path to the JSON file.
 
     Returns:
-        list | dict:
-            The parsed JSON data.
-            Returns a list or dictionary depending on the JSON structure,
-            or an empty list if the file is missing or invalid.
+        out (list | dict):
+            Parsed JSON data,
+            or an empty list if missing or invalid.
     """
 
     if not NewtCons.validate_input(file_name, str):
@@ -334,21 +333,15 @@ def read_json_from_file(
         with open(file_name, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        # Normalize output to always be a list of dicts
-        if isinstance(data, dict) or isinstance(data, list):
+        # Normalize output to always be a list or dict
+        if NewtCons.validate_input(data, (dict, list)):
             return data
-        else:
-            NewtCons.error_msg(
-                f"Unexpected JSON structure: {type(data)}",
-                location="Newt.files.read_json_from_file"
-            )
-            return []
 
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
             location="Newt.files.read_json_from_file"
-            )
+        )
         return []
 
 
