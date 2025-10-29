@@ -13,6 +13,9 @@ Functions:
     def _normalize_newlines(
         text: str
         ) -> str
+    def choose_file_from_folder(
+        folder_path: str
+        ) -> str | None
     === TEXT ===
     def read_text_from_file(
         file_name: str
@@ -131,23 +134,21 @@ def choose_file_from_folder(
         folder_path: str
         ) -> str | None:
     """
-    Display files in a folder with numeric indices and let the user choose one.
+    Display files in a folder and allow the user to choose one.
 
-    The function lists all files from the specified directory, assigns each
-    a numeric index (starting from 1), and prompts the user to select one
-    by entering its number.
-
-    The user can enter a number corresponding to a file or 0 to cancel.
-    The function loops until a valid input is entered.
+    Lists all files in the given directory, assigns numeric indices,
+    and prompts the user to select a file by number.
+    Returns the selected file name
+    or None if cancelled.
 
     Args:
         folder_path (str):
             Path to the folder containing files.
 
     Returns:
-        str | None:
-            The selected file name (without path)
-            or None if selection failed or cancelled.
+        out (str | None):
+            The selected file name,
+            or None if cancelled or an error occurred.
     """
 
     # Validate folder path
@@ -157,8 +158,7 @@ def choose_file_from_folder(
     if not os.path.isdir(folder_path):
         NewtCons.error_msg(
             f"Folder not found: {folder_path}",
-            location="Newt.files.choose_file_from_folder",
-            stop=False
+            location="Newt.files.choose_file_from_folder"
         )
         return None
 
@@ -166,7 +166,7 @@ def choose_file_from_folder(
     try:
         file_list = sorted([
             f for f in os.listdir(folder_path)
-            if os.path.isfile(os.path.join(folder_path, f))
+            if _check_file_exists(os.path.join(folder_path, f))
         ])
     except Exception as e:
         NewtCons.error_msg(
