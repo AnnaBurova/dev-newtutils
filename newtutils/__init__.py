@@ -29,6 +29,7 @@ from .utility import (
 
 # Files
 from .files import (
+    choose_file_from_folder,
     read_text_from_file, save_text_to_file,
     read_json_from_file, save_json_to_file,
     read_csv_from_file, save_csv_to_file,
@@ -60,6 +61,7 @@ __all__ = [
     "sorting_list",
     "sorting_dict_by_keys",
     # Files
+    "choose_file_from_folder",
     "read_text_from_file", "save_text_to_file",
     "read_json_from_file", "save_json_to_file",
     "read_csv_from_file", "save_csv_to_file",
