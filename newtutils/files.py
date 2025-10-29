@@ -111,17 +111,17 @@ def _normalize_newlines(
     """
     Normalize newline characters in a text string.
 
-    This function replaces all Windows-style newline sequences (`\r\n`)
-    with Unix-style newlines (`\n`)
-    to ensure consistent formatting across platforms.
+    Converts Windows-style newlines (`\\r\\n`)
+    to Unix-style (`\\n`)
+    for consistent text formatting across platforms.
 
     Args:
         text (str):
-            The input text to normalize.
+            Input text to normalize.
 
     Returns:
-        str:
-            The normalized text string with Unix-style line endings.
+        out (str):
+            Normalized text with Unix-style newlines.
     """
 
     return text.replace("\r\n", "\n")
