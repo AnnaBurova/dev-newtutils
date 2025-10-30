@@ -3,9 +3,11 @@ Created on 2025-10
 
 @author: NewtCode Anna Burova
 
+Constants:
+    DEFAULT_HTTP_HEADERS (dict[str, str]):
+        Default HTTP headers used by all outgoing HTTP requests.
+
 Functions:
-    DEFAULT_HTTP_HEADERS: dict[str, str]
-        "User-Agent"
     def fetch_data_from_url(
         base_url: str,
         params: dict[str, object] | None = None,
@@ -33,15 +35,16 @@ import newtutils.files as NewtFiles
 
 # === CONSTANTS ===
 
-# Default HTTP request headers for external API communication.
-# Used by all outgoing HTTP requests from NewtUtils.
-# Mimics a modern Chrome browser to reduce blocking by remote servers.
-# Usage:
-#     headers = DEFAULT_HTTP_HEADERS.copy()
-#     response = requests.get(url, headers=headers)
-# Notes:
-#     - Always use `.copy()` when modifying headers locally.
-#     - Never reassign or mutate this constant directly.
+"""
+Default HTTP request headers for external API calls.
+
+These headers are applied to all HTTP requests unless overridden.
+They mimic a modern Chrome browser to minimize blocking by remote servers.
+
+Notes:
+    - Always use `.copy()` when modifying headers locally.
+    - Never modify this constant directly.
+"""
 DEFAULT_HTTP_HEADERS: dict[str, str] = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
