@@ -49,17 +49,17 @@ def db_delayed_close(
         database: str
         ) -> bool:
     """
-    Safely close a SQLite database connection and release all file handles.
+    Safely close a SQLite database and release all file handles.
 
-    This helper opens and closes the given SQLite database file to ensure that all pending transactions are committed
-    and the operating system releases the file lock completely.
+    Opens and closes the target database file to ensure that all
+    pending transactions are committed and the file lock is released.
 
     Args:
         database (str):
             Path to the SQLite database file.
 
     Returns:
-        bool:
+        out (bool):
             True if the database was successfully closed and released,
             otherwise False.
     """
@@ -72,8 +72,9 @@ def db_delayed_close(
         conn.commit()
         conn.close()
 
-        # Force Python's garbage collector to immediately destroy any remaining SQLite connection or cursor objects that may still hold a file handle.
-        # This ensures that the database file is fully released by the operating system before deletion.
+        # Force Python's garbage collector to immediately destroy
+        # any remaining SQLite connection or cursor objects
+        # that may still hold a file handle.
         gc.collect()
 
         return True
