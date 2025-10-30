@@ -190,22 +190,20 @@ def sql_insert_row(
         data: dict[str, object] | list[dict[str, object]]
         ) -> int:
     """
-    Insert one or multiple rows into a given table.
+    Insert one or more rows into a database table.
 
     Args:
         database (str):
             Path to the SQLite database file.
         table (str):
-            Table name.
+            Name of the target table.
         data (dict[str, object] | list[dict[str, object]]):
-            A single dictionary
-            or a list of dictionaries
-            containing column-value pairs to insert.
+            One dictionary or a list of dictionaries
+            containing column-value pairs.
 
     Returns:
-        int:
-            Number of inserted rows.
-            Returns 0 if an error occurs or no rows were inserted.
+        out (int):
+            Number of inserted rows, or 0 on failure.
     """
 
     if not data:
@@ -213,7 +211,7 @@ def sql_insert_row(
             "Empty data",
             location="Newt.sql.sql_insert_row",
             stop=False
-            )
+        )
         return 0
 
     # Normalize input to list[dict]
@@ -232,7 +230,9 @@ def sql_insert_row(
     else:
         result = sql_execute_query(database, query, params)
 
-    return result if isinstance(result, int) else 0
+    if NewtCons.validate_input(result, int, stop=False):
+        return result
+    return 0
 
 
 def sql_update_rows(
