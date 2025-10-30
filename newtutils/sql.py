@@ -94,30 +94,29 @@ def sql_execute_query(
         params: tuple | list[tuple] | None = None
         ) -> list[dict] | int | None:
     """
-    Execute a SQL query (SELECT, INSERT, UPDATE, or DELETE).
+    Execute a SQL query and return its result or affected row count.
 
-    Automatically detects query type based on its first keyword.
-    SELECT queries return a list of dictionaries.
-    Other queries return the number of affected rows.
+    Automatically detects query type (SELECT, INSERT, UPDATE, DELETE)
+    and executes it accordingly. SELECT queries return data as
+    a list of dictionaries, while others return the affected row count.
 
     Args:
         database (str):
             Path to the SQLite database file.
         query (str):
             SQL query to execute.
-        params (tuple | list[tuple] | None, optional):
-            Query parameters (single or multiple sets).
+        params (tuple | list[tuple] | None):
+            Query parameters.
             Use a list of tuples for batch operations (executemany).
             Defaults to None.
 
     Returns:
-        list[dict] | int | None:
-            For SELECT queries - a list of dictionaries representing rows.
-            For INSERT/UPDATE/DELETE - the number of affected rows.
-            Returns None if an error occurs.
+        out (list[dict] | int | None):
+            Query result as list of dicts for SELECT,
+            number of affected rows for DML,
+            or None if an error occurs.
     """
 
-    # Ensure directory exists
     NewtFiles._ensure_dir_exists(database)
     result = None
 
@@ -142,8 +141,8 @@ def sql_execute_query(
             if query.strip().lower().startswith("select"):
                 result = [dict(row) for row in cursor.fetchall()]
 
+            # DML/DLL
             else:
-                # DML/DLL
                 conn.commit()
                 result = cursor.rowcount
 
@@ -153,7 +152,7 @@ def sql_execute_query(
         NewtCons.error_msg(
             f"Exception: {e}",
             location="Newt.sql.sql_execute_query"
-            )
+        )
         return None
 
 
