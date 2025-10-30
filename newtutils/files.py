@@ -353,21 +353,18 @@ def save_json_to_file(
     """
     Write JSON data to a file.
 
-    This function serializes and saves Python data as JSON into a UTF-8 encoded file.
-    The file's parent directories are created automatically if they do not exist.
-    A final newline is appended to the output for compatibility with text file standards.
+    Serializes a Python object as formatted JSON and saves it to disk.
+    Creates parent directories if they do not exist.
+    Appends a final newline for text file compatibility.
 
     Args:
         file_name (str):
-            The full path to the JSON file to write.
+            Path to the output JSON file.
         data:
-            The Python data structure (list or dict) to serialize as JSON.
-        indent (int, optional):
-            The indentation level for pretty-printing the JSON output.
+            Python data (list or dict) to serialize.
+        indent (int):
+            Indentation level for pretty-printing.
             Defaults to 2.
-
-    Returns:
-        None
     """
 
     _ensure_dir_exists(file_name)
@@ -382,7 +379,7 @@ def save_json_to_file(
             f"Exception: {e}",
             location="Newt.files.save_json_to_file",
             stop=False
-            )
+        )
 
 
 # === CSV ===
@@ -392,26 +389,23 @@ def read_csv_from_file(
         delimiter: str = ";"
         ) -> list[list[str]]:
     """
-    Read CSV data from a file.
+    Read CSV data from a UTF-8 file.
 
-    This function reads the contents of a CSV file encoded in UTF-8
-    and returns all rows as a list of string lists.
-    Each sublist represents one row.
-    If the file does not exist or cannot be read, an empty list is returned.
+    Loads CSV content into a list of string lists.
+    Each sublist represents one row of data.
+    Returns an empty list if reading fails.
 
     Args:
         file_name (str):
-            The full path to the CSV file to read.
-        delimiter (str, optional):
-            The character used to separate columns in the CSV file.
-            Defaults to ';'.
+            Path to the CSV file.
+        delimiter (str):
+            Column separator character.
+            Defaults to `;`.
 
     Returns:
-        list[list[str]]:
-            A list of rows from the CSV file.
-            Each row is represented as a list of strings.
-            Returns an empty list if the file is not found
-            or an error occurs during reading.
+        out (list[list[str]]):
+            List of CSV rows,
+            or an empty list on failure.
     """
 
     if not _check_file_exists(file_name):
@@ -426,7 +420,7 @@ def read_csv_from_file(
             f"Exception: {e}",
             location="Newt.files.read_csv_from_file",
             stop=False
-            )
+        )
         return []
 
 
