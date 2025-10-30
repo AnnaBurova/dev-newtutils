@@ -264,8 +264,8 @@ def download_file_from_url(
                     content = response.text
                     NewtFiles.save_text_to_file(save_path, content)
 
+                # Binary save
                 else:
-                    # Binary save
                     NewtFiles._ensure_dir_exists(save_path)
                     with open(save_path, "wb") as f:
                         f.write(response.content)
@@ -273,13 +273,12 @@ def download_file_from_url(
                 print(f"Saved to: {save_path}")
                 return True
 
-            else:
-                NewtCons.error_msg(
-                    f"HTTP {status} while downloading {file_url}",
-                    location="Newt.network.download_file_from_url",
-                    stop=False
-                )
-                NewtCons._beep_boop()
+            NewtCons.error_msg(
+                f"HTTP {status} while downloading {file_url}",
+                location="Newt.network.download_file_from_url",
+                stop=False
+            )
+            NewtCons._beep_boop()
 
         except requests.exceptions.ReadTimeout as e:
             NewtCons.error_msg(
