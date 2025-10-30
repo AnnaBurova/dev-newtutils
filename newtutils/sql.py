@@ -162,23 +162,26 @@ def sql_select_rows(
         params: tuple | None = None
         ) -> list[dict]:
     """
-    Run a SELECT query and return all matching rows as a list of dictionaries.
+    Execute a SELECT query and return rows as a list of dictionaries.
 
     Args:
         database (str):
             Path to the SQLite database file.
         query (str):
-            SELECT query string.
-        params (tuple | None, optional):
+            SQL SELECT query to execute.
+        params (tuple | None):
             Query parameters. Defaults to None.
 
     Returns:
-        list[dict]:
-            A list of rows as dictionaries, or an empty list if no results or errors.
+        out (list[dict]):
+            List of rows as dictionaries,
+            or an empty list if no data or errors.
     """
 
     result = sql_execute_query(database, query, params)
-    return result if isinstance(result, list) else []
+    if NewtCons.validate_input(result, list, stop=False):
+        return result
+    return []
 
 
 def sql_insert_row(
