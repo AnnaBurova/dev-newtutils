@@ -289,7 +289,7 @@ def export_sql_query_to_csv(
         delimiter: str = ";"
         ) -> bool:
     """
-    Execute a SQL SELECT query and export the result to a CSV file.
+    Run a SQL SELECT query and export the result to a CSV file.
 
     Args:
         database (str):
@@ -297,15 +297,17 @@ def export_sql_query_to_csv(
         query (str):
             SQL SELECT query to execute.
         csv_file (str):
-            Path to the CSV file where the result will be saved.
-        params (tuple | None, optional):
+            Path to the CSV output file.
+        params (tuple | None):
             Query parameters. Defaults to None.
-        delimiter (str, optional):
-            CSV delimiter, defaults to ';'.
+        delimiter (str):
+            CSV delimiter character.
+            Defaults to `;`.
 
     Returns:
-        bool:
-            True if export succeeded, otherwise False.
+        out (bool):
+            True if export succeeded,
+            otherwise False.
     """
 
     try:
@@ -317,7 +319,7 @@ def export_sql_query_to_csv(
                 "Empty result",
                 location="Newt.sql.export_sql_query_to_csv",
                 stop=False
-                )
+            )
             return False
 
         # Step 2: extract headers and rows for CSV
@@ -334,5 +336,5 @@ def export_sql_query_to_csv(
             f"Exception: {e}",
             location="Newt.sql.export_sql_query_to_csv",
             stop=False
-            )
+        )
         return False
