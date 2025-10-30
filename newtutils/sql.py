@@ -243,7 +243,7 @@ def sql_update_rows(
         where_params: tuple | None = None
         ) -> int:
     """
-    Update existing rows in a table based on a WHERE condition.
+    Update rows in a database table using a WHERE condition.
 
     Args:
         database (str):
@@ -253,16 +253,16 @@ def sql_update_rows(
         set_data (dict[str, object]):
             Column-value pairs to update.
         where_condition (str):
-            WHERE condition
-            (e.g., "id = ? AND name = ?").
-        where_params (tuple | None, optional):
+            SQL WHERE clause:
+            id = ? AND name = ?
+        where_params (tuple | None):
             Parameters for the WHERE clause.
             Defaults to None.
 
     Returns:
-        int:
-            Number of inserted rows.
-            Returns 0 if an error occurs or no rows were inserted.
+        out (int):
+            Number of updated rows,
+            or 0 on failure.
     """
 
     if not set_data:
@@ -270,7 +270,7 @@ def sql_update_rows(
             "Empty data",
             location="Newt.sql.sql_update_rows",
             stop=False
-            )
+        )
         return 0
 
     set_clause = ", ".join([f"{k} = ?" for k in set_data])
