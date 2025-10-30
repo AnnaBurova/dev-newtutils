@@ -206,30 +206,30 @@ def download_file_from_url(
         repeat_on_fail: bool = True
         ) -> bool:
     """
-    Download a text or binary file from a given URL and save it locally.
+    Download a file from a URL and save it locally.
 
-    This function sends a GET request to the specified URL and writes the
-    downloaded content to the provided file path.
-    It automatically creates the destination directory if missing and retries
-    failed downloads when allowed.
+    Sends a GET request to download a file and saves it to the specified path.
+    The target directory is created automatically if missing.
+    Retries may occur after temporary errors depending on configuration.
 
     Args:
         file_url (str):
-            The full URL of the file to download.
+            URL of the file to download.
         save_path (str):
-            Local file path where the downloaded content will be saved.
-        headers (dict[str, str] | None, optional):
-            Optional HTTP headers for the request.
-            If None, a copy of DEFAULT_HTTP_HEADERS is used.
-        timeout (int, optional):
-            Request timeout in seconds. Defaults to 60.
-        repeat_on_fail (bool, optional):
-            If True, retry after recoverable errors.
+            Local path where the file will be saved.
+        headers (dict[str, str] | None):
+            Custom HTTP headers.
+            If None, uses `DEFAULT_HTTP_HEADERS`.
+        timeout (int):
+            Request timeout in seconds.
+            Defaults to 60.
+        repeat_on_fail (bool):
+            If True, automatically retries after recoverable errors.
             Defaults to True.
 
     Returns:
-        bool:
-            True if the file was successfully downloaded and saved,
+        out (bool):
+            True if successfully downloaded and saved,
             otherwise False.
     """
 
