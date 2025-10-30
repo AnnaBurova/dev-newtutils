@@ -430,24 +430,19 @@ def save_csv_to_file(
         delimiter: str = ";"
         ) -> None:
     """
-    Write CSV data to a file.
+    Write tabular data to a CSV file.
 
-    This function writes tabular data (a list of rows) into a CSV file encoded in UTF-8.
-    Each inner list represents a single row of values.
-    The target directory is created automatically if it does not exist.
+    Saves a list of rows (lists of values) into a UTF-8 encoded CSV file.
+    Automatically creates directories if necessary.
+    Normalizes newlines in all cell data.
 
     Args:
         file_name (str):
-            The full path to the CSV file to write.
+            Path to the output CSV file.
         rows (list[list]):
-            The tabular data to write.
-            Each sublist represents one row of values to be written to the CSV file.
-        delimiter (str, optional):
-            The character used to separate columns in the CSV file.
-            Defaults to ';'.
-
-    Returns:
-        None
+            List of rows, where each row is a list of values.
+        delimiter (str):
+            Column separator character. Defaults to `;`.
     """
 
     _ensure_dir_exists(file_name)
@@ -455,7 +450,7 @@ def save_csv_to_file(
     try:
         # Normalize newlines in cell data
         normalized_rows = [
-            [str(cell).replace("\r\n", "\n") for cell in row]
+            [_normalize_newlines(str(cell)) for cell in row]
             for row in rows
         ]
 
@@ -468,4 +463,4 @@ def save_csv_to_file(
             f"Exception: {e}",
             location="Newt.files.save_csv_to_file",
             stop=False
-            )
+        )
