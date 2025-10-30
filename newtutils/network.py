@@ -120,7 +120,7 @@ def fetch_data_from_url(
                 params=params_to_send,
                 headers=headers,
                 timeout=timeout
-                )
+            )
             elapsed = time.perf_counter() - start_time
             status = response.status_code
 
@@ -174,7 +174,7 @@ def fetch_data_from_url(
             NewtCons.error_msg(
                 f"ReadTimeout: {e}",
                 f"Timeout ({timeout}s) for {base_url}",
-                f"Request failed after {elapsed:.2f}s: {e}",
+                f"Request failed after {elapsed:.2f}s",
                 location="Newt.network.fetch_data_from_url",
                 stop=False
             )
