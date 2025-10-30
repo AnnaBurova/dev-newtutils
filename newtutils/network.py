@@ -58,40 +58,42 @@ def fetch_data_from_url(
         base_url: str,
         params: dict[str, object] | None = None,
         headers: dict[str, str] | None = None,
-        mode: str = "auto",  # "auto" / "alert" (auto) / "manual"
+        mode: str = "auto",
         timeout: int = 45,
         repeat_on_fail: bool = True
         ) -> str | None:
     """
-    Fetch data from an external URL with retry logic and colored console feedback.
+    Fetch data from a URL with retry logic and console feedback.
 
-    This function performs a GET request to the specified URL with optional parameters.
-    If a recoverable error occurs (timeout, temporary unavailability, etc.),
-    it optionally retries the request until a valid response (HTTP 200|206) is received.
+    Sends a GET request to the specified URL using optional query parameters and headers.
+    The function can automatically retry after temporary failures
+    depending on the selected mode and retry settings.
 
     Args:
         base_url (str):
-            The base URL for the request.
-        params (dict[str, object] | None, optional):
-            Dictionary of query parameters. Defaults to None.
-        headers (dict[str, str] | None, optional):
-            Optional HTTP headers for the request.
-            If None, a copy of DEFAULT_HTTP_HEADERS is used.
-        mode (str, optional):
-            Controls retry and notification behavior.
-            Available options:
-                - "auto": automatic retries without prompts.
-                - "alert": same as auto, but plays sound on failure.
-                - "manual": interactive prompts (ask to repeat or continue).
-        timeout (int, optional):
-            Timeout for the request in seconds. Defaults to 45.
-        repeat_on_fail (bool, optional):
-            If True, the function retries the request after recoverable errors.
+            Target URL for the request.
+        params (dict[str, object] | None):
+            Query parameters to include in the request.
+            Defaults to None.
+        headers (dict[str, str] | None):
+            Custom HTTP headers.
+            If None, uses `DEFAULT_HTTP_HEADERS`.
+        mode (str):
+            Controls retry behavior and notifications
+            Defaults to "auto"
+            - "auto": automatic retries without user input.
+            - "alert": auto retries with sound alerts.
+            - "manual": prompts user for each retry decision.
+        timeout (int):
+            Timeout for the request in seconds.
+            Defaults to 45.
+        repeat_on_fail (bool):
+            If True, automatically retries after recoverable errors.
             Defaults to True.
 
     Returns:
-        str | None:
-            The response text if successful, otherwise None.
+        out (str | None):
+            Response text if successful, otherwise None.
     """
 
     if not NewtCons.validate_input(base_url, str):
