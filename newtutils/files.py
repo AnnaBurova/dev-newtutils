@@ -41,7 +41,7 @@ Functions:
         ) -> list[list[str]]
     def save_csv_to_file(
         file_name: str,
-        rows: list[list],
+        rows: list[list[object]],
         delimiter: str = ";"
         ) -> None
 """
@@ -343,6 +343,9 @@ def read_json_from_file(
         if NewtCons.validate_input(data, (dict, list)):
             return data
 
+        # If data is not a list or dict, return empty list
+        return []
+
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
@@ -440,7 +443,7 @@ def read_csv_from_file(
 
 def save_csv_to_file(
         file_name: str,
-        rows: list[list],
+        rows: list[list[object]],
         delimiter: str = ";"
         ) -> None:
     """
