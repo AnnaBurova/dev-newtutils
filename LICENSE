@@ -25,13 +25,21 @@ SOFTWARE.
 This project uses components from the Python standard library,
 licensed under the [Python Software Foundation License (PSF License)](https://docs.python.org/3/license.html):
 
-- __future__ - Python standard library (future feature imports)
-- sys - Python standard library
-- os - Python standard library
-- gc - Python standard library
-- csv - Python standard library
-- json - Python standard library
-- time - Python standard library
+- __future__ - future feature imports
+- builtins - implicit base types
+
+- sys - interpreter and runtime
+- os - file system and environment
+- tempfile - temporary files and directories
+
+- gc - garbage collector interface
+- time - timing and sleep utilities
+
+- json - JSON serialization
+- csv - CSV parsing and writing
+
+- unittest.mock - testing and mocking utilities
+
 - winsound - Python standard library (Windows-only module)
 
 - sqlite3 - included with Python under the PSF License;
@@ -41,6 +49,11 @@ licensed under the [Python Software Foundation License (PSF License)](https://do
 ================================================================================
 
 This project uses the following third-party libraries:
+
+- pytest (MIT)
+  Copyright (c) 2004-2025 Holger Krekel
+  https://github.com/pytest-dev/pytest
+  https://pypi.org/project/pytest/
 
 - Colorama (BSD 3-Clause License)
   Copyright (c) 2010-2025 Jonathan Hartley & Arnon Yaari

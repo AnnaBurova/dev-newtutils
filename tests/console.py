@@ -7,22 +7,11 @@ This module provides basic tests for the `error_msg` function
 from the `newtutils` package.
 
 The tests cover:
-1. Single-line error without stopping the program.
 2. Multi-line error without stopping the program.
 3. Error with `stop=True` that triggers SystemExit.
 """
 
 import newtutils.console as NewtCons
-
-
-def test_error_without_stop() -> None:
-    """
-    Test single-line error message without stopping the program.
-    """
-
-    print("Test 1: error_msg without stop")
-    NewtCons.error_msg("This is a test error message", stop=False)
-    print("This line will be printed")
 
 
 def test_multiline_error_without_stop() -> None:
@@ -64,8 +53,6 @@ def test_error_with_stop() -> None:
 
 if __name__ == "__main__":
     """Run all tests in sequence."""
-    NewtCons._divider()
-    test_error_without_stop()
     NewtCons._divider()
     test_multiline_error_without_stop()
     NewtCons._divider()

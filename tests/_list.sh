@@ -1,34 +1,39 @@
 #!/usr/bin/env bash
-set -e  # exit on error
+set +e  # continue on error
 
 # > — Creates (or overwrites) the output.txt file.
 # >> — Appends output to the end of an existing file.
 
 cd "$(dirname "$0")" || exit 1
 
-# run console.py and write pure UTF-8 + LF
-"C:/ProgramData/anaconda3/python.exe" "d:/VS_Code/dev-newtutils/tests/console.py" > console_output.txt
-# & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/console.py | Out-File console_output.txt -Encoding utf8
-echo "d:/VS_Code/dev-newtutils/tests/console_output.txt"
+# === List of test modules ===
+modules=("console")
 
-# run files.py and write pure UTF-8 + LF
-"C:/ProgramData/anaconda3/python.exe" "d:/VS_Code/dev-newtutils/tests/files.py" > files_output.txt
-# & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/files.py | Out-File files_output.txt -Encoding utf8
-echo "d:/VS_Code/dev-newtutils/tests/files_output.txt"
+# === Loop each module ===
+for mod in "${modules[@]}"; do
+  echo "Running tests for: $mod"
+  base_path="d:/VS_Code/dev-newtutils/tests/test_${mod}.py"
 
-# run utility.py and write pure UTF-8 + LF
-"C:/ProgramData/anaconda3/python.exe" "d:/VS_Code/dev-newtutils/tests/utility.py" > utility_output.txt
-# & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/utility.py | Out-File utility_output.txt -Encoding utf8
-echo "d:/VS_Code/dev-newtutils/tests/utility_output.txt"
+    for n in 1 2 3 4; do
+        echo "tests/test_${mod} $n"
+        case $n in
+          1)
+            pytest "$base_path" > "test_${mod}_output_${n}.txt"
+            ;;
+          2)
+            pytest "$base_path" -v > "test_${mod}_output_${n}.txt" 2>&1
+            ;;
+          3)
+            pytest "$base_path" -s > "test_${mod}_output_${n}.txt"
+            ;;
+          4)
+            pytest "$base_path" -s -v > "test_${mod}_output_${n}.txt" 2>&1
+            ;;
+        esac
+        # Convert to LF
+        dos2unix --force "test_${mod}_output_${n}.txt"
+    done
+    echo "-----------------------------------------"
+done
 
-# run sql.py and write pure UTF-8 + LF
-"C:/ProgramData/anaconda3/python.exe" "d:/VS_Code/dev-newtutils/tests/sql.py" > sql_output.txt
-# & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/sql.py | Out-File sql_output.txt -Encoding utf8
-echo "d:/VS_Code/dev-newtutils/tests/sql_output.txt"
-
-# run network.py and write pure UTF-8 + LF
-"C:/ProgramData/anaconda3/python.exe" "d:/VS_Code/dev-newtutils/tests/network.py" > network_output.txt
-# & C:/ProgramData/anaconda3/python.exe d:/VS_Code/dev-newtutils/tests/network.py | Out-File network_output.txt -Encoding utf8
-echo "d:/VS_Code/dev-newtutils/tests/network_output.txt"
-
-echo "Done. Check if Files are saved with UTF-8 + LF"
+echo "✅ Done. Check output files (UTF-8 + LF)."

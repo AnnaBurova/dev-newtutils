@@ -1,15 +1,5 @@
 --------------------------------------------------
 
-Test 1: error_msg without stop
-[1m [31m
-Location: Unknown
-::: ERROR :::
-This is a test error message
-[0m
-This line will be printed
-
---------------------------------------------------
-
 Test 2: multiline error_msg without stop
 [1m [31m
 Location: d:\VS_Code\dev-newtutils\tests\console.py

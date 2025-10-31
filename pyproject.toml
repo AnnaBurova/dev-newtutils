@@ -16,6 +16,11 @@ dependencies = [
   "colorama>=0.4.6",
   "requests>=2.31.0"
 ]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=7.0.0",
+]
 keywords = [
   "utilities", "console", "validation", "files", "sorting",
   "sql", "database", "sqlite", "helpers", "newtutils"
