@@ -114,8 +114,8 @@ def fetch_data_from_url(
     beep_boop = mode in ("alert", "manual")
 
     while True:
+        start_time = time.perf_counter()
         try:
-            start_time = time.perf_counter()
             response = requests.get(
                 base_url,
                 params=params_to_send,
