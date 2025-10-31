@@ -136,8 +136,7 @@ def sql_execute_query(
                 if isinstance(params, list):
                     if NewtCons.validate_input(params[0], tuple):
                         cursor.executemany(query, params)
-                    else:
-                        raise TypeError("Invalid parameter format for executemany()")
+
                 # Normal single execution
                 else:
                     cursor.execute(query, params)
@@ -185,8 +184,12 @@ def sql_select_rows(
     """
 
     result = sql_execute_query(database, query, params)
-    if NewtCons.validate_input(result, list, stop=False):
+    if isinstance(result, list):
         return result
+
+    if not NewtCons.validate_input(result, list, stop=False):
+        print(result)
+
     return []
 
 
@@ -229,6 +232,14 @@ def sql_insert_row(
     if isinstance(data, dict):
         data = [data]
 
+    if not NewtCons.validate_input(data, list, stop=False):
+        NewtCons.error_msg(
+            "Data must be dict or list[dict]",
+            location="Newt.sql.sql_insert_row",
+            stop=False
+        )
+        return 0
+
     # Build SQL template
     columns = ", ".join(data[0].keys())
     placeholders = ", ".join(["?"] * len(data[0]))
@@ -241,8 +252,12 @@ def sql_insert_row(
     else:
         result = sql_execute_query(database, query, params)
 
-    if NewtCons.validate_input(result, int, stop=False):
+    if isinstance(result, int):
         return result
+
+    if not NewtCons.validate_input(result, int, stop=False):
+        print(result)
+
     return 0
 
 
