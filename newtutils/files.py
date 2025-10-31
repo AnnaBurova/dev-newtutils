@@ -98,6 +98,9 @@ def _check_file_exists(
             otherwise False.
     """
 
+    if not NewtCons.validate_input(file_path, str, stop=False):
+        return False
+
     if os.path.isfile(file_path):
         return True
 
@@ -285,6 +288,11 @@ def save_text_to_file(
             Writes text to file.
     """
 
+    if not NewtCons.validate_input(file_name, str, stop=False):
+        return
+    if not NewtCons.validate_input(text, str, stop=False):
+        return
+
     _ensure_dir_exists(file_name)
     text = _normalize_newlines(text)
     mode = "a" if append else "w"
@@ -414,6 +422,11 @@ def read_csv_from_file(
             or an empty list on failure.
     """
 
+    if not NewtCons.validate_input(file_name, str, stop=False):
+        return []
+    if not NewtCons.validate_input(delimiter, str, stop=False):
+        return []
+
     if not _check_file_exists(file_name):
         return []
 
@@ -450,6 +463,13 @@ def save_csv_to_file(
         delimiter (str):
             Column separator character. Defaults to `;`.
     """
+
+    if not NewtCons.validate_input(file_name, str, stop=False):
+        return
+    if not NewtCons.validate_input(rows, list, stop=False):
+        return
+    if not NewtCons.validate_input(delimiter, str, stop=False):
+        return
 
     _ensure_dir_exists(file_name)
 
