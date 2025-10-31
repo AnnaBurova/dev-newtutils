@@ -155,7 +155,9 @@ def _beep_boop(
     if os.name != "nt" or winsound is None:
         return
 
-    if not isinstance(pause_s, (int, float)) or pause_s < 0:
+    if not validate_input(pause_s, (int, float), stop=False):
+        return
+    if pause_s < 0:
         error_msg(
             f"Invalid pause duration: {pause_s}",
             location="Newt.console._beep_boop"
@@ -196,7 +198,9 @@ def _retry_pause(
             Defaults to False.
     """
 
-    if not isinstance(seconds, int) or seconds <= 0:
+    if not validate_input(seconds, int, stop=False):
+        return
+    if seconds <= 0:
         error_msg(
             f"Invalid pause duration: {seconds}",
             location="Newt.console._retry_pause"
