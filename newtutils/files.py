@@ -31,7 +31,7 @@ Functions:
         ) -> list | dict
     def save_json_to_file(
         file_name: str,
-        data,
+        data: list | dict,
         indent: int = 2
         ) -> None
     === CSV ===
@@ -348,7 +348,7 @@ def read_json_from_file(
 
 def save_json_to_file(
         file_name: str,
-        data,
+        data: list | dict,
         indent: int = 2
         ) -> None:
     """
@@ -361,12 +361,17 @@ def save_json_to_file(
     Args:
         file_name (str):
             Path to the output JSON file.
-        data:
-            Python data (list or dict) to serialize.
+        data (list | dict):
+            Python data to serialize.
         indent (int):
             Indentation level for pretty-printing.
             Defaults to 2.
     """
+
+    if not NewtCons.validate_input(file_name, str, stop=False):
+        return
+    if not NewtCons.validate_input(data, (list, dict), stop=False):
+        return
 
     _ensure_dir_exists(file_name)
 
