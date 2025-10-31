@@ -118,6 +118,11 @@ def sql_execute_query(
             or None if an error occurs.
     """
 
+    if not NewtCons.validate_input(database, str, stop=False):
+        return None
+    if not NewtCons.validate_input(query, str, stop=False):
+        return None
+
     NewtFiles._ensure_dir_exists(database)
     result = None
 
@@ -207,6 +212,11 @@ def sql_insert_row(
             Number of inserted rows, or 0 on failure.
     """
 
+    if not NewtCons.validate_input(database, str, stop=False):
+        return 0
+    if not NewtCons.validate_input(table, str, stop=False):
+        return 0
+
     if not data:
         NewtCons.error_msg(
             "Empty data",
@@ -266,6 +276,13 @@ def sql_update_rows(
             or 0 on failure.
     """
 
+    if not NewtCons.validate_input(database, str, stop=False):
+        return 0
+    if not NewtCons.validate_input(table, str, stop=False):
+        return 0
+    if not NewtCons.validate_input(where_condition, str, stop=False):
+        return 0
+
     if not set_data:
         NewtCons.error_msg(
             "Empty data",
@@ -310,6 +327,15 @@ def export_sql_query_to_csv(
             True if export succeeded,
             otherwise False.
     """
+
+    if not NewtCons.validate_input(database, str, stop=False):
+        return False
+    if not NewtCons.validate_input(query, str, stop=False):
+        return False
+    if not NewtCons.validate_input(csv_file, str, stop=False):
+        return False
+    if not NewtCons.validate_input(delimiter, str, stop=False):
+        return False
 
     try:
         # Step 1: run select query

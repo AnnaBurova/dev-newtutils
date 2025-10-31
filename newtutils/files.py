@@ -332,9 +332,6 @@ def read_json_from_file(
             or an empty list if missing or invalid.
     """
 
-    if not NewtCons.validate_input(file_name, str):
-        return []
-
     if not _check_file_exists(file_name):
         return []
 
@@ -422,8 +419,6 @@ def read_csv_from_file(
             or an empty list on failure.
     """
 
-    if not NewtCons.validate_input(file_name, str, stop=False):
-        return []
     if not NewtCons.validate_input(delimiter, str, stop=False):
         return []
 
