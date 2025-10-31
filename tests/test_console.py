@@ -9,6 +9,8 @@ Tests cover:
 - Error messaging (error_msg)
 """
 
+import pytest
+
 import newtutils.console as NewtCons
 
 
@@ -44,3 +46,10 @@ class TestErrorMsg:
         assert "Location: Unknown" in captured.out
         assert "::: ERROR :::" in captured.out
         assert "Test error" in captured.out
+
+    def test_error_msg_with_stop(self):
+        """Test error message with stop=True raises SystemExit."""
+        print()
+        with pytest.raises(SystemExit) as exc_info:
+            NewtCons.error_msg("Test error", stop=True)
+        assert exc_info.value.code == 1

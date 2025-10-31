@@ -12,15 +12,4 @@ This line will be printed
 
 --------------------------------------------------
 
-Test 3: error_msg with stop=True default (should raise SystemExit)
-[1m [31m
-Location: Unknown
-::: ERROR :::
-This error will stop the program
-[0m
-Caught SystemExit with code: 1
-Program continues after catching SystemExit
-
---------------------------------------------------
-
 Test passed

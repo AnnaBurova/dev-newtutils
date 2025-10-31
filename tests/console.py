@@ -30,33 +30,10 @@ def test_multiline_error_without_stop() -> None:
     print("This line will be printed")
 
 
-def test_error_with_stop() -> None:
-    """
-    Test error message with stop=True (should raise SystemExit).
-    """
-
-    print("Test 3: error_msg with stop=True default (should raise SystemExit)")
-
-    try:
-        NewtCons.error_msg("This error will stop the program")  # Expected to exit
-        print("This line will not be printed")
-
-    except SystemExit as e:
-        print(f"Caught SystemExit with code: {e}")
-
-    except Exception as e:
-        print(f"Caught other exception: {e}")
-
-    finally:
-        print("Program continues after catching SystemExit")
-
-
 if __name__ == "__main__":
     """Run all tests in sequence."""
     NewtCons._divider()
     test_multiline_error_without_stop()
-    NewtCons._divider()
-    test_error_with_stop()
     NewtCons._divider()
 
     print("Test passed")
