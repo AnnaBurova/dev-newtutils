@@ -46,11 +46,12 @@ Functions:
         ) -> None
 """
 
+from __future__ import annotations
+
 import os
 import csv
 import json
 import newtutils.console as NewtCons
-import newtutils.utility as NewtUtil
 
 
 def _ensure_dir_exists(

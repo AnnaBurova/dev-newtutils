@@ -38,10 +38,11 @@ Functions:
         ) -> bool
 """
 
+from __future__ import annotations
+
 import sqlite3
 import gc
 import newtutils.console as NewtCons
-import newtutils.utility as NewtUtil
 import newtutils.files as NewtFiles
 
 

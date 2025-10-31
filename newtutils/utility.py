@@ -15,6 +15,8 @@ Functions:
         ) -> list[dict[str, object]]
 """
 
+from __future__ import annotations
+
 import newtutils.console as NewtCons
 
 

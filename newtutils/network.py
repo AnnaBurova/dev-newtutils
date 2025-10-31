@@ -25,11 +25,12 @@ Functions:
         ) -> bool
 """
 
+from __future__ import annotations
+
 import sys
 import time
 import requests
 import newtutils.console as NewtCons
-import newtutils.utility as NewtUtil
 import newtutils.files as NewtFiles
 
 
