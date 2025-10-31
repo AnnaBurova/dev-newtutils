@@ -8,7 +8,7 @@ A collection of utility functions for common programming tasks.
 
 **NewtUtils** is designed as a small but extendable utility library to simplify common scripting and development tasks — such as structured console output, safe type validation, file management, SQL access, and API communication.
 
-The project follows clean, documented, and predictable function behavior for maintainable and testable code.
+The project follows clean, documented, and predictable function behavior for maintainable and testable code. All functions include comprehensive type hints and Google-style docstrings for better IDE support and code clarity.
 
 ---
 
@@ -24,7 +24,12 @@ The project follows clean, documented, and predictable function behavior for mai
 
 ---
 
-## ⚙️ Dependencies
+## ⚙️ Requirements
+
+- **Python 3.10+** (tested with Python 3.10, 3.11, 3.12, 3.13)
+- Full type hint support with `from __future__ import annotations`
+
+## 📦 Dependencies
 
 - [**Colorama**](https://pypi.org/project/colorama/) — cross-platform colored terminal output.  
   Licensed under the [BSD 3-Clause License](https://github.com/tartley/colorama/blob/master/LICENSE.txt).

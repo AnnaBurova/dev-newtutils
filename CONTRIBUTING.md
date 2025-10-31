@@ -82,6 +82,8 @@ When adding new functionality:
 
 * Respect `.gitattributes` settings for line endings and encoding.
 * Use meaningful docstrings in **Google style** (`"""Args: Returns: Raises:"""`).
+* All modules should include `from __future__ import annotations` at the top for better type hint support.
+* Provide comprehensive type hints for all function parameters and return values.
 * Avoid wildcard imports (`from x import *`).
 
 ---
