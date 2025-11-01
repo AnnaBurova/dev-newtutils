@@ -1,4 +1,5 @@
 """
+Updated on 2025-11
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -127,6 +128,7 @@ def validate_input(
     if not isinstance(value, expected_type):
         error_msg(
             f"Expected {expected_type}, got {type(value)}",
+            f"Value: {value}",
             location="Newt.console.validate_input",
             stop=stop
         )

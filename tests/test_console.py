@@ -111,3 +111,16 @@ class TestValidateInput:
         print()
         with pytest.raises(SystemExit):
             NewtCons.validate_input("hello", int, stop=True)
+
+    def test_validate_input_multiple_types(self):
+        """Test validation with tuple of allowed types."""
+        print()
+        input_1 = 123
+        print(input_1)
+        assert NewtCons.validate_input(input_1, (int, str), stop=False) is True
+        input_2 = "hello"
+        print(input_2)
+        assert NewtCons.validate_input(input_2, (int, str), stop=False) is True
+        input_3 = 3.14
+        print(input_3)
+        assert NewtCons.validate_input(input_3, (int, str), stop=False) is False
