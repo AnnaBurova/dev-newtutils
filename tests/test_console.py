@@ -161,3 +161,13 @@ class TestBeepBoop:
         print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         assert mock_winsound.Beep.call_count == 2
         print("mock_sleep.call_count:", mock_sleep.call_count)
+
+    @patch('newtutils.console.winsound')
+    @patch('newtutils.console.os.name', 'posix')
+    def test_beep_boop_on_non_windows(self, mock_winsound):
+        """Test beep_boop on non-Windows (should not raise)."""
+        # Should not raise on non-Windows
+        print()
+        NewtCons._beep_boop()
+        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
+        mock_winsound.Beep.assert_not_called()
