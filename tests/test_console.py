@@ -171,3 +171,11 @@ class TestBeepBoop:
         NewtCons._beep_boop()
         print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         mock_winsound.Beep.assert_not_called()
+
+    def test_beep_boop_invalid_pause(self, capsys):
+        """Test beep_boop with invalid pause duration."""
+        with pytest.raises(SystemExit):
+            NewtCons._beep_boop(pause_s=-1)
+        # Should handle gracefully without raising
+        captured = capsys.readouterr()
+        print_my_captured(captured)
