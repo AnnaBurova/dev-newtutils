@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 6 items
+collecting ... collected 7 items
 
 test_console.py::TestErrorMsg::test_error_msg_without_stop 
 =====captured.out=====
@@ -71,5 +71,12 @@ Expected <class 'int'>, got <class 'str'>
 (no stderr captured)
 ======================
 PASSED
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop 
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'int'>, got <class 'str'>
+[0m
+PASSED
 
-============================== 6 passed in 0.40s ==============================
+============================== 7 passed in 0.38s ==============================

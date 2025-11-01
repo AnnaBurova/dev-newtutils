@@ -78,7 +78,6 @@ class TestValidateInput:
     def test_validate_input_correct_type(self):
         """Test validation with correct type."""
         print()
-
         input_1 = 123
         print(input_1)
         assert NewtCons.validate_input(input_1, int, stop=False) is True
@@ -106,3 +105,9 @@ class TestValidateInput:
         print_my_captured(captured)
         assert "::: ERROR :::" in captured.out
         assert "Expected <class 'int'>, got <class 'str'>" in captured.out
+
+    def test_validate_input_incorrect_type_with_stop(self):
+        """Test validation with incorrect type, stop=True."""
+        print()
+        with pytest.raises(SystemExit):
+            NewtCons.validate_input("hello", int, stop=True)

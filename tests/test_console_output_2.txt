@@ -4,13 +4,14 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 6 items
+collecting ... collected 7 items
 
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 16%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 33%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 50%]
-test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 66%]
-test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 83%]
-test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [100%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 14%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 28%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 42%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 57%]
+test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 71%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [ 85%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop PASSED [100%]
 
-============================== 6 passed in 0.40s ==============================
+============================== 7 passed in 0.39s ==============================
