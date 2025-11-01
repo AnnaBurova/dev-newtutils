@@ -136,3 +136,11 @@ class TestValidateInput:
         assert NewtCons.validate_input(input_1, dict, stop=False) is True
         print(input_1, list, "not")
         assert NewtCons.validate_input(input_1, list, stop=False) is False
+
+    def test_validate_input_none_value(self):
+        """Test validation with None value."""
+        print()
+        print(None, type(None))
+        assert NewtCons.validate_input(None, type(None), stop=False) is True
+        print(None, int, "not")
+        assert NewtCons.validate_input(None, int, stop=False) is False
