@@ -90,9 +90,6 @@ class TestValidateInput:
         input_4 = False
         print(input_4)
         assert NewtCons.validate_input(input_4, bool, stop=False) is True
-        input_5 = [1, 2, 3]
-        print(input_5)
-        assert NewtCons.validate_input(input_5, list, stop=False) is True
         input_6 = {"1": 1, "2": 2, "3": 3}
         print(input_6)
         assert NewtCons.validate_input(input_6, dict, stop=False) is True
@@ -124,3 +121,12 @@ class TestValidateInput:
         input_3 = 3.14
         print(input_3)
         assert NewtCons.validate_input(input_3, (int, str), stop=False) is False
+
+    def test_validate_input_list_type(self):
+        """Test validation with list type."""
+        print()
+        input_1 = [1, 2, 3]
+        print(input_1, list)
+        assert NewtCons.validate_input(input_1, list, stop=False) is True
+        print(input_1, dict, "not")
+        assert NewtCons.validate_input(input_1, dict, stop=False) is False
