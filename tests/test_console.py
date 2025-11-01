@@ -97,3 +97,12 @@ class TestValidateInput:
         input_6 = {"1": 1, "2": 2, "3": 3}
         print(input_6)
         assert NewtCons.validate_input(input_6, dict, stop=False) is True
+
+    def test_validate_input_incorrect_type_no_stop(self, capsys):
+        """Test validation with incorrect type, stop=False."""
+        result = NewtCons.validate_input("hello", int, stop=False)
+        assert result is False
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "::: ERROR :::" in captured.out
+        assert "Expected <class 'int'>, got <class 'str'>" in captured.out
