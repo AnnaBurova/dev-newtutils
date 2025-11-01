@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 2 items
+collected 3 items
 
 test_console.py 
 =====captured.out=====
@@ -23,5 +23,18 @@ Location: Unknown
 Test error
 [0m
 .
+=====captured.out=====
+[1m [31m
+Location: Unknown
+::: ERROR :::
+Error 1
+Error 2
+Error 3
+[0m
 
-============================== 2 passed in 0.37s ==============================
+=====captured.err=====
+(no stderr captured)
+======================
+.
+
+============================== 3 passed in 0.40s ==============================

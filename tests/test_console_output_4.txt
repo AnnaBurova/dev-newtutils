@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 2 items
+collecting ... collected 3 items
 
 test_console.py::TestErrorMsg::test_error_msg_without_stop 
 =====captured.out=====
@@ -25,5 +25,19 @@ Location: Unknown
 Test error
 [0m
 PASSED
+test_console.py::TestErrorMsg::test_error_msg_multiple_args 
+=====captured.out=====
+[1m [31m
+Location: Unknown
+::: ERROR :::
+Error 1
+Error 2
+Error 3
+[0m
 
-============================== 2 passed in 0.37s ==============================
+=====captured.err=====
+(no stderr captured)
+======================
+PASSED
+
+============================== 3 passed in 0.41s ==============================

@@ -53,3 +53,12 @@ class TestErrorMsg:
         with pytest.raises(SystemExit) as exc_info:
             NewtCons.error_msg("Test error", stop=True)
         assert exc_info.value.code == 1
+
+    def test_error_msg_multiple_args(self, capsys):
+        """Test error message with multiple arguments."""
+        NewtCons.error_msg("Error 1", "Error 2", "Error 3", stop=False)
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "Error 1" in captured.out
+        assert "Error 2" in captured.out
+        assert "Error 3" in captured.out
