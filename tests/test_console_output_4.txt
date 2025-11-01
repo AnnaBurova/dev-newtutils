@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 4 items
+collecting ... collected 5 items
 
 test_console.py::TestErrorMsg::test_error_msg_without_stop 
 =====captured.out=====
@@ -51,5 +51,13 @@ Test error
 (no stderr captured)
 ======================
 PASSED
+test_console.py::TestValidateInput::test_validate_input_correct_type 
+123
+hello
+3.14
+False
+[1, 2, 3]
+{'1': 1, '2': 2, '3': 3}
+PASSED
 
-============================== 4 passed in 0.39s ==============================
+============================== 5 passed in 0.38s ==============================

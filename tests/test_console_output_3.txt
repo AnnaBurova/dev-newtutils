@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 4 items
+collected 5 items
 
 test_console.py 
 =====captured.out=====
@@ -47,5 +47,12 @@ Test error
 (no stderr captured)
 ======================
 .
+123
+hello
+3.14
+False
+[1, 2, 3]
+{'1': 1, '2': 2, '3': 3}
+.
 
-============================== 4 passed in 0.39s ==============================
+============================== 5 passed in 0.38s ==============================

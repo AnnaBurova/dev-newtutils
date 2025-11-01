@@ -7,6 +7,7 @@ Comprehensive unit tests for newtutils.console module.
 
 Tests cover:
 - Error messaging (error_msg)
+- Input validation (validate_input)
 """
 
 import pytest
@@ -69,3 +70,30 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
         assert "Location: test.module" in captured.out
+
+
+class TestValidateInput:
+    """Tests for validate_input function."""
+
+    def test_validate_input_correct_type(self):
+        """Test validation with correct type."""
+        print()
+
+        input_1 = 123
+        print(input_1)
+        assert NewtCons.validate_input(input_1, int, stop=False) is True
+        input_2 = "hello"
+        print(input_2)
+        assert NewtCons.validate_input(input_2, str, stop=False) is True
+        input_3 = 3.14
+        print(input_3)
+        assert NewtCons.validate_input(input_3, float, stop=False) is True
+        input_4 = False
+        print(input_4)
+        assert NewtCons.validate_input(input_4, bool, stop=False) is True
+        input_5 = [1, 2, 3]
+        print(input_5)
+        assert NewtCons.validate_input(input_5, list, stop=False) is True
+        input_6 = {"1": 1, "2": 2, "3": 3}
+        print(input_6)
+        assert NewtCons.validate_input(input_6, dict, stop=False) is True
