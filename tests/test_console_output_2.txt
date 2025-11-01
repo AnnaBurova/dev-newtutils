@@ -4,10 +4,11 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 3 items
+collecting ... collected 4 items
 
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 33%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 66%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [100%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 25%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 50%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 75%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [100%]
 
-============================== 3 passed in 0.38s ==============================
+============================== 4 passed in 0.39s ==============================

@@ -62,3 +62,10 @@ class TestErrorMsg:
         assert "Error 1" in captured.out
         assert "Error 2" in captured.out
         assert "Error 3" in captured.out
+
+    def test_error_msg_with_location(self, capsys):
+        """Test error message with custom location."""
+        NewtCons.error_msg("Test error", location="test.module", stop=False)
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "Location: test.module" in captured.out
