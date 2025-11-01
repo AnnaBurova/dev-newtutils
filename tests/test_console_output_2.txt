@@ -4,18 +4,19 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 11 items
+collecting ... collected 12 items
 
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [  9%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 18%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 27%]
-test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 36%]
-test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 45%]
-test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [ 54%]
-test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop PASSED [ 63%]
-test_console.py::TestValidateInput::test_validate_input_multiple_types PASSED [ 72%]
-test_console.py::TestValidateInput::test_validate_input_list_type PASSED [ 81%]
-test_console.py::TestValidateInput::test_validate_input_dict_type PASSED [ 90%]
-test_console.py::TestValidateInput::test_validate_input_none_value PASSED [100%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [  8%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 16%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 25%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 33%]
+test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 41%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [ 50%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop PASSED [ 58%]
+test_console.py::TestValidateInput::test_validate_input_multiple_types PASSED [ 66%]
+test_console.py::TestValidateInput::test_validate_input_list_type PASSED [ 75%]
+test_console.py::TestValidateInput::test_validate_input_dict_type PASSED [ 83%]
+test_console.py::TestValidateInput::test_validate_input_none_value PASSED [ 91%]
+test_console.py::TestBeepBoop::test_beep_boop_on_windows PASSED          [100%]
 
-============================= 11 passed in 0.39s ==============================
+============================= 12 passed in 0.42s ==============================

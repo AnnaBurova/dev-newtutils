@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 11 items
+collected 12 items
 
 test_console.py 
 =====captured.out=====
@@ -108,5 +108,8 @@ Expected <class 'int'>, got <class 'NoneType'>
 Value: None
 [0m
 .
+mock_winsound.Beep.call_count: 2
+mock_sleep.call_count: 2
+.
 
-============================= 11 passed in 0.38s ==============================
+============================= 12 passed in 0.40s ==============================

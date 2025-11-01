@@ -8,9 +8,11 @@ Comprehensive unit tests for newtutils.console module.
 Tests cover:
 - Error messaging (error_msg)
 - Input validation (validate_input)
+- Beep notification (_beep_boop)
 """
 
 import pytest
+from unittest.mock import patch
 
 import newtutils.console as NewtCons
 
@@ -144,3 +146,18 @@ class TestValidateInput:
         assert NewtCons.validate_input(None, type(None), stop=False) is True
         print(None, int, "not")
         assert NewtCons.validate_input(None, int, stop=False) is False
+
+
+class TestBeepBoop:
+    """Tests for _beep_boop function."""
+
+    @patch('newtutils.console.winsound')
+    @patch('newtutils.console.os.name', 'nt')
+    @patch('time.sleep')
+    def test_beep_boop_on_windows(self, mock_sleep, mock_winsound):
+        """Test beep_boop on Windows."""
+        print()
+        NewtCons._beep_boop()
+        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
+        assert mock_winsound.Beep.call_count == 2
+        print("mock_sleep.call_count:", mock_sleep.call_count)
