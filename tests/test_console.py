@@ -90,9 +90,6 @@ class TestValidateInput:
         input_4 = False
         print(input_4)
         assert NewtCons.validate_input(input_4, bool, stop=False) is True
-        input_6 = {"1": 1, "2": 2, "3": 3}
-        print(input_6)
-        assert NewtCons.validate_input(input_6, dict, stop=False) is True
 
     def test_validate_input_incorrect_type_no_stop(self, capsys):
         """Test validation with incorrect type, stop=False."""
@@ -130,3 +127,12 @@ class TestValidateInput:
         assert NewtCons.validate_input(input_1, list, stop=False) is True
         print(input_1, dict, "not")
         assert NewtCons.validate_input(input_1, dict, stop=False) is False
+
+    def test_validate_input_dict_type(self):
+        """Test validation with dict type."""
+        print()
+        input_1 = {"key": "value"}
+        print(input_1, dict)
+        assert NewtCons.validate_input(input_1, dict, stop=False) is True
+        print(input_1, list, "not")
+        assert NewtCons.validate_input(input_1, list, stop=False) is False

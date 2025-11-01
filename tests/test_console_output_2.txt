@@ -4,16 +4,17 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 9 items
+collecting ... collected 10 items
 
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 11%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 22%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 33%]
-test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 44%]
-test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 55%]
-test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [ 66%]
-test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop PASSED [ 77%]
-test_console.py::TestValidateInput::test_validate_input_multiple_types PASSED [ 88%]
-test_console.py::TestValidateInput::test_validate_input_list_type PASSED [100%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 10%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 20%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 30%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 40%]
+test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 50%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [ 60%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop PASSED [ 70%]
+test_console.py::TestValidateInput::test_validate_input_multiple_types PASSED [ 80%]
+test_console.py::TestValidateInput::test_validate_input_list_type PASSED [ 90%]
+test_console.py::TestValidateInput::test_validate_input_dict_type PASSED [100%]
 
-============================== 9 passed in 0.39s ==============================
+============================= 10 passed in 0.40s ==============================
