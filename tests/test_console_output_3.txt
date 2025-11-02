@@ -20,6 +20,8 @@ Test error
 (no stderr captured)
 ======================
 .
+=====captured.out=====
+
 Function: test_error_msg_with_stop
 --------------------------------------------
 [1m [31m
@@ -27,6 +29,10 @@ Location: Unknown
 ::: ERROR :::
 Test error
 [0m
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
 =====captured.out=====
 
@@ -58,12 +64,18 @@ Test error
 (no stderr captured)
 ======================
 .
+=====captured.out=====
+
 Function: test_validate_input_correct_type
 --------------------------------------------
 123
 hello
 3.14
 False
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
 =====captured.out=====
 
@@ -80,6 +92,8 @@ Value: hello
 (no stderr captured)
 ======================
 .
+=====captured.out=====
+
 Function: test_validate_input_incorrect_type_with_stop
 --------------------------------------------
 [1m [31m
@@ -88,7 +102,13 @@ Location: Newt.console.validate_input
 Expected <class 'int'>, got <class 'str'>
 Value: hello
 [0m
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
+=====captured.out=====
+
 Function: test_validate_input_multiple_types
 --------------------------------------------
 123
@@ -100,7 +120,13 @@ Location: Newt.console.validate_input
 Expected (<class 'int'>, <class 'str'>), got <class 'float'>
 Value: 3.14
 [0m
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
+=====captured.out=====
+
 Function: test_validate_input_list_type
 --------------------------------------------
 [1, 2, 3] <class 'list'>
@@ -111,7 +137,13 @@ Location: Newt.console.validate_input
 Expected <class 'dict'>, got <class 'list'>
 Value: [1, 2, 3]
 [0m
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
+=====captured.out=====
+
 Function: test_validate_input_dict_type
 --------------------------------------------
 {'key': 'value'} <class 'dict'>
@@ -122,7 +154,13 @@ Location: Newt.console.validate_input
 Expected <class 'list'>, got <class 'dict'>
 Value: {'key': 'value'}
 [0m
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
+=====captured.out=====
+
 Function: test_validate_input_none_value
 --------------------------------------------
 None <class 'NoneType'>
@@ -133,15 +171,31 @@ Location: Newt.console.validate_input
 Expected <class 'int'>, got <class 'NoneType'>
 Value: None
 [0m
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
+=====captured.out=====
+
 Function: test_beep_boop_on_windows
 --------------------------------------------
 mock_sleep.call_count: 2
 mock_winsound.Beep.call_count: 2
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
+=====captured.out=====
+
 Function: test_beep_boop_on_non_windows
 --------------------------------------------
 mock_winsound.Beep.call_count: 0
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
 =====captured.out=====
 
@@ -159,11 +213,19 @@ mock_winsound.Beep.call_count: 2
 (no stderr captured)
 ======================
 .
+=====captured.out=====
+
 Function: test_beep_boop_custom_pause
 --------------------------------------------
 mock_sleep.call_count: 2
 mock_winsound.Beep.call_count: 2
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
+=====captured.out=====
+
 Function: test_retry_pause_countdown
 --------------------------------------------
 Retrying in 3 seconds...
@@ -171,7 +233,13 @@ Time left: 3s
 Time left: 2s
 Time left: 1s
 mock_sleep.call_count: 3
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
+=====captured.out=====
+
 Function: test_retry_pause_with_beep
 --------------------------------------------
 Retrying in 2 seconds...
@@ -179,6 +247,10 @@ Time left: 2s
 Time left: 1s
 mock_sleep.call_count: 2
 mock_beep.call_count: 1
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
 =====captured.out=====
 
@@ -223,4 +295,4 @@ mock_sleep.call_count: 5
 ======================
 .
 
-============================= 19 passed in 0.41s ==============================
+============================= 19 passed in 0.42s ==============================
