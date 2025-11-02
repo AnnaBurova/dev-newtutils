@@ -158,13 +158,15 @@ def _beep_boop(
         return
 
     if not validate_input(pause_s, (int, float), stop=False):
-        return
+        pause_s = 0.2
+
     if pause_s < 0:
         error_msg(
             f"Invalid pause duration: {pause_s}",
-            location="Newt.console._beep_boop"
+            location="Newt.console._beep_boop",
+            stop=False
         )
-        return
+        pause_s = 0.2
 
     try:
         winsound.Beep(1200, 500)
@@ -201,13 +203,15 @@ def _retry_pause(
     """
 
     if not validate_input(seconds, int, stop=False):
-        return
+        seconds = 5
+
     if seconds <= 0:
         error_msg(
             f"Invalid pause duration: {seconds}",
-            location="Newt.console._retry_pause"
+            location="Newt.console._retry_pause",
+            stop=False
         )
-        return
+        seconds = 5
 
     if beep:
         _beep_boop()
