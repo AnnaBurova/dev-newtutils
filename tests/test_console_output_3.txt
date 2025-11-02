@@ -6,8 +6,8 @@ plugins: anyio-4.7.0
 collected 19 items
 
 test_console.py 
+START=======================================
 =====captured.out=====
-
 Function: test_error_msg_without_stop
 --------------------------------------------
 [1m [31m
@@ -18,10 +18,10 @@ Test error
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_error_msg_with_stop
 --------------------------------------------
 [1m [31m
@@ -32,10 +32,10 @@ Test error
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_error_msg_multiple_args
 --------------------------------------------
 [1m [31m
@@ -48,10 +48,10 @@ Error 3
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_error_msg_with_location
 --------------------------------------------
 [1m [31m
@@ -62,10 +62,10 @@ Test error
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_validate_input_correct_type
 --------------------------------------------
 123
@@ -75,10 +75,10 @@ False
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_validate_input_incorrect_type_no_stop
 --------------------------------------------
 [1m [31m
@@ -90,10 +90,10 @@ Value: hello
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_validate_input_incorrect_type_with_stop
 --------------------------------------------
 [1m [31m
@@ -105,10 +105,10 @@ Value: hello
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_validate_input_multiple_types
 --------------------------------------------
 123
@@ -123,10 +123,10 @@ Value: 3.14
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_validate_input_list_type
 --------------------------------------------
 [1, 2, 3] <class 'list'>
@@ -140,10 +140,10 @@ Value: [1, 2, 3]
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_validate_input_dict_type
 --------------------------------------------
 {'key': 'value'} <class 'dict'>
@@ -157,10 +157,10 @@ Value: {'key': 'value'}
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_validate_input_none_value
 --------------------------------------------
 None <class 'NoneType'>
@@ -174,10 +174,10 @@ Value: None
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_beep_boop_on_windows
 --------------------------------------------
 mock_sleep.call_count: 2
@@ -185,20 +185,20 @@ mock_winsound.Beep.call_count: 2
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_beep_boop_on_non_windows
 --------------------------------------------
 mock_winsound.Beep.call_count: 0
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_beep_boop_invalid_pause
 --------------------------------------------
 [1m [31m
@@ -211,10 +211,10 @@ mock_winsound.Beep.call_count: 2
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_beep_boop_custom_pause
 --------------------------------------------
 mock_sleep.call_count: 2
@@ -222,10 +222,10 @@ mock_winsound.Beep.call_count: 2
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_retry_pause_countdown
 --------------------------------------------
 Retrying in 3 seconds...
@@ -236,10 +236,10 @@ mock_sleep.call_count: 3
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_retry_pause_with_beep
 --------------------------------------------
 Retrying in 2 seconds...
@@ -250,10 +250,10 @@ mock_beep.call_count: 1
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_retry_pause_invalid_seconds
 --------------------------------------------
 [1m [31m
@@ -271,10 +271,10 @@ mock_sleep.call_count: 5
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
+START=======================================
 =====captured.out=====
-
 Function: test_retry_pause_negative_seconds
 --------------------------------------------
 [1m [31m
@@ -292,7 +292,7 @@ mock_sleep.call_count: 5
 
 =====captured.err=====
 (no stderr captured)
-======================
+END=========================================
 .
 
-============================= 19 passed in 0.42s ==============================
+============================= 19 passed in 0.41s ==============================

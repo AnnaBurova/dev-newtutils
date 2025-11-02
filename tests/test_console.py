@@ -26,16 +26,22 @@ def print_my_func_name(func_name):
         func_name (str):
             Name of the function to display.
     """
-    print()
     print("Function:", func_name)
     print("--------------------------------------------")
 
 
-def print_my_captured(
-        captured
-        ) -> None:
-    """Pretty-print captured stdout and stderr from pytest capsys."""
+def print_my_captured(captured):
+    """
+    Pretty-print captured standard output and error streams from pytest.
+
+    Args:
+        captured:
+            A pytest `CaptureResult` object returned by `capsys.readouterr()`.
+            Must provide `.out` and `.err` attributes representing captured
+            standard output and standard error text.
+    """
     print()
+    print("START=======================================")
 
     print("=====captured.out=====")
     if captured.out:
@@ -49,7 +55,7 @@ def print_my_captured(
     else:
         print("(no stderr captured)")
 
-    print("======================")
+    print("END=========================================")
 
 
 class TestErrorMsg:
