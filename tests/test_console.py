@@ -285,3 +285,14 @@ class TestRetryPause:
         print("mock_sleep.call_count:", mock_sleep.call_count)
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    @patch('newtutils.console.time.sleep')
+    def test_retry_pause_invalid_type(self, mock_sleep, capsys):
+        """Test retry pause with invalid type."""
+        print_my_func_name("test_retry_pause_invalid_type")
+        NewtCons._retry_pause(seconds="invalid", beep=False)  # type: ignore
+        # Should sleep 5 times (once per second)
+        assert mock_sleep.call_count == 5
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        captured = capsys.readouterr()
+        print_my_captured(captured)

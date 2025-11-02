@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 19 items
+collected 20 items
 
 test_console.py 
 START=======================================
@@ -294,5 +294,27 @@ mock_sleep.call_count: 5
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_retry_pause_invalid_type
+--------------------------------------------
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'int'>, got <class 'str'>
+Value: invalid
+[0m
+Retrying in 5 seconds...
+Time left: 5s
+Time left: 4s
+Time left: 3s
+Time left: 2s
+Time left: 1s
+mock_sleep.call_count: 5
 
-============================= 19 passed in 0.41s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 20 passed in 0.44s ==============================
