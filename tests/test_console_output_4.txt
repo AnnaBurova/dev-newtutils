@@ -8,6 +8,9 @@ collecting ... collected 19 items
 
 test_console.py::TestErrorMsg::test_error_msg_without_stop 
 =====captured.out=====
+
+Function: test_error_msg_without_stop
+--------------------------------------------
 [1m [31m
 Location: Unknown
 ::: ERROR :::
@@ -19,6 +22,8 @@ Test error
 ======================
 PASSED
 test_console.py::TestErrorMsg::test_error_msg_with_stop 
+Function: test_error_msg_with_stop
+--------------------------------------------
 [1m [31m
 Location: Unknown
 ::: ERROR :::
@@ -27,6 +32,9 @@ Test error
 PASSED
 test_console.py::TestErrorMsg::test_error_msg_multiple_args 
 =====captured.out=====
+
+Function: test_error_msg_multiple_args
+--------------------------------------------
 [1m [31m
 Location: Unknown
 ::: ERROR :::
@@ -41,6 +49,9 @@ Error 3
 PASSED
 test_console.py::TestErrorMsg::test_error_msg_with_location 
 =====captured.out=====
+
+Function: test_error_msg_with_location
+--------------------------------------------
 [1m [31m
 Location: test.module
 ::: ERROR :::
@@ -52,6 +63,8 @@ Test error
 ======================
 PASSED
 test_console.py::TestValidateInput::test_validate_input_correct_type 
+Function: test_validate_input_correct_type
+--------------------------------------------
 123
 hello
 3.14
@@ -59,6 +72,9 @@ False
 PASSED
 test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop 
 =====captured.out=====
+
+Function: test_validate_input_incorrect_type_no_stop
+--------------------------------------------
 [1m [31m
 Location: Newt.console.validate_input
 ::: ERROR :::
@@ -71,6 +87,8 @@ Value: hello
 ======================
 PASSED
 test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop 
+Function: test_validate_input_incorrect_type_with_stop
+--------------------------------------------
 [1m [31m
 Location: Newt.console.validate_input
 ::: ERROR :::
@@ -79,6 +97,8 @@ Value: hello
 [0m
 PASSED
 test_console.py::TestValidateInput::test_validate_input_multiple_types 
+Function: test_validate_input_multiple_types
+--------------------------------------------
 123
 hello
 3.14
@@ -90,6 +110,8 @@ Value: 3.14
 [0m
 PASSED
 test_console.py::TestValidateInput::test_validate_input_list_type 
+Function: test_validate_input_list_type
+--------------------------------------------
 [1, 2, 3] <class 'list'>
 [1, 2, 3] <class 'dict'> not
 [1m [31m
@@ -100,6 +122,8 @@ Value: [1, 2, 3]
 [0m
 PASSED
 test_console.py::TestValidateInput::test_validate_input_dict_type 
+Function: test_validate_input_dict_type
+--------------------------------------------
 {'key': 'value'} <class 'dict'>
 {'key': 'value'} <class 'list'> not
 [1m [31m
@@ -110,6 +134,8 @@ Value: {'key': 'value'}
 [0m
 PASSED
 test_console.py::TestValidateInput::test_validate_input_none_value 
+Function: test_validate_input_none_value
+--------------------------------------------
 None <class 'NoneType'>
 None <class 'int'> not
 [1m [31m
@@ -120,14 +146,21 @@ Value: None
 [0m
 PASSED
 test_console.py::TestBeepBoop::test_beep_boop_on_windows 
+Function: test_beep_boop_on_windows
+--------------------------------------------
 mock_sleep.call_count: 2
 mock_winsound.Beep.call_count: 2
 PASSED
 test_console.py::TestBeepBoop::test_beep_boop_on_non_windows 
+Function: test_beep_boop_on_non_windows
+--------------------------------------------
 mock_winsound.Beep.call_count: 0
 PASSED
 test_console.py::TestBeepBoop::test_beep_boop_invalid_pause 
 =====captured.out=====
+
+Function: test_beep_boop_invalid_pause
+--------------------------------------------
 [1m [31m
 Location: Newt.console._beep_boop
 ::: ERROR :::
@@ -141,10 +174,14 @@ mock_winsound.Beep.call_count: 2
 ======================
 PASSED
 test_console.py::TestBeepBoop::test_beep_boop_custom_pause 
+Function: test_beep_boop_custom_pause
+--------------------------------------------
 mock_sleep.call_count: 2
 mock_winsound.Beep.call_count: 2
 PASSED
 test_console.py::TestRetryPause::test_retry_pause_countdown 
+Function: test_retry_pause_countdown
+--------------------------------------------
 Retrying in 3 seconds...
 Time left: 3s
 Time left: 2s
@@ -152,6 +189,8 @@ Time left: 1s
 mock_sleep.call_count: 3
 PASSED
 test_console.py::TestRetryPause::test_retry_pause_with_beep 
+Function: test_retry_pause_with_beep
+--------------------------------------------
 Retrying in 2 seconds...
 Time left: 2s
 Time left: 1s
@@ -160,6 +199,9 @@ mock_beep.call_count: 1
 PASSED
 test_console.py::TestRetryPause::test_retry_pause_invalid_seconds 
 =====captured.out=====
+
+Function: test_retry_pause_invalid_seconds
+--------------------------------------------
 [1m [31m
 Location: Newt.console._retry_pause
 ::: ERROR :::
@@ -179,6 +221,9 @@ mock_sleep.call_count: 5
 PASSED
 test_console.py::TestRetryPause::test_retry_pause_negative_seconds 
 =====captured.out=====
+
+Function: test_retry_pause_negative_seconds
+--------------------------------------------
 [1m [31m
 Location: Newt.console._retry_pause
 ::: ERROR :::
@@ -197,4 +242,4 @@ mock_sleep.call_count: 5
 ======================
 PASSED
 
-============================= 19 passed in 0.41s ==============================
+============================= 19 passed in 0.43s ==============================

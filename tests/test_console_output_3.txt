@@ -7,6 +7,9 @@ collected 19 items
 
 test_console.py 
 =====captured.out=====
+
+Function: test_error_msg_without_stop
+--------------------------------------------
 [1m [31m
 Location: Unknown
 ::: ERROR :::
@@ -17,6 +20,8 @@ Test error
 (no stderr captured)
 ======================
 .
+Function: test_error_msg_with_stop
+--------------------------------------------
 [1m [31m
 Location: Unknown
 ::: ERROR :::
@@ -24,6 +29,9 @@ Test error
 [0m
 .
 =====captured.out=====
+
+Function: test_error_msg_multiple_args
+--------------------------------------------
 [1m [31m
 Location: Unknown
 ::: ERROR :::
@@ -37,6 +45,9 @@ Error 3
 ======================
 .
 =====captured.out=====
+
+Function: test_error_msg_with_location
+--------------------------------------------
 [1m [31m
 Location: test.module
 ::: ERROR :::
@@ -47,12 +58,17 @@ Test error
 (no stderr captured)
 ======================
 .
+Function: test_validate_input_correct_type
+--------------------------------------------
 123
 hello
 3.14
 False
 .
 =====captured.out=====
+
+Function: test_validate_input_incorrect_type_no_stop
+--------------------------------------------
 [1m [31m
 Location: Newt.console.validate_input
 ::: ERROR :::
@@ -64,6 +80,8 @@ Value: hello
 (no stderr captured)
 ======================
 .
+Function: test_validate_input_incorrect_type_with_stop
+--------------------------------------------
 [1m [31m
 Location: Newt.console.validate_input
 ::: ERROR :::
@@ -71,6 +89,8 @@ Expected <class 'int'>, got <class 'str'>
 Value: hello
 [0m
 .
+Function: test_validate_input_multiple_types
+--------------------------------------------
 123
 hello
 3.14
@@ -81,6 +101,8 @@ Expected (<class 'int'>, <class 'str'>), got <class 'float'>
 Value: 3.14
 [0m
 .
+Function: test_validate_input_list_type
+--------------------------------------------
 [1, 2, 3] <class 'list'>
 [1, 2, 3] <class 'dict'> not
 [1m [31m
@@ -90,6 +112,8 @@ Expected <class 'dict'>, got <class 'list'>
 Value: [1, 2, 3]
 [0m
 .
+Function: test_validate_input_dict_type
+--------------------------------------------
 {'key': 'value'} <class 'dict'>
 {'key': 'value'} <class 'list'> not
 [1m [31m
@@ -99,6 +123,8 @@ Expected <class 'list'>, got <class 'dict'>
 Value: {'key': 'value'}
 [0m
 .
+Function: test_validate_input_none_value
+--------------------------------------------
 None <class 'NoneType'>
 None <class 'int'> not
 [1m [31m
@@ -108,12 +134,19 @@ Expected <class 'int'>, got <class 'NoneType'>
 Value: None
 [0m
 .
+Function: test_beep_boop_on_windows
+--------------------------------------------
 mock_sleep.call_count: 2
 mock_winsound.Beep.call_count: 2
 .
+Function: test_beep_boop_on_non_windows
+--------------------------------------------
 mock_winsound.Beep.call_count: 0
 .
 =====captured.out=====
+
+Function: test_beep_boop_invalid_pause
+--------------------------------------------
 [1m [31m
 Location: Newt.console._beep_boop
 ::: ERROR :::
@@ -126,15 +159,21 @@ mock_winsound.Beep.call_count: 2
 (no stderr captured)
 ======================
 .
+Function: test_beep_boop_custom_pause
+--------------------------------------------
 mock_sleep.call_count: 2
 mock_winsound.Beep.call_count: 2
 .
+Function: test_retry_pause_countdown
+--------------------------------------------
 Retrying in 3 seconds...
 Time left: 3s
 Time left: 2s
 Time left: 1s
 mock_sleep.call_count: 3
 .
+Function: test_retry_pause_with_beep
+--------------------------------------------
 Retrying in 2 seconds...
 Time left: 2s
 Time left: 1s
@@ -142,6 +181,9 @@ mock_sleep.call_count: 2
 mock_beep.call_count: 1
 .
 =====captured.out=====
+
+Function: test_retry_pause_invalid_seconds
+--------------------------------------------
 [1m [31m
 Location: Newt.console._retry_pause
 ::: ERROR :::
@@ -160,6 +202,9 @@ mock_sleep.call_count: 5
 ======================
 .
 =====captured.out=====
+
+Function: test_retry_pause_negative_seconds
+--------------------------------------------
 [1m [31m
 Location: Newt.console._retry_pause
 ::: ERROR :::

@@ -18,6 +18,19 @@ from unittest.mock import patch
 import newtutils.console as NewtCons
 
 
+def print_my_func_name(func_name):
+    """
+    Print the provided function name in a structured format.
+
+    Args:
+        func_name (str):
+            Name of the function to display.
+    """
+    print()
+    print("Function:", func_name)
+    print("--------------------------------------------")
+
+
 def print_my_captured(
         captured
         ) -> None:
@@ -44,6 +57,7 @@ class TestErrorMsg:
 
     def test_error_msg_without_stop(self, capsys):
         """Test error message without stopping execution."""
+        print_my_func_name("test_error_msg_without_stop")
         NewtCons.error_msg("Test error", stop=False)
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -53,13 +67,14 @@ class TestErrorMsg:
 
     def test_error_msg_with_stop(self):
         """Test error message with stop=True raises SystemExit."""
-        print()
+        print_my_func_name("test_error_msg_with_stop")
         with pytest.raises(SystemExit) as exc_info:
             NewtCons.error_msg("Test error", stop=True)
         assert exc_info.value.code == 1
 
     def test_error_msg_multiple_args(self, capsys):
         """Test error message with multiple arguments."""
+        print_my_func_name("test_error_msg_multiple_args")
         NewtCons.error_msg("Error 1", "Error 2", "Error 3", stop=False)
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -69,6 +84,7 @@ class TestErrorMsg:
 
     def test_error_msg_with_location(self, capsys):
         """Test error message with custom location."""
+        print_my_func_name("test_error_msg_with_location")
         NewtCons.error_msg("Test error", location="test.module", stop=False)
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -80,7 +96,7 @@ class TestValidateInput:
 
     def test_validate_input_correct_type(self):
         """Test validation with correct type."""
-        print()
+        print_my_func_name("test_validate_input_correct_type")
         input_1 = 123
         print(input_1)
         assert NewtCons.validate_input(input_1, int, stop=False) is True
@@ -96,6 +112,7 @@ class TestValidateInput:
 
     def test_validate_input_incorrect_type_no_stop(self, capsys):
         """Test validation with incorrect type, stop=False."""
+        print_my_func_name("test_validate_input_incorrect_type_no_stop")
         result = NewtCons.validate_input("hello", int, stop=False)
         assert result is False
         captured = capsys.readouterr()
@@ -105,13 +122,13 @@ class TestValidateInput:
 
     def test_validate_input_incorrect_type_with_stop(self):
         """Test validation with incorrect type, stop=True."""
-        print()
+        print_my_func_name("test_validate_input_incorrect_type_with_stop")
         with pytest.raises(SystemExit):
             NewtCons.validate_input("hello", int, stop=True)
 
     def test_validate_input_multiple_types(self):
         """Test validation with tuple of allowed types."""
-        print()
+        print_my_func_name("test_validate_input_multiple_types")
         input_1 = 123
         print(input_1)
         assert NewtCons.validate_input(input_1, (int, str), stop=False) is True
@@ -124,7 +141,7 @@ class TestValidateInput:
 
     def test_validate_input_list_type(self):
         """Test validation with list type."""
-        print()
+        print_my_func_name("test_validate_input_list_type")
         input_1 = [1, 2, 3]
         print(input_1, list)
         assert NewtCons.validate_input(input_1, list, stop=False) is True
@@ -133,7 +150,7 @@ class TestValidateInput:
 
     def test_validate_input_dict_type(self):
         """Test validation with dict type."""
-        print()
+        print_my_func_name("test_validate_input_dict_type")
         input_1 = {"key": "value"}
         print(input_1, dict)
         assert NewtCons.validate_input(input_1, dict, stop=False) is True
@@ -142,7 +159,7 @@ class TestValidateInput:
 
     def test_validate_input_none_value(self):
         """Test validation with None value."""
-        print()
+        print_my_func_name("test_validate_input_none_value")
         print(None, type(None))
         assert NewtCons.validate_input(None, type(None), stop=False) is True
         print(None, int, "not")
@@ -157,7 +174,7 @@ class TestBeepBoop:
     @patch('newtutils.console.time.sleep')
     def test_beep_boop_on_windows(self, mock_sleep, mock_winsound):
         """Test beep_boop on Windows."""
-        print()
+        print_my_func_name("test_beep_boop_on_windows")
         NewtCons._beep_boop()
         assert mock_winsound.Beep.call_count == 2
         print("mock_sleep.call_count:", mock_sleep.call_count)
@@ -167,8 +184,7 @@ class TestBeepBoop:
     @patch('newtutils.console.winsound')
     def test_beep_boop_on_non_windows(self, mock_winsound):
         """Test beep_boop on non-Windows (should not raise)."""
-        # Should not raise on non-Windows
-        print()
+        print_my_func_name("test_beep_boop_on_non_windows")
         NewtCons._beep_boop()
         mock_winsound.Beep.assert_not_called()
         print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
@@ -177,6 +193,7 @@ class TestBeepBoop:
     @patch('newtutils.console.time.sleep')
     def test_beep_boop_invalid_pause(self, mock_sleep, mock_winsound, capsys):
         """Test beep_boop with invalid pause duration."""
+        print_my_func_name("test_beep_boop_invalid_pause")
         NewtCons._beep_boop(pause_s=-1)
         print("mock_sleep.call_count:", mock_sleep.call_count)
         print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
@@ -185,7 +202,7 @@ class TestBeepBoop:
 
     def test_beep_boop_custom_pause(self):
         """Test beep_boop with custom pause duration."""
-        print()
+        print_my_func_name("test_beep_boop_custom_pause")
         with patch('newtutils.console.winsound') as mock_winsound, \
              patch('newtutils.console.os.name', 'nt'), \
              patch('newtutils.console.time.sleep') as mock_sleep:
@@ -201,7 +218,7 @@ class TestRetryPause:
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_countdown(self, mock_sleep):
         """Test retry pause countdown."""
-        print()
+        print_my_func_name("test_retry_pause_countdown")
         NewtCons._retry_pause(seconds=3, beep=False)
         # Should sleep 3 times (once per second)
         assert mock_sleep.call_count == 3
@@ -211,7 +228,7 @@ class TestRetryPause:
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_with_beep(self, mock_sleep, mock_beep):
         """Test retry pause with beep enabled."""
-        print()
+        print_my_func_name("test_retry_pause_with_beep")
         NewtCons._retry_pause(seconds=2, beep=True)
         mock_beep.assert_called_once()
         print("mock_sleep.call_count:", mock_sleep.call_count)
@@ -220,7 +237,7 @@ class TestRetryPause:
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_invalid_seconds(self, mock_sleep, capsys):
         """Test retry pause with invalid seconds."""
-        # Should handle gracefully
+        print_my_func_name("test_retry_pause_invalid_seconds")
         NewtCons._retry_pause(seconds=0, beep=False)
         # Should sleep 5 times (once per second)
         assert mock_sleep.call_count == 5
@@ -231,7 +248,7 @@ class TestRetryPause:
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_negative_seconds(self, mock_sleep, capsys):
         """Test retry pause with negative seconds."""
-        # Should handle gracefully
+        print_my_func_name("test_retry_pause_negative_seconds")
         NewtCons._retry_pause(seconds=-1, beep=False)
         # Should sleep 5 times (once per second)
         assert mock_sleep.call_count == 5
