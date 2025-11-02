@@ -214,10 +214,24 @@ class TestRetryPause:
         print("mock_sleep.call_count:", mock_sleep.call_count)
         print("mock_beep.call_count:", mock_beep.call_count)
 
-    def test_retry_pause_invalid_seconds(self, capsys):
+    @patch('time.sleep')
+    def test_retry_pause_invalid_seconds(self, mock_sleep, capsys):
         """Test retry pause with invalid seconds."""
-        with pytest.raises(SystemExit):
-            NewtCons._retry_pause(seconds=0, beep=False)
         # Should handle gracefully
+        NewtCons._retry_pause(seconds=0, beep=False)
+        # Should sleep 5 times (once per second)
+        assert mock_sleep.call_count == 5
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    @patch('time.sleep')
+    def test_retry_pause_negative_seconds(self, mock_sleep, capsys):
+        """Test retry pause with negative seconds."""
+        # Should handle gracefully
+        NewtCons._retry_pause(seconds=-1, beep=False)
+        # Should sleep 5 times (once per second)
+        assert mock_sleep.call_count == 5
+        print("mock_sleep.call_count:", mock_sleep.call_count)
         captured = capsys.readouterr()
         print_my_captured(captured)
