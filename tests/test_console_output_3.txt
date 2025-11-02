@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 16 items
+collected 17 items
 
 test_console.py 
 =====captured.out=====
@@ -132,5 +132,12 @@ Time left: 2s
 Time left: 1s
 mock_sleep.call_count: 3
 .
+Retrying in 2 seconds...
+Time left: 2s
+Time left: 1s
+mock_sleep.call_count: 2
+mock_beep.call_count: 1
+mock_beep.called: True
+.
 
-============================= 16 passed in 0.41s ==============================
+============================= 17 passed in 0.40s ==============================

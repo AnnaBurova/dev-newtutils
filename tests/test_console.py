@@ -203,3 +203,13 @@ class TestRetryPause:
         # Should sleep 3 times (once per second)
         assert mock_sleep.call_count == 3
         print("mock_sleep.call_count:", mock_sleep.call_count)
+
+    @patch('newtutils.console._beep_boop')
+    @patch('time.sleep')
+    def test_retry_pause_with_beep(self, mock_sleep, mock_beep):
+        """Test retry pause with beep enabled."""
+        print()
+        NewtCons._retry_pause(seconds=2, beep=True)
+        mock_beep.assert_called_once()
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        print("mock_beep.call_count:", mock_beep.call_count)

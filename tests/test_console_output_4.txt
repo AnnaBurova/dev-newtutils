@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 16 items
+collecting ... collected 17 items
 
 test_console.py::TestErrorMsg::test_error_msg_without_stop 
 =====captured.out=====
@@ -148,5 +148,13 @@ Time left: 2s
 Time left: 1s
 mock_sleep.call_count: 3
 PASSED
+test_console.py::TestRetryPause::test_retry_pause_with_beep 
+Retrying in 2 seconds...
+Time left: 2s
+Time left: 1s
+mock_sleep.call_count: 2
+mock_beep.call_count: 1
+mock_beep.called: True
+PASSED
 
-============================= 16 passed in 0.41s ==============================
+============================= 17 passed in 0.41s ==============================

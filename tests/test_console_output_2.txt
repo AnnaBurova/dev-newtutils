@@ -4,23 +4,24 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 16 items
+collecting ... collected 17 items
 
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [  6%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 12%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 18%]
-test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 25%]
-test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 31%]
-test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [ 37%]
-test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop PASSED [ 43%]
-test_console.py::TestValidateInput::test_validate_input_multiple_types PASSED [ 50%]
-test_console.py::TestValidateInput::test_validate_input_list_type PASSED [ 56%]
-test_console.py::TestValidateInput::test_validate_input_dict_type PASSED [ 62%]
-test_console.py::TestValidateInput::test_validate_input_none_value PASSED [ 68%]
-test_console.py::TestBeepBoop::test_beep_boop_on_windows PASSED          [ 75%]
-test_console.py::TestBeepBoop::test_beep_boop_on_non_windows PASSED      [ 81%]
-test_console.py::TestBeepBoop::test_beep_boop_invalid_pause PASSED       [ 87%]
-test_console.py::TestBeepBoop::test_beep_boop_custom_pause PASSED        [ 93%]
-test_console.py::TestRetryPause::test_retry_pause_countdown PASSED       [100%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [  5%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 11%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 17%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 23%]
+test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 29%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [ 35%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop PASSED [ 41%]
+test_console.py::TestValidateInput::test_validate_input_multiple_types PASSED [ 47%]
+test_console.py::TestValidateInput::test_validate_input_list_type PASSED [ 52%]
+test_console.py::TestValidateInput::test_validate_input_dict_type PASSED [ 58%]
+test_console.py::TestValidateInput::test_validate_input_none_value PASSED [ 64%]
+test_console.py::TestBeepBoop::test_beep_boop_on_windows PASSED          [ 70%]
+test_console.py::TestBeepBoop::test_beep_boop_on_non_windows PASSED      [ 76%]
+test_console.py::TestBeepBoop::test_beep_boop_invalid_pause PASSED       [ 82%]
+test_console.py::TestBeepBoop::test_beep_boop_custom_pause PASSED        [ 88%]
+test_console.py::TestRetryPause::test_retry_pause_countdown PASSED       [ 94%]
+test_console.py::TestRetryPause::test_retry_pause_with_beep PASSED       [100%]
 
-============================= 16 passed in 0.42s ==============================
+============================= 17 passed in 0.42s ==============================
