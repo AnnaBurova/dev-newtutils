@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 17 items
+collecting ... collected 18 items
 
 test_console.py::TestErrorMsg::test_error_msg_without_stop 
 =====captured.out=====
@@ -154,7 +154,18 @@ Time left: 2s
 Time left: 1s
 mock_sleep.call_count: 2
 mock_beep.call_count: 1
-mock_beep.called: True
+PASSED
+test_console.py::TestRetryPause::test_retry_pause_invalid_seconds 
+=====captured.out=====
+[1m [31m
+Location: Newt.console._retry_pause
+::: ERROR :::
+Invalid pause duration: 0
+[0m
+
+=====captured.err=====
+(no stderr captured)
+======================
 PASSED
 
-============================= 17 passed in 0.41s ==============================
+============================= 18 passed in 0.41s ==============================

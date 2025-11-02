@@ -213,3 +213,11 @@ class TestRetryPause:
         mock_beep.assert_called_once()
         print("mock_sleep.call_count:", mock_sleep.call_count)
         print("mock_beep.call_count:", mock_beep.call_count)
+
+    def test_retry_pause_invalid_seconds(self, capsys):
+        """Test retry pause with invalid seconds."""
+        with pytest.raises(SystemExit):
+            NewtCons._retry_pause(seconds=0, beep=False)
+        # Should handle gracefully
+        captured = capsys.readouterr()
+        print_my_captured(captured)

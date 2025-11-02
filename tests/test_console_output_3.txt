@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 17 items
+collected 18 items
 
 test_console.py 
 =====captured.out=====
@@ -137,7 +137,17 @@ Time left: 2s
 Time left: 1s
 mock_sleep.call_count: 2
 mock_beep.call_count: 1
-mock_beep.called: True
+.
+=====captured.out=====
+[1m [31m
+Location: Newt.console._retry_pause
+::: ERROR :::
+Invalid pause duration: 0
+[0m
+
+=====captured.err=====
+(no stderr captured)
+======================
 .
 
-============================= 17 passed in 0.40s ==============================
+============================= 18 passed in 0.41s ==============================
