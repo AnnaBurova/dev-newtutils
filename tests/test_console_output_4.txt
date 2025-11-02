@@ -120,8 +120,8 @@ Value: None
 [0m
 PASSED
 test_console.py::TestBeepBoop::test_beep_boop_on_windows 
-mock_winsound.Beep.call_count: 2
 mock_sleep.call_count: 2
+mock_winsound.Beep.call_count: 2
 PASSED
 test_console.py::TestBeepBoop::test_beep_boop_on_non_windows 
 mock_winsound.Beep.call_count: 0
@@ -133,13 +133,16 @@ Location: Newt.console._beep_boop
 ::: ERROR :::
 Invalid pause duration: -1
 [0m
+mock_sleep.call_count: 2
+mock_winsound.Beep.call_count: 2
 
 =====captured.err=====
 (no stderr captured)
 ======================
 PASSED
 test_console.py::TestBeepBoop::test_beep_boop_custom_pause 
-mock_winsound.Beep.called: True
+mock_sleep.call_count: 2
+mock_winsound.Beep.call_count: 2
 PASSED
 test_console.py::TestRetryPause::test_retry_pause_countdown 
 Retrying in 3 seconds...

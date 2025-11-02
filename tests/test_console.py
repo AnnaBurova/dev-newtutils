@@ -152,32 +152,34 @@ class TestValidateInput:
 class TestBeepBoop:
     """Tests for _beep_boop function."""
 
-    @patch('newtutils.console.winsound')
     @patch('newtutils.console.os.name', 'nt')
-    @patch('time.sleep')
+    @patch('newtutils.console.winsound')
+    @patch('newtutils.console.time.sleep')
     def test_beep_boop_on_windows(self, mock_sleep, mock_winsound):
         """Test beep_boop on Windows."""
         print()
         NewtCons._beep_boop()
-        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         assert mock_winsound.Beep.call_count == 2
         print("mock_sleep.call_count:", mock_sleep.call_count)
+        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
 
-    @patch('newtutils.console.winsound')
     @patch('newtutils.console.os.name', 'posix')
+    @patch('newtutils.console.winsound')
     def test_beep_boop_on_non_windows(self, mock_winsound):
         """Test beep_boop on non-Windows (should not raise)."""
         # Should not raise on non-Windows
         print()
         NewtCons._beep_boop()
-        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         mock_winsound.Beep.assert_not_called()
+        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
 
-    def test_beep_boop_invalid_pause(self, capsys):
+    @patch('newtutils.console.winsound')
+    @patch('newtutils.console.time.sleep')
+    def test_beep_boop_invalid_pause(self, mock_sleep, mock_winsound, capsys):
         """Test beep_boop with invalid pause duration."""
-        with pytest.raises(SystemExit):
-            NewtCons._beep_boop(pause_s=-1)
-        # Should handle gracefully without raising
+        NewtCons._beep_boop(pause_s=-1)
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         captured = capsys.readouterr()
         print_my_captured(captured)
 
@@ -186,16 +188,17 @@ class TestBeepBoop:
         print()
         with patch('newtutils.console.winsound') as mock_winsound, \
              patch('newtutils.console.os.name', 'nt'), \
-             patch('time.sleep'):
+             patch('newtutils.console.time.sleep') as mock_sleep:
             NewtCons._beep_boop(pause_s=0.5)
-            print("mock_winsound.Beep.called:", mock_winsound.Beep.called)
             assert mock_winsound.Beep.called
+            print("mock_sleep.call_count:", mock_sleep.call_count)
+            print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
 
 
 class TestRetryPause:
     """Tests for _retry_pause function."""
 
-    @patch('time.sleep')
+    @patch('newtutils.console.time.sleep')
     def test_retry_pause_countdown(self, mock_sleep):
         """Test retry pause countdown."""
         print()
@@ -205,7 +208,7 @@ class TestRetryPause:
         print("mock_sleep.call_count:", mock_sleep.call_count)
 
     @patch('newtutils.console._beep_boop')
-    @patch('time.sleep')
+    @patch('newtutils.console.time.sleep')
     def test_retry_pause_with_beep(self, mock_sleep, mock_beep):
         """Test retry pause with beep enabled."""
         print()
@@ -214,7 +217,7 @@ class TestRetryPause:
         print("mock_sleep.call_count:", mock_sleep.call_count)
         print("mock_beep.call_count:", mock_beep.call_count)
 
-    @patch('time.sleep')
+    @patch('newtutils.console.time.sleep')
     def test_retry_pause_invalid_seconds(self, mock_sleep, capsys):
         """Test retry pause with invalid seconds."""
         # Should handle gracefully
@@ -225,7 +228,7 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-    @patch('time.sleep')
+    @patch('newtutils.console.time.sleep')
     def test_retry_pause_negative_seconds(self, mock_sleep, capsys):
         """Test retry pause with negative seconds."""
         # Should handle gracefully

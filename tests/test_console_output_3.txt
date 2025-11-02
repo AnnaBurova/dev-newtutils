@@ -108,8 +108,8 @@ Expected <class 'int'>, got <class 'NoneType'>
 Value: None
 [0m
 .
-mock_winsound.Beep.call_count: 2
 mock_sleep.call_count: 2
+mock_winsound.Beep.call_count: 2
 .
 mock_winsound.Beep.call_count: 0
 .
@@ -119,12 +119,15 @@ Location: Newt.console._beep_boop
 ::: ERROR :::
 Invalid pause duration: -1
 [0m
+mock_sleep.call_count: 2
+mock_winsound.Beep.call_count: 2
 
 =====captured.err=====
 (no stderr captured)
 ======================
 .
-mock_winsound.Beep.called: True
+mock_sleep.call_count: 2
+mock_winsound.Beep.call_count: 2
 .
 Retrying in 3 seconds...
 Time left: 3s
