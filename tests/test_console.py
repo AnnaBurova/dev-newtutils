@@ -179,3 +179,13 @@ class TestBeepBoop:
         # Should handle gracefully without raising
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_beep_boop_custom_pause(self):
+        """Test beep_boop with custom pause duration."""
+        print()
+        with patch('newtutils.console.winsound') as mock_winsound, \
+             patch('newtutils.console.os.name', 'nt'), \
+             patch('time.sleep'):
+            NewtCons._beep_boop(pause_s=0.5)
+            print("mock_winsound.Beep.called:", mock_winsound.Beep.called)
+            assert mock_winsound.Beep.called

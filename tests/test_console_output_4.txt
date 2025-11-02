@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 14 items
+collecting ... collected 15 items
 
 test_console.py::TestErrorMsg::test_error_msg_without_stop 
 =====captured.out=====
@@ -138,5 +138,8 @@ Invalid pause duration: -1
 (no stderr captured)
 ======================
 PASSED
+test_console.py::TestBeepBoop::test_beep_boop_custom_pause 
+mock_winsound.Beep.called: True
+PASSED
 
-============================= 14 passed in 0.41s ==============================
+============================= 15 passed in 0.41s ==============================
