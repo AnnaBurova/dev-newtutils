@@ -9,6 +9,7 @@ Tests cover:
 - Error messaging (error_msg)
 - Input validation (validate_input)
 - Beep notification (_beep_boop)
+- Retry pause (_retry_pause)
 """
 
 import pytest
@@ -189,3 +190,16 @@ class TestBeepBoop:
             NewtCons._beep_boop(pause_s=0.5)
             print("mock_winsound.Beep.called:", mock_winsound.Beep.called)
             assert mock_winsound.Beep.called
+
+
+class TestRetryPause:
+    """Tests for _retry_pause function."""
+
+    @patch('time.sleep')
+    def test_retry_pause_countdown(self, mock_sleep):
+        """Test retry pause countdown."""
+        print()
+        NewtCons._retry_pause(seconds=3, beep=False)
+        # Should sleep 3 times (once per second)
+        assert mock_sleep.call_count == 3
+        print("mock_sleep.call_count:", mock_sleep.call_count)
