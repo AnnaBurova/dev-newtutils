@@ -161,3 +161,16 @@ class TestSortingList:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_list_not_a_list(self, capsys):
+        """Test sorting list with non-list input."""
+        print_my_func_name("test_sorting_list_not_a_list")
+
+        input_str = "not a list"
+        print(input_str)
+        result = NewtUtil.sorting_list(input_str, stop=False)  # type: ignore
+        print(result)
+        assert result == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
