@@ -10,6 +10,7 @@ Tests cover:
 - Input validation (validate_input)
 - Beep notification (_beep_boop)
 - Retry pause (_retry_pause)
+- Divider (_divider)
 """
 
 import pytest
@@ -296,3 +297,16 @@ class TestRetryPause:
         print("mock_sleep.call_count:", mock_sleep.call_count)
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+
+class TestDivider:
+    """Tests for _divider function."""
+
+    def test_divider_output(self, capsys):
+        """Test that divider prints correctly."""
+        NewtCons._divider()
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "-" in captured.out
+        assert "\n" in captured.out
+
