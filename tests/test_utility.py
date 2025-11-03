@@ -10,6 +10,8 @@ Tests cover:
 - Dictionary sorting (sorting_dict_by_keys)
 """
 
+import pytest
+
 import newtutils.utility as NewtUtil
 
 
@@ -147,3 +149,15 @@ class TestSortingList:
 
         assert "::: ERROR :::" in captured.out
         assert "must have only str and int types:" in captured.out
+
+    def test_sorting_list_invalid_type_with_stop(self, capsys):
+        """Test sorting list with invalid types, stop=True."""
+        print_my_func_name("test_sorting_list_invalid_type_with_stop")
+
+        input_list = [1, 2, 3.5]
+        print(input_list)
+        with pytest.raises(SystemExit):
+            NewtUtil.sorting_list(input_list, stop=True)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
