@@ -1,30 +1,5 @@
 --------------------------------------------------
 
-Test 1: validate_input basic tests
-Input: 123, expected int
-Output:  True
-
-Input: 'hello', expected int
-[1m [31m
-Location: Newt.utility.validate_input
-::: ERROR :::
-Expected <class 'int'>, got <class 'str'>
-[0m
-Output:  False
-
-Input: 3.14, expected (int, float)
-Output:  True
-
-Input: [1,2,3], expected (dict, set)
-[1m [31m
-Location: Newt.utility.validate_input
-::: ERROR :::
-Expected (<class 'dict'>, <class 'set'>), got <class 'list'>
-[0m
-Output:  False
-
---------------------------------------------------
-
 Test 2: sorting_list with different input types
 Numbers:
 Input: [3, 1, 2, 3]
@@ -73,18 +48,6 @@ Expected: reversed order of previous result
 {'name': 'Alice', 'age': 30}
 {'name': 'Charlie', 'age': 25}
 {'name': 'Aska', 'age': 25}
-
---------------------------------------------------
-
-Test 4: beep_boop() and _retry_pause()
-Retrying in 7 seconds...
-Time left: 7s
-Time left: 6s
-Time left: 5s
-Time left: 4s
-Time left: 3s
-Time left: 2s
-Time left: 1s
 
 --------------------------------------------------
 
