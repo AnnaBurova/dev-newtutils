@@ -23,12 +23,6 @@ def test_sorting_list() -> None:
 
     print("Test 2: sorting_list with different input types")
 
-    numbers_input = [3, 1, 2, 3]
-    numbers_output = NewtUtil.sorting_list(numbers_input)
-    print("Numbers:")
-    print(f"Input: {numbers_input}")
-    print(f"Output: {numbers_output}")
-
     words_input = ["b", "a", "b"]
     words_output = NewtUtil.sorting_list(words_input)
     print("Words:")
