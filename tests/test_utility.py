@@ -131,3 +131,19 @@ class TestSortingList:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_list_invalid_type_no_stop(self, capsys):
+        """Test sorting list with invalid types, stop=False."""
+        print_my_func_name("test_sorting_list_invalid_type_no_stop")
+
+        input_list = [1, 2, 3.5]
+        print(input_list)
+        result = NewtUtil.sorting_list(input_list, stop=False)
+        print(result)
+        assert result == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "::: ERROR :::" in captured.out
+        assert "must have only str and int types:" in captured.out
