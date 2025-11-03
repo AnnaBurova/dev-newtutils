@@ -1,18 +1,5 @@
 --------------------------------------------------
 
-Test 2: sorting_list with different input types
-Numbers:
-Input: [3, 1, 2, 3]
-Output: [1, 2, 3]
-Words:
-Input: ['b', 'a', 'b']
-Output: ['a', 'b']
-Mixed:
-Input: ['f', 4, 'a', 2, 'b', 1, 'a']
-Output: ['a', 'b', 'f', 1, 2, 4]
-
---------------------------------------------------
-
 Test 3: sorting_dict_by_keys with different sorting key options
 {'name': 'Bob'}
 {'name': 'Alice', 'age': 30}

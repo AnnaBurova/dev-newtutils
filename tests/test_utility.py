@@ -99,9 +99,22 @@ class TestSortingList:
     def test_sorting_list_empty(self, capsys):
         """Test sorting empty list."""
         print_my_func_name("test_sorting_list_empty")
+
         result = NewtUtil.sorting_list([])
         print(result)
         assert result == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_sorting_list_single_element(self, capsys):
+        """Test sorting list with single element."""
+        print_my_func_name("test_sorting_list_single_element")
+
+        print(NewtUtil.sorting_list([1]))
+        assert NewtUtil.sorting_list([1]) == [1]
+        print(NewtUtil.sorting_list(["a"]))
+        assert NewtUtil.sorting_list(["a"]) == ["a"]
 
         captured = capsys.readouterr()
         print_my_captured(captured)
