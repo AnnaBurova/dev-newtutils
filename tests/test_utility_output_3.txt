@@ -3,12 +3,12 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 1 item
+collected 2 items
 
 test_utility.py 
 START=======================================
 =====captured.out=====
-Function: test_error_msg_without_stop
+Function: test_sorting_list_integers
 --------------------------------------------
 [3, 1, 2, 3, 5, 1]
 [1, 2, 3, 5]
@@ -17,5 +17,16 @@ Function: test_error_msg_without_stop
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_sorting_list_strings
+--------------------------------------------
+['c', 'a', 'b', 'c', 'z']
+['a', 'b', 'c', 'z']
 
-============================== 1 passed in 0.37s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 2 passed in 0.38s ==============================

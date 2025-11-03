@@ -58,13 +58,26 @@ class TestSortingList:
 
     def test_sorting_list_integers(self, capsys):
         """Test sorting list of integers."""
-        print_my_func_name("test_error_msg_without_stop")
+        print_my_func_name("test_sorting_list_integers")
 
         input_list = [3, 1, 2, 3, 5, 1]
         print(input_list)
         result = NewtUtil.sorting_list(input_list)
         print(result)
         assert result == [1, 2, 3, 5]
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_sorting_list_strings(self, capsys):
+        """Test sorting list of strings."""
+        print_my_func_name("test_sorting_list_strings")
+
+        input_list = ["c", "a", "b", "c", "z"]
+        print(input_list)
+        result = NewtUtil.sorting_list(input_list)
+        print(result)
+        assert result == ["a", "b", "c", "z"]
 
         captured = capsys.readouterr()
         print_my_captured(captured)
