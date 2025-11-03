@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 3 items
+collected 4 items
 
 test_utility.py 
 START=======================================
@@ -39,5 +39,15 @@ Function: test_sorting_list_mixed
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_sorting_list_empty
+--------------------------------------------
+[]
 
-============================== 3 passed in 0.38s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 4 passed in 0.42s ==============================

@@ -16,26 +16,6 @@ import newtutils.utility as NewtUtil
 import newtutils.console as NewtCons
 
 
-def test_sorting_list() -> None:
-    """
-    Test sorting_list with different input types.
-    """
-
-    print("Test 2: sorting_list with different input types")
-
-    words_input = ["b", "a", "b"]
-    words_output = NewtUtil.sorting_list(words_input)
-    print("Words:")
-    print(f"Input: {words_input}")
-    print(f"Output: {words_output}")
-
-    mixed_input = ["f", 4, "a", 2, "b", 1, "a"]
-    mixed_output = NewtUtil.sorting_list(mixed_input)
-    print("Mixed:")
-    print(f"Input: {mixed_input}")
-    print(f"Output: {mixed_output}")
-
-
 def test_sorting_dict_by_keys() -> None:
     """
     Test sorting_dict_by_keys with different sorting key options.
@@ -81,8 +61,6 @@ def test_sorting_dict_by_keys() -> None:
 
 if __name__ == "__main__":
     """Run all tests in sequence."""
-    NewtCons._divider()
-    test_sorting_list()
     NewtCons._divider()
     test_sorting_dict_by_keys()
     NewtCons._divider()

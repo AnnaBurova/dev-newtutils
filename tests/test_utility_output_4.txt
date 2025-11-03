@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 3 items
+collecting ... collected 4 items
 
 test_utility.py::TestSortingList::test_sorting_list_integers 
 START=======================================
@@ -42,5 +42,16 @@ Function: test_sorting_list_mixed
 (no stderr captured)
 END=========================================
 PASSED
+test_utility.py::TestSortingList::test_sorting_list_empty 
+START=======================================
+=====captured.out=====
+Function: test_sorting_list_empty
+--------------------------------------------
+[]
 
-============================== 3 passed in 0.38s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 4 passed in 0.40s ==============================

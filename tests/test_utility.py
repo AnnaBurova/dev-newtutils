@@ -95,3 +95,13 @@ class TestSortingList:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_list_empty(self, capsys):
+        """Test sorting empty list."""
+        print_my_func_name("test_sorting_list_empty")
+        result = NewtUtil.sorting_list([])
+        print(result)
+        assert result == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
