@@ -174,3 +174,16 @@ class TestSortingList:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_list_with_none(self, capsys):
+        """Test sorting list containing None."""
+        print_my_func_name("test_sorting_list_with_none")
+
+        input_list = [1, None, "a"]
+        print(input_list)
+        result = NewtUtil.sorting_list(input_list, stop=False)
+        print(result)
+        assert result == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
