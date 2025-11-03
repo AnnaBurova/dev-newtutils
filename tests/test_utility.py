@@ -82,3 +82,16 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+    def test_sorting_list_mixed(self, capsys):
+        """Test sorting list with mixed strings and integers."""
+        print_my_func_name("test_sorting_list_mixed")
+
+        input_list = ["f", 4, "a", 2, "b", 1, "a"]
+        print(input_list)
+        result = NewtUtil.sorting_list(input_list)
+        print(result)
+        # Strings first, then integers
+        assert result == ["a", "b", "f", 1, 2, 4]
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

@@ -309,4 +309,3 @@ class TestDivider:
         print_my_captured(captured)
         assert "-" in captured.out
         assert "\n" in captured.out
-
