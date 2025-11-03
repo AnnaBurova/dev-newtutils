@@ -118,3 +118,16 @@ class TestSortingList:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_list_all_duplicates(self, capsys):
+        """Test sorting list with all duplicates."""
+        print_my_func_name("test_sorting_list_all_duplicates")
+
+        input_list = [1, 1, 1, 1]
+        print(input_list)
+        result = NewtUtil.sorting_list(input_list)
+        print(result)
+        assert result == [1]
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
