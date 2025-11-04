@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 18 items
+collecting ... collected 19 items
 
 test_utility.py::TestSortingList::test_sorting_list_integers 
 START=======================================
@@ -240,5 +240,21 @@ Function: test_sorting_dict_no_keys
 (no stderr captured)
 END=========================================
 PASSED
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_not_list 
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_not_list
+--------------------------------------------
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'list'>, got <class 'str'>
+Value: not a list
+[0m
 
-============================= 18 passed in 0.39s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 19 passed in 0.39s ==============================
