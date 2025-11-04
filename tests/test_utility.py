@@ -242,3 +242,21 @@ class TestSortingDictByKeys:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_dict_reverse(self, capsys):
+        """Test sorting in reverse order."""
+        print_my_func_name("test_sorting_dict_reverse")
+
+        input_dict = [
+            {"name": "Alice", "age": 30},
+            {"name": "Bob", "age": 20},
+            {"name": "Charlie", "age": 25}
+        ]
+        print(input_dict)
+        result = NewtUtil.sorting_dict_by_keys(input_dict, "age", reverse=True)
+        print(result)
+        assert result[0]["age"] == 30
+        assert result[-1]["age"] == 20
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
