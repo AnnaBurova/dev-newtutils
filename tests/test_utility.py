@@ -260,3 +260,22 @@ class TestSortingDictByKeys:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_dict_missing_keys(self, capsys):
+        """Test sorting with missing keys (should be placed at end)."""
+        print_my_func_name("test_sorting_dict_missing_keys")
+
+        input_dict = [
+            {"name": "Alice", "age": 30},
+            {"name": "Bob"},  # Missing age
+            {"name": "Charlie", "age": 25}
+        ]
+        print(input_dict)
+        result = NewtUtil.sorting_dict_by_keys(input_dict, "age")
+        print(result)
+        # Items with missing keys should be at the end
+        assert result[-1]["name"] == "Bob"
+        assert result[0]["age"] == 25
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
