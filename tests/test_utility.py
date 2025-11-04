@@ -309,3 +309,21 @@ class TestSortingDictByKeys:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_dict_no_keys(self, capsys):
+        """Test sorting without keys (should return original order)."""
+        print_my_func_name("test_sorting_dict_no_keys")
+
+        input_dict = [
+            {"name": "Charlie"},
+            {"name": "Alice"},
+            {"name": "Bob"}
+        ]
+        print(input_dict)
+        result = NewtUtil.sorting_dict_by_keys(input_dict)  # type: ignore
+        print(result)
+        # Should return same order (no sorting keys provided)
+        assert len(result) == 3
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

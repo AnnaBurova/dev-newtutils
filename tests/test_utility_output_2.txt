@@ -4,24 +4,25 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 17 items
+collecting ... collected 18 items
 
 test_utility.py::TestSortingList::test_sorting_list_integers PASSED      [  5%]
 test_utility.py::TestSortingList::test_sorting_list_strings PASSED       [ 11%]
-test_utility.py::TestSortingList::test_sorting_list_mixed PASSED         [ 17%]
-test_utility.py::TestSortingList::test_sorting_list_empty PASSED         [ 23%]
-test_utility.py::TestSortingList::test_sorting_list_single_element PASSED [ 29%]
-test_utility.py::TestSortingList::test_sorting_list_all_duplicates PASSED [ 35%]
-test_utility.py::TestSortingList::test_sorting_list_invalid_type_no_stop PASSED [ 41%]
-test_utility.py::TestSortingList::test_sorting_list_invalid_type_with_stop PASSED [ 47%]
-test_utility.py::TestSortingList::test_sorting_list_not_a_list PASSED    [ 52%]
-test_utility.py::TestSortingList::test_sorting_list_with_none PASSED     [ 58%]
-test_utility.py::TestSortingList::test_sorting_list_large_numbers PASSED [ 64%]
-test_utility.py::TestSortingDictByKeys::test_sorting_dict_by_single_key PASSED [ 70%]
-test_utility.py::TestSortingDictByKeys::test_sorting_dict_by_multiple_keys PASSED [ 76%]
-test_utility.py::TestSortingDictByKeys::test_sorting_dict_reverse PASSED [ 82%]
-test_utility.py::TestSortingDictByKeys::test_sorting_dict_missing_keys PASSED [ 88%]
-test_utility.py::TestSortingDictByKeys::test_sorting_dict_none_values PASSED [ 94%]
-test_utility.py::TestSortingDictByKeys::test_sorting_dict_empty_list PASSED [100%]
+test_utility.py::TestSortingList::test_sorting_list_mixed PASSED         [ 16%]
+test_utility.py::TestSortingList::test_sorting_list_empty PASSED         [ 22%]
+test_utility.py::TestSortingList::test_sorting_list_single_element PASSED [ 27%]
+test_utility.py::TestSortingList::test_sorting_list_all_duplicates PASSED [ 33%]
+test_utility.py::TestSortingList::test_sorting_list_invalid_type_no_stop PASSED [ 38%]
+test_utility.py::TestSortingList::test_sorting_list_invalid_type_with_stop PASSED [ 44%]
+test_utility.py::TestSortingList::test_sorting_list_not_a_list PASSED    [ 50%]
+test_utility.py::TestSortingList::test_sorting_list_with_none PASSED     [ 55%]
+test_utility.py::TestSortingList::test_sorting_list_large_numbers PASSED [ 61%]
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_by_single_key PASSED [ 66%]
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_by_multiple_keys PASSED [ 72%]
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_reverse PASSED [ 77%]
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_missing_keys PASSED [ 83%]
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_none_values PASSED [ 88%]
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_empty_list PASSED [ 94%]
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_no_keys PASSED [100%]
 
-============================= 17 passed in 0.41s ==============================
+============================= 18 passed in 0.40s ==============================

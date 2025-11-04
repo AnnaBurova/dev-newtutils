@@ -1,4 +1,5 @@
 """
+Updated on 2025-11
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -129,6 +130,9 @@ def sorting_dict_by_keys(
             location="Newt.utility.sorting_dict_by_keys"
         )
         return []
+
+    if not keys:
+        return data
 
     try:
         def sort_key(d: dict[str, object]) -> tuple[object, ...]:
