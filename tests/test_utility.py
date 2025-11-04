@@ -279,3 +279,22 @@ class TestSortingDictByKeys:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_dict_none_values(self, capsys):
+        """Test sorting with None values (should be placed at end)."""
+        print_my_func_name("test_sorting_dict_none_values")
+
+        input_dict = [
+            {"name": "Alice", "age": 30},
+            {"name": "Bob", "age": None},
+            {"name": "Charlie", "age": 25}
+        ]
+        print(input_dict)
+        result = NewtUtil.sorting_dict_by_keys(input_dict, "age")
+        print(result)
+        # Items with None should be at the end
+        assert result[-1]["name"] == "Bob"
+        assert result[0]["age"] == 25
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
