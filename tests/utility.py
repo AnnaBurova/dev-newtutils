@@ -43,11 +43,6 @@ def test_sorting_dict_by_keys() -> None:
     for item in dict_age:
         print(item)
 
-    print("\nExpected: sorted alphabetically by name")
-    dict_name = NewtUtil.sorting_dict_by_keys(data_dict, "name")
-    for item in dict_name:
-        print(item)
-
     print("\nExpected: sorted by age, and by name for equal ages")
     dict_age_name = NewtUtil.sorting_dict_by_keys(data_dict, "age", "name")
     for item in dict_age_name:

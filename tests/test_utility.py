@@ -200,3 +200,26 @@ class TestSortingList:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+
+class TestSortingDictByKeys:
+    """Tests for sorting_dict_by_keys function."""
+
+    def test_sorting_dict_by_single_key(self, capsys):
+        """Test sorting by a single key."""
+        print_my_func_name("test_sorting_dict_by_single_key")
+
+        input_dict = [
+            {"name": "Charlie", "age": 25},
+            {"name": "Alice", "age": 30},
+            {"name": "Bob", "age": 20}
+        ]
+        print(input_dict)
+        result = NewtUtil.sorting_dict_by_keys(input_dict, "age")
+        print(result)
+        assert result[0]["age"] == 20
+        assert result[1]["age"] == 25
+        assert result[2]["age"] == 30
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
