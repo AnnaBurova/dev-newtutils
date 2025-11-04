@@ -187,3 +187,16 @@ class TestSortingList:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_list_large_numbers(self, capsys):
+        """Test sorting list with large numbers."""
+        print_my_func_name("test_sorting_list_large_numbers")
+
+        input_list = [100, 1, 50, 1000, 5]
+        print(input_list)
+        result = NewtUtil.sorting_list(input_list)
+        print(result)
+        assert result == [1, 5, 50, 100, 1000]
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

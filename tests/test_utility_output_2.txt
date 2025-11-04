@@ -4,17 +4,18 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 10 items
+collecting ... collected 11 items
 
-test_utility.py::TestSortingList::test_sorting_list_integers PASSED      [ 10%]
-test_utility.py::TestSortingList::test_sorting_list_strings PASSED       [ 20%]
-test_utility.py::TestSortingList::test_sorting_list_mixed PASSED         [ 30%]
-test_utility.py::TestSortingList::test_sorting_list_empty PASSED         [ 40%]
-test_utility.py::TestSortingList::test_sorting_list_single_element PASSED [ 50%]
-test_utility.py::TestSortingList::test_sorting_list_all_duplicates PASSED [ 60%]
-test_utility.py::TestSortingList::test_sorting_list_invalid_type_no_stop PASSED [ 70%]
-test_utility.py::TestSortingList::test_sorting_list_invalid_type_with_stop PASSED [ 80%]
-test_utility.py::TestSortingList::test_sorting_list_not_a_list PASSED    [ 90%]
-test_utility.py::TestSortingList::test_sorting_list_with_none PASSED     [100%]
+test_utility.py::TestSortingList::test_sorting_list_integers PASSED      [  9%]
+test_utility.py::TestSortingList::test_sorting_list_strings PASSED       [ 18%]
+test_utility.py::TestSortingList::test_sorting_list_mixed PASSED         [ 27%]
+test_utility.py::TestSortingList::test_sorting_list_empty PASSED         [ 36%]
+test_utility.py::TestSortingList::test_sorting_list_single_element PASSED [ 45%]
+test_utility.py::TestSortingList::test_sorting_list_all_duplicates PASSED [ 54%]
+test_utility.py::TestSortingList::test_sorting_list_invalid_type_no_stop PASSED [ 63%]
+test_utility.py::TestSortingList::test_sorting_list_invalid_type_with_stop PASSED [ 72%]
+test_utility.py::TestSortingList::test_sorting_list_not_a_list PASSED    [ 81%]
+test_utility.py::TestSortingList::test_sorting_list_with_none PASSED     [ 90%]
+test_utility.py::TestSortingList::test_sorting_list_large_numbers PASSED [100%]
 
-============================= 10 passed in 0.39s ==============================
+============================= 11 passed in 0.39s ==============================
