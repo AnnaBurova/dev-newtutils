@@ -155,7 +155,9 @@ class TestValidateInput:
         print_my_func_name("test_validate_input_incorrect_type_with_stop")
 
         with pytest.raises(SystemExit):
-            NewtCons.validate_input("hello", int, stop=True)
+            result = NewtCons.validate_input("hello", int, stop=True)
+            print("This line will not be printed:", result)
+
         captured = capsys.readouterr()
         print_my_captured(captured)
 
@@ -357,6 +359,8 @@ class TestDivider:
 
     def test_divider_output(self, capsys):
         """Test that divider prints correctly."""
+        print_my_func_name("test_divider_output")
+
         NewtCons._divider()
 
         captured = capsys.readouterr()
