@@ -339,3 +339,15 @@ class TestSortingDictByKeys:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_dict_not_dicts(self, capsys):
+        """Test sorting with list containing non-dicts."""
+        print_my_func_name("test_sorting_dict_not_dicts")
+
+        input_list = [1, 2, 3]
+        with pytest.raises(SystemExit):
+            result = NewtUtil.sorting_dict_by_keys(input_list, "key")  # type: ignore
+            print("result:", result)  # This line will not be printed
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

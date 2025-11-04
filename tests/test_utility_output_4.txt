@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 19 items
+collecting ... collected 20 items
 
 test_utility.py::TestSortingList::test_sorting_list_integers 
 START=======================================
@@ -256,5 +256,21 @@ Value: not a list
 (no stderr captured)
 END=========================================
 PASSED
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_not_dicts 
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_not_dicts
+--------------------------------------------
+[1m [31m
+Location: Newt.utility.sorting_dict_by_keys
+::: ERROR :::
+Expected a list of dictionaries
+[1, 2, 3]
+[0m
 
-============================= 19 passed in 0.39s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 20 passed in 0.39s ==============================
