@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 12 items
+collecting ... collected 13 items
 
 test_utility.py::TestSortingList::test_sorting_list_integers 
 START=======================================
@@ -169,5 +169,17 @@ Function: test_sorting_dict_by_single_key
 (no stderr captured)
 END=========================================
 PASSED
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_by_multiple_keys 
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_by_multiple_keys
+--------------------------------------------
+[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 20}]
+[{'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 25}, {'name': 'Charlie', 'age': 25}]
 
-============================= 12 passed in 0.39s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 13 passed in 0.38s ==============================

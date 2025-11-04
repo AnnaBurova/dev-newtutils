@@ -223,3 +223,22 @@ class TestSortingDictByKeys:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_dict_by_multiple_keys(self, capsys):
+        """Test sorting by multiple keys."""
+        print_my_func_name("test_sorting_dict_by_multiple_keys")
+
+        input_dict = [
+            {"name": "Charlie", "age": 25},
+            {"name": "Alice", "age": 25},
+            {"name": "Bob", "age": 20}
+        ]
+        print(input_dict)
+        result = NewtUtil.sorting_dict_by_keys(input_dict, "age", "name")
+        print(result)
+        assert result[0]["age"] == 20
+        assert result[1]["name"] == "Alice"  # Same age, sorted by name
+        assert result[2]["name"] == "Charlie"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
