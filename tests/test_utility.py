@@ -298,3 +298,14 @@ class TestSortingDictByKeys:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_dict_empty_list(self, capsys):
+        """Test sorting empty list."""
+        print_my_func_name("test_sorting_dict_empty_list")
+
+        result = NewtUtil.sorting_dict_by_keys([])
+        print(result)
+        assert result == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
