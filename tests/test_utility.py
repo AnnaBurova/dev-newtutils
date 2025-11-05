@@ -354,3 +354,16 @@ class TestSortingDictByKeys:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_dict_invalid_key_type(self, capsys):
+        """Test sorting with invalid key type."""
+        print_my_func_name("test_sorting_dict_invalid_key_type")
+
+        input_dict = [{"name": "Alice"}]
+        print(input_dict)
+        with pytest.raises(SystemExit):
+            result = NewtUtil.sorting_dict_by_keys(input_dict, 123)  # type: ignore
+            print("This line will not be printed:", result)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
