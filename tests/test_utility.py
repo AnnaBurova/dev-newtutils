@@ -157,7 +157,8 @@ class TestSortingList:
         input_list = [1, 2, 3.5]
         print(input_list)
         with pytest.raises(SystemExit):
-            NewtUtil.sorting_list(input_list, stop=True)
+            result = NewtUtil.sorting_list(input_list, stop=True)
+            print("This line will not be printed:", result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -333,9 +334,10 @@ class TestSortingDictByKeys:
         print_my_func_name("test_sorting_dict_not_list")
 
         input_str = "not a list"
+        print(input_str)
         with pytest.raises(SystemExit):
             result = NewtUtil.sorting_dict_by_keys(input_str, "key")  # type: ignore
-            print("result:", result)  # This line will not be printed
+            print("This line will not be printed:", result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -345,9 +347,10 @@ class TestSortingDictByKeys:
         print_my_func_name("test_sorting_dict_not_dicts")
 
         input_list = [1, 2, 3]
+        print(input_list)
         with pytest.raises(SystemExit):
             result = NewtUtil.sorting_dict_by_keys(input_list, "key")  # type: ignore
-            print("result:", result)  # This line will not be printed
+            print("This line will not be printed:", result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
