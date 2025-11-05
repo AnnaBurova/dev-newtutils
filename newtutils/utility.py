@@ -6,7 +6,7 @@ Created on 2025-10
 
 Functions:
     def sorting_list(
-        json_input: list,
+        input_list: list,
         stop: bool = True
         ) -> list[str | int]
     def sorting_dict_by_keys(
@@ -22,7 +22,7 @@ import newtutils.console as NewtCons
 
 
 def sorting_list(
-        json_input: list,
+        input_list: list,
         stop: bool = True
         ) -> list[str | int]:
     """
@@ -38,7 +38,7 @@ def sorting_list(
     The function stops execution if `stop=True`.
 
     Args:
-        json_input (list):
+        input_list (list):
             The input list to process.
             Must contain only `str` or `int` values.
         stop (bool):
@@ -56,21 +56,21 @@ def sorting_list(
             Raised when `stop=True` and the input contains invalid data types.
     """
 
-    if not NewtCons.validate_input(json_input, list, stop=stop):
+    if not NewtCons.validate_input(input_list, list, stop=stop):
         return []
 
     try:
         # Validate all elements
-        if not all(isinstance(x, (str, int)) for x in json_input):
+        if not all(isinstance(x, (str, int)) for x in input_list):
             NewtCons.error_msg(
-                f"json_input must have only str and int types: {json_input}",
+                f"input_list must have only str and int types: {input_list}",
                 location="Newt.utility.sorting_list",
                 stop=stop
             )
             return []
 
         # Remove duplicates
-        unique_values = set(json_input)
+        unique_values = set(input_list)
 
         # Separate by type and sort
         str_values = sorted([x for x in unique_values if isinstance(x, str)])
