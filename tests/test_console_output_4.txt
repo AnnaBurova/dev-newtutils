@@ -339,6 +339,8 @@ PASSED
 test_console.py::TestDivider::test_divider_output 
 START=======================================
 =====captured.out=====
+Function: test_divider_output
+--------------------------------------------
 
 --------------------------------------------------
 
