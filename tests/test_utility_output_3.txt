@@ -79,7 +79,7 @@ Function: test_sorting_list_invalid_type_no_stop
 [1m [31m
 Location: Newt.utility.sorting_list
 ::: ERROR :::
-json_input must have only str and int types: [1, 2, 3.5]
+input_list must have only str and int types: [1, 2, 3.5]
 [0m
 []
 
@@ -95,7 +95,7 @@ Function: test_sorting_list_invalid_type_with_stop
 [1m [31m
 Location: Newt.utility.sorting_list
 ::: ERROR :::
-json_input must have only str and int types: [1, 2, 3.5]
+input_list must have only str and int types: [1, 2, 3.5]
 [0m
 
 =====captured.err=====
@@ -127,7 +127,7 @@ Function: test_sorting_list_with_none
 [1m [31m
 Location: Newt.utility.sorting_list
 ::: ERROR :::
-json_input must have only str and int types: [1, None, 'a']
+input_list must have only str and int types: [1, None, 'a']
 [0m
 []
 
