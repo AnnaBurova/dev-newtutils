@@ -321,7 +321,7 @@ class TestSortingDictByKeys:
             {"name": "Bob"}
         ]
         print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict)  # type: ignore
+        result = NewtUtil.sorting_dict_by_keys(input_dict)
         print(result)
         # Should return same order (no sorting keys provided)
         assert len(result) == 3

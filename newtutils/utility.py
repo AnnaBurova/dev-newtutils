@@ -10,7 +10,7 @@ Functions:
         stop: bool = True
         ) -> list[str | int]
     def sorting_dict_by_keys(
-        data: list[dict[str, object]],
+        data: Sequence[Mapping[str, object]],
         *keys: str,
         reverse: bool = False
         ) -> list[dict[str, object]]
@@ -18,6 +18,7 @@ Functions:
 
 from __future__ import annotations
 
+from collections.abc import Sequence, Mapping
 import newtutils.console as NewtCons
 
 
@@ -89,59 +90,73 @@ def sorting_list(
 
 
 def sorting_dict_by_keys(
-        data: list[dict[str, object]],
+        data: Sequence[Mapping[str, object]],
         *keys: str,
         reverse: bool = False
         ) -> list[dict[str, object]]:
     """
-    Sort a list of dictionaries by one or more keys.
+    Sort a sequence of mappings (dictionaries) by one or more keys.
 
-    Missing or None-valued keys are placed at the end of the result.
+    This function validates the input sequence and its elements,
+    ensuring each entry is a mapping with string keys.
+    It supports sorting by multiple keys in priority order.
+    Missing or None-valued keys are placed at the end of the sorted list.
 
     Args:
-        data (list[dict[str, object]]):
-            The list of dictionaries to sort.
+        data (Sequence[Mapping[str, object]]):
+            Sequence of mapping-like objects to sort.
         *keys (str):
             One or more keys to sort by, in priority order.
         reverse (bool):
-            If True, sort in descending order. Defaults to False.
+            If True, sorts in descending order.
+            Defaults to False.
 
     Returns:
         out (list[dict[str, object]]):
-            A new list sorted by the specified keys,
-            with entries missing those keys placed at the end.
+            A new list of dictionaries sorted by the specified keys.
+            Items with missing or None-valued keys are placed at the end.
+
+    Raises:
+        SystemExit:
+            Raised when validation fails and `NewtCons.error_msg()` is called
+            with `stop=True` (if configured that way).
     """
 
+    # Validate that data is a list
     if not NewtCons.validate_input(data, list):
         return []
 
+    # Validate that each element is a dictionary
     if not all(isinstance(d, dict) for d in data):
         NewtCons.error_msg(
             "Expected a list of dictionaries",
-            data,
+            f"Data: {data}",
             location="Newt.utility.sorting_dict_by_keys"
         )
         return []
 
+    # Validate that all keys are strings
     if not all(isinstance(k, str) for k in keys):
         NewtCons.error_msg(
             "Keys must be strings",
-            keys,
+            f"Keys: {keys}",
             location="Newt.utility.sorting_dict_by_keys"
         )
         return []
 
+    # If no keys provided — return the data as a list (no sorting)
     if not keys:
-        return data
+        return [dict(d) for d in data]
 
     try:
-        def sort_key(d: dict[str, object]) -> tuple[object, ...]:
+        def sort_key(d: Mapping[str, object]) -> tuple[object, ...]:
             """
-            Generate a sorting key that moves missing values to the end.
+            Generate a sorting key that moves missing or None values to the end.
             """
             return tuple((d.get(k) is None, d.get(k)) for k in keys)
 
-        return sorted(data, key=sort_key, reverse=reverse)
+        # sorted() always returns a new list
+        return [dict(d) for d in sorted(data, key=sort_key, reverse=reverse)]
 
     except Exception as e:
         NewtCons.error_msg(
@@ -149,4 +164,4 @@ def sorting_dict_by_keys(
             location="Newt.utility.sorting_dict_by_keys",
             stop=False
         )
-        return data
+        return [dict(d) for d in data]

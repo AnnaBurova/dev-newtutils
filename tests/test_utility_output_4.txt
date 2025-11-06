@@ -267,7 +267,7 @@ Function: test_sorting_dict_not_dicts
 Location: Newt.utility.sorting_dict_by_keys
 ::: ERROR :::
 Expected a list of dictionaries
-[1, 2, 3]
+Data: [1, 2, 3]
 [0m
 
 =====captured.err=====
@@ -284,7 +284,7 @@ Function: test_sorting_dict_invalid_key_type
 Location: Newt.utility.sorting_dict_by_keys
 ::: ERROR :::
 Keys must be strings
-(123,)
+Keys: (123,)
 [0m
 
 =====captured.err=====
