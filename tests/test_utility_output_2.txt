@@ -37,3 +37,5 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_complex_sorting PASSED
 ..
 ============================= 22 passed in 0.43s ==============================
 .
+============================= 22 passed in 0.45s ==============================
+.
