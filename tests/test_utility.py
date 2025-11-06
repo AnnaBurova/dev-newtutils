@@ -367,3 +367,30 @@ class TestSortingDictByKeys:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sorting_dict_complex_sorting(self, capsys):
+        """Test complex multi-key sorting."""
+        input_dict = [
+            {"category": "A", "priority": 2, "name": "Item2"},
+            {"category": "B", "priority": 1, "name": "Item1"},
+            {"category": "A", "priority": 1, "name": "Item1"},
+            {"category": "A", "priority": 2, "name": "Item1"}
+        ]
+        print(input_dict)
+        result = NewtUtil.sorting_dict_by_keys(input_dict, "category", "priority", "name")
+        print(result)
+        assert result[0]["category"] == "A"
+        assert result[1]["category"] == "A"
+        assert result[2]["category"] == "A"
+        assert result[3]["category"] == "B"
+        assert result[0]["priority"] == 1
+        assert result[1]["priority"] == 2
+        assert result[2]["priority"] == 2
+        assert result[3]["priority"] == 1
+        assert result[0]["name"] == "Item1"
+        assert result[1]["name"] == "Item1"
+        assert result[2]["name"] == "Item2"
+        assert result[3]["name"] == "Item1"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
