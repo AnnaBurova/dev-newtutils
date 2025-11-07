@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 6 items
+collected 7 items
 
 test_files.py 
 START=======================================
@@ -40,7 +40,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpigbn4_ai
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmp46t_d8v8
 [0m
 
 =====captured.err=====
@@ -73,5 +73,16 @@ Function: test_converts_windows_newlines
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_preserves_unix_newlines
+--------------------------------------------
+'line1\nline2\nline3'
+'line1\nline2\nline3'
 
-============================== 6 passed in 0.39s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 7 passed in 0.38s ==============================

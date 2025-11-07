@@ -149,3 +149,16 @@ class TestNormalizeNewlines:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_preserves_unix_newlines(self, capsys):
+        """Test that Unix newlines are preserved."""
+        print_my_func_name("test_preserves_unix_newlines")
+
+        text = "line1\nline2\nline3"
+        print(repr(text))
+        result = NewtFiles._normalize_newlines(text)
+        print(repr(result))
+        assert result == text
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
