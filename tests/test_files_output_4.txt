@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 2 items
+collecting ... collected 3 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory 
 START=======================================
@@ -26,5 +26,15 @@ Function: test_handles_existing_directory
 (no stderr captured)
 END=========================================
 PASSED
+test_files.py::TestEnsureDirExists::test_handles_current_directory 
+START=======================================
+=====captured.out=====
+Function: test_handles_current_directory
+--------------------------------------------
 
-============================== 2 passed in 0.39s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 3 passed in 0.39s ==============================

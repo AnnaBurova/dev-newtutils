@@ -90,3 +90,14 @@ class TestEnsureDirExists:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_handles_current_directory(self, capsys):
+        """Test that empty dir_path (current dir) is handled."""
+        print_my_func_name("test_handles_current_directory")
+
+        file_path = "file.txt"
+        # Should not raise
+        NewtFiles._ensure_dir_exists(file_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
