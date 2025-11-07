@@ -23,6 +23,7 @@ def print_my_func_name(func_name):
         func_name (str):
             Name of the function to display.
     """
+
     print("Function:", func_name)
     print("--------------------------------------------")
 
@@ -37,6 +38,7 @@ def print_my_captured(captured):
             Must provide `.out` and `.err` attributes representing captured
             standard output and standard error text.
     """
+
     print()
     print("START=======================================")
 
@@ -370,6 +372,8 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_complex_sorting(self, capsys):
         """Test complex multi-key sorting."""
+        print_my_func_name("test_sorting_dict_complex_sorting")
+
         input_dict = [
             {"category": "A", "priority": 2, "name": "Item2"},
             {"category": "B", "priority": 1, "name": "Item1"},
