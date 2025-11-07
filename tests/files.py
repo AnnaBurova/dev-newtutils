@@ -18,26 +18,6 @@ import newtutils.console as NewtCons
 import newtutils.files as NewtFiles
 
 
-def setup_test_directory() -> str:
-    """
-    Create and return the test directory path for file operations.
-
-    This function determines the absolute path of the current script,
-    creates a subdirectory named `files_data`, and ensures that it exists.
-
-    Returns:
-        str:
-            The full absolute path to the test directory where
-            temporary test files will be created.
-    """
-
-    dir_ = os.path.dirname(os.path.realpath(__file__))
-    test_dir = os.path.join(dir_, "files_data")
-    NewtFiles._ensure_dir_exists(test_dir)
-    print(f"Setup test directory: {test_dir}")
-    return test_dir
-
-
 def test_text_files(
         test_dir: str
         ) -> None:
