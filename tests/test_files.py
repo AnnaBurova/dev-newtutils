@@ -7,6 +7,7 @@ Comprehensive unit tests for newtutils.files module.
 
 Tests cover:
 - Directory operations (_ensure_dir_exists)
+- File existence checks (_check_file_exists)
 """
 
 import tempfile
@@ -63,7 +64,6 @@ class TestEnsureDirExists:
         """Test that nested directories are created."""
         print_my_func_name("test_creates_nested_directory")
 
-        nested_path = ""
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
             NewtFiles._ensure_dir_exists(nested_path)
@@ -78,7 +78,6 @@ class TestEnsureDirExists:
         """Test that existing directories don't cause errors."""
         print_my_func_name("test_handles_existing_directory")
 
-        file_path = ""
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "file.txt")
             NewtFiles._ensure_dir_exists(file_path)
@@ -98,6 +97,28 @@ class TestEnsureDirExists:
         file_path = "file.txt"
         # Should not raise
         NewtFiles._ensure_dir_exists(file_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+
+class TestCheckFileExists:
+    """Tests for _check_file_exists function."""
+
+    def test_returns_true_for_existing_file(self, capsys):
+        """Test that existing files return True."""
+        print_my_func_name("test_returns_true_for_existing_file")
+
+        with tempfile.NamedTemporaryFile(delete=False) as tmp:
+            tmp.write(b"test")
+            tmp_path = tmp.name
+
+        try:
+            assert NewtFiles._check_file_exists(tmp_path) is True
+        finally:
+            os.unlink(tmp_path)
+
+        assert NewtFiles._check_file_exists(tmp_path) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)

@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 3 items
+collecting ... collected 4 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory 
 START=======================================
@@ -36,5 +36,20 @@ Function: test_handles_current_directory
 (no stderr captured)
 END=========================================
 PASSED
+test_files.py::TestCheckFileExists::test_returns_true_for_existing_file 
+START=======================================
+=====captured.out=====
+Function: test_returns_true_for_existing_file
+--------------------------------------------
+[1m [31m
+Location: Newt.files._check_file_exists
+::: ERROR :::
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpgofhxw38
+[0m
 
-============================== 3 passed in 0.39s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 4 passed in 0.39s ==============================
