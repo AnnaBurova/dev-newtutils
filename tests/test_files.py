@@ -122,3 +122,12 @@ class TestCheckFileExists:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_returns_false_for_invalid_input(self, capsys):
+        """Test that invalid input returns False."""
+        print_my_func_name("test_returns_false_for_invalid_input")
+
+        assert NewtFiles._check_file_exists(123) is False  # type: ignore
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

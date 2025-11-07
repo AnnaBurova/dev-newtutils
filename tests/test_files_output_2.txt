@@ -4,11 +4,12 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 4 items
+collecting ... collected 5 items
 
-test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [ 25%]
-test_files.py::TestEnsureDirExists::test_handles_existing_directory PASSED [ 50%]
-test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 75%]
-test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [100%]
+test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [ 20%]
+test_files.py::TestEnsureDirExists::test_handles_existing_directory PASSED [ 40%]
+test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 60%]
+test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [ 80%]
+test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [100%]
 
-============================== 4 passed in 0.39s ==============================
+============================== 5 passed in 0.39s ==============================

@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 4 items
+collected 5 items
 
 test_files.py 
 START=======================================
@@ -40,7 +40,22 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpu6gyiwzy
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpigbn4_ai
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_returns_false_for_invalid_input
+--------------------------------------------
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
 [0m
 
 =====captured.err=====
@@ -48,4 +63,4 @@ File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpu6gyiwzy
 END=========================================
 .
 
-============================== 4 passed in 0.40s ==============================
+============================== 5 passed in 0.39s ==============================
