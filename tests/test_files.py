@@ -8,6 +8,7 @@ Comprehensive unit tests for newtutils.files module.
 Tests cover:
 - Directory operations (_ensure_dir_exists)
 - File existence checks (_check_file_exists)
+- Newline normalization (_normalize_newlines)
 """
 
 import tempfile
@@ -128,6 +129,23 @@ class TestCheckFileExists:
         print_my_func_name("test_returns_false_for_invalid_input")
 
         assert NewtFiles._check_file_exists(123) is False  # type: ignore
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+
+class TestNormalizeNewlines:
+    """Tests for _normalize_newlines function."""
+
+    def test_converts_windows_newlines(self, capsys):
+        """Test that Windows newlines are converted."""
+        print_my_func_name("test_converts_windows_newlines")
+
+        text = "line1\r\nline2\r\nline3"
+        print(repr(text))
+        result = NewtFiles._normalize_newlines(text)
+        print(repr(result))
+        assert result == "line1\nline2\nline3"
 
         captured = capsys.readouterr()
         print_my_captured(captured)

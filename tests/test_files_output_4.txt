@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 5 items
+collecting ... collected 6 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory 
 START=======================================
@@ -67,5 +67,17 @@ Value: 123
 (no stderr captured)
 END=========================================
 PASSED
+test_files.py::TestNormalizeNewlines::test_converts_windows_newlines 
+START=======================================
+=====captured.out=====
+Function: test_converts_windows_newlines
+--------------------------------------------
+'line1\r\nline2\r\nline3'
+'line1\nline2\nline3'
 
-============================== 5 passed in 0.39s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 6 passed in 0.40s ==============================
