@@ -27,6 +27,7 @@ def print_my_func_name(func_name):
         func_name (str):
             Name of the function to display.
     """
+
     print("Function:", func_name)
     print("--------------------------------------------")
 
@@ -41,6 +42,7 @@ def print_my_captured(captured):
             Must provide `.out` and `.err` attributes representing captured
             standard output and standard error text.
     """
+
     print()
     print("START=======================================")
 
