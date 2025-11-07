@@ -73,3 +73,20 @@ class TestEnsureDirExists:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_handles_existing_directory(self, capsys):
+        """Test that existing directories don't cause errors."""
+        print_my_func_name("test_handles_existing_directory")
+
+        file_path = ""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            file_path = os.path.join(tmpdir, "file.txt")
+            NewtFiles._ensure_dir_exists(file_path)
+            # Call again - should not raise
+            NewtFiles._ensure_dir_exists(file_path)
+            assert os.path.exists(tmpdir)
+
+        assert not os.path.exists(os.path.dirname(file_path))
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
