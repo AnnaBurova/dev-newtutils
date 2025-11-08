@@ -4,12 +4,6 @@ Setup test directory: D:\VS_Code\dev-newtutils\tests\files_data
 
 --------------------------------------------------
 
-Test 1: Text file operations
-Initial content: 'Hello\nWorld!\n'
-After append: 'Hello\nWorld!\nAppended line\n'
-
---------------------------------------------------
-
 Test 2: JSON file operations
 Loaded JSON: {'name': 'NewtCode', 'version': 0.1, 'features': ['json', 'csv', 'text']}
 

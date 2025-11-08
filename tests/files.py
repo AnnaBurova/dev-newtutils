@@ -8,7 +8,6 @@ from the `newtutils` package.
 
 The tests cover:
 1. Directory setup and cleanup.
-2. Reading and writing plain text files.
 3. Reading and writing JSON files.
 4. Reading and writing CSV files.
 """
@@ -16,38 +15,6 @@ The tests cover:
 import os
 import newtutils.console as NewtCons
 import newtutils.files as NewtFiles
-
-
-def test_text_files(
-        test_dir: str
-        ) -> None:
-    """
-    Test reading and writing text files using the provided test directory.
-
-    This test verifies that text content is written, appended, and read correctly
-    from UTF-8 encoded files.
-
-    Args:
-        test_dir (str):
-            The path to the test directory created by `setup_test_directory()`.
-
-    Returns:
-        None
-    """
-
-    print("Test 1: Text file operations")
-
-    text_file = os.path.join(test_dir, "example.txt")
-
-    # Write initial content
-    NewtFiles.save_text_to_file(text_file, "Hello\nWorld!")
-    content = NewtFiles.read_text_from_file(text_file)
-    print("Initial content:", repr(content))
-
-    # Append content
-    NewtFiles.save_text_to_file(text_file, "Appended line", append=True)
-    appended = NewtFiles.read_text_from_file(text_file)
-    print("After append:", repr(appended))
 
 
 def test_json_files(
@@ -142,10 +109,6 @@ def cleanup_test_directory(
 
 if __name__ == "__main__":
     """Run all tests in sequence."""
-    NewtCons._divider()
-    test_dir = setup_test_directory()
-    NewtCons._divider()
-    test_text_files(test_dir)
     NewtCons._divider()
     test_json_files(test_dir)
     NewtCons._divider()

@@ -338,3 +338,23 @@ class TestTextFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_save_text_invalid_input(self, capsys):
+        """Test that invalid input is handled gracefully."""
+        print_my_func_name("test_save_text_invalid_input")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            # Invalid file_name
+            NewtFiles.save_text_to_file(123, "test")  # type: ignore
+            # Invalid text
+            NewtFiles.save_text_to_file(tmp_path, 456)  # type: ignore
+            # Should not raise, but file should not be created with invalid input
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
