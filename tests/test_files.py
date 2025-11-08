@@ -162,3 +162,16 @@ class TestNormalizeNewlines:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_handles_mixed_newlines(self, capsys):
+        """Test that mixed newlines are normalized."""
+        print_my_func_name("test_handles_mixed_newlines")
+
+        text = "line1\r\nline2\nline3\r\n"
+        print(repr(text))
+        result = NewtFiles._normalize_newlines(text)
+        print(repr(result))
+        assert result == "line1\nline2\nline3\n"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
