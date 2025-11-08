@@ -4,21 +4,23 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 14 items
+collecting ... collected 16 items
 
-test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [  7%]
-test_files.py::TestEnsureDirExists::test_handles_existing_directory PASSED [ 14%]
-test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 21%]
-test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [ 28%]
-test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [ 35%]
-test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 42%]
-test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 50%]
-test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 57%]
-test_files.py::TestNormalizeNewlines::test_handles_empty_string PASSED   [ 64%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_nonexistent_folder PASSED [ 71%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_empty_folder PASSED [ 78%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_input_zero PASSED [ 85%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_invalid_input PASSED [ 92%]
-test_files.py::TestTextFiles::test_save_and_read_text_file PASSED        [100%]
+test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [  6%]
+test_files.py::TestEnsureDirExists::test_handles_existing_directory PASSED [ 12%]
+test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 18%]
+test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [ 25%]
+test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [ 31%]
+test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 37%]
+test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 43%]
+test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 50%]
+test_files.py::TestNormalizeNewlines::test_handles_empty_string PASSED   [ 56%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_nonexistent_folder PASSED [ 62%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_empty_folder PASSED [ 68%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_input_zero PASSED [ 75%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_invalid_input PASSED [ 81%]
+test_files.py::TestTextFiles::test_save_and_read_text_file PASSED        [ 87%]
+test_files.py::TestTextFiles::test_save_text_creates_directory PASSED    [ 93%]
+test_files.py::TestTextFiles::test_save_text_append_mode PASSED          [100%]
 
-============================= 14 passed in 0.40s ==============================
+============================= 16 passed in 0.43s ==============================
