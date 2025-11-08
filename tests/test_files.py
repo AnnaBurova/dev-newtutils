@@ -231,3 +231,14 @@ class TestChooseFileFromFolder:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_returns_none_for_invalid_input(self, capsys):
+        """Test that invalid input returns None."""
+        print_my_func_name("test_returns_none_for_invalid_input")
+
+        with pytest.raises(SystemExit):
+            result = NewtFiles.choose_file_from_folder(123)  # type: ignore
+            assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
