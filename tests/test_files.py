@@ -201,3 +201,14 @@ class TestChooseFileFromFolder:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_returns_none_for_empty_folder(self, capsys):
+        """Test that empty folder returns None."""
+        print_my_func_name("test_returns_none_for_empty_folder")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result = NewtFiles.choose_file_from_folder(tmpdir)
+            assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
