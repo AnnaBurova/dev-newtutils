@@ -4,16 +4,17 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 9 items
+collecting ... collected 10 items
 
-test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [ 11%]
-test_files.py::TestEnsureDirExists::test_handles_existing_directory PASSED [ 22%]
-test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 33%]
-test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [ 44%]
-test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [ 55%]
-test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 66%]
-test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 77%]
-test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 88%]
-test_files.py::TestNormalizeNewlines::test_handles_empty_string PASSED   [100%]
+test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [ 10%]
+test_files.py::TestEnsureDirExists::test_handles_existing_directory PASSED [ 20%]
+test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 30%]
+test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [ 40%]
+test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [ 50%]
+test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 60%]
+test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 70%]
+test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 80%]
+test_files.py::TestNormalizeNewlines::test_handles_empty_string PASSED   [ 90%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_nonexistent_folder PASSED [100%]
 
-============================== 9 passed in 0.41s ==============================
+============================= 10 passed in 0.39s ==============================

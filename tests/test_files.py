@@ -9,8 +9,10 @@ Tests cover:
 - Directory operations (_ensure_dir_exists)
 - File existence checks (_check_file_exists)
 - Newline normalization (_normalize_newlines)
+- File selection (choose_file_from_folder)
 """
 
+import pytest
 import tempfile
 
 import os
@@ -181,6 +183,21 @@ class TestNormalizeNewlines:
         print_my_func_name("test_handles_empty_string")
 
         assert NewtFiles._normalize_newlines("") == ""
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+
+class TestChooseFileFromFolder:
+    """Tests for choose_file_from_folder function."""
+
+    def test_returns_none_for_nonexistent_folder(self, capsys):
+        """Test that non-existent folder returns None."""
+        print_my_func_name("test_returns_none_for_nonexistent_folder")
+
+        with pytest.raises(SystemExit):
+            result = NewtFiles.choose_file_from_folder("/nonexistent/folder")
+            print("This line will not be printed:", result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
