@@ -175,3 +175,12 @@ class TestNormalizeNewlines:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_handles_empty_string(self, capsys):
+        """Test that empty string is handled."""
+        print_my_func_name("test_handles_empty_string")
+
+        assert NewtFiles._normalize_newlines("") == ""
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
