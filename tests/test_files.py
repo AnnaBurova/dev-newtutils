@@ -316,3 +316,25 @@ class TestTextFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_save_text_normalizes_newlines(self, capsys):
+        """Test that save_text_to_file normalizes newlines."""
+        print_my_func_name("test_save_text_normalizes_newlines")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            content = "line1\r\nline2\r\n"
+            NewtFiles.save_text_to_file(tmp_path, content)
+            result = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result))
+            # Should have Unix newlines
+            assert "\r\n" not in result
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
