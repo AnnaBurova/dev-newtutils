@@ -212,3 +212,22 @@ class TestChooseFileFromFolder:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_returns_none_for_input_zero(self, monkeypatch, capsys):
+        """Test that non empty folder returns on input zero."""
+        print_my_func_name("test_returns_none_for_input_zero")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            # Create several files in the temporary directory
+            for i in range(3):
+                filepath = os.path.join(tmpdir, f"dummy_file_{i}.txt")
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write("dummy content\n")
+
+            # Mock input to cancel immediately
+            monkeypatch.setattr('builtins.input', lambda _: "0")
+            result = NewtFiles.choose_file_from_folder(tmpdir)
+            assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

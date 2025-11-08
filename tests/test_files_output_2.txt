@@ -4,18 +4,19 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 11 items
+collecting ... collected 12 items
 
-test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [  9%]
-test_files.py::TestEnsureDirExists::test_handles_existing_directory PASSED [ 18%]
-test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 27%]
-test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [ 36%]
-test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [ 45%]
-test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 54%]
-test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 63%]
-test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 72%]
-test_files.py::TestNormalizeNewlines::test_handles_empty_string PASSED   [ 81%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_nonexistent_folder PASSED [ 90%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_empty_folder PASSED [100%]
+test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [  8%]
+test_files.py::TestEnsureDirExists::test_handles_existing_directory PASSED [ 16%]
+test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 25%]
+test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [ 33%]
+test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [ 41%]
+test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 50%]
+test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 58%]
+test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 66%]
+test_files.py::TestNormalizeNewlines::test_handles_empty_string PASSED   [ 75%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_nonexistent_folder PASSED [ 83%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_empty_folder PASSED [ 91%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_input_zero PASSED [100%]
 
-============================= 11 passed in 0.41s ==============================
+============================= 12 passed in 0.40s ==============================

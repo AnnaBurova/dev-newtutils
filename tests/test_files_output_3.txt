@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 11 items
+collected 12 items
 
 test_files.py 
 START=======================================
@@ -40,7 +40,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpr4qedfci
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpo7b_8wy4
 [0m
 
 =====captured.err=====
@@ -128,5 +128,21 @@ No files found in this folder.
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_returns_none_for_input_zero
+--------------------------------------------
 
-============================= 11 passed in 0.40s ==============================
+Available files: 3
+  1: dummy_file_0.txt
+  2: dummy_file_1.txt
+  3: dummy_file_2.txt
+  0: Exit / Cancel
+Selection cancelled.
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 12 passed in 0.39s ==============================
