@@ -242,3 +242,30 @@ class TestChooseFileFromFolder:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+
+class TestTextFiles:
+    """Tests for text file operations."""
+
+    def test_save_and_read_text_file(self, capsys):
+        """Test saving and reading a text file."""
+        print_my_func_name("test_save_and_read_text_file")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            content = "Hello\nWorld!"
+            NewtFiles.save_text_to_file(tmp_path, content)
+            result = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result))
+
+            # Note: save_text_to_file adds a newline at the end
+            assert result == content + "\n"
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

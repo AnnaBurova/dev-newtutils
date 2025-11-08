@@ -1,4 +1,5 @@
 """
+Updated on 2025-11
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -281,11 +282,6 @@ def save_text_to_file(
         append (bool):
             If True, appends instead of overwriting.
             Defaults to False.
-
-    Returns:
-        out (None):
-            No return value.
-            Writes text to file.
     """
 
     if not NewtCons.validate_input(file_name, str, stop=False):
