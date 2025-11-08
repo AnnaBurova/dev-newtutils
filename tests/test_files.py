@@ -10,6 +10,7 @@ Tests cover:
 - File existence checks (_check_file_exists)
 - Newline normalization (_normalize_newlines)
 - File selection (choose_file_from_folder)
+- Text file operations (read_text_from_file, save_text_to_file)
 """
 
 import pytest
@@ -266,6 +267,18 @@ class TestTextFiles:
         finally:
             if os.path.exists(tmp_path):
                 os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_save_text_creates_directory(self, capsys):
+        """Test that save_text_to_file creates parent directories."""
+        print_my_func_name("test_save_text_creates_directory")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            nested_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
+            NewtFiles.save_text_to_file(nested_path, "test")
+            assert os.path.exists(nested_path)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
