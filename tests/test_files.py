@@ -30,6 +30,7 @@ def print_my_func_name(func_name):
         func_name (str):
             Name of the function to display.
     """
+
     print("Function:", func_name)
     print("--------------------------------------------")
 
@@ -44,6 +45,7 @@ def print_my_captured(captured):
             Must provide `.out` and `.err` attributes representing captured
             standard output and standard error text.
     """
+
     print()
     print("START=======================================")
 
@@ -71,6 +73,7 @@ class TestEnsureDirExists:
 
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
+
             NewtFiles._ensure_dir_exists(nested_path)
             assert os.path.exists(os.path.dirname(nested_path))
 
@@ -85,7 +88,9 @@ class TestEnsureDirExists:
 
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "file.txt")
+
             NewtFiles._ensure_dir_exists(file_path)
+
             # Call again - should not raise
             NewtFiles._ensure_dir_exists(file_path)
             assert os.path.exists(tmpdir)
@@ -120,6 +125,7 @@ class TestCheckFileExists:
 
         try:
             assert NewtFiles._check_file_exists(tmp_path) is True
+
         finally:
             os.unlink(tmp_path)
 
@@ -147,6 +153,7 @@ class TestNormalizeNewlines:
 
         text = "line1\r\nline2\r\nline3"
         print(repr(text))
+
         result = NewtFiles._normalize_newlines(text)
         print(repr(result))
         assert result == "line1\nline2\nline3"
@@ -160,6 +167,7 @@ class TestNormalizeNewlines:
 
         text = "line1\nline2\nline3"
         print(repr(text))
+
         result = NewtFiles._normalize_newlines(text)
         print(repr(result))
         assert result == text
@@ -173,6 +181,7 @@ class TestNormalizeNewlines:
 
         text = "line1\r\nline2\nline3\r\n"
         print(repr(text))
+
         result = NewtFiles._normalize_newlines(text)
         print(repr(result))
         assert result == "line1\nline2\nline3\n"
@@ -228,6 +237,7 @@ class TestChooseFileFromFolder:
 
             # Mock input to cancel immediately
             monkeypatch.setattr('builtins.input', lambda _: "0")
+
             result = NewtFiles.choose_file_from_folder(tmpdir)
             assert result is None
 
@@ -259,6 +269,7 @@ class TestTextFiles:
         try:
             content = "Hello\nWorld!"
             NewtFiles.save_text_to_file(tmp_path, content)
+
             result = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result))
 
@@ -294,6 +305,7 @@ class TestTextFiles:
         try:
             NewtFiles.save_text_to_file(tmp_path, "Line 1\n")
             NewtFiles.save_text_to_file(tmp_path, "Line 2\n", append=True)
+
             result = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result))
             assert "Line 1" in result
@@ -327,7 +339,10 @@ class TestTextFiles:
 
         try:
             content = "line1\r\nline2\r\n"
+            print(repr(content))
+
             NewtFiles.save_text_to_file(tmp_path, content)
+
             result = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result))
             # Should have Unix newlines
@@ -352,7 +367,8 @@ class TestTextFiles:
             NewtFiles.save_text_to_file(123, "test")  # type: ignore
             # Invalid text
             NewtFiles.save_text_to_file(tmp_path, 456)  # type: ignore
-            # Should not raise, but file should not be created with invalid input
+            # Should not raise, but file should not be edited with invalid input
+
         finally:
             if os.path.exists(tmp_path):
                 os.unlink(tmp_path)
@@ -374,10 +390,13 @@ class TestJsonFiles:
         try:
             data = {"name": "test", "value": 123, "items": [1, 2, 3]}
             print(repr(data))
+
             NewtFiles.save_json_to_file(tmp_path, data)
+
             result_json = NewtFiles.read_json_from_file(tmp_path)
             print(repr(result_json))
             assert result_json == data
+
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
             print(result_text)
@@ -399,10 +418,13 @@ class TestJsonFiles:
         try:
             data = [1, 2, 3, {"key": "value"}]
             print(repr(data))
+
             NewtFiles.save_json_to_file(tmp_path, data)
+
             result_json = NewtFiles.read_json_from_file(tmp_path)
             print(repr(result_json))
             assert result_json == data
+
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
             print(result_text)
@@ -430,8 +452,10 @@ class TestJsonFiles:
 
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.json")
+
             data = {"test": "data"}
             print(repr(data))
+
             NewtFiles.save_json_to_file(nested_path, data)
             assert os.path.exists(nested_path)
 
@@ -449,9 +473,11 @@ class TestJsonFiles:
             data = {"a": 1, "b": 2}
             print(repr(data))
             NewtFiles.save_json_to_file(tmp_path, data, indent=4)
+
             result_json = NewtFiles.read_json_from_file(tmp_path)
             print(repr(result_json))
             assert result_json == data
+
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
             print(result_text)

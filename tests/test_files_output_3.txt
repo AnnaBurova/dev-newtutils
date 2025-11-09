@@ -207,6 +207,7 @@ START=======================================
 =====captured.out=====
 Function: test_save_text_normalizes_newlines
 --------------------------------------------
+'line1\r\nline2\r\n'
 'line1\nline2\n\n'
 
 =====captured.err=====
