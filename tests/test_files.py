@@ -404,3 +404,13 @@ class TestJsonFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_read_json_from_nonexistent_file(self, capsys):
+        """Test reading from non-existent JSON file returns empty list."""
+        print_my_func_name("test_read_json_from_nonexistent_file")
+
+        result = NewtFiles.read_json_from_file("/nonexistent/file.json")
+        assert result == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

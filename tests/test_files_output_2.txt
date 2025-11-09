@@ -4,28 +4,29 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 21 items
+collecting ... collected 22 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [  4%]
 test_files.py::TestEnsureDirExists::test_handles_existing_directory PASSED [  9%]
-test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 14%]
-test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [ 19%]
-test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [ 23%]
-test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 28%]
-test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 33%]
-test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 38%]
-test_files.py::TestNormalizeNewlines::test_handles_empty_string PASSED   [ 42%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_nonexistent_folder PASSED [ 47%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_empty_folder PASSED [ 52%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_input_zero PASSED [ 57%]
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_invalid_input PASSED [ 61%]
-test_files.py::TestTextFiles::test_save_and_read_text_file PASSED        [ 66%]
-test_files.py::TestTextFiles::test_save_text_creates_directory PASSED    [ 71%]
-test_files.py::TestTextFiles::test_save_text_append_mode PASSED          [ 76%]
-test_files.py::TestTextFiles::test_read_text_from_nonexistent_file PASSED [ 80%]
-test_files.py::TestTextFiles::test_save_text_normalizes_newlines PASSED  [ 85%]
-test_files.py::TestTextFiles::test_save_text_invalid_input PASSED        [ 90%]
-test_files.py::TestJsonFiles::test_save_and_read_json_dict PASSED        [ 95%]
-test_files.py::TestJsonFiles::test_save_and_read_json_list PASSED        [100%]
+test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [ 13%]
+test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [ 18%]
+test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [ 22%]
+test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 27%]
+test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 31%]
+test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 36%]
+test_files.py::TestNormalizeNewlines::test_handles_empty_string PASSED   [ 40%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_nonexistent_folder PASSED [ 45%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_empty_folder PASSED [ 50%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_input_zero PASSED [ 54%]
+test_files.py::TestChooseFileFromFolder::test_returns_none_for_invalid_input PASSED [ 59%]
+test_files.py::TestTextFiles::test_save_and_read_text_file PASSED        [ 63%]
+test_files.py::TestTextFiles::test_save_text_creates_directory PASSED    [ 68%]
+test_files.py::TestTextFiles::test_save_text_append_mode PASSED          [ 72%]
+test_files.py::TestTextFiles::test_read_text_from_nonexistent_file PASSED [ 77%]
+test_files.py::TestTextFiles::test_save_text_normalizes_newlines PASSED  [ 81%]
+test_files.py::TestTextFiles::test_save_text_invalid_input PASSED        [ 86%]
+test_files.py::TestJsonFiles::test_save_and_read_json_dict PASSED        [ 90%]
+test_files.py::TestJsonFiles::test_save_and_read_json_list PASSED        [ 95%]
+test_files.py::TestJsonFiles::test_read_json_from_nonexistent_file PASSED [100%]
 
-============================= 21 passed in 0.43s ==============================
+============================= 22 passed in 0.43s ==============================
