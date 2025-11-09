@@ -12,6 +12,7 @@ Tests cover:
 - File selection (choose_file_from_folder)
 - Text file operations (read_text_from_file, save_text_to_file)
 - JSON file operations (read_json_from_file, save_json_to_file)
+- CSV file operations (read_csv_from_file, save_csv_to_file)
 """
 
 import pytest
@@ -530,6 +531,42 @@ class TestJsonFiles:
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
             assert result_text == ""
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+
+class TestCsvFiles:
+    """Tests for CSV file operations."""
+
+    def test_save_and_read_csv(self, capsys):
+        """Test saving and reading a CSV file."""
+        print_my_func_name("test_save_and_read_csv")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            rows = [
+                ["Name", "Age", "City"],
+                ["Alice", "30", "New York"],
+                ["Bob", "25", "London"]
+            ]
+            print(repr(rows))
+
+            NewtFiles.save_csv_to_file(tmp_path, rows)
+
+            result_csv = NewtFiles.read_csv_from_file(tmp_path)
+            print(repr(result_csv))
+            assert result_csv == rows
+
+            result_text = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result_text))
+            print(result_text)
 
         finally:
             if os.path.exists(tmp_path):
