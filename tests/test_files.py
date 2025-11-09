@@ -442,6 +442,7 @@ class TestJsonFiles:
         print_my_func_name("test_read_json_from_nonexistent_file")
 
         result = NewtFiles.read_json_from_file("/nonexistent/file.json")
+        print(repr(result))
         assert result == []
 
         captured = capsys.readouterr()
@@ -599,6 +600,17 @@ class TestCsvFiles:
         finally:
             if os.path.exists(tmp_path):
                 os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_read_csv_from_nonexistent_file(self, capsys):
+        """Test reading from non-existent CSV file returns empty list."""
+        print_my_func_name("test_read_csv_from_nonexistent_file")
+
+        result = NewtFiles.read_csv_from_file("/nonexistent/file.csv")
+        print(repr(result))
+        assert result == []
 
         captured = capsys.readouterr()
         print_my_captured(captured)
