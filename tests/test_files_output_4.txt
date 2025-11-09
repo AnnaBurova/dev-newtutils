@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 24 items
+collecting ... collected 25 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory 
 START=======================================
@@ -44,7 +44,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpmort230m
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpp7jfb9kq
 [0m
 
 =====captured.err=====
@@ -342,5 +342,20 @@ Function: test_save_json_custom_indent
 (no stderr captured)
 END=========================================
 PASSED
+test_files.py::TestJsonFiles::test_read_json_invalid_file 
+START=======================================
+=====captured.out=====
+Function: test_read_json_invalid_file
+--------------------------------------------
+[1m [31m
+Location: Newt.files.read_json_from_file
+::: ERROR :::
+Exception: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+[0m
 
-============================= 24 passed in 0.41s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 25 passed in 0.41s ==============================

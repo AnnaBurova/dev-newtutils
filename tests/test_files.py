@@ -240,7 +240,7 @@ class TestChooseFileFromFolder:
 
         with pytest.raises(SystemExit):
             result = NewtFiles.choose_file_from_folder(123)  # type: ignore
-            assert result is None
+            print("This line will not be printed:", result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -455,6 +455,26 @@ class TestJsonFiles:
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
             print(result_text)
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_read_json_invalid_file(self, capsys):
+        """Test reading invalid JSON returns empty list."""
+        print_my_func_name("test_read_json_invalid_file")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
+            tmp.write("{ invalid json }")
+            tmp_path = tmp.name
+
+        try:
+            with pytest.raises(SystemExit):
+                result = NewtFiles.read_json_from_file(tmp_path)
+                print("This line will not be printed:", result)
 
         finally:
             if os.path.exists(tmp_path):
