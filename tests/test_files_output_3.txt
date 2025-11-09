@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 23 items
+collected 24 items
 
 test_files.py 
 START=======================================
@@ -40,7 +40,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpmnd9n9gz
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpx5l18h0r
 [0m
 
 =====captured.err=====
@@ -301,5 +301,22 @@ Function: test_save_json_creates_directory
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_save_json_custom_indent
+--------------------------------------------
+{'a': 1, 'b': 2}
+{'a': 1, 'b': 2}
+'{\n    "a": 1,\n    "b": 2\n}\n'
+{
+    "a": 1,
+    "b": 2
+}
 
-============================= 23 passed in 0.43s ==============================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 24 passed in 0.41s ==============================

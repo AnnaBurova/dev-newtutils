@@ -437,3 +437,28 @@ class TestJsonFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_save_json_custom_indent(self, capsys):
+        """Test saving JSON with custom indent."""
+        print_my_func_name("test_save_json_custom_indent")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            data = {"a": 1, "b": 2}
+            print(repr(data))
+            NewtFiles.save_json_to_file(tmp_path, data, indent=4)
+            result_json = NewtFiles.read_json_from_file(tmp_path)
+            print(repr(result_json))
+            assert result_json == data
+            result_text = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result_text))
+            print(result_text)
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
