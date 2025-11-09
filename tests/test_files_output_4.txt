@@ -44,7 +44,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpmur5axff
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmporqtcm8l
 [0m
 
 =====captured.err=====
@@ -259,6 +259,18 @@ START=======================================
 Function: test_save_and_read_json_dict
 --------------------------------------------
 {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
+{'name': 'test', 'value': 123, 'items': [1, 2, 3]}
+'{\n  "name": "test",\n  "value": 123,\n  "items": [\n    1,\n    2,\n    3\n  ]\n}\n'
+{
+  "name": "test",
+  "value": 123,
+  "items": [
+    1,
+    2,
+    3
+  ]
+}
+
 
 =====captured.err=====
 (no stderr captured)
@@ -270,6 +282,17 @@ START=======================================
 Function: test_save_and_read_json_list
 --------------------------------------------
 [1, 2, 3, {'key': 'value'}]
+[1, 2, 3, {'key': 'value'}]
+'[\n  1,\n  2,\n  3,\n  {\n    "key": "value"\n  }\n]\n'
+[
+  1,
+  2,
+  3,
+  {
+    "key": "value"
+  }
+]
+
 
 =====captured.err=====
 (no stderr captured)
@@ -295,10 +318,11 @@ START=======================================
 =====captured.out=====
 Function: test_save_json_creates_directory
 --------------------------------------------
+{'test': 'data'}
 
 =====captured.err=====
 (no stderr captured)
 END=========================================
 PASSED
 
-============================= 23 passed in 0.43s ==============================
+============================= 23 passed in 0.44s ==============================

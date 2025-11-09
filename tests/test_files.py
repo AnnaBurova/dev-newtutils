@@ -373,10 +373,14 @@ class TestJsonFiles:
 
         try:
             data = {"name": "test", "value": 123, "items": [1, 2, 3]}
+            print(repr(data))
             NewtFiles.save_json_to_file(tmp_path, data)
-            result = NewtFiles.read_json_from_file(tmp_path)
-            print(repr(result))
-            assert result == data
+            result_json = NewtFiles.read_json_from_file(tmp_path)
+            print(repr(result_json))
+            assert result_json == data
+            result_text = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result_text))
+            print(result_text)
 
         finally:
             if os.path.exists(tmp_path):
@@ -394,10 +398,14 @@ class TestJsonFiles:
 
         try:
             data = [1, 2, 3, {"key": "value"}]
+            print(repr(data))
             NewtFiles.save_json_to_file(tmp_path, data)
-            result = NewtFiles.read_json_from_file(tmp_path)
-            print(repr(result))
-            assert result == data
+            result_json = NewtFiles.read_json_from_file(tmp_path)
+            print(repr(result_json))
+            assert result_json == data
+            result_text = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result_text))
+            print(result_text)
 
         finally:
             if os.path.exists(tmp_path):
@@ -423,6 +431,7 @@ class TestJsonFiles:
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.json")
             data = {"test": "data"}
+            print(repr(data))
             NewtFiles.save_json_to_file(nested_path, data)
             assert os.path.exists(nested_path)
 
