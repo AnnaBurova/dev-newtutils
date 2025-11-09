@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 20 items
+collecting ... collected 21 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory 
 START=======================================
@@ -44,7 +44,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpccuecngv
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmp3eq7gxy3
 [0m
 
 =====captured.err=====
@@ -264,5 +264,16 @@ Function: test_save_and_read_json_dict
 (no stderr captured)
 END=========================================
 PASSED
+test_files.py::TestJsonFiles::test_save_and_read_json_list 
+START=======================================
+=====captured.out=====
+Function: test_save_and_read_json_list
+--------------------------------------------
+[1, 2, 3, {'key': 'value'}]
 
-============================= 20 passed in 0.44s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 21 passed in 0.43s ==============================

@@ -383,3 +383,24 @@ class TestJsonFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_save_and_read_json_list(self, capsys):
+        """Test saving and reading a JSON list."""
+        print_my_func_name("test_save_and_read_json_list")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            data = [1, 2, 3, {"key": "value"}]
+            NewtFiles.save_json_to_file(tmp_path, data)
+            result = NewtFiles.read_json_from_file(tmp_path)
+            print(repr(result))
+            assert result == data
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
