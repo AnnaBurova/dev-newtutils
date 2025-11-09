@@ -42,7 +42,7 @@ Functions:
         ) -> list[list[str]]
     def save_csv_to_file(
         file_name: str,
-        rows: list[list[object]],
+        rows: Sequence[Sequence[object]],
         delimiter: str = ";"
         ) -> None
 """
@@ -52,6 +52,7 @@ from __future__ import annotations
 import os
 import csv
 import json
+from collections.abc import Sequence
 import newtutils.console as NewtCons
 
 
@@ -439,7 +440,7 @@ def read_csv_from_file(
 
 def save_csv_to_file(
         file_name: str,
-        rows: list[list[object]],
+        rows: Sequence[Sequence[object]],
         delimiter: str = ";"
         ) -> None:
     """
@@ -452,15 +453,15 @@ def save_csv_to_file(
     Args:
         file_name (str):
             Path to the output CSV file.
-        rows (list[list]):
-            List of rows, where each row is a list of values.
+        rows (Sequence[Sequence[object]]):
+            Tabular data, where each row is a sequence of values.
         delimiter (str):
             Column separator character. Defaults to `;`.
     """
 
     if not NewtCons.validate_input(file_name, str, stop=False):
         return
-    if not NewtCons.validate_input(rows, list, stop=False):
+    if not NewtCons.validate_input(rows, (list, tuple), stop=False):
         return
     if not NewtCons.validate_input(delimiter, str, stop=False):
         return
