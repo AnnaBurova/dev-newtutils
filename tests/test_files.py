@@ -574,3 +574,31 @@ class TestCsvFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_save_and_read_csv_custom_delimiter(self, capsys):
+        """Test saving and reading CSV with custom delimiter."""
+        print_my_func_name("test_save_and_read_csv_custom_delimiter")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            rows = [["A", "B"], ["1", "2"]]
+            print(repr(rows))
+
+            NewtFiles.save_csv_to_file(tmp_path, rows, delimiter=",")
+
+            result_csv = NewtFiles.read_csv_from_file(tmp_path, delimiter=",")
+            print(repr(result_csv))
+            assert result_csv == rows
+
+            result_text = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result_text))
+            print(result_text)
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
