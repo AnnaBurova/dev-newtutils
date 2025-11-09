@@ -82,8 +82,6 @@ def cleanup_test_directory(
 if __name__ == "__main__":
     """Run all tests in sequence."""
     NewtCons._divider()
-    test_json_files(test_dir)
-    NewtCons._divider()
     test_csv_files(test_dir)
     NewtCons._divider()
     cleanup_test_directory(test_dir)

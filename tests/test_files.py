@@ -482,3 +482,32 @@ class TestJsonFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_save_json_invalid_input(self, capsys):
+        """Test that invalid input is handled gracefully."""
+        print_my_func_name("test_save_json_invalid_input")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            # Invalid file_name
+            NewtFiles.save_json_to_file(123, {"test": "data"})  # type: ignore
+            # Invalid data (not list or dict)
+            NewtFiles.save_json_to_file(tmp_path, "not a dict or list")  # type: ignore
+            # Should not raise
+
+            with pytest.raises(SystemExit):
+                result_json = NewtFiles.read_json_from_file(tmp_path)
+                print("This line will not be printed:", result_json)
+
+            result_text = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result_text))
+            assert result_text == ""
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

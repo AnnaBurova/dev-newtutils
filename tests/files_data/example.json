@@ -1,9 +1,0 @@
-{
-  "name": "NewtCode",
-  "version": 0.1,
-  "features": [
-    "json",
-    "csv",
-    "text"
-  ]
-}

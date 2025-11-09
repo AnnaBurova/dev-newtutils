@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 25 items
+collected 26 items
 
 test_files.py 
 START=======================================
@@ -40,7 +40,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpdid2r1so
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpjv55t9u5
 [0m
 
 =====captured.err=====
@@ -332,5 +332,32 @@ Exception: Expecting property name enclosed in double quotes: line 1 column 3 (c
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_save_json_invalid_input
+--------------------------------------------
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected (<class 'list'>, <class 'dict'>), got <class 'str'>
+Value: not a dict or list
+[0m
+[1m [31m
+Location: Newt.files.read_json_from_file
+::: ERROR :::
+Exception: Expecting value: line 1 column 1 (char 0)
+[0m
+''
 
-============================= 25 passed in 0.42s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 26 passed in 0.42s ==============================
