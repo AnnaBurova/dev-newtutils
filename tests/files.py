@@ -8,40 +8,12 @@ from the `newtutils` package.
 
 The tests cover:
 1. Directory setup and cleanup.
-3. Reading and writing JSON files.
 4. Reading and writing CSV files.
 """
 
 import os
 import newtutils.console as NewtCons
 import newtutils.files as NewtFiles
-
-
-def test_json_files(
-        test_dir: str
-        ) -> None:
-    """
-    Test reading and writing JSON files using the provided test directory.
-
-    This test validates saving and loading JSON data to and from UTF-8 encoded files.
-
-    Args:
-        test_dir (str):
-            The path to the test directory created by `setup_test_directory()`.
-
-    Returns:
-        None
-    """
-
-    print("Test 2: JSON file operations")
-
-    json_file = os.path.join(test_dir, "example.json")
-
-    data = {"name": "NewtCode", "version": 0.1, "features": ["json", "csv", "text"]}
-    NewtFiles.save_json_to_file(json_file, data)
-
-    loaded = NewtFiles.read_json_from_file(json_file)
-    print("Loaded JSON:", loaded)
 
 
 def test_csv_files(

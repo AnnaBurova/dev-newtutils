@@ -11,6 +11,7 @@ Tests cover:
 - Newline normalization (_normalize_newlines)
 - File selection (choose_file_from_folder)
 - Text file operations (read_text_from_file, save_text_to_file)
+- JSON file operations (read_json_from_file, save_json_to_file)
 """
 
 import pytest
@@ -411,6 +412,19 @@ class TestJsonFiles:
 
         result = NewtFiles.read_json_from_file("/nonexistent/file.json")
         assert result == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_save_json_creates_directory(self, capsys):
+        """Test that save_json_to_file creates parent directories."""
+        print_my_func_name("test_save_json_creates_directory")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            nested_path = os.path.join(tmpdir, "level1", "level2", "file.json")
+            data = {"test": "data"}
+            NewtFiles.save_json_to_file(nested_path, data)
+            assert os.path.exists(nested_path)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
