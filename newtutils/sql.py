@@ -122,6 +122,19 @@ def sql_execute_query(
         return None
     if not NewtCons.validate_input(query, str, stop=False):
         return None
+    if params:
+        if not NewtCons.validate_input(params, (list, tuple), stop=False):
+            return None
+
+    # EXECUTEMANY - list of tuples
+    if isinstance(params, list):
+        if not all(NewtCons.validate_input(p, tuple, stop=False) for p in params):
+            NewtCons.error_msg(
+                "All items in 'params' list must be tuples for executemany().",
+                f"params: {params}",
+                location="Newt.sql.sql_execute_query"
+            )
+            return None
 
     NewtFiles._ensure_dir_exists(database)
     result = None
@@ -134,8 +147,7 @@ def sql_execute_query(
             if params:
                 # EXECUTEMANY - list of tuples
                 if isinstance(params, list):
-                    if NewtCons.validate_input(params[0], tuple):
-                        cursor.executemany(query, params)
+                    cursor.executemany(query, params)
 
                 # Normal single execution
                 else:
