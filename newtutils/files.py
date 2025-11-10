@@ -285,10 +285,8 @@ def save_text_to_file(
             Defaults to False.
     """
 
-    if not NewtCons.validate_input(file_name, str, stop=False):
-        return
-    if not NewtCons.validate_input(text, str, stop=False):
-        return
+    NewtCons.validate_input(file_name, str)
+    NewtCons.validate_input(text, str)
 
     _ensure_dir_exists(file_name)
     text = _normalize_newlines(text)
@@ -373,10 +371,8 @@ def save_json_to_file(
             Defaults to 2.
     """
 
-    if not NewtCons.validate_input(file_name, str, stop=False):
-        return
-    if not NewtCons.validate_input(data, (list, dict), stop=False):
-        return
+    NewtCons.validate_input(file_name, str)
+    NewtCons.validate_input(data, (list, dict))
 
     _ensure_dir_exists(file_name)
 
@@ -459,12 +455,9 @@ def save_csv_to_file(
             Column separator character. Defaults to `;`.
     """
 
-    if not NewtCons.validate_input(file_name, str, stop=False):
-        return
-    if not NewtCons.validate_input(rows, (list, tuple), stop=False):
-        return
-    if not NewtCons.validate_input(delimiter, str, stop=False):
-        return
+    NewtCons.validate_input(file_name, str)
+    NewtCons.validate_input(rows, (list, tuple))
+    NewtCons.validate_input(delimiter, str)
 
     _ensure_dir_exists(file_name)
 
