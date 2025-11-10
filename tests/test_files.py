@@ -614,3 +614,19 @@ class TestCsvFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_save_csv_creates_directory(self, capsys):
+        """Test that save_csv_to_file creates parent directories."""
+        print_my_func_name("test_save_csv_creates_directory")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            nested_path = os.path.join(tmpdir, "level1", "level2", "file.csv")
+
+            rows = [["Header"], ["Data"]]
+            print(repr(rows))
+
+            NewtFiles.save_csv_to_file(nested_path, rows)
+            assert os.path.exists(nested_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 29 items
+collected 30 items
 
 test_files.py 
 START=======================================
@@ -40,7 +40,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpjjtl8w8m
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmp4oj45nh5
 [0m
 
 =====captured.err=====
@@ -407,5 +407,15 @@ File not found: /nonexistent/file.csv
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_save_csv_creates_directory
+--------------------------------------------
+[['Header'], ['Data']]
 
-============================= 29 passed in 0.42s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 30 passed in 0.42s ==============================
