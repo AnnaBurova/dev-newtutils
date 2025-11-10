@@ -3,6 +3,7 @@ Comprehensive unit tests for newtutils.sql module.
 
 Tests cover:
 - Database delayed close (db_delayed_close)
+- SQL query execution (sql_execute_query)
 """
 
 import tempfile
@@ -82,6 +83,33 @@ class TestDbDelayedClose:
 
         result = NewtSQL.db_delayed_close("/nonexistent/database.db")
         assert result is True
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+
+class TestSqlExecuteQuery:
+    """Tests for sql_execute_query function."""
+
+    def test_sql_execute_query_create_table(self, capsys):
+        """Test creating a table."""
+        print_my_func_name("test_sql_execute_query_create_table")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            query = "CREATE TABLE test (id INTEGER PRIMARY KEY, name TEXT)"
+            result = NewtSQL.sql_execute_query(db_path, query)
+            print("result:", result)
+            # CREATE returns rowcount, typically -1
+            assert isinstance(result, int)
+            assert result == -1
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
