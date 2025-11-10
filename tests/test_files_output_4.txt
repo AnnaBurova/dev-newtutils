@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 31 items
+collecting ... collected 32 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory 
 START=======================================
@@ -44,7 +44,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpixqh9quq
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpdir3yfbe
 [0m
 
 =====captured.err=====
@@ -463,5 +463,20 @@ Line2";Cell2
 (no stderr captured)
 END=========================================
 PASSED
+test_files.py::TestCsvFiles::test_save_csv_with_various_types 
+START=======================================
+=====captured.out=====
+Function: test_save_csv_with_various_types
+--------------------------------------------
+[['String', 123, 45.67, True]]
+[['String', '123', '45.67', 'True']]
+'String;123;45.67;True\n'
+String;123;45.67;True
 
-============================= 31 passed in 0.42s ==============================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 32 passed in 0.48s ==============================

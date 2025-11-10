@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 31 items
+collected 32 items
 
 test_files.py 
 START=======================================
@@ -40,7 +40,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpywfhtnyp
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmplttuneaj
 [0m
 
 =====captured.err=====
@@ -432,5 +432,19 @@ Line2";Cell2
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_save_csv_with_various_types
+--------------------------------------------
+[['String', 123, 45.67, True]]
+[['String', '123', '45.67', 'True']]
+'String;123;45.67;True\n'
+String;123;45.67;True
 
-============================= 31 passed in 0.42s ==============================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 32 passed in 0.44s ==============================

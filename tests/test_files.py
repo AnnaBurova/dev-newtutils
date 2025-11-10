@@ -659,3 +659,32 @@ class TestCsvFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_save_csv_with_various_types(self, capsys):
+        """Test saving CSV with various data types."""
+        print_my_func_name("test_save_csv_with_various_types")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            rows = [["String", 123, 45.67, True]]
+            print(repr(rows))
+
+            NewtFiles.save_csv_to_file(tmp_path, rows)
+
+            result_csv = NewtFiles.read_csv_from_file(tmp_path)
+            print(repr(result_csv))
+            # All values should be strings in CSV
+            assert all(isinstance(cell, str) for row in result_csv for cell in row)
+
+            result_text = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result_text))
+            print(result_text)
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
