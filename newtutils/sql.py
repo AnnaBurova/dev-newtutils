@@ -1,4 +1,5 @@
 """
+Updated on 2025-11
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -52,8 +53,9 @@ def db_delayed_close(
     """
     Safely close a SQLite database and release all file handles.
 
-    Opens and closes the target database file to ensure that all
-    pending transactions are committed and the file lock is released.
+    Performs strict input validation, checks that the target path exists,
+    then triggers Python's garbage collector to finalize any remaining
+    SQLite connection or cursor objects that may still hold a file handle.
 
     Args:
         database (str):
@@ -61,21 +63,19 @@ def db_delayed_close(
 
     Returns:
         out (bool):
-            True if the database was successfully closed and released,
-            otherwise False.
+            True if the input is valid and
+            the database path either does not exist or appears to be released;
+            False if validation fails.
     """
 
     if not NewtFiles._check_file_exists(database):
+        # Nothing to release; treat as success because there is no existing file.
         return True
 
     try:
-        conn = sqlite3.connect(database)
-        conn.commit()
-        conn.close()
-
-        # Force Python's garbage collector to immediately destroy
-        # any remaining SQLite connection or cursor objects
-        # that may still hold a file handle.
+        # Force Python's garbage collector to finalize any remaining
+        # SQLite-related objects (connections, cursors, etc.) that may
+        # still hold a file handle to the database file.
         gc.collect()
 
         return True

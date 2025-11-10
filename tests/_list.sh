@@ -7,7 +7,7 @@ set +e  # continue on error
 cd "$(dirname "$0")" || exit 1
 
 # === List of test modules ===
-modules=("console" "utility" "files")
+modules=("console" "utility" "files" "sql")
 
 # === Loop each module ===
 for mod in "${modules[@]}"; do
