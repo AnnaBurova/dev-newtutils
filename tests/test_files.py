@@ -365,10 +365,12 @@ class TestTextFiles:
 
         try:
             # Invalid file_name
-            NewtFiles.save_text_to_file(123, "test")  # type: ignore
+            with pytest.raises(SystemExit):
+                NewtFiles.save_text_to_file(123, "test")  # type: ignore
+
             # Invalid text
-            NewtFiles.save_text_to_file(tmp_path, 456)  # type: ignore
-            # Should not raise, but file should not be edited with invalid input
+            with pytest.raises(SystemExit):
+                NewtFiles.save_text_to_file(tmp_path, 456)  # type: ignore
 
         finally:
             if os.path.exists(tmp_path):
@@ -519,11 +521,13 @@ class TestJsonFiles:
             tmp_path = tmp.name
 
         try:
-            # Invalid file_name
-            NewtFiles.save_json_to_file(123, {"test": "data"})  # type: ignore
-            # Invalid data (not list or dict)
-            NewtFiles.save_json_to_file(tmp_path, "not a dict or list")  # type: ignore
-            # Should not raise
+            with pytest.raises(SystemExit):
+                # Invalid file_name
+                NewtFiles.save_json_to_file(123, {"test": "data"})  # type: ignore
+
+            with pytest.raises(SystemExit):
+                # Invalid data (not list or dict)
+                NewtFiles.save_json_to_file(tmp_path, "not a dict or list")  # type: ignore
 
             with pytest.raises(SystemExit):
                 result_json = NewtFiles.read_json_from_file(tmp_path)
