@@ -75,3 +75,13 @@ class TestDbDelayedClose:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_db_delayed_close_nonexistent_db(self, capsys):
+        """Test closing a non-existent database returns True."""
+        print_my_func_name("test_db_delayed_close_nonexistent_db")
+
+        result = NewtSQL.db_delayed_close("/nonexistent/database.db")
+        assert result is True
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
