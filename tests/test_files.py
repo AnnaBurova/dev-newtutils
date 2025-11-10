@@ -723,3 +723,27 @@ class TestCsvFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_read_csv_invalid_delimiter(self, capsys):
+        """Test reading CSV with invalid delimiter returns empty list."""
+        print_my_func_name("test_read_csv_invalid_delimiter")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
+            tmp.write("A;B\n1;2")
+            tmp_path = tmp.name
+
+        try:
+            # Wrong delimiter
+            result = NewtFiles.read_csv_from_file(tmp_path, delimiter=",")
+            print(repr(result))
+            print(repr(result[0][0]))
+            # Should still read but with wrong parsing
+            assert isinstance(result, list)
+            assert isinstance(result[0][0], str)
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

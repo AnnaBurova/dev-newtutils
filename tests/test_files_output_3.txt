@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 33 items
+collected 34 items
 
 test_files.py 
 START=======================================
@@ -40,7 +40,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpaqr9vl3k
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpcp_bkgjh
 [0m
 
 =====captured.err=====
@@ -474,5 +474,16 @@ Value: 123
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_read_csv_invalid_delimiter
+--------------------------------------------
+[['A;B'], ['1;2']]
+'A;B'
 
-============================= 33 passed in 0.43s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 34 passed in 0.44s ==============================
