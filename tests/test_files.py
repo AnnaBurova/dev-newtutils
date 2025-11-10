@@ -630,3 +630,32 @@ class TestCsvFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_save_csv_normalizes_newlines_in_cells(self, capsys):
+        """Test that CSV cells with Windows newlines are normalized."""
+        print_my_func_name("test_save_csv_normalizes_newlines_in_cells")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            rows = [["Cell1\r\nLine2", "Cell2"]]
+            print(repr(rows))
+
+            NewtFiles.save_csv_to_file(tmp_path, rows)
+
+            result_csv = NewtFiles.read_csv_from_file(tmp_path)
+            print(repr(result_csv))
+            # Check that newlines are normalized
+            assert "\r\n" not in result_csv[0][0]
+
+            result_text = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result_text))
+            print(result_text)
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
