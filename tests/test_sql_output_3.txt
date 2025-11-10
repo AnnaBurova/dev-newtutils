@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 3 items
+collected 4 items
 
 test_sql.py 
 START=======================================
@@ -39,5 +39,15 @@ result: -1
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_sql_execute_query_insert
+--------------------------------------------
+result: 1
 
-============================== 3 passed in 0.41s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 4 passed in 0.44s ==============================

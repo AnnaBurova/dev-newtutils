@@ -222,7 +222,7 @@ def sql_insert_row(
 
     if not data:
         NewtCons.error_msg(
-            "Empty data",
+            f"Empty data: {data}",
             location="Newt.sql.sql_insert_row",
             stop=False
         )
@@ -235,6 +235,7 @@ def sql_insert_row(
     if not NewtCons.validate_input(data, list, stop=False):
         NewtCons.error_msg(
             "Data must be dict or list[dict]",
+            f"Data: {data}",
             location="Newt.sql.sql_insert_row",
             stop=False
         )
@@ -300,7 +301,7 @@ def sql_update_rows(
 
     if not set_data:
         NewtCons.error_msg(
-            "Empty data",
+            f"Empty data: {set_data}",
             location="Newt.sql.sql_update_rows",
             stop=False
         )
@@ -358,7 +359,7 @@ def export_sql_query_to_csv(
 
         if not result:
             NewtCons.error_msg(
-                "Empty result",
+                f"Empty result: {result}",
                 location="Newt.sql.export_sql_query_to_csv",
                 stop=False
             )
