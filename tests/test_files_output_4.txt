@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 32 items
+collecting ... collected 33 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory 
 START=======================================
@@ -44,7 +44,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpdir3yfbe
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpl8o9uzwl
 [0m
 
 =====captured.err=====
@@ -478,5 +478,34 @@ String;123;45.67;True
 (no stderr captured)
 END=========================================
 PASSED
+test_files.py::TestCsvFiles::test_save_csv_invalid_input 
+START=======================================
+=====captured.out=====
+Function: test_save_csv_invalid_input
+--------------------------------------------
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected (<class 'list'>, <class 'tuple'>), got <class 'str'>
+Value: not a list
+[0m
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+''
 
-============================= 32 passed in 0.48s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 33 passed in 0.45s ==============================

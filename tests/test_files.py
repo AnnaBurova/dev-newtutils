@@ -364,12 +364,12 @@ class TestTextFiles:
             tmp_path = tmp.name
 
         try:
-            # Invalid file_name
             with pytest.raises(SystemExit):
+                # Invalid file_name
                 NewtFiles.save_text_to_file(123, "test")  # type: ignore
 
-            # Invalid text
             with pytest.raises(SystemExit):
+                # Invalid text
                 NewtFiles.save_text_to_file(tmp_path, 456)  # type: ignore
 
         finally:
@@ -685,6 +685,37 @@ class TestCsvFiles:
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
             print(result_text)
+
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_save_csv_invalid_input(self, capsys):
+        """Test that invalid input is handled gracefully."""
+        print_my_func_name("test_save_csv_invalid_input")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
+            tmp_path = tmp.name
+
+        try:
+            with pytest.raises(SystemExit):
+                # Invalid file_name
+                NewtFiles.save_csv_to_file(123, [["test"]])  # type: ignore
+
+            with pytest.raises(SystemExit):
+                # Invalid rows (not a list)
+                NewtFiles.save_csv_to_file(tmp_path, "not a list")
+
+            with pytest.raises(SystemExit):
+                # Invalid delimiter
+                NewtFiles.save_csv_to_file(tmp_path, [["test"]], delimiter=123)  # type: ignore
+
+            result_text = NewtFiles.read_text_from_file(tmp_path)
+            print(repr(result_text))
+            assert result_text == ""
 
         finally:
             if os.path.exists(tmp_path):
