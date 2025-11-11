@@ -4,17 +4,18 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 10 items
+collecting ... collected 11 items
 
-test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db PASSED [ 10%]
-test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [ 20%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table PASSED [ 30%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 40%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [ 50%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update PASSED   [ 60%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_delete PASSED   [ 70%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_executemany PASSED [ 80%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input PASSED [ 90%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_creates_directory PASSED [100%]
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db PASSED [  9%]
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [ 18%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table PASSED [ 27%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 36%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [ 45%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update PASSED   [ 54%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_delete PASSED   [ 63%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_executemany PASSED [ 72%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input PASSED [ 81%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_creates_directory PASSED [ 90%]
+test_sql.py::TestSqlSelectRows::test_sql_select_rows_basic PASSED        [100%]
 
-============================= 10 passed in 0.69s ==============================
+============================= 11 passed in 0.79s ==============================

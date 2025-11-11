@@ -304,3 +304,34 @@ class TestSqlExecuteQuery:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+
+class TestSqlSelectRows:
+    """Tests for sql_select_rows function."""
+
+    def test_sql_select_rows_basic(self, capsys):
+        """Test basic select operation."""
+        print_my_func_name("test_sql_select_rows_basic")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table and insert data
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob')")
+
+            # Select rows
+            result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            print("result:", result)
+            assert isinstance(result, list)
+            assert len(result) == 2
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
