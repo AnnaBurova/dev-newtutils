@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 12 items
+collected 13 items
 
 test_sql.py 
 START=======================================
@@ -143,5 +143,15 @@ result: [{'id': 1, 'name': 'Alice'}]
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_sql_select_rows_empty_result
+--------------------------------------------
+result: []
 
-============================= 12 passed in 0.80s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 13 passed in 0.80s ==============================

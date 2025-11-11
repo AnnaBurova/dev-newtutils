@@ -29,6 +29,4 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_not_dicts PASSED [ 90%
 test_utility.py::TestSortingDictByKeys::test_sorting_dict_invalid_key_type PASSED [ 95%]
 test_utility.py::TestSortingDictByKeys::test_sorting_dict_complex_sorting PASSED [100%]
 
-============================= 22 passed in 0.40s ==============================
-============================= 22 passed in 0.41s ==============================
 ============================= 22 passed in 0.42s ==============================

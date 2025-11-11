@@ -362,3 +362,27 @@ class TestSqlSelectRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_select_rows_empty_result(self, capsys):
+        """Test select with no results."""
+        print_my_func_name("test_sql_select_rows_empty_result")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER)")
+
+            # Select with no data
+            result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            print("result:", result)
+            assert result == []
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
