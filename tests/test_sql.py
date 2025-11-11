@@ -4,6 +4,7 @@ Comprehensive unit tests for newtutils.sql module.
 Tests cover:
 - Database delayed close (db_delayed_close)
 - SQL query execution (sql_execute_query)
+- SQL select operations (sql_select_rows)
 - SQL insert operations (sql_insert_row)
 """
 
@@ -133,6 +134,36 @@ class TestSqlExecuteQuery:
             print("result:", result)
             assert isinstance(result, int)
             assert result == 1
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_sql_execute_query_select(self, capsys):
+        """Test SELECT query."""
+        print_my_func_name("test_sql_execute_query_select")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table and insert data
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob')")
+
+            # Select data
+            query = "SELECT * FROM test"
+            result = NewtSQL.sql_execute_query(db_path, query)
+            print("result:", result)
+            assert isinstance(result, list)
+            assert len(result) == 2
+            assert result[0]["id"] == 1
+            assert result[0]["name"] == "Alice"
 
         finally:
             NewtSQL.db_delayed_close(db_path)

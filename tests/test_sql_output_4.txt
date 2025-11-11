@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 4 items
+collecting ... collected 5 items
 
 test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db 
 START=======================================
@@ -53,5 +53,16 @@ result: 1
 (no stderr captured)
 END=========================================
 PASSED
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select 
+START=======================================
+=====captured.out=====
+Function: test_sql_execute_query_select
+--------------------------------------------
+result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
 
-============================== 4 passed in 0.45s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 5 passed in 0.45s ==============================
