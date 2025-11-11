@@ -276,3 +276,16 @@ class TestSqlExecuteQuery:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_execute_query_invalid_input(self, capsys):
+        """Test with invalid input."""
+        print_my_func_name("test_sql_execute_query_invalid_input")
+
+        result = NewtSQL.sql_execute_query(123, "SELECT 1")  # type: ignore
+        assert result is None
+
+        result = NewtSQL.sql_execute_query("test.db", 456)  # type: ignore
+        assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

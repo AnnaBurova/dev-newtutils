@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 8 items
+collecting ... collected 9 items
 
 test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db 
 START=======================================
@@ -100,5 +100,27 @@ select_result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 
 (no stderr captured)
 END=========================================
 PASSED
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input 
+START=======================================
+=====captured.out=====
+Function: test_sql_execute_query_invalid_input
+--------------------------------------------
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 456
+[0m
 
-============================== 8 passed in 0.67s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 9 passed in 0.69s ==============================
