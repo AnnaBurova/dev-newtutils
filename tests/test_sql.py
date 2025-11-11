@@ -208,3 +208,38 @@ class TestSqlExecuteQuery:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_execute_query_delete(self, capsys):
+        """Test DELETE query."""
+        print_my_func_name("test_sql_execute_query_delete")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table and insert data
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob')")
+
+            # Delete data
+            query = "DELETE FROM test WHERE id = ?"
+            params = (1,)
+            delete_result = NewtSQL.sql_execute_query(db_path, query, params)
+            print("delete_result:", delete_result)
+            assert isinstance(delete_result, int)
+            assert delete_result == 1
+
+            # Verify deletion
+            select_result = NewtSQL.sql_execute_query(db_path, "SELECT * FROM test")
+            print("select_result:", select_result)
+            assert isinstance(select_result, list)
+            assert len(select_result) == 1
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

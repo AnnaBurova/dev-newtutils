@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 6 items
+collected 7 items
 
 test_sql.py 
 START=======================================
@@ -70,5 +70,16 @@ select_result: [{'id': 1, 'name': 'Alice Updated'}]
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_sql_execute_query_delete
+--------------------------------------------
+delete_result: 1
+select_result: [{'id': 2, 'name': 'Bob'}]
 
-============================== 6 passed in 0.61s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 7 passed in 0.52s ==============================
