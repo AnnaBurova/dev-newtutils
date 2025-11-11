@@ -4,20 +4,21 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 13 items
+collecting ... collected 14 items
 
 test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db PASSED [  7%]
-test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [ 15%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table PASSED [ 23%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 30%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [ 38%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update PASSED   [ 46%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_delete PASSED   [ 53%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_executemany PASSED [ 61%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input PASSED [ 69%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_creates_directory PASSED [ 76%]
-test_sql.py::TestSqlSelectRows::test_sql_select_rows_basic PASSED        [ 84%]
-test_sql.py::TestSqlSelectRows::test_sql_select_rows_with_params PASSED  [ 92%]
-test_sql.py::TestSqlSelectRows::test_sql_select_rows_empty_result PASSED [100%]
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [ 14%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table PASSED [ 21%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 28%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [ 35%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update PASSED   [ 42%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_delete PASSED   [ 50%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_executemany PASSED [ 57%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input PASSED [ 64%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_creates_directory PASSED [ 71%]
+test_sql.py::TestSqlSelectRows::test_sql_select_rows_basic PASSED        [ 78%]
+test_sql.py::TestSqlSelectRows::test_sql_select_rows_with_params PASSED  [ 85%]
+test_sql.py::TestSqlSelectRows::test_sql_select_rows_empty_result PASSED [ 92%]
+test_sql.py::TestSqlSelectRows::test_sql_select_rows_invalid_query PASSED [100%]
 
-============================= 13 passed in 0.88s ==============================
+============================= 14 passed in 0.65s ==============================

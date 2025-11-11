@@ -9,6 +9,7 @@ Tests cover:
 - SQL update operations (sql_update_rows)
 """
 
+import pytest
 import tempfile
 
 import os
@@ -378,6 +379,26 @@ class TestSqlSelectRows:
             result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
             print("result:", result)
             assert result == []
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_sql_select_rows_invalid_query(self, capsys):
+        """Test select with invalid query."""
+        print_my_func_name("test_sql_select_rows_invalid_query")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            with pytest.raises(SystemExit):
+                result = NewtSQL.sql_select_rows(db_path, "INVALID SQL QUERY")
+                print("This line will not be printed:", result)
 
         finally:
             NewtSQL.db_delayed_close(db_path)
