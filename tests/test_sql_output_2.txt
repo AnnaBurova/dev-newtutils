@@ -4,16 +4,17 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 9 items
+collecting ... collected 10 items
 
-test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db PASSED [ 11%]
-test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [ 22%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table PASSED [ 33%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 44%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [ 55%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update PASSED   [ 66%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_delete PASSED   [ 77%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_executemany PASSED [ 88%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input PASSED [100%]
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db PASSED [ 10%]
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [ 20%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table PASSED [ 30%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 40%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [ 50%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update PASSED   [ 60%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_delete PASSED   [ 70%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_executemany PASSED [ 80%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input PASSED [ 90%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_creates_directory PASSED [100%]
 
-============================== 9 passed in 0.69s ==============================
+============================= 10 passed in 0.69s ==============================

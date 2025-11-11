@@ -289,3 +289,18 @@ class TestSqlExecuteQuery:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_execute_query_creates_directory(self, capsys):
+        """Test that sql_execute_query creates parent directories."""
+        print_my_func_name("test_sql_execute_query_creates_directory")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            nested_path = os.path.join(tmpdir, "level1", "level2", "test.db")
+            query = "CREATE TABLE test (id INTEGER)"
+            result = NewtSQL.sql_execute_query(nested_path, query)
+            print("result:", result)
+            assert os.path.exists(nested_path)
+            NewtSQL.db_delayed_close(nested_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
