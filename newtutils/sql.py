@@ -126,6 +126,46 @@ def sql_execute_query(
         if not NewtCons.validate_input(params, (list, tuple), stop=False):
             return None
 
+    normalized_query = query.strip()
+
+    if not normalized_query:
+        NewtCons.error_msg(
+            "SQL query is empty after stripping whitespace",
+            location="Newt.sql.sql_execute_query",
+            stop=False,
+        )
+        return None
+
+    # Very basic multiple-statement protection
+    # Reject queries with more than one non-empty segment separated by ';'
+    parts_query = [p.strip() for p in normalized_query.split(";") if p.strip()]
+    if len(parts_query) != 1:
+        NewtCons.error_msg(
+            "SQL query must contain exactly one statement",
+            location="Newt.sql.sql_execute_query",
+            stop=False,
+        )
+        return None
+
+    lowered_query = normalized_query.lower()
+    dangerous_tokens = (
+        " drop ",
+        " truncate ",
+        " alter ",
+        ";--",
+        "/*",
+        "*/",
+        " xp_",
+    )
+    for token in dangerous_tokens:
+        if token in f" {lowered_query} ":
+            NewtCons.error_msg(
+                f"SQL query contains potentially dangerous token: {token.strip()}",
+                location="Newt.sql.sql_execute_query",
+                stop=False,
+            )
+            return None
+
     # EXECUTEMANY - list of tuples
     if isinstance(params, list):
         if not all(NewtCons.validate_input(p, tuple, stop=False) for p in params):
