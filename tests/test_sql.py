@@ -243,3 +243,36 @@ class TestSqlExecuteQuery:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_execute_query_executemany(self, capsys):
+        """Test executemany with list of tuples."""
+        print_my_func_name("test_sql_execute_query_executemany")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+
+            # Insert multiple rows
+            query = "INSERT INTO test (id, name) VALUES (?, ?)"
+            params = [(1, "Alice"), (2, "Bob"), (3, "Charlie")]
+            insert_result = NewtSQL.sql_execute_query(db_path, query, params)
+            print("result:", insert_result)
+            assert isinstance(insert_result, int)
+            assert insert_result == 3
+
+            # Verify insertion
+            select_result = NewtSQL.sql_execute_query(db_path, "SELECT * FROM test")
+            print("select_result:", select_result)
+            assert isinstance(select_result, list)
+            assert len(select_result) == 3
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
