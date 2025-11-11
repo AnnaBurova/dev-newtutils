@@ -6,6 +6,7 @@ Tests cover:
 - SQL query execution (sql_execute_query)
 - SQL select operations (sql_select_rows)
 - SQL insert operations (sql_insert_row)
+- SQL update operations (sql_update_rows)
 """
 
 import tempfile
@@ -164,6 +165,41 @@ class TestSqlExecuteQuery:
             assert len(result) == 2
             assert result[0]["id"] == 1
             assert result[0]["name"] == "Alice"
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_sql_execute_query_update(self, capsys):
+        """Test UPDATE query."""
+        print_my_func_name("test_sql_execute_query_update")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table and insert data
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
+
+            # Update data
+            query = "UPDATE test SET name = ? WHERE id = ?"
+            params = ("Alice Updated", 1)
+            update_result = NewtSQL.sql_execute_query(db_path, query, params)
+            print("update_result:", update_result)
+            assert isinstance(update_result, int)
+            assert update_result == 1
+
+            # Verify update
+            select_result = NewtSQL.sql_execute_query(db_path, "SELECT * FROM test")
+            print("select_result:", select_result)
+            assert isinstance(select_result, list)
+            assert len(select_result) > 0
+            assert select_result[0]["name"] == "Alice Updated"
 
         finally:
             NewtSQL.db_delayed_close(db_path)

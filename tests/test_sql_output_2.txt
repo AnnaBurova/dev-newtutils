@@ -4,12 +4,13 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 5 items
+collecting ... collected 6 items
 
-test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db PASSED [ 20%]
-test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [ 40%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table PASSED [ 60%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 80%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [100%]
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db PASSED [ 16%]
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [ 33%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table PASSED [ 50%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 66%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [ 83%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update PASSED   [100%]
 
-============================== 5 passed in 0.45s ==============================
+============================== 6 passed in 0.54s ==============================
