@@ -335,3 +335,30 @@ class TestSqlSelectRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_select_rows_with_params(self, capsys):
+        """Test select with parameters."""
+        print_my_func_name("test_sql_select_rows_with_params")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table and insert data
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob')")
+
+            # Select with WHERE clause
+            result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test WHERE id = ?", (1,))
+            print("result:", result)
+            assert len(result) == 1
+            assert result[0]["id"] == 1
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
