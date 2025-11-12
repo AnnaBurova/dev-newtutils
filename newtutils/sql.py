@@ -292,6 +292,19 @@ def sql_insert_row(
     # Build SQL template
     columns = ", ".join(data[0].keys())
     placeholders = ", ".join(["?"] * len(data[0]))
+
+    # Validate that all dictionaries have the same keys and length
+    first_keys = set(data[0].keys())
+    for row in data:
+        if set(row.keys()) != first_keys or len(row) != len(data[0]):
+            NewtCons.error_msg(
+                "All dictionaries must have identical keys and same length",
+                f"Expected keys: {first_keys}, got: {set(row.keys())}",
+                location="Newt.sql.sql_insert_row",
+                stop=False
+            )
+            return 0
+
     params = [tuple(row.values()) for row in data]
 
     query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
