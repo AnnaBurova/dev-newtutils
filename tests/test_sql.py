@@ -127,15 +127,15 @@ class TestSqlExecuteQuery:
 
         try:
             # Create table
-            query_create = "CREATE TABLE test (id INTEGER, name TEXT)"
-            NewtSQL.sql_execute_query(db_path, query_create)
+            create_query = "CREATE TABLE test (id INTEGER, name TEXT)"
+            NewtSQL.sql_execute_query(db_path, create_query)
             # Insert row
-            query_insert = "INSERT INTO test (id, name) VALUES (?, ?)"
-            params_insert = (1, "Test")
-            result = NewtSQL.sql_execute_query(db_path, query_insert, params_insert)
-            print("result:", result)
-            assert isinstance(result, int)
-            assert result == 1
+            insert_query = "INSERT INTO test (id, name) VALUES (?, ?)"
+            insert_params = (1, "Test")
+            insert_result = NewtSQL.sql_execute_query(db_path, insert_query, insert_params)
+            print("result:", insert_result)
+            assert isinstance(insert_result, int)
+            assert insert_result == 1
 
         finally:
             NewtSQL.db_delayed_close(db_path)
