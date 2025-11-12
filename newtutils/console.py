@@ -15,7 +15,8 @@ Functions:
     def validate_input(
         value: object,
         expected_type: type | tuple[type, ...],
-        stop: bool = True
+        stop: bool = True,
+        location: str = ""
         ) -> bool
     def _beep_boop(
         pause_s: float = 0.2
@@ -96,7 +97,8 @@ def error_msg(
 def validate_input(
         value: object,
         expected_type: type | tuple[type, ...],
-        stop: bool = True
+        stop: bool = True,
+        location: str = ""
         ) -> bool:
     """
     Validate that a given value matches the expected type.
@@ -125,11 +127,14 @@ def validate_input(
             Raised when `stop=True` and the value type is invalid.
     """
 
+    if location:
+        location = " "+location
+
     if not isinstance(value, expected_type):
         error_msg(
             f"Expected {expected_type}, got {type(value)}",
             f"Value: {value}",
-            location="Newt.console.validate_input",
+            location="Newt.console.validate_input"+location,
             stop=stop
         )
         return False
