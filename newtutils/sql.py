@@ -239,9 +239,7 @@ def sql_select_rows(
     if isinstance(result, list):
         return result
 
-    if not NewtCons.validate_input(result, list, stop=False):
-        print(result)
-
+    NewtCons.validate_input(result, list, stop=False)
     return []
 
 
@@ -308,9 +306,7 @@ def sql_insert_row(
     if isinstance(result, int):
         return result
 
-    if not NewtCons.validate_input(result, int, stop=False):
-        print(result)
-
+    NewtCons.validate_input(result, int, stop=False)
     return 0
 
 
@@ -364,7 +360,12 @@ def sql_update_rows(
     query = f"UPDATE {table} SET {set_clause} WHERE {where_condition}"
 
     result = sql_execute_query(database, query, params)
-    return result if isinstance(result, int) else 0
+
+    if isinstance(result, int):
+        return result
+
+    NewtCons.validate_input(result, int, stop=False)
+    return 0
 
 
 def export_sql_query_to_csv(
