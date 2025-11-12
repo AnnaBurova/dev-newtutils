@@ -479,3 +479,24 @@ class TestSqlInsertRow:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_insert_row_empty_data(self, capsys):
+        """Test inserting with empty data."""
+        print_my_func_name("test_sql_insert_row_empty_data")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER)")
+            result = NewtSQL.sql_insert_row(db_path, "test", {})
+            print("result:", result)
+            assert result == 0
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

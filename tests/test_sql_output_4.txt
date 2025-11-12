@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 16 items
+collecting ... collected 17 items
 
 test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db 
 START=======================================
@@ -207,5 +207,21 @@ select_result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 
 (no stderr captured)
 END=========================================
 PASSED
+test_sql.py::TestSqlInsertRow::test_sql_insert_row_empty_data 
+START=======================================
+=====captured.out=====
+Function: test_sql_insert_row_empty_data
+--------------------------------------------
+[1m [31m
+Location: Newt.sql.sql_insert_row
+::: ERROR :::
+Empty data: {}
+[0m
+result: 0
 
-============================= 16 passed in 0.68s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 17 passed in 0.75s ==============================
