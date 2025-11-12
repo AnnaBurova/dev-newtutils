@@ -519,3 +519,55 @@ class TestSqlInsertRow:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+
+class TestSqlUpdateRows:
+    """Tests for sql_update_rows function."""
+
+    def test_sql_update_rows_basic(self, capsys):
+        """Test basic update operation."""
+        print_my_func_name("test_sql_update_rows_basic")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table and insert data
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            data = [
+                {"id": 1, "name": "Alice", "age": 30},
+                {"id": 2, "name": "Bob", "age": 35},
+                {"id": 3, "name": "Charlie", "age": 40}
+            ]
+            print("data:", data)
+            NewtSQL.sql_insert_row(db_path, "test", data)
+
+            # Select with no data
+            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            print("select_result:", select_result)
+            assert len(select_result) == 3
+
+            # Update row
+            update_result = NewtSQL.sql_update_rows(
+                db_path,
+                "test",
+                {"age": 31},
+                "id = ?",
+                (1,)
+            )
+            print("update_result:", update_result)
+            assert update_result == 1
+
+            # Verify update
+            select_result_1 = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test WHERE id = 1")
+            print("select_result_1:", select_result_1)
+            assert select_result_1[0]["age"] == 31
+            assert len(select_result_1) == 1
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
