@@ -425,14 +425,52 @@ class TestSqlInsertRow:
 
             # Insert single row
             data = {"id": 1, "name": "Alice", "age": 30}
+            print("data:", data)
+
             insert_result = NewtSQL.sql_insert_row(db_path, "test", data)
-            print("result:", insert_result)
+            print("insert_result:", insert_result)
             assert insert_result == 1
 
             # Select with no data
             select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
-            print("result:", select_result)
+            print("select_result:", select_result)
             assert len(select_result) == 1
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_sql_insert_row_multiple_dicts(self, capsys):
+        """Test inserting multiple rows from list of dicts."""
+        print_my_func_name("test_sql_insert_row_multiple_dicts")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+
+            # Insert multiple rows
+            data = [
+                {"id": 1, "name": "Alice"},
+                {"id": 2, "name": "Bob"},
+                {"id": 3, "name": "Charlie"}
+            ]
+            print("data:", data)
+
+            insert_result = NewtSQL.sql_insert_row(db_path, "test", data)
+            print("insert_result:", insert_result)
+            assert insert_result == 3
+
+            # Select with no data
+            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            print("select_result:", select_result)
+            assert len(select_result) == 3
 
         finally:
             NewtSQL.db_delayed_close(db_path)
