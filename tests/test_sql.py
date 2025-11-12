@@ -500,3 +500,22 @@ class TestSqlInsertRow:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_insert_row_invalid_input(self, capsys):
+        """Test inserting with invalid input."""
+        print_my_func_name("test_sql_insert_row_invalid_input")
+
+        result_1 = NewtSQL.sql_insert_row(123, "test", {"id": 1})  # type: ignore
+        print("result_1:", result_1)
+        assert result_1 == 0
+
+        result_2 = NewtSQL.sql_insert_row("test.db", 456, {"id": 2})  # type: ignore
+        print("result:", result_2)
+        assert result_2 == 0
+
+        result_3 = NewtSQL.sql_insert_row("test.db", "test", "not a dict")  # type: ignore
+        print("result:", result_3)
+        assert result_3 == 0
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
