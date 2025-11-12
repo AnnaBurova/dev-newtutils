@@ -265,8 +265,6 @@ def sql_insert_row(
             Number of inserted rows, or 0 on failure.
     """
 
-    if not NewtCons.validate_input(database, str, stop=False):
-        return 0
     if not NewtCons.validate_input(table, str, stop=False):
         return 0
 
@@ -340,8 +338,6 @@ def sql_update_rows(
             or 0 on failure.
     """
 
-    if not NewtCons.validate_input(database, str, stop=False):
-        return 0
     if not NewtCons.validate_input(table, str, stop=False):
         return 0
     if not NewtCons.validate_input(where_condition, str, stop=False):
