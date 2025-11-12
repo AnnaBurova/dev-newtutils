@@ -106,13 +106,13 @@ START=======================================
 Function: test_sql_execute_query_invalid_input
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input
+Location: Newt.console.validate_input Newt.sql.sql_execute_query
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.console.validate_input
+Location: Newt.console.validate_input Newt.sql.sql_execute_query
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 456

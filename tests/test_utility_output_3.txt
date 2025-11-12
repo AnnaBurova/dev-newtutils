@@ -108,7 +108,7 @@ Function: test_sorting_list_not_a_list
 --------------------------------------------
 not a list
 [1m [31m
-Location: Newt.console.validate_input
+Location: Newt.console.validate_input Newt.utility.sorting_list
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a list
@@ -228,7 +228,7 @@ Function: test_sorting_dict_not_list
 --------------------------------------------
 not a list
 [1m [31m
-Location: Newt.console.validate_input
+Location: Newt.console.validate_input Newt.utility.sorting_dict_by_keys
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a list

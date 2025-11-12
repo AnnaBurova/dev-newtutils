@@ -299,7 +299,7 @@ START=======================================
 Function: test_retry_pause_invalid_type
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input
+Location: Newt.console.validate_input Newt.console._retry_pause
 ::: ERROR :::
 Expected <class 'int'>, got <class 'str'>
 Value: invalid
@@ -329,4 +329,4 @@ Function: test_divider_output
 END=========================================
 .
 
-============================= 21 passed in 0.45s ==============================
+============================= 21 passed in 0.43s ==============================

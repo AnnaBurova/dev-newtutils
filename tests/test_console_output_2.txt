@@ -28,4 +28,4 @@ test_console.py::TestRetryPause::test_retry_pause_negative_seconds PASSED [ 90%]
 test_console.py::TestRetryPause::test_retry_pause_invalid_type PASSED    [ 95%]
 test_console.py::TestDivider::test_divider_output PASSED                 [100%]
 
-============================= 21 passed in 0.45s ==============================
+============================= 21 passed in 0.44s ==============================
