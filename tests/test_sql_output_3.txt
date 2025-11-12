@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 14 items
+collected 15 items
 
 test_sql.py 
 START=======================================
@@ -167,5 +167,16 @@ Exception: near "INVALID": syntax error
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_sql_insert_row_single_dict
+--------------------------------------------
+result: 1
+result: [{'id': 1, 'name': 'Alice', 'age': 30}]
 
-============================= 14 passed in 0.62s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 15 passed in 0.66s ==============================

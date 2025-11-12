@@ -407,3 +407,37 @@ class TestSqlSelectRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+
+class TestSqlInsertRow:
+    """Tests for sql_insert_row function."""
+
+    def test_sql_insert_row_single_dict(self, capsys):
+        """Test inserting a single row from dict."""
+        print_my_func_name("test_sql_insert_row_single_dict")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+
+            # Insert single row
+            data = {"id": 1, "name": "Alice", "age": 30}
+            insert_result = NewtSQL.sql_insert_row(db_path, "test", data)
+            print("result:", insert_result)
+            assert insert_result == 1
+
+            # Select with no data
+            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            print("result:", select_result)
+            assert len(select_result) == 1
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
