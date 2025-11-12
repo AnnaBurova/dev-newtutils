@@ -1,4 +1,5 @@
 """
+Updated on 2025-11
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -97,12 +98,12 @@ def fetch_data_from_url(
             Response text if successful, otherwise None.
     """
 
-    if not NewtCons.validate_input(base_url, str):
+    if not NewtCons.validate_input(base_url, str, location="Newt.network.fetch_data_from_url"):
         return None
 
     params_to_send = None
     if params is not None:
-        if not NewtCons.validate_input(params, dict):
+        if not NewtCons.validate_input(params, dict, location="Newt.network.fetch_data_from_url"):
             return None
 
         # Ensure params are in a requests-compatible form (mapping of str->str)
@@ -234,10 +235,10 @@ def download_file_from_url(
             otherwise False.
     """
 
-    if not NewtCons.validate_input(file_url, str):
+    if not NewtCons.validate_input(file_url, str, location="Newt.network.download_file_from_url"):
         return False
 
-    if not NewtCons.validate_input(save_path, str):
+    if not NewtCons.validate_input(save_path, str, location="Newt.network.download_file_from_url"):
         return False
 
     # Assign safe default headers

@@ -100,7 +100,7 @@ def _check_file_exists(
             otherwise False.
     """
 
-    if not NewtCons.validate_input(file_path, str, stop=False):
+    if not NewtCons.validate_input(file_path, str, stop=False, location="Newt.files._check_file_exists"):
         return False
 
     if os.path.isfile(file_path):
@@ -158,7 +158,7 @@ def choose_file_from_folder(
     """
 
     # Validate folder path
-    if not NewtCons.validate_input(folder_path, str):
+    if not NewtCons.validate_input(folder_path, str, location="Newt.files.choose_file_from_folder"):
         return None
 
     if not os.path.isdir(folder_path):
@@ -285,8 +285,8 @@ def save_text_to_file(
             Defaults to False.
     """
 
-    NewtCons.validate_input(file_name, str)
-    NewtCons.validate_input(text, str)
+    NewtCons.validate_input(file_name, str, location="Newt.files.save_text_to_file")
+    NewtCons.validate_input(text, str, location="Newt.files.save_text_to_file")
 
     _ensure_dir_exists(file_name)
     text = _normalize_newlines(text)
@@ -335,7 +335,7 @@ def read_json_from_file(
             data = json.load(f)
 
         # Normalize output to always be a list or dict
-        if NewtCons.validate_input(data, (dict, list)):
+        if NewtCons.validate_input(data, (dict, list), location="Newt.files.read_json_from_file"):
             return data
 
         # If data is not a list or dict, return empty list
@@ -371,8 +371,8 @@ def save_json_to_file(
             Defaults to 2.
     """
 
-    NewtCons.validate_input(file_name, str)
-    NewtCons.validate_input(data, (list, dict))
+    NewtCons.validate_input(file_name, str, location="Newt.files.save_json_to_file")
+    NewtCons.validate_input(data, (list, dict), location="Newt.files.save_json_to_file")
 
     _ensure_dir_exists(file_name)
 
@@ -415,7 +415,7 @@ def read_csv_from_file(
             or an empty list on failure.
     """
 
-    if not NewtCons.validate_input(delimiter, str, stop=False):
+    if not NewtCons.validate_input(delimiter, str, stop=False, location="Newt.files.read_csv_from_file"):
         return []
 
     if not _check_file_exists(file_name):
@@ -455,9 +455,9 @@ def save_csv_to_file(
             Column separator character. Defaults to `;`.
     """
 
-    NewtCons.validate_input(file_name, str)
-    NewtCons.validate_input(rows, (list, tuple))
-    NewtCons.validate_input(delimiter, str)
+    NewtCons.validate_input(file_name, str, location="Newt.files.save_csv_to_file")
+    NewtCons.validate_input(rows, (list, tuple), location="Newt.files.save_csv_to_file")
+    NewtCons.validate_input(delimiter, str, location="Newt.files.save_csv_to_file")
 
     _ensure_dir_exists(file_name)
 
