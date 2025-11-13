@@ -175,7 +175,7 @@ def sql_execute_query(
             NewtCons.error_msg(
                 "All items in 'params' list must be tuples for executemany().",
                 f"params: {params}",
-                location="Newt.sql.sql_execute_query"
+                location="Newt.sql.sql_execute_query.params"
             )
             return None
 

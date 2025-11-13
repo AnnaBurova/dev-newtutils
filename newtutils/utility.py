@@ -67,7 +67,7 @@ def sorting_list(
             NewtCons.error_msg(
                 "input_list must have only str and int types",
                 f"input_list: {input_list}",
-                location="Newt.utility.sorting_list",
+                location="Newt.utility.sorting_list.input_list",
                 stop=stop
             )
             return []

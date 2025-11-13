@@ -150,7 +150,7 @@ class TestSortingList:
         print_my_captured(captured)
 
         assert "::: ERROR :::" in captured.out
-        assert "must have only str and int types:" in captured.out
+        assert "must have only str and int types" in captured.out
 
     def test_sorting_list_invalid_type_with_stop(self, capsys):
         """Test sorting list with invalid types, stop=True."""
