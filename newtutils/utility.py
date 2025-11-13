@@ -63,9 +63,10 @@ def sorting_list(
 
     try:
         # Validate all elements
-        if not all(isinstance(x, (str, int)) for x in input_list):
+        if not all(NewtCons.validate_input(x, (str, int), stop=False) for x in input_list):
             NewtCons.error_msg(
-                f"input_list must have only str and int types: {input_list}",
+                "input_list must have only str and int types",
+                f"input_list: {input_list}",
                 location="Newt.utility.sorting_list",
                 stop=stop
             )
