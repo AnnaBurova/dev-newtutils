@@ -7,7 +7,14 @@ set +e  # continue on error
 cd "$(dirname "$0")" || exit 1
 
 # === List of test modules ===
+# modules=("console")
+# modules=("utility")
+# modules=("files")
+# modules=("sql")
 modules=("console" "utility" "files" "sql")
+
+# cd dev-newtutils/tests/
+# $ ./_list.sh
 
 # === Loop each module ===
 for mod in "${modules[@]}"; do
