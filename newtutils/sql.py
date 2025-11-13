@@ -118,12 +118,15 @@ def sql_execute_query(
             or None if an error occurs.
     """
 
-    if not NewtCons.validate_input(database, str, stop=False, location="Newt.sql.sql_execute_query"):
+    if not NewtCons.validate_input(database, str, stop=False,
+                                   location="Newt.sql.sql_execute_query.database"):
         return None
-    if not NewtCons.validate_input(query, str, stop=False, location="Newt.sql.sql_execute_query"):
+    if not NewtCons.validate_input(query, str, stop=False,
+                                   location="Newt.sql.sql_execute_query.query"):
         return None
     if params:
-        if not NewtCons.validate_input(params, (list, tuple), stop=False, location="Newt.sql.sql_execute_query"):
+        if not NewtCons.validate_input(params, (list, tuple), stop=False,
+                                       location="Newt.sql.sql_execute_query.params"):
             return None
 
     normalized_query = query.strip()
@@ -239,7 +242,8 @@ def sql_select_rows(
     if isinstance(result, list):
         return result
 
-    NewtCons.validate_input(result, list, stop=False, location="Newt.sql.sql_select_rows")
+    NewtCons.validate_input(result, list, stop=False,
+                            location="Newt.sql.sql_select_rows.result")
     return []
 
 
@@ -265,7 +269,8 @@ def sql_insert_row(
             Number of inserted rows, or 0 on failure.
     """
 
-    if not NewtCons.validate_input(table, str, stop=False, location="Newt.sql.sql_insert_row"):
+    if not NewtCons.validate_input(table, str, stop=False,
+                                   location="Newt.sql.sql_insert_row.table"):
         return 0
 
     if not data:
@@ -280,7 +285,8 @@ def sql_insert_row(
     if isinstance(data, dict):
         data = [data]
 
-    if not NewtCons.validate_input(data, list, stop=False, location="Newt.sql.sql_insert_row"):
+    if not NewtCons.validate_input(data, list, stop=False,
+                                   location="Newt.sql.sql_insert_row.data"):
         return 0
 
     # Build SQL template
@@ -311,7 +317,8 @@ def sql_insert_row(
     if isinstance(result, int):
         return result
 
-    NewtCons.validate_input(result, int, stop=False, location="Newt.sql.sql_insert_row")
+    NewtCons.validate_input(result, int, stop=False,
+                            location="Newt.sql.sql_insert_row.result")
     return 0
 
 
@@ -345,9 +352,11 @@ def sql_update_rows(
             or 0 on failure.
     """
 
-    if not NewtCons.validate_input(table, str, stop=False, location="Newt.sql.sql_update_rows"):
+    if not NewtCons.validate_input(table, str, stop=False,
+                                   location="Newt.sql.sql_update_rows.table"):
         return 0
-    if not NewtCons.validate_input(where_condition, str, stop=False, location="Newt.sql.sql_update_rows"):
+    if not NewtCons.validate_input(where_condition, str, stop=False,
+                                   location="Newt.sql.sql_update_rows.where_condition"):
         return 0
 
     if not set_data:
@@ -367,7 +376,8 @@ def sql_update_rows(
     if isinstance(result, int):
         return result
 
-    NewtCons.validate_input(result, int, stop=False, location="Newt.sql.sql_update_rows")
+    NewtCons.validate_input(result, int, stop=False,
+                            location="Newt.sql.sql_update_rows.result")
     return 0
 
 
@@ -400,13 +410,17 @@ def export_sql_query_to_csv(
             otherwise False.
     """
 
-    if not NewtCons.validate_input(database, str, stop=False, location="Newt.sql.export_sql_query_to_csv"):
+    if not NewtCons.validate_input(database, str, stop=False,
+                                   location="Newt.sql.export_sql_query_to_csv.database"):
         return False
-    if not NewtCons.validate_input(query, str, stop=False, location="Newt.sql.export_sql_query_to_csv"):
+    if not NewtCons.validate_input(query, str, stop=False,
+                                   location="Newt.sql.export_sql_query_to_csv.query"):
         return False
-    if not NewtCons.validate_input(csv_file, str, stop=False, location="Newt.sql.export_sql_query_to_csv"):
+    if not NewtCons.validate_input(csv_file, str, stop=False,
+                                   location="Newt.sql.export_sql_query_to_csv.csv_file"):
         return False
-    if not NewtCons.validate_input(delimiter, str, stop=False, location="Newt.sql.export_sql_query_to_csv"):
+    if not NewtCons.validate_input(delimiter, str, stop=False,
+                                   location="Newt.sql.export_sql_query_to_csv.delimiter"):
         return False
 
     try:

@@ -162,7 +162,8 @@ def _beep_boop(
     if os.name != "nt" or winsound is None:
         return
 
-    if not validate_input(pause_s, (int, float), stop=False, location="Newt.console._beep_boop"):
+    if not validate_input(pause_s, (int, float), stop=False,
+                          location="Newt.console._beep_boop.pause_s"):
         pause_s = 0.2
 
     if pause_s < 0:
@@ -207,7 +208,8 @@ def _retry_pause(
             Defaults to False.
     """
 
-    if not validate_input(seconds, int, stop=False, location="Newt.console._retry_pause"):
+    if not validate_input(seconds, int, stop=False,
+                          location="Newt.console._retry_pause.seconds"):
         seconds = 5
 
     if seconds <= 0:
