@@ -106,13 +106,13 @@ START=======================================
 Function: test_sql_execute_query_invalid_input
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input Newt.sql.sql_execute_query
+Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.console.validate_input Newt.sql.sql_execute_query
+Location: Newt.console.validate_input > Newt.sql.sql_execute_query.query
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 456
@@ -229,27 +229,27 @@ START=======================================
 Function: test_sql_insert_row_invalid_input
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input Newt.sql.sql_execute_query
+Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.console.validate_input Newt.sql.sql_insert_row
+Location: Newt.console.validate_input > Newt.sql.sql_insert_row.result
 ::: ERROR :::
 Expected <class 'int'>, got <class 'NoneType'>
 Value: None
 [0m
 result_1: 0
 [1m [31m
-Location: Newt.console.validate_input Newt.sql.sql_insert_row
+Location: Newt.console.validate_input > Newt.sql.sql_insert_row.table
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 456
 [0m
 result: 0
 [1m [31m
-Location: Newt.console.validate_input Newt.sql.sql_insert_row
+Location: Newt.console.validate_input > Newt.sql.sql_insert_row.data
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a dict

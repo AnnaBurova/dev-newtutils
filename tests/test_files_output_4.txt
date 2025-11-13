@@ -57,7 +57,7 @@ START=======================================
 Function: test_returns_false_for_invalid_input
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input Newt.files._check_file_exists
+Location: Newt.console.validate_input > Newt.files._check_file_exists.file_path
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
@@ -162,7 +162,7 @@ START=======================================
 Function: test_returns_none_for_invalid_input
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input Newt.files.choose_file_from_folder
+Location: Newt.console.validate_input > Newt.files.choose_file_from_folder.folder_path
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
@@ -238,13 +238,13 @@ START=======================================
 Function: test_save_text_invalid_input
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input Newt.files.save_text_to_file
+Location: Newt.console.validate_input > Newt.files.save_text_to_file.file_name
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.console.validate_input Newt.files.save_text_to_file
+Location: Newt.console.validate_input > Newt.files.save_text_to_file.text
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 456
@@ -365,13 +365,13 @@ START=======================================
 Function: test_save_json_invalid_input
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input Newt.files.save_json_to_file
+Location: Newt.console.validate_input > Newt.files.save_json_to_file.file_name
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.console.validate_input Newt.files.save_json_to_file
+Location: Newt.console.validate_input > Newt.files.save_json_to_file.data
 ::: ERROR :::
 Expected (<class 'list'>, <class 'dict'>), got <class 'str'>
 Value: not a dict or list
@@ -484,19 +484,19 @@ START=======================================
 Function: test_save_csv_invalid_input
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input Newt.files.save_csv_to_file
+Location: Newt.console.validate_input > Newt.files.save_csv_to_file.file_name
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.console.validate_input Newt.files.save_csv_to_file
+Location: Newt.console.validate_input > Newt.files.save_csv_to_file.rows
 ::: ERROR :::
 Expected (<class 'list'>, <class 'tuple'>), got <class 'str'>
 Value: not a list
 [0m
 [1m [31m
-Location: Newt.console.validate_input Newt.files.save_csv_to_file
+Location: Newt.console.validate_input > Newt.files.save_csv_to_file.delimiter
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123

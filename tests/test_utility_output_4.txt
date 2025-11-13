@@ -84,7 +84,7 @@ Function: test_sorting_list_invalid_type_no_stop
 --------------------------------------------
 [1, 2, 3.5]
 [1m [31m
-Location: Newt.utility.sorting_list
+Location: Newt.utility.sorting_list.input_list
 ::: ERROR :::
 input_list must have only str and int types: [1, 2, 3.5]
 [0m
@@ -101,7 +101,7 @@ Function: test_sorting_list_invalid_type_with_stop
 --------------------------------------------
 [1, 2, 3.5]
 [1m [31m
-Location: Newt.utility.sorting_list
+Location: Newt.utility.sorting_list.input_list
 ::: ERROR :::
 input_list must have only str and int types: [1, 2, 3.5]
 [0m
@@ -117,7 +117,7 @@ Function: test_sorting_list_not_a_list
 --------------------------------------------
 not a list
 [1m [31m
-Location: Newt.console.validate_input Newt.utility.sorting_list
+Location: Newt.console.validate_input > Newt.utility.sorting_list.input_list
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a list
@@ -135,7 +135,7 @@ Function: test_sorting_list_with_none
 --------------------------------------------
 [1, None, 'a']
 [1m [31m
-Location: Newt.utility.sorting_list
+Location: Newt.utility.sorting_list.input_list
 ::: ERROR :::
 input_list must have only str and int types: [1, None, 'a']
 [0m
@@ -247,7 +247,7 @@ Function: test_sorting_dict_not_list
 --------------------------------------------
 not a list
 [1m [31m
-Location: Newt.console.validate_input Newt.utility.sorting_dict_by_keys
+Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys.data
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a list

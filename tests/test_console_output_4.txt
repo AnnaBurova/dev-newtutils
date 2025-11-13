@@ -319,7 +319,7 @@ START=======================================
 Function: test_retry_pause_invalid_type
 --------------------------------------------
 [1m [31m
-Location: Newt.console.validate_input Newt.console._retry_pause
+Location: Newt.console.validate_input > Newt.console._retry_pause.seconds
 ::: ERROR :::
 Expected <class 'int'>, got <class 'str'>
 Value: invalid
