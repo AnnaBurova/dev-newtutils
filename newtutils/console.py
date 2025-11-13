@@ -128,7 +128,7 @@ def validate_input(
     """
 
     if location:
-        location = " "+location
+        location = " > "+location
 
     if not isinstance(value, expected_type):
         error_msg(
