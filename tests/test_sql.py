@@ -7,12 +7,14 @@ Tests cover:
 - SQL select operations (sql_select_rows)
 - SQL insert operations (sql_insert_row)
 - SQL update operations (sql_update_rows)
+- CSV export (export_sql_query_to_csv)
 """
 
 import pytest
 import tempfile
 
 import os
+import newtutils.files as NewtFiles
 import newtutils.sql as NewtSQL
 
 
@@ -678,6 +680,53 @@ class TestSqlUpdateRows:
             )
         print("result:", result)
         assert result == 0
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+
+class TestExportSqlQueryToCsv:
+    """Tests for export_sql_query_to_csv function."""
+
+    def test_export_sql_query_to_csv_basic(self, capsys):
+        """Test basic CSV export."""
+        print_my_func_name("test_export_sql_query_to_csv_basic")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
+            csv_path = csv_tmp.name
+
+        try:
+            # Create table and insert data
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice', 30)")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob', 25)")
+
+            # Export to CSV
+            result = NewtSQL.export_sql_query_to_csv(
+                db_path,
+                "SELECT * FROM test ORDER BY id",
+                csv_path
+            )
+            print("result:", result)
+            assert result is True
+            assert os.path.exists(csv_path)
+
+            # Verify CSV content
+            csv_data = NewtFiles.read_csv_from_file(csv_path)
+            print("csv_data:", csv_data)
+            assert len(csv_data) == 3  # Header + 2 rows
+            assert "id" in csv_data[0]
+            assert "name" in csv_data[0]
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+            if os.path.exists(csv_path):
+                os.unlink(csv_path)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
