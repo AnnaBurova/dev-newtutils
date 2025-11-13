@@ -730,3 +730,36 @@ class TestExportSqlQueryToCsv:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_export_sql_query_to_csv_empty_result(self, capsys):
+        """Test export with empty query result."""
+        print_my_func_name("test_export_sql_query_to_csv_empty_result")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
+            csv_path = csv_tmp.name
+
+        try:
+            # Create empty table
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER)")
+
+            # Export empty result
+            result = NewtSQL.export_sql_query_to_csv(
+                db_path,
+                "SELECT * FROM test",
+                csv_path
+            )
+            print("result:", result)
+            assert result is False
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+            if os.path.exists(csv_path):
+                os.unlink(csv_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
