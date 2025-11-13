@@ -571,3 +571,46 @@ class TestSqlUpdateRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_update_rows_multiple_columns(self, capsys):
+        """Test updating multiple columns."""
+        print_my_func_name("test_sql_update_rows_multiple_columns")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table and insert data
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            data = [
+                {"id": 1, "name": "Alice", "age": 30},
+                {"id": 2, "name": "Bob", "age": 35},
+                {"id": 3, "name": "Charlie", "age": 40}
+            ]
+            print("data:", data)
+            NewtSQL.sql_insert_row(db_path, "test", data)
+
+            # Update multiple columns
+            result = NewtSQL.sql_update_rows(
+                db_path, "test",
+                {"name": "Alice Updated", "age": 31},
+                "id = ?",
+                (1,)
+            )
+            print("result:", result)
+            assert result == 1
+
+            # Verify update
+            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test WHERE id = 1")
+            print("select_result:", select_result)
+            assert select_result[0]["age"] == 31
+            assert select_result[0]["name"] == "Alice Updated"
+            assert len(select_result) == 1
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

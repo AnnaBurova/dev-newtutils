@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 19 items
+collected 20 items
 
 test_sql.py 
 START=======================================
@@ -255,5 +255,17 @@ select_result_1: [{'id': 1, 'name': 'Alice', 'age': 31}]
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_sql_update_rows_multiple_columns
+--------------------------------------------
+data: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
+result: 1
+select_result: [{'id': 1, 'name': 'Alice Updated', 'age': 31}]
 
-============================= 19 passed in 0.75s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 20 passed in 0.76s ==============================
