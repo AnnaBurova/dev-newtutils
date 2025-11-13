@@ -763,3 +763,42 @@ class TestExportSqlQueryToCsv:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_export_sql_query_to_csv_custom_delimiter(self, capsys):
+        """Test export with custom delimiter."""
+        print_my_func_name("test_export_sql_query_to_csv_custom_delimiter")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
+            csv_path = csv_tmp.name
+
+        try:
+            # Create table and insert data
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
+
+            # Export with comma delimiter
+            result = NewtSQL.export_sql_query_to_csv(
+                db_path,
+                "SELECT * FROM test",
+                csv_path,
+                delimiter=","
+            )
+            print("result:", result)
+            assert result is True
+
+            # Verify CSV content
+            csv_data = NewtFiles.read_csv_from_file(csv_path, ",")
+            print("csv_data:", csv_data)
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+            if os.path.exists(csv_path):
+                os.unlink(csv_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

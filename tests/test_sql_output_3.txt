@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 25 items
+collected 26 items
 
 test_sql.py 
 START=======================================
@@ -340,5 +340,16 @@ result: False
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_export_sql_query_to_csv_custom_delimiter
+--------------------------------------------
+result: True
+csv_data: [['id', 'name'], ['1', 'Alice']]
 
-============================= 25 passed in 0.87s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 26 passed in 0.86s ==============================

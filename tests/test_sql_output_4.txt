@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 25 items
+collecting ... collected 26 items
 
 test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db 
 START=======================================
@@ -365,5 +365,17 @@ result: False
 (no stderr captured)
 END=========================================
 PASSED
+test_sql.py::TestExportSqlQueryToCsv::test_export_sql_query_to_csv_custom_delimiter 
+START=======================================
+=====captured.out=====
+Function: test_export_sql_query_to_csv_custom_delimiter
+--------------------------------------------
+result: True
+csv_data: [['id', 'name'], ['1', 'Alice']]
 
-============================= 25 passed in 0.85s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 26 passed in 0.88s ==============================
