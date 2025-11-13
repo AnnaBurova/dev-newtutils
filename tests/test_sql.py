@@ -664,3 +664,20 @@ class TestSqlUpdateRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_update_rows_invalid_input(self, capsys):
+        """Test update with invalid input."""
+        print_my_func_name("test_sql_update_rows_invalid_input")
+
+        result = NewtSQL.sql_update_rows(
+            123,  # type: ignore
+            "test",
+            {"name": "test"},
+            "id = ?",
+            (1,)
+            )
+        print("result:", result)
+        assert result == 0
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

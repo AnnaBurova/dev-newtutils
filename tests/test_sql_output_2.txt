@@ -4,29 +4,30 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 22 items
+collecting ... collected 23 items
 
 test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db PASSED [  4%]
-test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [  9%]
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db PASSED [  8%]
 test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table PASSED [ 13%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 18%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [ 22%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update PASSED   [ 27%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_delete PASSED   [ 31%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_executemany PASSED [ 36%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input PASSED [ 40%]
-test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_creates_directory PASSED [ 45%]
-test_sql.py::TestSqlSelectRows::test_sql_select_rows_basic PASSED        [ 50%]
-test_sql.py::TestSqlSelectRows::test_sql_select_rows_with_params PASSED  [ 54%]
-test_sql.py::TestSqlSelectRows::test_sql_select_rows_empty_result PASSED [ 59%]
-test_sql.py::TestSqlSelectRows::test_sql_select_rows_invalid_query PASSED [ 63%]
-test_sql.py::TestSqlInsertRow::test_sql_insert_row_single_dict PASSED    [ 68%]
-test_sql.py::TestSqlInsertRow::test_sql_insert_row_multiple_dicts PASSED [ 72%]
-test_sql.py::TestSqlInsertRow::test_sql_insert_row_empty_data PASSED     [ 77%]
-test_sql.py::TestSqlInsertRow::test_sql_insert_row_invalid_input PASSED  [ 81%]
-test_sql.py::TestSqlUpdateRows::test_sql_update_rows_basic PASSED        [ 86%]
-test_sql.py::TestSqlUpdateRows::test_sql_update_rows_multiple_columns PASSED [ 90%]
-test_sql.py::TestSqlUpdateRows::test_sql_update_rows_no_match PASSED     [ 95%]
-test_sql.py::TestSqlUpdateRows::test_sql_update_rows_empty_data PASSED   [100%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert PASSED   [ 17%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select PASSED   [ 21%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update PASSED   [ 26%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_delete PASSED   [ 30%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_executemany PASSED [ 34%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input PASSED [ 39%]
+test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_creates_directory PASSED [ 43%]
+test_sql.py::TestSqlSelectRows::test_sql_select_rows_basic PASSED        [ 47%]
+test_sql.py::TestSqlSelectRows::test_sql_select_rows_with_params PASSED  [ 52%]
+test_sql.py::TestSqlSelectRows::test_sql_select_rows_empty_result PASSED [ 56%]
+test_sql.py::TestSqlSelectRows::test_sql_select_rows_invalid_query PASSED [ 60%]
+test_sql.py::TestSqlInsertRow::test_sql_insert_row_single_dict PASSED    [ 65%]
+test_sql.py::TestSqlInsertRow::test_sql_insert_row_multiple_dicts PASSED [ 69%]
+test_sql.py::TestSqlInsertRow::test_sql_insert_row_empty_data PASSED     [ 73%]
+test_sql.py::TestSqlInsertRow::test_sql_insert_row_invalid_input PASSED  [ 78%]
+test_sql.py::TestSqlUpdateRows::test_sql_update_rows_basic PASSED        [ 82%]
+test_sql.py::TestSqlUpdateRows::test_sql_update_rows_multiple_columns PASSED [ 86%]
+test_sql.py::TestSqlUpdateRows::test_sql_update_rows_no_match PASSED     [ 91%]
+test_sql.py::TestSqlUpdateRows::test_sql_update_rows_empty_data PASSED   [ 95%]
+test_sql.py::TestSqlUpdateRows::test_sql_update_rows_invalid_input PASSED [100%]
 
-============================= 22 passed in 0.85s ==============================
+============================= 23 passed in 0.79s ==============================
