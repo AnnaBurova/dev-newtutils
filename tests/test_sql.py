@@ -614,3 +614,32 @@ class TestSqlUpdateRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_sql_update_rows_no_match(self, capsys):
+        """Test update with no matching rows."""
+        print_my_func_name("test_sql_update_rows_no_match")
+
+        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
+            db_path = tmp.name
+
+        try:
+            # Create table
+            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+
+            # Update with no match
+            result = NewtSQL.sql_update_rows(
+                db_path, "test",
+                {"name": "Updated"},
+                "id = ?",
+                (999,)
+            )
+            print("result:", result)
+            assert result == 0
+
+        finally:
+            NewtSQL.db_delayed_close(db_path)
+            if os.path.exists(db_path):
+                os.unlink(db_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

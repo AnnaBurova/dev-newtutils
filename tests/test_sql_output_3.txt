@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 20 items
+collected 21 items
 
 test_sql.py 
 START=======================================
@@ -267,5 +267,15 @@ select_result: [{'id': 1, 'name': 'Alice Updated', 'age': 31}]
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_sql_update_rows_no_match
+--------------------------------------------
+result: 0
 
-============================= 20 passed in 0.76s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 21 passed in 0.77s ==============================

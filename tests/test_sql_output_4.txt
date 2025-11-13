@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 20 items
+collecting ... collected 21 items
 
 test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db 
 START=======================================
@@ -287,5 +287,16 @@ select_result: [{'id': 1, 'name': 'Alice Updated', 'age': 31}]
 (no stderr captured)
 END=========================================
 PASSED
+test_sql.py::TestSqlUpdateRows::test_sql_update_rows_no_match 
+START=======================================
+=====captured.out=====
+Function: test_sql_update_rows_no_match
+--------------------------------------------
+result: 0
 
-============================= 20 passed in 0.74s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 21 passed in 0.80s ==============================
