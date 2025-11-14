@@ -112,7 +112,9 @@ def fetch_data_from_url(
         params_to_send = {str(k): str(v) for k, v in params.items()}
 
     # Assign safe default headers
-    headers = DEFAULT_HTTP_HEADERS.copy() if headers is None else headers.copy()
+    custom_headers = DEFAULT_HTTP_HEADERS.copy()
+    if headers is not None:
+        custom_headers.update(headers)
 
     beep_boop = mode in ("alert", "manual")
 
@@ -122,7 +124,7 @@ def fetch_data_from_url(
             response = requests.get(
                 base_url,
                 params=params_to_send,
-                headers=headers,
+                headers=custom_headers,
                 timeout=timeout
             )
             elapsed = time.perf_counter() - start_time
