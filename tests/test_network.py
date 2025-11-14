@@ -63,14 +63,43 @@ class TestFetchDataFromUrl:
         # Mock successful response
         mock_response = Mock()
         mock_response.status_code = 200
-        mock_response.text = "Test response data"
+        mock_response.text = "Lorem ipsum dolor sit ame"
         mock_response.url = "https://example.com"
         mock_get.return_value = mock_response
 
         result = NewtNet.fetch_data_from_url("https://example.com", repeat_on_fail=False)
         print("result:", result)
-        assert result == "Test response data"
+        assert result == "Lorem ipsum dolor sit ame"
         mock_get.assert_called_once()
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    @patch('newtutils.network.requests.get')
+    def test_fetch_data_from_url_with_params(self, mock_get, capsys):
+        """Test fetch with query parameters."""
+        print_my_func_name("test_fetch_data_from_url_with_params")
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.text = "Lorem ipsum dolor sit ame"
+        mock_response.url = "https://example.com?key=value"
+        mock_get.return_value = mock_response
+
+        params = {"key": "value", "num": 123}
+        result = NewtNet.fetch_data_from_url(
+            "https://example.com",
+            params=params,
+            repeat_on_fail=False
+        )
+        print("result:", result)
+        assert result == "Lorem ipsum dolor sit ame"
+
+        # Check that params were converted to strings
+        call_kwargs = mock_get.call_args[1]
+        print("call_kwargs:", call_kwargs)
+        assert "key" in call_kwargs["params"]
+        assert call_kwargs["params"]["num"] == "123"
 
         captured = capsys.readouterr()
         print_my_captured(captured)
