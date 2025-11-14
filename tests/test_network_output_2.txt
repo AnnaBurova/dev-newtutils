@@ -4,10 +4,11 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 3 items
+collecting ... collected 4 items
 
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success PASSED [ 33%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_params PASSED [ 66%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_custom_headers PASSED [100%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success PASSED [ 25%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_params PASSED [ 50%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_custom_headers PASSED [ 75%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_206 PASSED [100%]
 
-============================== 3 passed in 0.40s ==============================
+============================== 4 passed in 0.42s ==============================

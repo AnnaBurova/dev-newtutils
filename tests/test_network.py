@@ -130,3 +130,21 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    @patch('newtutils.network.requests.get')
+    def test_fetch_data_from_url_status_206(self, mock_get, capsys):
+        """Test fetch with status 206 (Partial Content)."""
+        print_my_func_name("test_fetch_data_from_url_status_206")
+
+        mock_response = Mock()
+        mock_response.status_code = 206
+        mock_response.text = "Partial Lorem ipsum dolor sit ame"
+        mock_response.url = "https://example.com"
+        mock_get.return_value = mock_response
+
+        result = NewtNet.fetch_data_from_url("https://example.com", repeat_on_fail=False)
+        print("result:", result)
+        assert result == "Partial Lorem ipsum dolor sit ame"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

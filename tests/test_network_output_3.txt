@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 3 items
+collected 4 items
 
 test_network.py 
 START=======================================
@@ -44,5 +44,17 @@ call_kwargs: {'params': None, 'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_fetch_data_from_url_status_206
+--------------------------------------------
+Full URL: https://example.com
+Status: 206 | Response time: 0.000 seconds
+result: Partial Lorem ipsum dolor sit ame
 
-============================== 3 passed in 0.40s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 4 passed in 0.40s ==============================
