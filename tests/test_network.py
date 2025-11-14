@@ -103,3 +103,30 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    @patch('newtutils.network.requests.get')
+    def test_fetch_data_from_url_with_custom_headers(self, mock_get, capsys):
+        """Test fetch with custom headers."""
+        print_my_func_name("test_fetch_data_from_url_with_custom_headers")
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.text = "Lorem ipsum dolor sit ame"
+        mock_response.url = "https://example.com"
+        mock_get.return_value = mock_response
+
+        custom_headers = {"Authorization": "Bearer token"}
+        result = NewtNet.fetch_data_from_url(
+            "https://example.com",
+            headers=custom_headers,
+            repeat_on_fail=False
+        )
+        print("result:", result)
+        assert result == "Lorem ipsum dolor sit ame"
+
+        call_kwargs = mock_get.call_args[1]
+        print("call_kwargs:", call_kwargs)
+        assert call_kwargs["headers"]["Authorization"] == "Bearer token"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)

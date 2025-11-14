@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 2 items
+collecting ... collected 3 items
 
 test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success 
 START=======================================
@@ -33,5 +33,19 @@ call_kwargs: {'params': {'key': 'value', 'num': '123'}, 'headers': {'User-Agent'
 (no stderr captured)
 END=========================================
 PASSED
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_custom_headers 
+START=======================================
+=====captured.out=====
+Function: test_fetch_data_from_url_with_custom_headers
+--------------------------------------------
+Full URL: https://example.com
+Status: 200 | Response time: 0.000 seconds
+result: Lorem ipsum dolor sit ame
+call_kwargs: {'params': None, 'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'Authorization': 'Bearer token'}, 'timeout': 45}
 
-============================== 2 passed in 0.40s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 3 passed in 0.40s ==============================
