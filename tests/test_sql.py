@@ -842,3 +842,26 @@ class TestExportSqlQueryToCsv:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    def test_export_sql_query_to_csv_invalid_input(self, capsys):
+        """Test export with invalid input."""
+        print_my_func_name("test_export_sql_query_to_csv_invalid_input")
+
+        result = NewtSQL.export_sql_query_to_csv(
+            123,  # type: ignore
+            "SELECT 1",
+            "test.csv"
+            )
+        print("result:", result)
+        assert result is False
+
+        result = NewtSQL.export_sql_query_to_csv(
+            "test.db",
+            456,  # type: ignore
+            "test.csv"
+            )
+        print("result:", result)
+        assert result is False
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
