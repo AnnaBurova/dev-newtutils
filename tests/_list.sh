@@ -11,7 +11,8 @@ cd "$(dirname "$0")" || exit 1
 # modules=("utility")
 # modules=("files")
 # modules=("sql")
-modules=("console" "utility" "files" "sql")
+# modules=("network")
+modules=("console" "utility" "files" "sql" "network")
 
 # cd dev-newtutils/tests/
 # $ ./_list.sh
