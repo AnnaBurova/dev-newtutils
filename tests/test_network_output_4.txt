@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 4 items
+collecting ... collected 5 items
 
 test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success 
 START=======================================
@@ -60,5 +60,23 @@ result: Partial Lorem ipsum dolor sit ame
 (no stderr captured)
 END=========================================
 PASSED
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_404 
+START=======================================
+=====captured.out=====
+Function: test_fetch_data_from_url_status_404
+--------------------------------------------
+Full URL: https://example.com/notfound
+Status: 404 | Response time: 0.000 seconds
+[1m [31m
+Location: Newt.network.fetch_data_from_url
+::: ERROR :::
+HTTP 404 for https://example.com/notfound
+[0m
+result: None
 
-============================== 4 passed in 0.43s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 5 passed in 0.41s ==============================

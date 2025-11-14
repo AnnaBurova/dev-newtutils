@@ -148,3 +148,24 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+    @patch('newtutils.network.requests.get')
+    def test_fetch_data_from_url_status_404(self, mock_get, capsys):
+        """Test fetch with 404 status."""
+        print_my_func_name("test_fetch_data_from_url_status_404")
+
+        mock_response = Mock()
+        mock_response.status_code = 404
+        mock_response.text = "Not Found Lorem ipsum dolor sit ame"
+        mock_response.url = "https://example.com/notfound"
+        mock_get.return_value = mock_response
+
+        result = NewtNet.fetch_data_from_url("https://example.com/notfound", repeat_on_fail=False)
+        print("result:", result)
+        assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "Status: 404" in captured.out
+        assert "::: ERROR :::" in captured.out
+        assert "HTTP 404 for" in captured.out
