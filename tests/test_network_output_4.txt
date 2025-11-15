@@ -145,6 +145,7 @@ HTTP 500 for https://example.com
 Full URL: https://example.com
 Status: 200 | Response time: 0.000 seconds
 result: Success
+mock_retry: 1
 
 =====captured.err=====
 (no stderr captured)

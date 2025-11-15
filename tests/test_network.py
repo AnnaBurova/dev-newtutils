@@ -256,6 +256,9 @@ class TestFetchDataFromUrl:
         assert result == "Success"
         assert mock_get.call_count == 2
 
+        print("mock_retry:", mock_retry.call_count)
+        assert mock_retry.call_count == 1
+
         captured = capsys.readouterr()
         print_my_captured(captured)
         assert "Status: 500" in captured.out
