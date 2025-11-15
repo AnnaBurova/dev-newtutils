@@ -5,6 +5,7 @@ Tests cover:
 - URL data fetching (fetch_data_from_url)
 """
 
+import pytest
 from unittest.mock import patch, Mock
 
 import requests
@@ -282,3 +283,17 @@ class TestFetchDataFromUrl:
         captured = capsys.readouterr()
         print_my_captured(captured)
         assert "Status: 200" in captured.out
+
+    def test_fetch_data_from_url_invalid_input(self, capsys):
+        """Test fetch with invalid input."""
+        print_my_func_name("test_fetch_data_from_url_invalid_input")
+
+        with pytest.raises(SystemExit):
+            result = NewtNet.fetch_data_from_url(123, repeat_on_fail=False)  # type: ignore
+            print("This line will not be printed:", result)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "::: ERROR :::" in captured.out
+        assert "Expected <class 'str'>, got <class 'int'>" in captured.out
+        assert "Value: 123" in captured.out
