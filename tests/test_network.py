@@ -229,3 +229,32 @@ class TestFetchDataFromUrl:
         assert "::: ERROR :::" in captured.out
         assert "Request failed after" in captured.out
         assert "RequestException: Connection error" in captured.out
+
+    @patch('newtutils.network.requests.get')
+    @patch('newtutils.console._retry_pause')
+    def test_fetch_data_from_url_retry_on_fail(self, mock_retry, mock_get, capsys):
+        """Test retry behavior on failure."""
+        print_my_func_name("test_fetch_data_from_url_retry_on_fail")
+
+        # First call fails, second succeeds
+        mock_response_fail = Mock()
+        mock_response_fail.status_code = 500
+        mock_response_fail.url = "https://example.com"
+
+        mock_response_success = Mock()
+        mock_response_success.status_code = 200
+        mock_response_success.text = "Success"
+        mock_response_success.url = "https://example.com"
+
+        mock_get.side_effect = [mock_response_fail, mock_response_success]
+
+        result = NewtNet.fetch_data_from_url("https://example.com", repeat_on_fail=True)
+        print("result:", result)
+        # Should retry and eventually succeed
+        assert result == "Success"
+        assert mock_get.call_count == 2
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "Status: 500" in captured.out
+        assert "Status: 200" in captured.out

@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 8 items
+collecting ... collected 9 items
 
 test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success 
 START=======================================
@@ -130,5 +130,25 @@ result: None
 (no stderr captured)
 END=========================================
 PASSED
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_retry_on_fail 
+START=======================================
+=====captured.out=====
+Function: test_fetch_data_from_url_retry_on_fail
+--------------------------------------------
+Full URL: https://example.com
+Status: 500 | Response time: 0.000 seconds
+[1m [31m
+Location: Newt.network.fetch_data_from_url
+::: ERROR :::
+HTTP 500 for https://example.com
+[0m
+Full URL: https://example.com
+Status: 200 | Response time: 0.000 seconds
+result: Success
 
-============================== 8 passed in 0.42s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 9 passed in 0.44s ==============================
