@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 6 items
+collected 7 items
 
 test_network.py 
 START=======================================
@@ -89,5 +89,22 @@ HTTP 500 for https://example.com
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_fetch_data_from_url_timeout
+--------------------------------------------
+[1m [31m
+Location: Newt.network.fetch_data_from_url
+::: ERROR :::
+ReadTimeout: Timeout
+Timeout (45s) for https://example.com
+Request failed after 0.00s
+[0m
+result: None
 
-============================== 6 passed in 0.42s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 7 passed in 0.40s ==============================

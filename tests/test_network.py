@@ -194,3 +194,21 @@ class TestFetchDataFromUrl:
         assert "Status: 500" in captured.out
         assert "::: ERROR :::" in captured.out
         assert "HTTP 500 for" in captured.out
+
+    @patch('newtutils.network.requests.get')
+    def test_fetch_data_from_url_timeout(self, mock_get, capsys):
+        """Test fetch with timeout error."""
+        print_my_func_name("test_fetch_data_from_url_timeout")
+
+        mock_get.side_effect = requests.exceptions.ReadTimeout("Timeout")
+
+        result = NewtNet.fetch_data_from_url("https://example.com", repeat_on_fail=False)
+        print("result:", result)
+        assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "::: ERROR :::" in captured.out
+        assert "ReadTimeout: Timeout" in captured.out
+        assert "Timeout (45s)" in captured.out
+        assert "Request failed after" in captured.out
