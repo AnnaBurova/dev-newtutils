@@ -3,6 +3,7 @@ Comprehensive unit tests for newtutils.network module.
 
 Tests cover:
 - URL data fetching (fetch_data_from_url)
+- File downloading (download_file_from_url)
 """
 
 import pytest
@@ -328,3 +329,41 @@ class TestFetchDataFromUrl:
         assert "Status: 500" in captured.out
         assert "::: ERROR :::" in captured.out
         assert "HTTP 500 for" in captured.out
+
+
+class TestDownloadFileFromUrl:
+    """Tests for download_file_from_url function."""
+
+    @patch('newtutils.network.requests.get')
+    @patch('newtutils.files.save_text_to_file')
+    def test_download_file_from_url_text(self, mock_save, mock_get, capsys):
+        """Test downloading a text file."""
+        print_my_func_name("test_download_file_from_url_text")
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.text = "File content"
+        mock_response.content = b"File content"
+        mock_response.headers = {"Content-Type": "text/plain"}
+        mock_get.return_value = mock_response
+
+        result = NewtNet.download_file_from_url(
+            "https://example.com/file.txt",
+            "tmp_file.txt",
+            repeat_on_fail=False
+        )
+        print("result:", result)
+        assert result is True
+
+        mock_save.assert_called_once()
+        print("mock_save:", mock_save.call_count)
+        assert mock_save.call_count == 1
+
+        print("mock_get:", mock_get.call_count)
+        assert mock_get.call_count == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "Status: 200" in captured.out
+        assert "Content-Type: text/plain" in captured.out
+        assert "Saved to: " in captured.out
