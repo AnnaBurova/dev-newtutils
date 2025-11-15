@@ -7,6 +7,7 @@ Tests cover:
 
 from unittest.mock import patch, Mock
 
+import requests
 import newtutils.network as NewtNet
 
 
@@ -257,4 +258,27 @@ class TestFetchDataFromUrl:
         captured = capsys.readouterr()
         print_my_captured(captured)
         assert "Status: 500" in captured.out
+        assert "Status: 200" in captured.out
+
+    @patch('newtutils.network.requests.get')
+    def test_fetch_data_from_url_custom_timeout(self, mock_get, capsys):
+        """Test fetch with custom timeout."""
+        print_my_func_name("test_fetch_data_from_url_custom_timeout")
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.text = "Lorem ipsum dolor sit ame"
+        mock_response.url = "https://example.com"
+        mock_get.return_value = mock_response
+
+        result = NewtNet.fetch_data_from_url("https://example.com", timeout=60, repeat_on_fail=False)
+        print("result:", result)
+        assert result == "Lorem ipsum dolor sit ame"
+
+        call_kwargs = mock_get.call_args[1]
+        print("call_kwargs:", call_kwargs)
+        assert call_kwargs["timeout"] == 60
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
         assert "Status: 200" in captured.out
