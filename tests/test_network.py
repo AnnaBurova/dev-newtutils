@@ -364,6 +364,7 @@ class TestDownloadFileFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+        assert "Downloading from: https://example.com/file.txt" in captured.out
         assert "Status: 200" in captured.out
         assert "Content-Type: text/plain" in captured.out
-        assert "Saved to: " in captured.out
+        assert "Saved to: tmp_file.txt" in captured.out
