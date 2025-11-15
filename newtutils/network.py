@@ -248,13 +248,15 @@ def download_file_from_url(
         return False
 
     # Assign safe default headers
-    headers = DEFAULT_HTTP_HEADERS.copy() if headers is None else headers.copy()
+    custom_headers = DEFAULT_HTTP_HEADERS.copy()
+    if headers is not None:
+        custom_headers.update(headers)
 
     while True:
         try:
             response = requests.get(
                 file_url,
-                headers=headers,
+                headers=custom_headers,
                 timeout=timeout
                 )
             status = response.status_code
@@ -267,6 +269,7 @@ def download_file_from_url(
                     ):
                 # Detect binary vs text
                 content_type = response.headers.get("Content-Type", "").lower()
+                print(f"Content-Type: {content_type}")
 
                 if "text" in content_type or "json" in content_type:
                     content = response.text
