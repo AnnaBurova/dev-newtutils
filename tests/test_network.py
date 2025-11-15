@@ -74,6 +74,7 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+        assert "Status: 200" in captured.out
 
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_with_params(self, mock_get, capsys):
@@ -103,6 +104,7 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+        assert "Status: 200" in captured.out
 
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_with_custom_headers(self, mock_get, capsys):
@@ -130,6 +132,8 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+        assert "Status: 200" in captured.out
+        assert "User-Agent" in captured.out
 
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_status_206(self, mock_get, capsys):
@@ -148,6 +152,7 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+        assert "Status: 206" in captured.out
 
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_status_404(self, mock_get, capsys):
