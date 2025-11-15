@@ -212,3 +212,20 @@ class TestFetchDataFromUrl:
         assert "ReadTimeout: Timeout" in captured.out
         assert "Timeout (45s)" in captured.out
         assert "Request failed after" in captured.out
+
+    @patch('newtutils.network.requests.get')
+    def test_fetch_data_from_url_request_exception(self, mock_get, capsys):
+        """Test fetch with general request exception."""
+        print_my_func_name("test_fetch_data_from_url_request_exception")
+
+        mock_get.side_effect = requests.exceptions.RequestException("Connection error")
+
+        result = NewtNet.fetch_data_from_url("https://example.com", repeat_on_fail=False)
+        print("result:", result)
+        assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "::: ERROR :::" in captured.out
+        assert "Request failed after" in captured.out
+        assert "RequestException: Connection error" in captured.out
