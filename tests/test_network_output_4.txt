@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 18 items
+collecting ... collected 19 items
 
 test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success 
 START=======================================
@@ -313,5 +313,27 @@ mock_get: 2
 (no stderr captured)
 END=========================================
 PASSED
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_invalid_input 
+START=======================================
+=====captured.out=====
+Function: test_download_file_from_url_invalid_input
+--------------------------------------------
+[1m [31m
+Location: Newt.console.validate_input > Newt.network.download_file_from_url.file_url
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+[1m [31m
+Location: Newt.console.validate_input > Newt.network.download_file_from_url.save_path
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 456
+[0m
 
-============================= 18 passed in 0.43s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 19 passed in 0.48s ==============================

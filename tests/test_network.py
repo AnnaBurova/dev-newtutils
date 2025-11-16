@@ -539,3 +539,29 @@ class TestDownloadFileFromUrl:
         assert "Status: 200" in captured.out
         assert "Content-Type: text/plain" in captured.out
         assert "Saved to: " in captured.out
+
+    def test_download_file_from_url_invalid_input(self, capsys):
+        """Test download with invalid input."""
+        print_my_func_name("test_download_file_from_url_invalid_input")
+
+        with pytest.raises(SystemExit):
+            result_file_url = NewtNet.download_file_from_url(
+                123,  # type: ignore
+                "tmp_file.txt",
+                repeat_on_fail=False
+                )
+            print("This line will not be printed:", result_file_url)
+
+        with pytest.raises(SystemExit):
+            result_save_path = NewtNet.download_file_from_url(
+                "https://example.com",
+                456,  # type: ignore
+                repeat_on_fail=False
+                )
+            print("This line will not be printed:", result_save_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert captured.out.count("::: ERROR :::") == 2
+        assert captured.out.count("Expected <class 'str'>, got <class 'int'>") == 2
