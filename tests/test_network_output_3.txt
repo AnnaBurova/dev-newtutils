@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 19 items
+collected 20 items
 
 test_network.py 
 START=======================================
@@ -316,5 +316,21 @@ Value: 456
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_download_file_from_url_json_content_type
+--------------------------------------------
+Downloading from: https://example.com/data.json
+Status: 200
+Content-Type: application/json
+Saved to: tmp_data.json
+result: True
+mock_save: 1
+mock_get: 1
 
-============================= 19 passed in 0.45s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 20 passed in 0.45s ==============================

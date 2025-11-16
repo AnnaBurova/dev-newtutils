@@ -565,3 +565,37 @@ class TestDownloadFileFromUrl:
 
         assert captured.out.count("::: ERROR :::") == 2
         assert captured.out.count("Expected <class 'str'>, got <class 'int'>") == 2
+
+    @patch('newtutils.network.requests.get')
+    @patch('newtutils.files.save_text_to_file')
+    def test_download_file_from_url_json_content_type(self, mock_save, mock_get, capsys):
+        """Test download with JSON content type."""
+        print_my_func_name("test_download_file_from_url_json_content_type")
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.text = '{"key": "value"}'
+        mock_response.content = b'{"key": "value"}'
+        mock_response.headers = {"Content-Type": "application/json"}
+        mock_get.return_value = mock_response
+
+        result = NewtNet.download_file_from_url(
+            "https://example.com/data.json",
+            "tmp_data.json",
+            repeat_on_fail=False
+        )
+        print("result:", result)
+        assert result is True
+
+        mock_save.assert_called_once()
+        print("mock_save:", mock_save.call_count)
+        assert mock_save.call_count == 1
+        print("mock_get:", mock_get.call_count)
+        assert mock_get.call_count == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "Downloading from: " in captured.out
+        assert "Status: 200" in captured.out
+        assert "Content-Type: application/json" in captured.out
+        assert "Saved to: " in captured.out
