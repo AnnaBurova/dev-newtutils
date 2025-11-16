@@ -14,13 +14,16 @@ cd "$(dirname "$0")" || exit 1
 # modules=("network")
 modules=("console" "utility" "files" "sql" "network")
 
-# $ cd dev-newtutils/tests/
-# $ ./_list.sh
 
 # === Loop each module ===
 for mod in "${modules[@]}"; do
   echo "Running tests for: $mod"
-  base_path="d:/VS_Code/dev-newtutils/tests/test_${mod}.py"
+
+  # base_path="D:/VS_Code/dev-newtutils/tests/test_${mod}.py"
+
+  # $ cd dev-newtutils/tests/
+  # $ ./_list.sh
+  base_path="test_${mod}.py"
 
     for n in 1 2 3 4; do
         echo "tests/test_${mod} $n"
