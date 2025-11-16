@@ -477,7 +477,7 @@ class TestDownloadFileFromUrl:
         with patch('newtutils.console._beep_boop'):
             result = NewtNet.download_file_from_url(
                 "https://example.com/file.txt",
-                "/tmp/file.txt",
+                "tmp_file.txt",
                 repeat_on_fail=False
             )
             print("result:", result)
@@ -493,3 +493,49 @@ class TestDownloadFileFromUrl:
         assert "RequestException: Error" in captured.out
 
         assert "Saved to: " not in captured.out
+
+    @patch('newtutils.network.requests.get')
+    @patch('newtutils.console._retry_pause')
+    @patch('newtutils.files.save_text_to_file')
+    def test_download_file_from_url_retry(self, mock_save, mock_retry, mock_get, capsys):
+        """Test download with retry on failure."""
+        print_my_func_name("test_download_file_from_url_retry")
+
+        # First call fails, second succeeds
+        mock_response_fail = Mock()
+        mock_response_fail.status_code = 500
+
+        mock_response_success = Mock()
+        mock_response_success.status_code = 200
+        mock_response_success.text = "Success"
+        mock_response_success.content = b"Success"
+        mock_response_success.headers = {"Content-Type": "text/plain"}
+
+        mock_get.side_effect = [mock_response_fail, mock_response_success]
+
+        with patch('newtutils.console._beep_boop'):
+            result = NewtNet.download_file_from_url(
+                "https://example.com/file.txt",
+                "tmp_file.txt",
+                repeat_on_fail=True
+            )
+            print("result:", result)
+            assert result is True
+
+        print("mock_save:", mock_save.call_count)
+        assert mock_save.call_count == 1
+        print("mock_retry:", mock_retry.call_count)
+        assert mock_retry.call_count == 1
+        print("mock_get:", mock_get.call_count)
+        assert mock_get.call_count == 2
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert captured.out.count("Downloading from:") == 2
+        assert "Status: 500" in captured.out
+        assert "::: ERROR :::" in captured.out
+        assert "HTTP 500 while downloading" in captured.out
+        assert "Status: 200" in captured.out
+        assert "Content-Type: text/plain" in captured.out
+        assert "Saved to: " in captured.out
