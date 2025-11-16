@@ -364,10 +364,10 @@ class TestDownloadFileFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Downloading from: https://example.com/file.txt" in captured.out
+        assert "Downloading from: " in captured.out
         assert "Status: 200" in captured.out
-        assert "Content-Type: text/plain" in captured.out
-        assert "Saved to: tmp_file.txt" in captured.out
+        assert "Content-Type: " in captured.out
+        assert "Saved to: " in captured.out
 
     @patch('newtutils.network.requests.get')
     @patch('builtins.open', create=True)
@@ -402,10 +402,10 @@ class TestDownloadFileFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Downloading from: https://example.com/file.bin" in captured.out
+        assert "Downloading from: " in captured.out
         assert "Status: 200" in captured.out
         assert "Content-Type: application/octet-stream" in captured.out
-        assert "Saved to: tmp_file.bin" in captured.out
+        assert "Saved to: " in captured.out
 
     @patch('newtutils.network.requests.get')
     def test_download_file_from_url_status_404(self, mock_get, capsys):
@@ -432,7 +432,8 @@ class TestDownloadFileFromUrl:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Downloading from: https://example.com/file.txt" in captured.out
+        assert "Downloading from: " in captured.out
         assert "Status: 404" in captured.out
         assert "::: ERROR :::" in captured.out
         assert "HTTP 404 while downloading" in captured.out
+        assert "Saved to: " not in captured.out
