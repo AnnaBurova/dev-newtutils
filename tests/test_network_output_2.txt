@@ -28,4 +28,4 @@ test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_invalid_in
 test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_json_content_type PASSED [ 95%]
 test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_custom_headers PASSED [100%]
 
-============================= 21 passed in 0.48s ==============================
+============================= 21 passed in 0.43s ==============================
