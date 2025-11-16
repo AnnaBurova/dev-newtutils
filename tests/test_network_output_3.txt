@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 14 items
+collected 15 items
 
 test_network.py 
 START=======================================
@@ -220,5 +220,23 @@ mock_get: 1
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_download_file_from_url_status_404
+--------------------------------------------
+Downloading from: https://example.com/file.txt
+Status: 404
+[1m [31m
+Location: Newt.network.download_file_from_url
+::: ERROR :::
+HTTP 404 while downloading https://example.com/file.txt
+[0m
+result: False
+mock_get: 1
 
-============================= 14 passed in 0.46s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 15 passed in 0.45s ==============================
