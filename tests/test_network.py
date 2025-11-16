@@ -466,3 +466,30 @@ class TestDownloadFileFromUrl:
         assert "Timeout (60s) while downloading" in captured.out
 
         assert "Saved to: " not in captured.out
+
+    @patch('newtutils.network.requests.get')
+    def test_download_file_from_url_request_exception(self, mock_get, capsys):
+        """Test download with request exception."""
+        print_my_func_name("test_download_file_from_url_request_exception")
+
+        mock_get.side_effect = requests.exceptions.RequestException("Error")
+
+        with patch('newtutils.console._beep_boop'):
+            result = NewtNet.download_file_from_url(
+                "https://example.com/file.txt",
+                "/tmp/file.txt",
+                repeat_on_fail=False
+            )
+            print("result:", result)
+            assert result is False
+
+        print("mock_get:", mock_get.call_count)
+        assert mock_get.call_count == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "::: ERROR :::" in captured.out
+        assert "RequestException: Error" in captured.out
+
+        assert "Saved to: " not in captured.out
