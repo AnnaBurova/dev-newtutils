@@ -4,22 +4,23 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 15 items
+collecting ... collected 16 items
 
 test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success PASSED [  6%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_params PASSED [ 13%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_custom_headers PASSED [ 20%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_206 PASSED [ 26%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_404 PASSED [ 33%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_500 PASSED [ 40%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_timeout PASSED [ 46%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_request_exception PASSED [ 53%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_retry_on_fail PASSED [ 60%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_custom_timeout PASSED [ 66%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_invalid_input PASSED [ 73%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_mode_alert PASSED [ 80%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_text PASSED [ 86%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_binary PASSED [ 93%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_status_404 PASSED [100%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_params PASSED [ 12%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_custom_headers PASSED [ 18%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_206 PASSED [ 25%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_404 PASSED [ 31%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_500 PASSED [ 37%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_timeout PASSED [ 43%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_request_exception PASSED [ 50%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_retry_on_fail PASSED [ 56%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_custom_timeout PASSED [ 62%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_invalid_input PASSED [ 68%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_mode_alert PASSED [ 75%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_text PASSED [ 81%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_binary PASSED [ 87%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_status_404 PASSED [ 93%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_timeout PASSED [100%]
 
-============================= 15 passed in 0.47s ==============================
+============================= 16 passed in 0.46s ==============================

@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 15 items
+collecting ... collected 16 items
 
 test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success 
 START=======================================
@@ -253,5 +253,23 @@ mock_get: 1
 (no stderr captured)
 END=========================================
 PASSED
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_timeout 
+START=======================================
+=====captured.out=====
+Function: test_download_file_from_url_timeout
+--------------------------------------------
+[1m [31m
+Location: Newt.network.download_file_from_url
+::: ERROR :::
+ReadTimeout: Timeout
+Timeout (60s) while downloading https://example.com/file.txt
+[0m
+result: False
+mock_get: 1
 
-============================= 15 passed in 0.44s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 16 passed in 0.45s ==============================
