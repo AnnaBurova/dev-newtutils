@@ -1,9 +1,9 @@
 ============================= test session starts =============================
 platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0 -- C:\ProgramData\anaconda3\python.exe
 cachedir: .pytest_cache
-rootdir: d:\VS_Code\dev-newtutils
+rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-plugins: anyio-4.7.0
+plugins: anyio-4.7.0, cov-7.0.0
 collecting ... collected 34 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [  2%]
@@ -41,4 +41,4 @@ test_files.py::TestCsvFiles::test_save_csv_with_various_types PASSED     [ 94%]
 test_files.py::TestCsvFiles::test_save_csv_invalid_input PASSED          [ 97%]
 test_files.py::TestCsvFiles::test_read_csv_invalid_delimiter PASSED      [100%]
 
-============================= 34 passed in 0.46s ==============================
+============================= 34 passed in 0.44s ==============================
