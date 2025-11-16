@@ -14,7 +14,7 @@ cd "$(dirname "$0")" || exit 1
 # modules=("network")
 modules=("console" "utility" "files" "sql" "network")
 
-# cd dev-newtutils/tests/
+# $ cd dev-newtutils/tests/
 # $ ./_list.sh
 
 # === Loop each module ===
