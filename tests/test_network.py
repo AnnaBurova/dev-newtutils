@@ -7,7 +7,7 @@ Tests cover:
 """
 
 import pytest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, MagicMock
 
 import requests
 import newtutils.network as NewtNet
@@ -368,3 +368,41 @@ class TestDownloadFileFromUrl:
         assert "Status: 200" in captured.out
         assert "Content-Type: text/plain" in captured.out
         assert "Saved to: tmp_file.txt" in captured.out
+
+    @patch('newtutils.network.requests.get')
+    @patch('builtins.open', create=True)
+    def test_download_file_from_url_binary(self, mock_open, mock_get, capsys):
+        """Test downloading a binary file."""
+        print_my_func_name("test_download_file_from_url_binary")
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.content = b"Binary content"
+        mock_response.headers = {"Content-Type": "application/octet-stream"}
+        mock_get.return_value = mock_response
+
+        mock_file = MagicMock()
+        mock_open.return_value.__enter__.return_value = mock_file
+
+        result = NewtNet.download_file_from_url(
+            "https://example.com/file.bin",
+            "tmp_file.bin",
+            repeat_on_fail=False
+        )
+        print("result:", result)
+        assert result is True
+
+        mock_file.write.assert_called_once_with(b"Binary content")
+
+        print("mock_open:", mock_open.call_count)
+        assert mock_open.call_count == 1
+
+        print("mock_get:", mock_get.call_count)
+        assert mock_get.call_count == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+        assert "Downloading from: https://example.com/file.bin" in captured.out
+        assert "Status: 200" in captured.out
+        assert "Content-Type: application/octet-stream" in captured.out
+        assert "Saved to: tmp_file.bin" in captured.out
