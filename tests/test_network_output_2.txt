@@ -4,27 +4,28 @@ cachedir: .pytest_cache
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collecting ... collected 20 items
+collecting ... collected 21 items
 
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success PASSED [  5%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_params PASSED [ 10%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_custom_headers PASSED [ 15%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_206 PASSED [ 20%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_404 PASSED [ 25%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_500 PASSED [ 30%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_timeout PASSED [ 35%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_request_exception PASSED [ 40%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_retry_on_fail PASSED [ 45%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_custom_timeout PASSED [ 50%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_invalid_input PASSED [ 55%]
-test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_mode_alert PASSED [ 60%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_text PASSED [ 65%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_binary PASSED [ 70%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_status_404 PASSED [ 75%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_timeout PASSED [ 80%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_request_exception PASSED [ 85%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_retry PASSED [ 90%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_invalid_input PASSED [ 95%]
-test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_json_content_type PASSED [100%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success PASSED [  4%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_params PASSED [  9%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_with_custom_headers PASSED [ 14%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_206 PASSED [ 19%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_404 PASSED [ 23%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_status_500 PASSED [ 28%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_timeout PASSED [ 33%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_request_exception PASSED [ 38%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_retry_on_fail PASSED [ 42%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_custom_timeout PASSED [ 47%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_invalid_input PASSED [ 52%]
+test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_mode_alert PASSED [ 57%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_text PASSED [ 61%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_binary PASSED [ 66%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_status_404 PASSED [ 71%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_timeout PASSED [ 76%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_request_exception PASSED [ 80%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_retry PASSED [ 85%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_invalid_input PASSED [ 90%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_json_content_type PASSED [ 95%]
+test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_custom_headers PASSED [100%]
 
-============================= 20 passed in 0.45s ==============================
+============================= 21 passed in 0.48s ==============================

@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
 rootdir: d:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0
-collected 20 items
+collected 21 items
 
 test_network.py 
 START=======================================
@@ -332,5 +332,21 @@ mock_get: 1
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_download_file_from_url_custom_headers
+--------------------------------------------
+Downloading from: https://example.com/file.bin
+Status: 200
+Content-Type: application/octet-stream
+Saved to: tmp_file.bin
+result: True
+call_kwargs: {'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'Authorization': 'Bearer token'}, 'timeout': 60}
+mock_get: 1
 
-============================= 20 passed in 0.45s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 21 passed in 0.50s ==============================

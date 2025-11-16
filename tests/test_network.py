@@ -599,3 +599,39 @@ class TestDownloadFileFromUrl:
         assert "Status: 200" in captured.out
         assert "Content-Type: application/json" in captured.out
         assert "Saved to: " in captured.out
+
+    @patch('newtutils.network.requests.get')
+    def test_download_file_from_url_custom_headers(self, mock_get, capsys):
+        """Test download with custom headers."""
+        print_my_func_name("test_download_file_from_url_custom_headers")
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.content = b"Content"
+        mock_response.headers = {"Content-Type": "application/octet-stream"}
+        mock_get.return_value = mock_response
+
+        custom_headers = {"Authorization": "Bearer token"}
+        with patch('builtins.open', create=True):
+            result = NewtNet.download_file_from_url(
+                "https://example.com/file.bin",
+                "tmp_file.bin",
+                headers=custom_headers,
+                repeat_on_fail=False
+            )
+            print("result:", result)
+            assert result is True
+            call_kwargs = mock_get.call_args[1]
+            print("call_kwargs:", call_kwargs)
+            assert call_kwargs["headers"]["Authorization"] == "Bearer token"
+
+        print("mock_get:", mock_get.call_count)
+        assert mock_get.call_count == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Downloading from: " in captured.out
+        assert "Status: 200" in captured.out
+        assert "Content-Type: application/octet-stream" in captured.out
+        assert "Saved to: " in captured.out
