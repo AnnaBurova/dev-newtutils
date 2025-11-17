@@ -77,11 +77,11 @@ __all__ = [
     "download_file_from_url",
 ]
 
-__version__ = "0.1.6"
+__version__ = "1.0.0"
 __author__ = "NewtCode Anna Burova"
 __description__ = (
     "NewtUtils — A modular Python toolkit providing reusable utilities "
-    "for console messaging, file I/O, SQL, and network operations."
+    "for console messaging, input validation, sorting, file I/O, SQL, and network operations."
 )
 __license__ = "MIT"
 __url__ = "https://github.com/AnnaBurova/dev-newtutils"

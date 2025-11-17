@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "newtutils"
-version = "0.1.6"
-description = "Utility functions for common programming tasks by NewtCode"
+version = "1.0.0"
+description = "A modular Python toolkit providing reusable utilities for console messaging, input validation, sorting, file I/O, SQL, and network operations"
 authors = [
   { name = "Anna Burova", email = "burova.anna+newt@gmail.com" }
 ]
@@ -26,7 +26,7 @@ keywords = [
   "sql", "database", "sqlite", "helpers", "newtutils"
 ]
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
