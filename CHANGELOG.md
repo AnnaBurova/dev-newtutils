@@ -5,6 +5,18 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## 🏷️ v1.0.1 — Project Configuration Fix
+
+**Date:** 2025-11-17
+
+### 🛠️ Fixed
+
+- `pyproject.toml`:
+  - Reorganized `[project.optional-dependencies]` section to appear after `classifiers` for improved logical structure.
+  - Ensures consistent formatting and readability of project metadata.
+
+---
+
 ## 🏷️ v1.0.0 — First Stable Release
 
 **Date:** 2025-11-17
