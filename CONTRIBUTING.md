@@ -60,10 +60,10 @@ style(scope): Formatting or code style only
 
 Before submitting a PR:
 
-1. Ensure your branch is up to date with `master`.
+1. Ensure your branch is up to date with `main`.
 2. Describe clearly what was changed and why.
 3. Reference related issues or previous discussions.
-4. Ensure that the code passes all tests (see below).
+4. Ensure that the code passes all tests (see [Testing](#5--testing) below).
 
 ---
 
@@ -71,10 +71,17 @@ Before submitting a PR:
 
 All scripts and utilities should be tested in the `tests/` directory.
 
+**See [tests/README.md](tests/README.md) for detailed testing instructions.**
+
 When adding new functionality:
 
 * Provide at least one test case that demonstrates correct behavior.
+* Use `pytest` for new tests (see `tests/test_*.py` for examples).
 * Avoid committing large test data files — use minimal reproducible examples.
+* Ensure all tests pass before submitting a PR:
+  ```bash
+  pytest tests/
+  ```
 
 ---
 
@@ -82,9 +89,10 @@ When adding new functionality:
 
 * Respect `.gitattributes` settings for line endings and encoding.
 * Use meaningful docstrings in **Google style** (`"""Args: Returns: Raises:"""`).
-* All modules should include `from __future__ import annotations` at the top for better type hint support.
-* Provide comprehensive type hints for all function parameters and return values.
-* Avoid wildcard imports (`from x import *`).
+* All Python modules **must** include `from __future__ import annotations` at the top to unify type hint behavior.
+* Provide **explicit type hints** for all public function parameters and return values.
+* Avoid wildcard imports (`from x import *`); prefer explicit imports for clarity and static analysis.
+
 
 ---
 
@@ -92,7 +100,7 @@ When adding new functionality:
 
 * All contributions are reviewed before merging.
 * Be open to feedback and suggested revisions.
-* Once approved, the branch will be merged into `master` and the next release prepared.
+* Once approved, the branch will be merged into `main` and the next release prepared.
 
 ---
 

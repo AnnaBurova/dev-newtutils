@@ -20,8 +20,8 @@ dev-newtutils/
 │
 ├── tests/             # Manual and automated test scripts
 │   ├── _list.sh       # Optional helper script to list or run tests
-│   ├── files.py
-│   └── (other test files)
+│   ├── test_*.py      # Pytest test files for each module
+│   └── (test output files)
 │
 ├── CHANGELOG.md       # Version history and release notes
 ├── CONTRIBUTING.md    # Guidelines for contributors
@@ -52,6 +52,7 @@ Since **NewtUtils** is a local development library and not published on PyPI, in
 Installs a copy of the package.
 
 ```powershell
+# Navigate to your project directory
 cd D:\VS_Code\dev-newtutils
 
 python -m pip install --user .
@@ -71,6 +72,7 @@ Any code changes in `newtutils/` will take effect immediately.
 No reinstall needed.
 
 ```powershell
+# Navigate to your project directory
 cd D:\VS_Code\dev-newtutils
 
 # Install in editable mode (user environment)
@@ -88,9 +90,15 @@ If you just want to run or test functions directly from source:
 ```python
 import sys
 import os
+
+# Adjust this path to your actual project location
 newt_root = os.path.join("D:", "VS_Code", "dev-newtutils")
+# Or use absolute path:
+# newt_root = r"D:\VS_Code\dev-newtutils"
+
 if newt_root not in sys.path:
     sys.path.append(newt_root)
+
 import newtutils as Newt
 ```
 
@@ -103,13 +111,17 @@ This approach doesn't install anything globally, it only extends your Python pat
 After installation (regular or editable), you can import **NewtUtils** anywhere:
 
 ```python
+# Import the main package (recommended - exports common functions)
 import newtutils as Newt
+
+# Or import specific modules
 import newtutils.console as NewtCons
 import newtutils.utility as NewtUtil
 import newtutils.files as NewtFiles
 import newtutils.sql as NewtSQL
 import newtutils.network as NewtNet
 
+# Usage examples:
 Newt.error_msg("Something went wrong", stop=False)
 Newt.console.error_msg("Something went wrong", stop=False)
 NewtCons.error_msg("Something went wrong", stop=False)
@@ -133,6 +145,8 @@ To make VS Code recognize your local package:
   "python.defaultInterpreterPath": "C:/ProgramData/anaconda3/python.exe"
 }
 ```
+
+> **Note:** Adjust the paths above to match your actual project location and Python interpreter path.
 
 3. Reload VS Code (`Ctrl + Shift + P` > "Developer: Reload Window").
 
