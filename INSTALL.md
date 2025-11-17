@@ -9,26 +9,27 @@ This guide explains how to install, use, update, and remove **NewtUtils** — a 
 ```
 dev-newtutils/
 │
-├── newtutils/         # Main Python package
+├── newtutils/         # Main Python package (module source)
 │   ├── __init__.py
 │   ├── console.py
 │   ├── utility.py
 │   ├── files.py
 │   ├── sql.py
 │   ├── network.py
-│   └── (other utility files)
+│   └── (other files)
 │
 ├── tests/             # Manual and automated test scripts
+│   ├── README.md      # Testing overview and usage instructions
 │   ├── _list.sh       # Optional helper script to list or run tests
 │   ├── test_*.py      # Pytest test files for each module
-│   └── (test output files)
+│   └── (test files)
 │
+├── pyproject.toml     # Build system configuration and project metadata
 ├── CHANGELOG.md       # Version history and release notes
 ├── CONTRIBUTING.md    # Guidelines for contributors
 ├── INSTALL.md         # Installation and development setup guide
 ├── LICENSE            # License file (MIT)
-├── README.md          # Project overview and usage instructions
-└── pyproject.toml     # Build system configuration and project metadata
+└── README.md          # Project overview and usage instructions
 ```
 
 ---

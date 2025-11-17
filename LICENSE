@@ -26,31 +26,22 @@ This project uses components from the Python standard library,
 licensed under the Python Software Foundation License (PSF License):
 https://docs.python.org/3/license.html
 
-Core language features:
 - __future__ - future feature imports
-- builtins - implicit base types
 
-Interpreter and runtime:
 - sys - interpreter and runtime
 - os - file system and environment
-- tempfile - temporary files and directories
-- gc - garbage collector interface
 - time - timing and sleep utilities
 
-Data processing:
-- json - JSON serialization
-- csv - CSV parsing and writing
-
-Collections and abstractions:
+- builtins - implicit base types
 - collections.abc  — abstract base classes for containers (e.g., Sequence)
-
-Testing utilities:
+- gc - garbage collector interface
+- tempfile - temporary files and directories
 - unittest.mock - testing and mocking utilities
 
-Platform-specific:
-- winsound - Python standard library (Windows-only module)
+- csv - CSV parsing and writing
+- json - JSON serialization
+- winsound - playing sounds and beeps (Windows-only module)
 
-Database:
 - sqlite3 - included with Python under the PSF License;
   the underlying SQLite engine is in the Public Domain:
   https://sqlite.org/copyright.html
