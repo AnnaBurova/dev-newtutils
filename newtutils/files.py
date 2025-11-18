@@ -198,6 +198,7 @@ def choose_file_from_folder(
     while True:
         try:
             choice = input("\nEnter file number (0 to exit): ").strip()
+            print(f"[INPUT]: {choice}")
 
             if choice == "0":
                 print("Selection cancelled.")
