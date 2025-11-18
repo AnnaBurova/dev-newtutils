@@ -27,6 +27,9 @@ Functions:
         append: bool = False
         ) -> None
     === JSON ===
+    def convert_str_to_json(
+        text: str
+        ) -> list | dict | None
     def read_json_from_file(
         file_name: str
         ) -> list | dict
@@ -311,6 +314,63 @@ def save_text_to_file(
 
 
 # === JSON ===
+
+def convert_str_to_json(
+        text: str
+        ) -> list | dict | None:
+    """
+    Parse a string into a JSON-compatible Python object.
+
+    Tries `json.loads` first, falls back to `ast.literal_eval`,
+    and as a last resort attempts a simple single-quote -> double-quote
+    substitution before retrying `json.loads`.
+
+    Args:
+        text (str): Input string containing JSON-like data.
+
+    Returns:
+        out (list | dict | None): Parsed Python object on success, otherwise None.
+    """
+
+    if not NewtCons.validate_input(text, str,
+                                   location="Newt.files.str_to_json.text", stop=False):
+        return None
+
+    text_strip = text.strip()
+    if not text_strip:
+        return None
+
+    # Try standard JSON first
+    try:
+        data = json.loads(text_strip)
+        if isinstance(data, (list, dict)):
+            return data
+        return None
+    except Exception as e:
+        NewtCons.error_msg(
+            f"Failed to parse string to JSON: {e}",
+            "Trying to replace single quotes with double quotes...",
+            location="Newt.files.str_to_json.standard",
+            stop=False
+        )
+
+    # Try to replace single quotes with double quotes and try JSON again
+    try:
+        text_replace = text_strip.replace("'", '"')
+        data = json.loads(text_replace)
+        if isinstance(data, (list, dict)):
+            return data
+    except Exception as e:
+        NewtCons.error_msg(
+            f"Failed to parse string to JSON: {e}",
+            location="Newt.files.str_to_json.replace",
+            stop=False
+        )
+        NewtCons.validate_input(text_replace, (list, dict),
+                                location="Newt.files.str_to_json.validate_input", stop=False)
+
+    return None
+
 
 def read_json_from_file(
         file_name: str
