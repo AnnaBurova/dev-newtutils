@@ -11,6 +11,7 @@ Tests cover:
 - Newline normalization (_normalize_newlines)
 - File selection (choose_file_from_folder)
 - Text file operations (read_text_from_file, save_text_to_file)
+- JSON string parsing (convert_str_to_json)
 - JSON file operations (read_json_from_file, save_json_to_file)
 - CSV file operations (read_csv_from_file, save_csv_to_file)
 """
@@ -375,6 +376,178 @@ class TestTextFiles:
         finally:
             if os.path.exists(tmp_path):
                 os.unlink(tmp_path)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+
+class TestConvertStrToJson:
+    """Tests for convert_str_to_json function."""
+
+    def test_parses_valid_json_dict(self, capsys):
+        """Test parsing a valid JSON dictionary string."""
+        print_my_func_name("test_parses_valid_json_dict")
+
+        json_str = '{"name": "test", "value": 123, "items": [1, 2, 3]}'
+        print(repr(json_str))
+
+        result = NewtFiles.convert_str_to_json(json_str)
+        print(repr(result))
+        assert isinstance(result, dict)
+        assert result == {"name": "test", "value": 123, "items": [1, 2, 3]}
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_parses_valid_json_list(self, capsys):
+        """Test parsing a valid JSON list string."""
+        print_my_func_name("test_parses_valid_json_list")
+
+        json_str = '[1, 2, 3, {"key": "value"}]'
+        print(repr(json_str))
+
+        result = NewtFiles.convert_str_to_json(json_str)
+        print(repr(result))
+        assert isinstance(result, list)
+        assert result == [1, 2, 3, {"key": "value"}]
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_parses_single_quotes_dict(self, capsys):
+        """Test parsing a dictionary string with single quotes."""
+        print_my_func_name("test_parses_single_quotes_dict")
+
+        json_str = "{'name': 'test', 'value': 123}"
+        print(repr(json_str))
+
+        result = NewtFiles.convert_str_to_json(json_str)
+        print(repr(result))
+        assert isinstance(result, dict)
+        assert result == {"name": "test", "value": 123}
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_parses_single_quotes_list(self, capsys):
+        """Test parsing a list string with single quotes."""
+        print_my_func_name("test_parses_single_quotes_list")
+
+        json_str = "['item1', 'item2', 'item3']"
+        print(repr(json_str))
+
+        result = NewtFiles.convert_str_to_json(json_str)
+        print(repr(result))
+        assert isinstance(result, list)
+        assert result == ["item1", "item2", "item3"]
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_returns_none_for_empty_string(self, capsys):
+        """Test that empty string returns None."""
+        print_my_func_name("test_returns_none_for_empty_string")
+
+        result = NewtFiles.convert_str_to_json("")
+        print(repr(result))
+        assert result is None
+
+        result = NewtFiles.convert_str_to_json("   ")
+        print(repr(result))
+        assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_returns_none_for_invalid_input(self, capsys):
+        """Test that invalid input (not a string) returns None."""
+        print_my_func_name("test_returns_none_for_invalid_input")
+
+        result = NewtFiles.convert_str_to_json(123)  # type: ignore
+        print(repr(result))
+        assert result is None
+
+        result = NewtFiles.convert_str_to_json(None)  # type: ignore
+        print(repr(result))
+        assert result is None
+
+        result = NewtFiles.convert_str_to_json(["not", "a", "string"])  # type: ignore
+        print(repr(result))
+        assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_returns_none_for_invalid_json(self, capsys):
+        """Test that invalid JSON string returns None."""
+        print_my_func_name("test_returns_none_for_invalid_json")
+
+        invalid_json = "{ invalid json }"
+        print(repr(invalid_json))
+        result = NewtFiles.convert_str_to_json(invalid_json)
+        print(repr(result))
+        assert result is None
+
+        invalid_json = "not json at all"
+        print(repr(invalid_json))
+        result = NewtFiles.convert_str_to_json(invalid_json)
+        print(repr(result))
+        assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_returns_none_for_non_list_or_dict_json(self, capsys):
+        """Test that JSON that is not a list or dict returns None."""
+        print_my_func_name("test_returns_none_for_non_list_or_dict_json")
+
+        json_str = '"just a string"'
+        print(repr(json_str))
+        result = NewtFiles.convert_str_to_json(json_str)
+        print(repr(result))
+        assert result is None
+
+        json_str = "123"
+        print(repr(json_str))
+        result = NewtFiles.convert_str_to_json(json_str)
+        print(repr(result))
+        assert result is None
+
+        json_str = "true"
+        print(repr(json_str))
+        result = NewtFiles.convert_str_to_json(json_str)
+        print(repr(result))
+        assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_handles_whitespace(self, capsys):
+        """Test that whitespace around JSON is handled correctly."""
+        print_my_func_name("test_handles_whitespace")
+
+        json_str = '   {"key": "value"}   '
+        print(repr(json_str))
+
+        result = NewtFiles.convert_str_to_json(json_str)
+        print(repr(result))
+        assert isinstance(result, dict)
+        assert result == {"key": "value"}
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+    def test_handles_nested_structures(self, capsys):
+        """Test parsing nested JSON structures."""
+        print_my_func_name("test_handles_nested_structures")
+
+        json_str = '{"outer": {"inner": {"deep": [1, 2, 3]}}}'
+        print(repr(json_str))
+
+        result = NewtFiles.convert_str_to_json(json_str)
+        print(repr(result))
+        assert isinstance(result, dict)
+        assert result == {"outer": {"inner": {"deep": [1, 2, 3]}}}
 
         captured = capsys.readouterr()
         print_my_captured(captured)

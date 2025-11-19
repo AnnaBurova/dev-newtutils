@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: anyio-4.7.0, cov-7.0.0
-collecting ... collected 34 items
+collecting ... collected 44 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory 
 START=======================================
@@ -44,7 +44,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\tmpyy6r1q4o
+File not found: C:\Users\SelinaK\AppData\Local\Temp\tmp_911lgko
 [0m
 
 =====captured.err=====
@@ -150,6 +150,7 @@ Available files: 3
   2: dummy_file_1.txt
   3: dummy_file_2.txt
   0: Exit / Cancel
+[INPUT]: 0
 Selection cancelled.
 
 =====captured.err=====
@@ -249,6 +250,197 @@ Location: Newt.console.validate_input > Newt.files.save_text_to_file.text
 Expected <class 'str'>, got <class 'int'>
 Value: 456
 [0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_parses_valid_json_dict 
+START=======================================
+=====captured.out=====
+Function: test_parses_valid_json_dict
+--------------------------------------------
+'{"name": "test", "value": 123, "items": [1, 2, 3]}'
+{'name': 'test', 'value': 123, 'items': [1, 2, 3]}
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_parses_valid_json_list 
+START=======================================
+=====captured.out=====
+Function: test_parses_valid_json_list
+--------------------------------------------
+'[1, 2, 3, {"key": "value"}]'
+[1, 2, 3, {'key': 'value'}]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_parses_single_quotes_dict 
+START=======================================
+=====captured.out=====
+Function: test_parses_single_quotes_dict
+--------------------------------------------
+"{'name': 'test', 'value': 123}"
+[1m [31m
+Location: Newt.files.str_to_json.standard
+::: ERROR :::
+Failed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+Trying to replace single quotes with double quotes...
+[0m
+{'name': 'test', 'value': 123}
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_parses_single_quotes_list 
+START=======================================
+=====captured.out=====
+Function: test_parses_single_quotes_list
+--------------------------------------------
+"['item1', 'item2', 'item3']"
+[1m [31m
+Location: Newt.files.str_to_json.standard
+::: ERROR :::
+Failed to parse string to JSON: Expecting value: line 1 column 2 (char 1)
+Trying to replace single quotes with double quotes...
+[0m
+['item1', 'item2', 'item3']
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_returns_none_for_empty_string 
+START=======================================
+=====captured.out=====
+Function: test_returns_none_for_empty_string
+--------------------------------------------
+None
+None
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_returns_none_for_invalid_input 
+START=======================================
+=====captured.out=====
+Function: test_returns_none_for_invalid_input
+--------------------------------------------
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.str_to_json.text
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+None
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.str_to_json.text
+::: ERROR :::
+Expected <class 'str'>, got <class 'NoneType'>
+Value: None
+[0m
+None
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.str_to_json.text
+::: ERROR :::
+Expected <class 'str'>, got <class 'list'>
+Value: ['not', 'a', 'string']
+[0m
+None
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_returns_none_for_invalid_json 
+START=======================================
+=====captured.out=====
+Function: test_returns_none_for_invalid_json
+--------------------------------------------
+'{ invalid json }'
+[1m [31m
+Location: Newt.files.str_to_json.standard
+::: ERROR :::
+Failed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+Trying to replace single quotes with double quotes...
+[0m
+[1m [31m
+Location: Newt.files.str_to_json.replace
+::: ERROR :::
+Failed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+[0m
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.str_to_json.validate_input
+::: ERROR :::
+Expected (<class 'list'>, <class 'dict'>), got <class 'str'>
+Value: { invalid json }
+[0m
+None
+'not json at all'
+[1m [31m
+Location: Newt.files.str_to_json.standard
+::: ERROR :::
+Failed to parse string to JSON: Expecting value: line 1 column 1 (char 0)
+Trying to replace single quotes with double quotes...
+[0m
+[1m [31m
+Location: Newt.files.str_to_json.replace
+::: ERROR :::
+Failed to parse string to JSON: Expecting value: line 1 column 1 (char 0)
+[0m
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.str_to_json.validate_input
+::: ERROR :::
+Expected (<class 'list'>, <class 'dict'>), got <class 'str'>
+Value: not json at all
+[0m
+None
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_returns_none_for_non_list_or_dict_json 
+START=======================================
+=====captured.out=====
+Function: test_returns_none_for_non_list_or_dict_json
+--------------------------------------------
+'"just a string"'
+None
+'123'
+None
+'true'
+None
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_handles_whitespace 
+START=======================================
+=====captured.out=====
+Function: test_handles_whitespace
+--------------------------------------------
+'   {"key": "value"}   '
+{'key': 'value'}
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestConvertStrToJson::test_handles_nested_structures 
+START=======================================
+=====captured.out=====
+Function: test_handles_nested_structures
+--------------------------------------------
+'{"outer": {"inner": {"deep": [1, 2, 3]}}}'
+{'outer': {'inner': {'deep': [1, 2, 3]}}}
 
 =====captured.err=====
 (no stderr captured)
@@ -520,4 +712,4 @@ Function: test_read_csv_invalid_delimiter
 END=========================================
 PASSED
 
-============================= 34 passed in 0.44s ==============================
+============================= 44 passed in 0.46s ==============================
