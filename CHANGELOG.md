@@ -5,6 +5,35 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## 🏷️ v1.0.2 — JSON String Parsing Utility
+
+**Date:** 2025-11-19
+
+### ✨ Added
+
+- `files.py`:
+  - `convert_str_to_json()` — parse a string into a JSON-compatible Python object.
+    - Tries `json.loads` first, falls back to attempts single-quote to double-quote substitution before retrying `json.loads`.
+    - Returns `list | dict` on success, otherwise `None`.
+
+- `newtutils.__init__`:
+  - Exported `convert_str_to_json` from `files` module for public API access.
+
+### 🧪 Testing
+
+- `tests/test_files.py`:
+  - Added comprehensive test suite for `convert_str_to_json()` function:
+    - `TestConvertStrToJson` class with 10 test cases covering:
+      - Valid JSON parsing (dict and list formats)
+      - Single-quote to double-quote conversion
+      - Empty string and whitespace handling
+      - Invalid input validation
+      - Invalid JSON error handling
+      - Non-list/dict JSON type filtering
+      - Nested structure parsing
+
+---
+
 ## 🏷️ v1.0.1 — Project Configuration Fix
 
 **Date:** 2025-11-17

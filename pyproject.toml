@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "newtutils"
-version = "1.0.0"
+version = "1.0.2"
 description = "A modular Python toolkit providing reusable utilities for console messaging, input validation, sorting, file I/O, SQL, and network operations"
 authors = [
   { name = "Anna Burova", email = "burova.anna+newt@gmail.com" }
