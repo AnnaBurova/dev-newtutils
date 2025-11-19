@@ -259,7 +259,13 @@ def read_text_from_file(
 
     try:
         with open(file_name, "r", encoding="utf-8") as f:
-            return f.read()
+            content = f.read()
+
+        print("[Newt.files.read_text_from_file] Loaded text from file:")
+        print(file_name)
+        print(f"(length={len(content)})")
+
+        return content
 
     except Exception as e:
         NewtCons.error_msg(
@@ -304,6 +310,10 @@ def save_text_to_file(
         with open(file_name, mode, encoding="utf-8", newline="\n") as f:
             f.write(text)
             f.write("\n")
+
+        print("[Newt.files.save_text_to_file] Saved text to file:")
+        print(file_name)
+        print(f"(mode={'append' if append else 'write'}, length={len(text)})")
 
     except Exception as e:
         NewtCons.error_msg(
@@ -402,9 +412,14 @@ def read_json_from_file(
         # Normalize output to always be a list or dict
         if NewtCons.validate_input(data, (dict, list),
                                    location="Newt.files.read_json_from_file.data"):
+            print("[Newt.files.read_json_from_file] Loaded JSON from file:")
+            print(file_name)
+            print(f"(type={type(data)})")
             return data
 
         # If data is not a list or dict, return empty list
+        print("[Newt.files.read_json_from_file] JSON content is not list/dict, returning empty list:")
+        print(file_name)
         return []
 
     except Exception as e:
@@ -449,6 +464,10 @@ def save_json_to_file(
             json.dump(data, f, indent=indent, ensure_ascii=False)
             f.write("\n")
 
+        print("[Newt.files.save_json_to_file] Saved JSON to file:")
+        print(file_name)
+        print(f"(type={type(data)}, indent={indent})")
+
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
@@ -492,7 +511,13 @@ def read_csv_from_file(
 
     try:
         with open(file_name, "r", encoding="utf-8", newline="") as f:
-            return list(csv.reader(f, delimiter=delimiter))
+            rows = list(csv.reader(f, delimiter=delimiter))
+
+        print("[Newt.files.read_csv_from_file] Loaded CSV from file:")
+        print(file_name)
+        print(f"(rows={len(rows)})")
+
+        return rows
 
     except Exception as e:
         NewtCons.error_msg(
@@ -543,6 +568,10 @@ def save_csv_to_file(
         with open(file_name, "w", encoding="utf-8", newline="\n") as f:
             writer = csv.writer(f, delimiter=delimiter, lineterminator="\n")
             writer.writerows(normalized_rows)
+
+        print("[Newt.files.save_csv_to_file] Saved CSV to file:")
+        print(file_name)
+        print(f"(rows={len(normalized_rows)}, delimiter='{delimiter}')")
 
     except Exception as e:
         NewtCons.error_msg(

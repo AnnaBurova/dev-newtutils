@@ -318,7 +318,13 @@ START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_basic
 --------------------------------------------
+[Newt.files.save_csv_to_file] Saved CSV to file:
+C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=3, delimiter=';')
 result: True
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=3)
 csv_data: [['id', 'name', 'age'], ['1', 'Alice', '30'], ['2', 'Bob', '25']]
 
 =====captured.err=====
@@ -344,7 +350,13 @@ START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_custom_delimiter
 --------------------------------------------
+[Newt.files.save_csv_to_file] Saved CSV to file:
+C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2, delimiter=',')
 result: True
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2)
 csv_data: [['id', 'name'], ['1', 'Alice']]
 
 =====captured.err=====
@@ -355,7 +367,13 @@ START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_with_params
 --------------------------------------------
+[Newt.files.save_csv_to_file] Saved CSV to file:
+C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2, delimiter=';')
 result: True
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2)
 csv_data: [['id', 'name'], ['1', 'Alice']]
 
 =====captured.err=====
