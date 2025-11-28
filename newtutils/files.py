@@ -515,7 +515,7 @@ def read_csv_from_file(
 
         print("[Newt.files.read_csv_from_file] Loaded CSV from file:")
         print(file_name)
-        print(f"(rows={len(rows)})")
+        print(f"(rows={len(rows)}, delimiter='{delimiter}')")
 
         return rows
 
@@ -571,7 +571,7 @@ def save_csv_to_file(
 
         print("[Newt.files.save_csv_to_file] Saved CSV to file:")
         print(file_name)
-        print(f"(rows={len(normalized_rows)}, delimiter='{delimiter}')")
+        print(f"(rows={len(normalized_rows)+1}, delimiter='{delimiter}')")
 
     except Exception as e:
         NewtCons.error_msg(
