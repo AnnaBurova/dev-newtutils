@@ -531,6 +531,7 @@ def read_csv_from_file(
 def save_csv_to_file(
         file_name: str,
         rows: Sequence[Sequence[object]],
+        append: bool = False,
         delimiter: str = ";"
         ) -> None:
     """
@@ -558,6 +559,8 @@ def save_csv_to_file(
 
     _ensure_dir_exists(file_name)
 
+    mode = "a" if append else "w"
+
     try:
         # Normalize newlines in cell data
         normalized_rows = [
@@ -565,13 +568,13 @@ def save_csv_to_file(
             for row in rows
         ]
 
-        with open(file_name, "w", encoding="utf-8", newline="\n") as f:
+        with open(file_name, mode, encoding="utf-8", newline="\n") as f:
             writer = csv.writer(f, delimiter=delimiter, lineterminator="\n")
             writer.writerows(normalized_rows)
 
         print("[Newt.files.save_csv_to_file] Saved CSV to file:")
         print(file_name)
-        print(f"(rows={len(normalized_rows)+1}, delimiter='{delimiter}')")
+        print(f"(rows={len(normalized_rows)+1}, mode={'append' if append else 'write'}, delimiter='{delimiter}')")
 
     except Exception as e:
         NewtCons.error_msg(
