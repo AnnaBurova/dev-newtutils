@@ -18,6 +18,10 @@ Functions:
         stop: bool = True,
         location: str = ""
         ) -> bool
+    def check_location(
+        dir_: str,
+        must_location: str
+        ) -> None
     def beep_boop(
         pause_s: float = 0.2
         ) -> None
@@ -140,6 +144,33 @@ def validate_input(
         return False
 
     return True
+
+
+def check_location(
+        dir_: str,
+        must_location: str
+        ) -> None:
+    """Check if the current directory matches the required location.
+
+    Prints a start message if directories match, otherwise logs an error.
+    """
+
+    validate_input(
+        dir_, str,
+        location="check_location : dir_"
+    )
+    validate_input(
+        must_location, str,
+        location="check_location : must_location"
+    )
+
+    if dir_ == must_location:
+        print("=== START ===")
+    else:
+        error_msg(
+            f"Something wrong, check folder: {dir_}",
+            location="check_location"
+        )
 
 
 def beep_boop(

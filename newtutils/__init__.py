@@ -20,6 +20,7 @@ from .console import (
     divider,
     error_msg,
     validate_input,
+    check_location,
     beep_boop,
     retry_pause,
 )
@@ -64,6 +65,7 @@ __all__ = [
     "divider",
     "error_msg",
     "validate_input",
+    "check_location",
     "beep_boop",
     "retry_pause",
     # Utility
