@@ -9,7 +9,9 @@ Functions:
         file_path: str
         ) -> None
     def _check_file_exists(
-        file_path: str
+        file_path: str,
+        stop: bool = False,
+        print_error: bool = True
         ) -> bool
     def _normalize_newlines(
         text: str
@@ -84,7 +86,9 @@ def _ensure_dir_exists(
 
 
 def _check_file_exists(
-        file_path: str
+        file_path: str,
+        stop: bool = False,
+        print_error: bool = True
         ) -> bool:
     """
     Check whether a file exists at the specified path.
@@ -96,6 +100,14 @@ def _check_file_exists(
     Args:
         file_path (str):
             Full path to the file to verify.
+        stop (bool):
+            If True, stops execution on error.
+            If False, continues execution.
+            Defaults to False.
+        print_error (bool):
+            If True, prints an error message when the file is not found.
+            If False, silently returns False without logging.
+            Defaults to True.
 
     Returns:
         out (bool):
@@ -103,18 +115,19 @@ def _check_file_exists(
             otherwise False.
     """
 
-    if not NewtCons.validate_input(file_path, str, stop=False,
+    if not NewtCons.validate_input(file_path, str, stop=stop,
                                    location="Newt.files._check_file_exists.file_path"):
         return False
 
     if os.path.isfile(file_path):
         return True
 
-    NewtCons.error_msg(
-        f"File not found: {file_path}",
-        location="Newt.files._check_file_exists",
-        stop=False
-    )
+    if print_error:
+        NewtCons.error_msg(
+            f"File not found: {file_path}",
+            location="Newt.files._check_file_exists",
+            stop=stop
+        )
     return False
 
 
