@@ -57,15 +57,27 @@ Functions:
         delimiter: str = ";",
         logging: bool = True
         ) -> None
+    === LOG ===
+    def setup_logging(
+        _dir: str
+        ) -> tuple[str, TextIO, object]
+    def cleanup_logging(
+        setup_data: tuple[str, TextIO, object],
+        file_target: str
+        ) -> None
 """
 
 from __future__ import annotations
 
+import sys
 import os
+from typing import TextIO
 from collections.abc import Sequence
 
 import csv
 import json
+import shutil
+from datetime import datetime, timedelta, timezone
 
 import newtutils.console as NewtCons
 
@@ -638,3 +650,82 @@ def save_csv_to_file(
             location="Newt.files.save_csv_to_file",
             stop=False
         )
+
+
+# === LOG ===
+
+def setup_logging(
+        _dir: str
+        ) -> tuple[str, TextIO, object]:
+    """
+    Set up logging by redirecting stdout and stderr to both console and a timestamped log file.
+
+    Creates a log file with a name based on current UTC time in the specified directory,
+    defines a Tee class to duplicate output to both console and file,
+    replaces sys.stdout and sys.stderr with Tee instances.
+
+    Args:
+        _dir (str):
+            Directory path where the timestamped log file will be created.
+
+    Returns:
+        tuple[str, TextIO, object]:
+            Tuple containing log filename (str),
+            open file object (TextIO),
+            and original sys.stdout (object).
+
+    Example:
+        >>> setup_data = setup_logging(_dir="path/to/log/directory")
+        >>> cleanup_logging(setup_data, "path/to/target/logfile.txt")
+    """
+
+    time_now = datetime.now(timezone.utc)
+    time_file_name = time_now.strftime('%Y-%m-%d-%H-%M-%S') + ".txt"
+
+    class Tee:
+        def __init__(self, a, b):
+            self.a, self.b = a, b
+
+        def write(self, s: str) -> None:
+            self.a.write(s)
+            self.b.write(s)
+
+        def flush(self) -> None:
+            self.a.flush()
+            try:
+                self.b.flush()
+            except ValueError:
+                pass  # File already closed
+
+    origin_stdout = sys.stdout
+    time_file = os.path.join(_dir, time_file_name)
+    file_content: TextIO = open(time_file, "a", encoding="utf-8", newline="\n")
+    sys.stdout = Tee(origin_stdout, file_content)
+    sys.stderr = sys.stdout
+
+    return (time_file, file_content, origin_stdout)
+
+
+def cleanup_logging(
+        setup_data: tuple[str, TextIO, object],
+        file_target: str
+        ) -> None:
+    """
+    Restore original stdout/stderr and move log file to target location.
+
+    Closes the log file, restores original sys.stdout, moves the timestamped log
+    to the specified target path, ensuring target directory exists.
+
+    Args:
+        setup_data (tuple[str, TextIO, object]):
+            Tuple returned from setup_logging() containing (log_filename, file, old_stdout).
+        file_target (str):
+            Target path where the log file should be moved.
+    """
+    time_file, file_content, origin_stdout = setup_data
+
+    sys.stdout = origin_stdout
+    file_content.close()
+    print("Log moved to", file_target)
+    ensure_dir_exists(file_target)
+    shutil.move(time_file, file_target)
