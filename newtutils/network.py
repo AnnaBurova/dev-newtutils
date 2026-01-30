@@ -29,6 +29,7 @@ Functions:
 from __future__ import annotations
 
 import sys
+import os
 import time
 import requests
 import newtutils.console as NewtCons
@@ -256,11 +257,25 @@ def download_file_from_url(
     while True:
         try:
             print(f"Downloading from: {file_url}")
+            head_content = requests.head(file_url, headers=custom_headers, timeout=10)
+            size_b = int(head_content.headers.get('Content-Length', 0))
+            size_mb = size_b / (1024*1024)
+            print(f"File size: {size_mb} Mb")
+
+            if NewtFiles._check_file_exists(save_path, print_error=False):
+                # get file size and compare
+                existing_size_b = os.path.getsize(save_path)
+
+                if existing_size_b == size_b:
+                    print(f"File already exists: {save_path}")
+                    return True
+
             response = requests.get(
                 file_url,
                 headers=custom_headers,
-                timeout=timeout
+                timeout=(5, timeout)
                 )
+            response.raise_for_status()
             status = response.status_code
             print(f"Status: {status}")
 
@@ -272,8 +287,7 @@ def download_file_from_url(
                 print(f"Content-Type: {content_type}")
 
                 if "text" in content_type or "json" in content_type:
-                    content = response.text
-                    NewtFiles.save_text_to_file(save_path, content)
+                    NewtFiles.save_text_to_file(save_path, response.text)
 
                 # Binary save
                 else:
@@ -299,10 +313,19 @@ def download_file_from_url(
                 stop=False
             )
             NewtCons._beep_boop()
+            timeout += 30
 
         except requests.exceptions.RequestException as e:
             NewtCons.error_msg(
                 f"RequestException: {e}",
+                location="Newt.network.download_file_from_url",
+                stop=False
+            )
+            NewtCons._beep_boop()
+
+        except Exception as e:
+            NewtCons.error_msg(
+                f"General error: {e}",
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
