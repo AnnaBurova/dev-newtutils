@@ -21,34 +21,41 @@ Functions:
         ) -> str | None
     === TEXT ===
     def read_text_from_file(
-        file_name: str
+        file_name: str,
+        logging: bool = True
         ) -> str
     def save_text_to_file(
         file_name: str,
         text: str,
-        append: bool = False
+        append: bool = False,
+        logging: bool = True
         ) -> None
     === JSON ===
     def convert_str_to_json(
         text: str
         ) -> list | dict | None
     def read_json_from_file(
-        file_name: str
+        file_name: str,
+        logging: bool = True
         ) -> list | dict
     def save_json_to_file(
         file_name: str,
         data: list | dict,
-        indent: int = 2
+        indent: int = 2,
+        logging: bool = True
         ) -> None
     === CSV ===
     def read_csv_from_file(
         file_name: str,
-        delimiter: str = ";"
+        delimiter: str = ";",
+        logging: bool = True
         ) -> list[list[str]]
     def save_csv_to_file(
         file_name: str,
         rows: Sequence[Sequence[object]],
-        delimiter: str = ";"
+        append: bool = False,
+        delimiter: str = ";",
+        logging: bool = True
         ) -> None
 """
 
@@ -250,7 +257,8 @@ def choose_file_from_folder(
 # === TEXT ===
 
 def read_text_from_file(
-        file_name: str
+        file_name: str,
+        logging: bool = True
         ) -> str:
     """
     Read UTF-8 text content from a file.
@@ -261,6 +269,9 @@ def read_text_from_file(
     Args:
         file_name (str):
             Full path to the text file.
+        logging (bool):
+            If True, prints a confirmation message after saving.
+            Defaults to True.
 
     Returns:
         out (str):
@@ -274,9 +285,10 @@ def read_text_from_file(
         with open(file_name, "r", encoding="utf-8") as f:
             content = f.read()
 
-        print("[Newt.files.read_text_from_file] Loaded text from file:")
-        print(file_name)
-        print(f"(length={len(content)})")
+        if logging:
+            print("[Newt.files.read_text_from_file] Loaded text from file:")
+            print(file_name)
+            print(f"(length={len(content)})")
 
         return content
 
@@ -292,7 +304,8 @@ def read_text_from_file(
 def save_text_to_file(
         file_name: str,
         text: str,
-        append: bool = False
+        append: bool = False,
+        logging: bool = True
         ) -> None:
     """
     Write or append text content to a UTF-8 file.
@@ -308,6 +321,9 @@ def save_text_to_file(
         append (bool):
             If True, appends instead of overwriting.
             Defaults to False.
+        logging (bool):
+            If True, prints a confirmation message after saving.
+            Defaults to True.
     """
 
     NewtCons.validate_input(file_name, str,
@@ -324,9 +340,10 @@ def save_text_to_file(
             f.write(text)
             f.write("\n")
 
-        print("[Newt.files.save_text_to_file] Saved text to file:")
-        print(file_name)
-        print(f"(mode={'append' if append else 'write'}, length={len(text)})")
+        if logging:
+            print("[Newt.files.save_text_to_file] Saved text to file:")
+            print(file_name)
+            print(f"(mode={'append' if append else 'write'}, length={len(text)})")
 
     except Exception as e:
         NewtCons.error_msg(
@@ -396,7 +413,8 @@ def convert_str_to_json(
 
 
 def read_json_from_file(
-        file_name: str
+        file_name: str,
+        logging: bool = True
         ) -> list | dict:
     """
     Read and parse JSON data from a file.
@@ -408,6 +426,9 @@ def read_json_from_file(
     Args:
         file_name (str):
             Path to the JSON file.
+        logging (bool):
+            If True, prints a confirmation message after saving.
+            Defaults to True.
 
     Returns:
         out (list | dict):
@@ -425,14 +446,16 @@ def read_json_from_file(
         # Normalize output to always be a list or dict
         if NewtCons.validate_input(data, (dict, list),
                                    location="Newt.files.read_json_from_file.data"):
-            print("[Newt.files.read_json_from_file] Loaded JSON from file:")
-            print(file_name)
-            print(f"(type={type(data)})")
+            if logging:
+                print("[Newt.files.read_json_from_file] Loaded JSON from file:")
+                print(file_name)
+                print(f"(type={type(data)})")
             return data
 
         # If data is not a list or dict, return empty list
-        print("[Newt.files.read_json_from_file] JSON content is not list/dict, returning empty list:")
-        print(file_name)
+        if logging:
+            print("[Newt.files.read_json_from_file] JSON content is not list/dict, returning empty list:")
+            print(file_name)
         return []
 
     except Exception as e:
@@ -446,7 +469,8 @@ def read_json_from_file(
 def save_json_to_file(
         file_name: str,
         data: list | dict,
-        indent: int = 2
+        indent: int = 2,
+        logging: bool = True
         ) -> None:
     """
     Write JSON data to a file.
@@ -463,6 +487,9 @@ def save_json_to_file(
         indent (int):
             Indentation level for pretty-printing.
             Defaults to 2.
+        logging (bool):
+            If True, prints a confirmation message after saving.
+            Defaults to True.
     """
 
     NewtCons.validate_input(file_name, str,
@@ -477,9 +504,10 @@ def save_json_to_file(
             json.dump(data, f, indent=indent, ensure_ascii=False)
             f.write("\n")
 
-        print("[Newt.files.save_json_to_file] Saved JSON to file:")
-        print(file_name)
-        print(f"(type={type(data)}, indent={indent})")
+        if logging:
+            print("[Newt.files.save_json_to_file] Saved JSON to file:")
+            print(file_name)
+            print(f"(type={type(data)}, indent={indent})")
 
     except Exception as e:
         NewtCons.error_msg(
@@ -493,7 +521,8 @@ def save_json_to_file(
 
 def read_csv_from_file(
         file_name: str,
-        delimiter: str = ";"
+        delimiter: str = ";",
+        logging: bool = True
         ) -> list[list[str]]:
     """
     Read CSV data from a UTF-8 file.
@@ -508,6 +537,9 @@ def read_csv_from_file(
         delimiter (str):
             Column separator character.
             Defaults to `;`.
+        logging (bool):
+            If True, prints a confirmation message after saving.
+            Defaults to True.
 
     Returns:
         out (list[list[str]]):
@@ -526,9 +558,10 @@ def read_csv_from_file(
         with open(file_name, "r", encoding="utf-8", newline="") as f:
             rows = list(csv.reader(f, delimiter=delimiter))
 
-        print("[Newt.files.read_csv_from_file] Loaded CSV from file:")
-        print(file_name)
-        print(f"(rows={len(rows)}, delimiter='{delimiter}')")
+        if logging:
+            print("[Newt.files.read_csv_from_file] Loaded CSV from file:")
+            print(file_name)
+            print(f"(rows={len(rows)}, delimiter='{delimiter}')")
 
         return rows
 
@@ -545,7 +578,8 @@ def save_csv_to_file(
         file_name: str,
         rows: Sequence[Sequence[object]],
         append: bool = False,
-        delimiter: str = ";"
+        delimiter: str = ";",
+        logging: bool = True
         ) -> None:
     """
     Write tabular data to a CSV file.
@@ -559,8 +593,14 @@ def save_csv_to_file(
             Path to the output CSV file.
         rows (Sequence[Sequence[object]]):
             Tabular data, where each row is a sequence of values.
+        append (bool):
+            If True, appends to the file instead of overwriting.
+            Defaults to False.
         delimiter (str):
             Column separator character. Defaults to `;`.
+        logging (bool):
+            If True, prints a confirmation message after saving.
+            Defaults to True.
     """
 
     NewtCons.validate_input(file_name, str,
@@ -585,9 +625,10 @@ def save_csv_to_file(
             writer = csv.writer(f, delimiter=delimiter, lineterminator="\n")
             writer.writerows(normalized_rows)
 
-        print("[Newt.files.save_csv_to_file] Saved CSV to file:")
-        print(file_name)
-        print(f"(rows={len(normalized_rows)+1}, mode={'append' if append else 'write'}, delimiter='{delimiter}')")
+        if logging:
+            print("[Newt.files.save_csv_to_file] Saved CSV to file:")
+            print(file_name)
+            print(f"(rows={len(normalized_rows)+1}, mode={'append' if append else 'write'}, delimiter='{delimiter}')")
 
     except Exception as e:
         NewtCons.error_msg(
