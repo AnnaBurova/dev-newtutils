@@ -5,6 +5,45 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## 🏷️ v1.0.3 — Enhanced File I/O and Network Utilities
+
+**Date:** 2026-01-30
+
+### ✨ Added
+
+- `files.py`:
+  - Added `logging` parameter to all file I/O functions (`read_text_from_file`, `save_text_to_file`, `read_json_from_file`, `save_json_to_file`, `read_csv_from_file`, `save_csv_to_file`) to control debug output.
+    - When `logging=True` (default), functions print confirmation messages with file paths and operation details.
+    - Set `logging=False` to suppress output for silent operations.
+  - Added `append` parameter to `save_csv_to_file()` for appending rows to existing CSV files.
+    - When `append=True`, new rows are added to the end of the file instead of overwriting.
+  - Enhanced `_check_file_exists()` with new parameters:
+    - `stop` parameter — controls whether execution stops on error (defaults to `False`).
+    - `print_error` parameter — controls error message output (defaults to `True`).
+
+- `network.py`:
+  - Enhanced `download_file_from_url()` with file size checking:
+    - Checks file size before download using HEAD request.
+    - Verifies if file already exists and compares sizes to avoid redundant downloads.
+    - Automatically skips download if file exists with matching size.
+  - Improved retry logic:
+    - Timeout increases by 30 seconds on each retry attempt.
+    - Better error handling with separate exception types for network and general errors.
+
+### 🛠️ Improved
+
+- `files.py`:
+  - Fixed row count calculation in `save_csv_to_file()` logging output.
+  - Improved debug output formatting for all file operations with consistent message structure.
+  - Enhanced error handling in `_check_file_exists()` with configurable behavior.
+
+- `network.py`:
+  - Separated status code and response time into distinct print statements for better readability.
+  - Improved timeout handling with separate connect and read timeouts.
+  - Added `response.raise_for_status()` for better HTTP error detection.
+
+---
+
 ## 🏷️ v1.0.2 — JSON String Parsing Utility
 
 **Date:** 2025-11-19

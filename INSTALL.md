@@ -41,6 +41,7 @@ dev-newtutils/
 - Dependencies (installed automatically):
   - `colorama` — for colored console output
   - `requests` — for HTTP/network utilities
+  - `pytest` — for code tests
 
 ---
 
@@ -78,6 +79,8 @@ cd D:\VS_Code\dev-newtutils
 
 # Install in editable mode (user environment)
 python -m pip install --user -e .
+# OR in venv
+python -m pip install -e .
 # OR for Anaconda
 C:/ProgramData/anaconda3/python.exe -m pip install --user -e .
 ```
@@ -142,8 +145,7 @@ To make VS Code recognize your local package:
 {
   "python.analysis.extraPaths": [
     "D:/VS_Code/dev-newtutils"
-  ],
-  "python.defaultInterpreterPath": "C:/ProgramData/anaconda3/python.exe"
+  ]
 }
 ```
 

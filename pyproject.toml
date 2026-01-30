@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "newtutils"
-version = "1.0.2"
+version = "1.0.3"
 description = "A modular Python toolkit providing reusable utilities for console messaging, input validation, sorting, file I/O, SQL, and network operations"
 authors = [
   { name = "Anna Burova", email = "burova.anna+newt@gmail.com" }
@@ -14,7 +14,7 @@ requires-python = ">=3.10"
 license = { file = "LICENSE" }
 dependencies = [
   "colorama>=0.4.6",
-  "requests>=2.31.0"
+  "requests>=2.32.0"
 ]
 keywords = [
   "utilities", "console", "validation", "files", "sorting",
@@ -38,7 +38,7 @@ classifiers = [
 
 [project.optional-dependencies]
 test = [
-  "pytest>=7.0.0",
+  "pytest>=9.0.0",
 ]
 
 [project.urls]
