@@ -1,8 +1,7 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-plugins: anyio-4.7.0, cov-7.0.0
 collected 21 items
 
 test_network.py 
@@ -11,7 +10,8 @@ START=======================================
 Function: test_fetch_data_from_url_success
 --------------------------------------------
 Full URL: https://example.com
-Status: 200 | Response time: 0.000 seconds
+Status: 200
+Response time: 0.000 seconds
 result: Lorem ipsum dolor sit ame
 
 =====captured.err=====
@@ -23,7 +23,8 @@ START=======================================
 Function: test_fetch_data_from_url_with_params
 --------------------------------------------
 Full URL: https://example.com?key=value
-Status: 200 | Response time: 0.000 seconds
+Status: 200
+Response time: 0.000 seconds
 result: Lorem ipsum dolor sit ame
 call_kwargs: {'params': {'key': 'value', 'num': '123'}, 'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36'}, 'timeout': 45}
 
@@ -36,7 +37,8 @@ START=======================================
 Function: test_fetch_data_from_url_with_custom_headers
 --------------------------------------------
 Full URL: https://example.com
-Status: 200 | Response time: 0.000 seconds
+Status: 200
+Response time: 0.000 seconds
 result: Lorem ipsum dolor sit ame
 call_kwargs: {'params': None, 'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'Authorization': 'Bearer token'}, 'timeout': 45}
 
@@ -49,7 +51,8 @@ START=======================================
 Function: test_fetch_data_from_url_status_206
 --------------------------------------------
 Full URL: https://example.com
-Status: 206 | Response time: 0.000 seconds
+Status: 206
+Response time: 0.000 seconds
 result: Partial Lorem ipsum dolor sit ame
 
 =====captured.err=====
@@ -61,7 +64,8 @@ START=======================================
 Function: test_fetch_data_from_url_status_404
 --------------------------------------------
 Full URL: https://example.com/notfound
-Status: 404 | Response time: 0.000 seconds
+Status: 404
+Response time: 0.000 seconds
 [1m [31m
 Location: Newt.network.fetch_data_from_url
 ::: ERROR :::
@@ -78,7 +82,8 @@ START=======================================
 Function: test_fetch_data_from_url_status_500
 --------------------------------------------
 Full URL: https://example.com
-Status: 500 | Response time: 0.000 seconds
+Status: 500
+Response time: 0.000 seconds
 [1m [31m
 Location: Newt.network.fetch_data_from_url
 ::: ERROR :::
@@ -127,14 +132,16 @@ START=======================================
 Function: test_fetch_data_from_url_retry_on_fail
 --------------------------------------------
 Full URL: https://example.com
-Status: 500 | Response time: 0.000 seconds
+Status: 500
+Response time: 0.000 seconds
 [1m [31m
 Location: Newt.network.fetch_data_from_url
 ::: ERROR :::
 HTTP 500 for https://example.com
 [0m
 Full URL: https://example.com
-Status: 200 | Response time: 0.000 seconds
+Status: 200
+Response time: 0.000 seconds
 result: Success
 mock_retry: 1
 
@@ -147,7 +154,8 @@ START=======================================
 Function: test_fetch_data_from_url_custom_timeout
 --------------------------------------------
 Full URL: https://example.com
-Status: 200 | Response time: 0.000 seconds
+Status: 200
+Response time: 0.000 seconds
 result: Lorem ipsum dolor sit ame
 call_kwargs: {'params': None, 'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36'}, 'timeout': 60}
 
@@ -175,7 +183,8 @@ START=======================================
 Function: test_fetch_data_from_url_mode_alert
 --------------------------------------------
 Full URL: https://example.com
-Status: 500 | Response time: 0.000 seconds
+Status: 500
+Response time: 0.000 seconds
 [1m [31m
 Location: Newt.network.fetch_data_from_url
 ::: ERROR :::
@@ -193,6 +202,7 @@ START=======================================
 Function: test_download_file_from_url_text
 --------------------------------------------
 Downloading from: https://example.com/file.txt
+File size: 1.1444091796875e-05 Mb
 Status: 200
 Content-Type: text/plain
 Saved to: tmp_file.txt
@@ -209,6 +219,7 @@ START=======================================
 Function: test_download_file_from_url_binary
 --------------------------------------------
 Downloading from: https://example.com/file.bin
+File size: 1.33514404296875e-05 Mb
 Status: 200
 Content-Type: application/octet-stream
 Saved to: tmp_file.bin
@@ -225,6 +236,7 @@ START=======================================
 Function: test_download_file_from_url_status_404
 --------------------------------------------
 Downloading from: https://example.com/file.txt
+File size: 0.0 Mb
 Status: 404
 [1m [31m
 Location: Newt.network.download_file_from_url
@@ -242,6 +254,8 @@ START=======================================
 =====captured.out=====
 Function: test_download_file_from_url_timeout
 --------------------------------------------
+Downloading from: https://example.com/file.txt
+File size: 0.0 Mb
 [1m [31m
 Location: Newt.network.download_file_from_url
 ::: ERROR :::
@@ -259,6 +273,8 @@ START=======================================
 =====captured.out=====
 Function: test_download_file_from_url_request_exception
 --------------------------------------------
+Downloading from: https://example.com/file.txt
+File size: 0.0 Mb
 [1m [31m
 Location: Newt.network.download_file_from_url
 ::: ERROR :::
@@ -276,6 +292,7 @@ START=======================================
 Function: test_download_file_from_url_retry
 --------------------------------------------
 Downloading from: https://example.com/file.txt
+File size: 6.67572021484375e-06 Mb
 Status: 500
 [1m [31m
 Location: Newt.network.download_file_from_url
@@ -283,6 +300,7 @@ Location: Newt.network.download_file_from_url
 HTTP 500 while downloading https://example.com/file.txt
 [0m
 Downloading from: https://example.com/file.txt
+File size: 6.67572021484375e-06 Mb
 Status: 200
 Content-Type: text/plain
 Saved to: tmp_file.txt
@@ -321,6 +339,7 @@ START=======================================
 Function: test_download_file_from_url_json_content_type
 --------------------------------------------
 Downloading from: https://example.com/data.json
+File size: 1.52587890625e-05 Mb
 Status: 200
 Content-Type: application/json
 Saved to: tmp_data.json
@@ -337,11 +356,12 @@ START=======================================
 Function: test_download_file_from_url_custom_headers
 --------------------------------------------
 Downloading from: https://example.com/file.bin
+File size: 6.67572021484375e-06 Mb
 Status: 200
 Content-Type: application/octet-stream
 Saved to: tmp_file.bin
 result: True
-call_kwargs: {'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'Authorization': 'Bearer token'}, 'timeout': 60}
+call_kwargs: {'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'Authorization': 'Bearer token'}, 'timeout': (5, 60)}
 mock_get: 1
 
 =====captured.err=====
@@ -349,4 +369,4 @@ mock_get: 1
 END=========================================
 .
 
-============================= 21 passed in 0.43s ==============================
+============================= 21 passed in 0.12s ==============================

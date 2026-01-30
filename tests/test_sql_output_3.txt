@@ -1,8 +1,7 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-plugins: anyio-4.7.0, cov-7.0.0
 collected 28 items
 
 test_sql.py 
@@ -319,12 +318,12 @@ START=======================================
 Function: test_export_sql_query_to_csv_basic
 --------------------------------------------
 [Newt.files.save_csv_to_file] Saved CSV to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=3, delimiter=';')
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=4, mode=write, delimiter=';')
 result: True
 [Newt.files.read_csv_from_file] Loaded CSV from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=3)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=3, delimiter=';')
 csv_data: [['id', 'name', 'age'], ['1', 'Alice', '30'], ['2', 'Bob', '25']]
 
 =====captured.err=====
@@ -351,12 +350,12 @@ START=======================================
 Function: test_export_sql_query_to_csv_custom_delimiter
 --------------------------------------------
 [Newt.files.save_csv_to_file] Saved CSV to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=2, delimiter=',')
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=3, mode=write, delimiter=',')
 result: True
 [Newt.files.read_csv_from_file] Loaded CSV from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=2)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2, delimiter=',')
 csv_data: [['id', 'name'], ['1', 'Alice']]
 
 =====captured.err=====
@@ -368,12 +367,12 @@ START=======================================
 Function: test_export_sql_query_to_csv_with_params
 --------------------------------------------
 [Newt.files.save_csv_to_file] Saved CSV to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=2, delimiter=';')
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=3, mode=write, delimiter=';')
 result: True
 [Newt.files.read_csv_from_file] Loaded CSV from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=2)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2, delimiter=';')
 csv_data: [['id', 'name'], ['1', 'Alice']]
 
 =====captured.err=====
@@ -404,4 +403,4 @@ result: False
 END=========================================
 .
 
-============================= 28 passed in 0.90s ==============================
+============================= 28 passed in 0.66s ==============================

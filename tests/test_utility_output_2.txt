@@ -1,9 +1,8 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0 -- C:\ProgramData\anaconda3\python.exe
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- python.exe
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-plugins: anyio-4.7.0, cov-7.0.0
 collecting ... collected 22 items
 
 test_utility.py::TestSortingList::test_sorting_list_integers PASSED      [  4%]
@@ -29,4 +28,4 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_not_dicts PASSED [ 90%
 test_utility.py::TestSortingDictByKeys::test_sorting_dict_invalid_key_type PASSED [ 95%]
 test_utility.py::TestSortingDictByKeys::test_sorting_dict_complex_sorting PASSED [100%]
 
-============================= 22 passed in 0.40s ==============================
+============================= 22 passed in 0.12s ==============================

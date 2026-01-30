@@ -1,8 +1,7 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-plugins: anyio-4.7.0, cov-7.0.0
 collected 44 items
 
 test_files.py 
@@ -40,7 +39,7 @@ Function: test_returns_true_for_existing_file
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
-File not found: C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx
+File not found: C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx
 [0m
 
 =====captured.err=====
@@ -89,7 +88,7 @@ START=======================================
 Function: test_handles_mixed_newlines
 --------------------------------------------
 'line1\r\nline2\nline3\r\n'
-'line1\nline2\nline3\n'
+'line1\nline2\nline3'
 
 =====captured.err=====
 (no stderr captured)
@@ -165,10 +164,10 @@ START=======================================
 Function: test_save_and_read_text_file
 --------------------------------------------
 [Newt.files.save_text_to_file] Saved text to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.txt
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
 (mode=write, length=12)
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.txt
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
 (length=13)
 'Hello\nWorld!\n'
 
@@ -181,7 +180,7 @@ START=======================================
 Function: test_save_text_creates_directory
 --------------------------------------------
 [Newt.files.save_text_to_file] Saved text to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.txt
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.txt
 (mode=write, length=4)
 
 =====captured.err=====
@@ -193,15 +192,15 @@ START=======================================
 Function: test_save_text_append_mode
 --------------------------------------------
 [Newt.files.save_text_to_file] Saved text to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.txt
-(mode=write, length=7)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
+(mode=write, length=6)
 [Newt.files.save_text_to_file] Saved text to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.txt
-(mode=append, length=7)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
+(mode=append, length=6)
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.txt
-(length=16)
-'Line 1\n\nLine 2\n\n'
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
+(length=14)
+'Line 1\nLine 2\n'
 
 =====captured.err=====
 (no stderr captured)
@@ -228,12 +227,12 @@ Function: test_save_text_normalizes_newlines
 --------------------------------------------
 'line1\r\nline2\r\n'
 [Newt.files.save_text_to_file] Saved text to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.txt
-(mode=write, length=12)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
+(mode=write, length=11)
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.txt
-(length=13)
-'line1\nline2\n\n'
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
+(length=12)
+'line1\nline2\n'
 
 =====captured.err=====
 (no stderr captured)
@@ -447,14 +446,14 @@ Function: test_save_and_read_json_dict
 --------------------------------------------
 {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
 [Newt.files.save_json_to_file] Saved JSON to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'dict'>, indent=2)
 [Newt.files.read_json_from_file] Loaded JSON from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'dict'>)
 {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (length=75)
 '{\n  "name": "test",\n  "value": 123,\n  "items": [\n    1,\n    2,\n    3\n  ]\n}\n'
 {
@@ -478,14 +477,14 @@ Function: test_save_and_read_json_list
 --------------------------------------------
 [1, 2, 3, {'key': 'value'}]
 [Newt.files.save_json_to_file] Saved JSON to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'list'>, indent=2)
 [Newt.files.read_json_from_file] Loaded JSON from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'list'>)
 [1, 2, 3, {'key': 'value'}]
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (length=46)
 '[\n  1,\n  2,\n  3,\n  {\n    "key": "value"\n  }\n]\n'
 [
@@ -523,7 +522,7 @@ Function: test_save_json_creates_directory
 --------------------------------------------
 {'test': 'data'}
 [Newt.files.save_json_to_file] Saved JSON to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.json
 (type=<class 'dict'>, indent=2)
 
 =====captured.err=====
@@ -536,14 +535,14 @@ Function: test_save_json_custom_indent
 --------------------------------------------
 {'a': 1, 'b': 2}
 [Newt.files.save_json_to_file] Saved JSON to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'dict'>, indent=4)
 [Newt.files.read_json_from_file] Loaded JSON from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'dict'>)
 {'a': 1, 'b': 2}
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (length=27)
 '{\n    "a": 1,\n    "b": 2\n}\n'
 {
@@ -592,7 +591,7 @@ Location: Newt.files.read_json_from_file
 Exception: Expecting value: line 1 column 1 (char 0)
 [0m
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.json
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (length=0)
 ''
 
@@ -606,14 +605,14 @@ Function: test_save_and_read_csv
 --------------------------------------------
 [['Name', 'Age', 'City'], ['Alice', '30', 'New York'], ['Bob', '25', 'London']]
 [Newt.files.save_csv_to_file] Saved CSV to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=3, delimiter=';')
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=4, mode=write, delimiter=';')
 [Newt.files.read_csv_from_file] Loaded CSV from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=3)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=3, delimiter=';')
 [['Name', 'Age', 'City'], ['Alice', '30', 'New York'], ['Bob', '25', 'London']]
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (length=46)
 'Name;Age;City\nAlice;30;New York\nBob;25;London\n'
 Name;Age;City
@@ -631,14 +630,14 @@ Function: test_save_and_read_csv_custom_delimiter
 --------------------------------------------
 [['A', 'B'], ['1', '2']]
 [Newt.files.save_csv_to_file] Saved CSV to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=2, delimiter=',')
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=3, mode=write, delimiter=',')
 [Newt.files.read_csv_from_file] Loaded CSV from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=2)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2, delimiter=',')
 [['A', 'B'], ['1', '2']]
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (length=8)
 'A,B\n1,2\n'
 A,B
@@ -670,8 +669,8 @@ Function: test_save_csv_creates_directory
 --------------------------------------------
 [['Header'], ['Data']]
 [Newt.files.save_csv_to_file] Saved CSV to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.csv
-(rows=2, delimiter=';')
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.csv
+(rows=3, mode=write, delimiter=';')
 
 =====captured.err=====
 (no stderr captured)
@@ -683,14 +682,14 @@ Function: test_save_csv_normalizes_newlines_in_cells
 --------------------------------------------
 [['Cell1\r\nLine2', 'Cell2']]
 [Newt.files.save_csv_to_file] Saved CSV to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=1, delimiter=';')
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2, mode=write, delimiter=';')
 [Newt.files.read_csv_from_file] Loaded CSV from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=1)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=1, delimiter=';')
 [['Cell1\nLine2', 'Cell2']]
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (length=20)
 '"Cell1\nLine2";Cell2\n'
 "Cell1
@@ -707,14 +706,14 @@ Function: test_save_csv_with_various_types
 --------------------------------------------
 [['String', 123, 45.67, True]]
 [Newt.files.save_csv_to_file] Saved CSV to file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=1, delimiter=';')
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2, mode=write, delimiter=';')
 [Newt.files.read_csv_from_file] Loaded CSV from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=1)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=1, delimiter=';')
 [['String', '123', '45.67', 'True']]
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (length=22)
 'String;123;45.67;True\n'
 String;123;45.67;True
@@ -747,7 +746,7 @@ Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (length=0)
 ''
 
@@ -760,8 +759,8 @@ START=======================================
 Function: test_read_csv_invalid_delimiter
 --------------------------------------------
 [Newt.files.read_csv_from_file] Loaded CSV from file:
-C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=2)
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
+(rows=2, delimiter=',')
 [['A;B'], ['1;2']]
 'A;B'
 
@@ -770,4 +769,4 @@ C:\Users\SelinaK\AppData\Local\Temp\xxxxxxxxxxx.csv
 END=========================================
 .
 
-============================= 44 passed in 0.46s ==============================
+============================= 44 passed in 0.16s ==============================

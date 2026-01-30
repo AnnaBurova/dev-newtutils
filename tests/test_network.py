@@ -334,11 +334,20 @@ class TestFetchDataFromUrl:
 class TestDownloadFileFromUrl:
     """Tests for download_file_from_url function."""
 
+    @patch('newtutils.network.os.path.getsize')
+    @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
+    @patch('newtutils.network.requests.head')
     @patch('newtutils.files.save_text_to_file')
-    def test_download_file_from_url_text(self, mock_save, mock_get, capsys):
+    def test_download_file_from_url_text(self, mock_save, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
         """Test downloading a text file."""
         print_my_func_name("test_download_file_from_url_text")
+
+        mock_check_file.return_value = False  # File doesn't exist
+
+        mock_head_response = Mock()
+        mock_head_response.headers = {"Content-Length": "12"}
+        mock_head.return_value = mock_head_response
 
         mock_response = Mock()
         mock_response.status_code = 200
@@ -369,11 +378,20 @@ class TestDownloadFileFromUrl:
         assert "Content-Type: " in captured.out
         assert "Saved to: " in captured.out
 
+    @patch('newtutils.network.os.path.getsize')
+    @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
+    @patch('newtutils.network.requests.head')
     @patch('builtins.open', create=True)
-    def test_download_file_from_url_binary(self, mock_open, mock_get, capsys):
+    def test_download_file_from_url_binary(self, mock_open, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
         """Test downloading a binary file."""
         print_my_func_name("test_download_file_from_url_binary")
+
+        mock_check_file.return_value = False  # File doesn't exist
+
+        mock_head_response = Mock()
+        mock_head_response.headers = {"Content-Length": "14"}
+        mock_head.return_value = mock_head_response
 
         mock_response = Mock()
         mock_response.status_code = 200
@@ -407,10 +425,19 @@ class TestDownloadFileFromUrl:
         assert "Content-Type: application/octet-stream" in captured.out
         assert "Saved to: " in captured.out
 
+    @patch('newtutils.network.os.path.getsize')
+    @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
-    def test_download_file_from_url_status_404(self, mock_get, capsys):
+    @patch('newtutils.network.requests.head')
+    def test_download_file_from_url_status_404(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
         """Test download with 404 status."""
         print_my_func_name("test_download_file_from_url_status_404")
+
+        mock_check_file.return_value = False  # File doesn't exist
+
+        mock_head_response = Mock()
+        mock_head_response.headers = {}
+        mock_head.return_value = mock_head_response
 
         mock_response = Mock()
         mock_response.status_code = 404
@@ -439,10 +466,19 @@ class TestDownloadFileFromUrl:
 
         assert "Saved to: " not in captured.out
 
+    @patch('newtutils.network.os.path.getsize')
+    @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
-    def test_download_file_from_url_timeout(self, mock_get, capsys):
+    @patch('newtutils.network.requests.head')
+    def test_download_file_from_url_timeout(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
         """Test download with timeout."""
         print_my_func_name("test_download_file_from_url_timeout")
+
+        mock_check_file.return_value = False  # File doesn't exist
+
+        mock_head_response = Mock()
+        mock_head_response.headers = {}
+        mock_head.return_value = mock_head_response
 
         mock_get.side_effect = requests.exceptions.ReadTimeout("Timeout")
 
@@ -467,10 +503,19 @@ class TestDownloadFileFromUrl:
 
         assert "Saved to: " not in captured.out
 
+    @patch('newtutils.network.os.path.getsize')
+    @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
-    def test_download_file_from_url_request_exception(self, mock_get, capsys):
+    @patch('newtutils.network.requests.head')
+    def test_download_file_from_url_request_exception(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
         """Test download with request exception."""
         print_my_func_name("test_download_file_from_url_request_exception")
+
+        mock_check_file.return_value = False  # File doesn't exist
+
+        mock_head_response = Mock()
+        mock_head_response.headers = {}
+        mock_head.return_value = mock_head_response
 
         mock_get.side_effect = requests.exceptions.RequestException("Error")
 
@@ -494,12 +539,21 @@ class TestDownloadFileFromUrl:
 
         assert "Saved to: " not in captured.out
 
+    @patch('newtutils.network.os.path.getsize')
+    @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
+    @patch('newtutils.network.requests.head')
     @patch('newtutils.console._retry_pause')
     @patch('newtutils.files.save_text_to_file')
-    def test_download_file_from_url_retry(self, mock_save, mock_retry, mock_get, capsys):
+    def test_download_file_from_url_retry(self, mock_save, mock_retry, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
         """Test download with retry on failure."""
         print_my_func_name("test_download_file_from_url_retry")
+
+        mock_check_file.return_value = False  # File doesn't exist
+
+        mock_head_response = Mock()
+        mock_head_response.headers = {"Content-Length": "7"}
+        mock_head.return_value = mock_head_response
 
         # First call fails, second succeeds
         mock_response_fail = Mock()
@@ -566,11 +620,20 @@ class TestDownloadFileFromUrl:
         assert captured.out.count("::: ERROR :::") == 2
         assert captured.out.count("Expected <class 'str'>, got <class 'int'>") == 2
 
+    @patch('newtutils.network.os.path.getsize')
+    @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
+    @patch('newtutils.network.requests.head')
     @patch('newtutils.files.save_text_to_file')
-    def test_download_file_from_url_json_content_type(self, mock_save, mock_get, capsys):
+    def test_download_file_from_url_json_content_type(self, mock_save, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
         """Test download with JSON content type."""
         print_my_func_name("test_download_file_from_url_json_content_type")
+
+        mock_check_file.return_value = False  # File doesn't exist
+
+        mock_head_response = Mock()
+        mock_head_response.headers = {"Content-Length": "16"}
+        mock_head.return_value = mock_head_response
 
         mock_response = Mock()
         mock_response.status_code = 200
@@ -600,10 +663,19 @@ class TestDownloadFileFromUrl:
         assert "Content-Type: application/json" in captured.out
         assert "Saved to: " in captured.out
 
+    @patch('newtutils.network.os.path.getsize')
+    @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
-    def test_download_file_from_url_custom_headers(self, mock_get, capsys):
+    @patch('newtutils.network.requests.head')
+    def test_download_file_from_url_custom_headers(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
         """Test download with custom headers."""
         print_my_func_name("test_download_file_from_url_custom_headers")
+
+        mock_check_file.return_value = False  # File doesn't exist
+
+        mock_head_response = Mock()
+        mock_head_response.headers = {"Content-Length": "7"}
+        mock_head.return_value = mock_head_response
 
         mock_response = Mock()
         mock_response.status_code = 200

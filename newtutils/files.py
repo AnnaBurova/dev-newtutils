@@ -157,7 +157,7 @@ def _normalize_newlines(
             Normalized text with Unix-style newlines.
     """
 
-    return text.replace("\r\n", "\n")
+    return text.replace("\r\n", "\n").rstrip()
 
 
 def choose_file_from_folder(

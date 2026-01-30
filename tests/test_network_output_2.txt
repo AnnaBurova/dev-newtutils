@@ -1,9 +1,8 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0 -- C:\ProgramData\anaconda3\python.exe
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- python.exe
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-plugins: anyio-4.7.0, cov-7.0.0
 collecting ... collected 21 items
 
 test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success PASSED [  4%]
@@ -28,4 +27,4 @@ test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_invalid_in
 test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_json_content_type PASSED [ 95%]
 test_network.py::TestDownloadFileFromUrl::test_download_file_from_url_custom_headers PASSED [100%]
 
-============================= 21 passed in 0.43s ==============================
+============================= 21 passed in 0.13s ==============================

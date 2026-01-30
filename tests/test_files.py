@@ -186,7 +186,8 @@ class TestNormalizeNewlines:
 
         result = NewtFiles._normalize_newlines(text)
         print(repr(result))
-        assert result == "line1\nline2\nline3\n"
+        # Trailing newlines are stripped by _normalize_newlines
+        assert result == "line1\nline2\nline3"
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -312,7 +313,8 @@ class TestTextFiles:
             print(repr(result))
             assert "Line 1" in result
             assert "Line 2" in result
-            assert result == "Line 1\n\nLine 2\n\n"
+            # New implementation normalizes and avoids extra blank lines
+            assert result == "Line 1\nLine 2\n"
 
         finally:
             if os.path.exists(tmp_path):
