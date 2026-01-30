@@ -131,7 +131,8 @@ def fetch_data_from_url(
             status = response.status_code
 
             print(f"Full URL: {response.url}")
-            print(f"Status: {status} | Response time: {elapsed:.3f} seconds")
+            print(f"Status: {status}")
+            print(f"Response time: {elapsed:.3f} seconds")
 
             if status in (
                     200,  # Normal success
@@ -254,14 +255,13 @@ def download_file_from_url(
 
     while True:
         try:
+            print(f"Downloading from: {file_url}")
             response = requests.get(
                 file_url,
                 headers=custom_headers,
                 timeout=timeout
                 )
             status = response.status_code
-
-            print(f"Downloading from: {file_url}")
             print(f"Status: {status}")
 
             if status in (
