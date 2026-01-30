@@ -157,7 +157,7 @@ def fetch_data_from_url(
                     stop=False
                 )
                 if beep_boop:
-                    NewtCons._beep_boop()
+                    NewtCons.beep_boop()
 
                 # MANUAL DECISION MODE
                 if mode == "manual":
@@ -187,7 +187,7 @@ def fetch_data_from_url(
                 stop=False
             )
             if beep_boop:
-                NewtCons._beep_boop()
+                NewtCons.beep_boop()
 
         except requests.exceptions.RequestException as e:
             elapsed = time.perf_counter() - start_time
@@ -198,12 +198,12 @@ def fetch_data_from_url(
                 stop=False
             )
             if beep_boop:
-                NewtCons._beep_boop()
+                NewtCons.beep_boop()
 
         if not repeat_on_fail:
             return None
 
-        NewtCons._retry_pause(beep=beep_boop)
+        NewtCons.retry_pause(beep=beep_boop)
 
 
 def download_file_from_url(
@@ -262,7 +262,7 @@ def download_file_from_url(
             size_mb = size_b / (1024*1024)
             print(f"File size: {size_mb} Mb")
 
-            if NewtFiles._check_file_exists(save_path, print_error=False):
+            if NewtFiles.check_file_exists(save_path, print_error=False):
                 # get file size and compare
                 existing_size_b = os.path.getsize(save_path)
 
@@ -291,7 +291,7 @@ def download_file_from_url(
 
                 # Binary save
                 else:
-                    NewtFiles._ensure_dir_exists(save_path)
+                    NewtFiles.ensure_dir_exists(save_path)
                     with open(save_path, "wb") as f:
                         f.write(response.content)
 
@@ -303,7 +303,7 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtCons._beep_boop()
+            NewtCons.beep_boop()
 
         except requests.exceptions.ReadTimeout as e:
             NewtCons.error_msg(
@@ -312,7 +312,7 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtCons._beep_boop()
+            NewtCons.beep_boop()
             timeout += 30
 
         except requests.exceptions.RequestException as e:
@@ -321,7 +321,7 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtCons._beep_boop()
+            NewtCons.beep_boop()
 
         except Exception as e:
             NewtCons.error_msg(
@@ -329,9 +329,9 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtCons._beep_boop()
+            NewtCons.beep_boop()
 
         if not repeat_on_fail:
             return False
 
-        NewtCons._retry_pause(beep=True)
+        NewtCons.retry_pause(beep=True)

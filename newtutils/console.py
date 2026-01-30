@@ -5,7 +5,7 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
-    def _divider(
+    def divider(
         ) -> None
     def error_msg(
         *args: object,
@@ -18,10 +18,10 @@ Functions:
         stop: bool = True,
         location: str = ""
         ) -> bool
-    def _beep_boop(
+    def beep_boop(
         pause_s: float = 0.2
         ) -> None
-    def _retry_pause(
+    def retry_pause(
         seconds: int = 5,
         beep: bool = False
         ) -> None
@@ -40,7 +40,7 @@ except ImportError:
     winsound = None
 
 
-def _divider(
+def divider(
         ) -> None:
     """
     Print a visual divider between console sections.
@@ -142,7 +142,7 @@ def validate_input(
     return True
 
 
-def _beep_boop(
+def beep_boop(
         pause_s: float = 0.2
         ) -> None:
     """
@@ -163,13 +163,13 @@ def _beep_boop(
         return
 
     if not validate_input(pause_s, (int, float), stop=False,
-                          location="Newt.console._beep_boop.pause_s"):
+                          location="Newt.console.beep_boop.pause_s"):
         pause_s = 0.2
 
     if pause_s < 0:
         error_msg(
             f"Invalid pause duration: {pause_s}",
-            location="Newt.console._beep_boop",
+            location="Newt.console.beep_boop",
             stop=False
         )
         pause_s = 0.2
@@ -183,12 +183,12 @@ def _beep_boop(
     except Exception as e:
         error_msg(
             f"Exception: {e}",
-            location="Newt.console._beep_boop",
+            location="Newt.console.beep_boop",
             stop=False
         )
 
 
-def _retry_pause(
+def retry_pause(
         seconds: int = 5,
         beep: bool = False
         ) -> None:
@@ -197,7 +197,7 @@ def _retry_pause(
 
     Used primarily by network-related functions
     to wait between retry attempts after a failed request.
-    Optionally plays a short sound notification using `_beep_boop()`.
+    Optionally plays a short sound notification using `beep_boop()`.
 
     Args:
         seconds (int):
@@ -209,19 +209,19 @@ def _retry_pause(
     """
 
     if not validate_input(seconds, int, stop=False,
-                          location="Newt.console._retry_pause.seconds"):
+                          location="Newt.console.retry_pause.seconds"):
         seconds = 5
 
     if seconds <= 0:
         error_msg(
             f"Invalid pause duration: {seconds}",
-            location="Newt.console._retry_pause",
+            location="Newt.console.retry_pause",
             stop=False
         )
         seconds = 5
 
     if beep:
-        _beep_boop()
+        beep_boop()
 
     print(f"Retrying in {seconds} seconds...")
 
@@ -233,5 +233,5 @@ def _retry_pause(
     except KeyboardInterrupt:
         error_msg(
             "Retry interrupted by user (Ctrl+C)",
-            location="Newt.console._retry_pause"
+            location="Newt.console.retry_pause"
         )

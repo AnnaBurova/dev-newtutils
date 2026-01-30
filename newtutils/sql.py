@@ -68,7 +68,7 @@ def db_delayed_close(
             False if validation fails.
     """
 
-    if not NewtFiles._check_file_exists(database):
+    if not NewtFiles.check_file_exists(database):
         # Nothing to release; treat as success because there is no existing file.
         return True
 
@@ -179,7 +179,7 @@ def sql_execute_query(
             )
             return None
 
-    NewtFiles._ensure_dir_exists(database)
+    NewtFiles.ensure_dir_exists(database)
     result = None
 
     try:

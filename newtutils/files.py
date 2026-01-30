@@ -5,15 +5,15 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
-    def _ensure_dir_exists(
+    def ensure_dir_exists(
         file_path: str
         ) -> None
-    def _check_file_exists(
+    def check_file_exists(
         file_path: str,
         stop: bool = False,
         print_error: bool = True
         ) -> bool
-    def _normalize_newlines(
+    def normalize_newlines(
         text: str
         ) -> str
     def choose_file_from_folder(
@@ -62,13 +62,15 @@ Functions:
 from __future__ import annotations
 
 import os
+from collections.abc import Sequence
+
 import csv
 import json
-from collections.abc import Sequence
+
 import newtutils.console as NewtCons
 
 
-def _ensure_dir_exists(
+def ensure_dir_exists(
         file_path: str
         ) -> None:
     """
@@ -92,7 +94,7 @@ def _ensure_dir_exists(
         os.makedirs(dir_path, exist_ok=True)
 
 
-def _check_file_exists(
+def check_file_exists(
         file_path: str,
         stop: bool = False,
         print_error: bool = True
@@ -123,7 +125,7 @@ def _check_file_exists(
     """
 
     if not NewtCons.validate_input(file_path, str, stop=stop,
-                                   location="Newt.files._check_file_exists.file_path"):
+                                   location="Newt.files.check_file_exists.file_path"):
         return False
 
     if os.path.isfile(file_path):
@@ -132,13 +134,13 @@ def _check_file_exists(
     if print_error:
         NewtCons.error_msg(
             f"File not found: {file_path}",
-            location="Newt.files._check_file_exists",
+            location="Newt.files.check_file_exists",
             stop=stop
         )
     return False
 
 
-def _normalize_newlines(
+def normalize_newlines(
         text: str
         ) -> str:
     """
@@ -197,7 +199,7 @@ def choose_file_from_folder(
     try:
         file_list = sorted([
             f for f in os.listdir(folder_path)
-            if _check_file_exists(os.path.join(folder_path, f))
+            if check_file_exists(os.path.join(folder_path, f))
         ])
     except Exception as e:
         NewtCons.error_msg(
@@ -278,7 +280,7 @@ def read_text_from_file(
             Text content of the file, or an empty string if reading fails.
     """
 
-    if not _check_file_exists(file_name):
+    if not check_file_exists(file_name):
         return ""
 
     try:
@@ -331,8 +333,8 @@ def save_text_to_file(
     NewtCons.validate_input(text, str,
                             location="Newt.files.save_text_to_file.text")
 
-    _ensure_dir_exists(file_name)
-    text = _normalize_newlines(text)
+    ensure_dir_exists(file_name)
+    text = normalize_newlines(text)
     mode = "a" if append else "w"
 
     try:
@@ -436,7 +438,7 @@ def read_json_from_file(
             or an empty list if missing or invalid.
     """
 
-    if not _check_file_exists(file_name):
+    if not check_file_exists(file_name):
         return []
 
     try:
@@ -497,7 +499,7 @@ def save_json_to_file(
     NewtCons.validate_input(data, (list, dict),
                             location="Newt.files.save_json_to_file.data")
 
-    _ensure_dir_exists(file_name)
+    ensure_dir_exists(file_name)
 
     try:
         with open(file_name, "w", encoding="utf-8", newline="\n") as f:
@@ -551,7 +553,7 @@ def read_csv_from_file(
                                    location="Newt.files.read_csv_from_file.delimiter"):
         return []
 
-    if not _check_file_exists(file_name):
+    if not check_file_exists(file_name):
         return []
 
     try:
@@ -610,14 +612,14 @@ def save_csv_to_file(
     NewtCons.validate_input(delimiter, str,
                             location="Newt.files.save_csv_to_file.delimiter")
 
-    _ensure_dir_exists(file_name)
+    ensure_dir_exists(file_name)
 
     mode = "a" if append else "w"
 
     try:
         # Normalize newlines in cell data
         normalized_rows = [
-            [_normalize_newlines(str(cell)) for cell in row]
+            [normalize_newlines(str(cell)) for cell in row]
             for row in rows
         ]
 

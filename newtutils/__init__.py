@@ -17,8 +17,11 @@ Modules:
 
 # Console
 from .console import (
+    divider,
     error_msg,
     validate_input,
+    beep_boop,
+    retry_pause,
 )
 
 # Utility
@@ -29,6 +32,8 @@ from .utility import (
 
 # Files
 from .files import (
+    ensure_dir_exists, check_file_exists,
+    normalize_newlines,
     choose_file_from_folder,
     read_text_from_file, save_text_to_file,
     convert_str_to_json,
@@ -56,12 +61,17 @@ from .network import (
 
 __all__ = [
     # Console
+    "divider",
     "error_msg",
     "validate_input",
+    "beep_boop",
+    "retry_pause",
     # Utility
     "sorting_list",
     "sorting_dict_by_keys",
     # Files
+    "ensure_dir_exists", "check_file_exists",
+    "normalize_newlines",
     "choose_file_from_folder",
     "read_text_from_file", "save_text_to_file",
     "convert_str_to_json",
