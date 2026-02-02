@@ -526,6 +526,34 @@ class TestRetryPause:
         assert "\nmock_sleep.call_count: 5\n" in captured.out
 
 
+    @patch('newtutils.console._beep_boop')
+    @patch('newtutils.console.time.sleep')
+    def test_retry_pause_keyboard_interrupt(self, mock_sleep, mock_beep, capsys):
+        """ Test KeyboardInterrupt (Ctrl+C) during countdown. """
+        print_my_func_name()
+
+        mock_sleep.side_effect = KeyboardInterrupt()
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtCons._retry_pause(seconds=5, beep=True)
+        assert exc_info.value.code == 1
+        print("mock_beep.call_count:", mock_beep.call_count)
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        assert mock_beep.call_count == 1
+        assert mock_sleep.call_count == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nRetrying in 5 seconds...\n" in captured.out
+        assert "\nTime left: 5s\n" in captured.out
+        assert "\nLocation: Newt.console._retry_pause : KeyboardInterrupt\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nRetry interrupted by user (Ctrl+C)\n" in captured.out
+        assert "\nmock_beep.call_count: 1\n" in captured.out
+        assert "\nmock_sleep.call_count: 1\n" in captured.out
+
+
 class TestCheckLocation:
     """ Tests for check_location function. """
 
