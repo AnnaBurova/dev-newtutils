@@ -231,10 +231,15 @@ def _retry_pause(
     Args:
         seconds (int):
             Total wait time in seconds.
+            Minimal 1.
             Defaults to 5.
         beep (bool):
             If True, plays a "beep-boop" notification before the countdown.
             Defaults to True.
+
+    Raises:
+        SystemExit:
+            Raised if interrupted by user (Ctrl+C).
     """
 
     if not validate_input(
@@ -264,5 +269,5 @@ def _retry_pause(
     except KeyboardInterrupt:
         error_msg(
             "Retry interrupted by user (Ctrl+C)",
-            location="Newt.console.retry_pause"
+            location="Newt.console._retry_pause : KeyboardInterrupt"
         )
