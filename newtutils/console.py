@@ -220,7 +220,7 @@ def _beep_boop(
 
 def _retry_pause(
         seconds: int = 5,
-        beep: bool = False
+        beep: bool = True
         ) -> None:
     """ Display a countdown and pause before retrying an operation.
 
@@ -234,7 +234,7 @@ def _retry_pause(
             Defaults to 5.
         beep (bool):
             If True, plays a "beep-boop" notification before the countdown.
-            Defaults to False.
+            Defaults to True.
     """
 
     if not validate_input(
