@@ -29,20 +29,20 @@ for mod in "${modules[@]}"; do
         echo "tests/test_${mod} $n"
         case $n in
           1)
-            pytest "$base_path" > "test_${mod}_output_${n}.txt"
+            pytest "$base_path" > "output/test_${mod}_${n}.txt"
             ;;
           2)
-            pytest "$base_path" -v > "test_${mod}_output_${n}.txt" 2>&1
+            pytest "$base_path" -v > "output/test_${mod}_${n}.txt" 2>&1
             ;;
           3)
-            pytest "$base_path" -s > "test_${mod}_output_${n}.txt"
+            pytest "$base_path" -s > "output/test_${mod}_${n}.txt"
             ;;
           4)
-            pytest "$base_path" -s -v > "test_${mod}_output_${n}.txt" 2>&1
+            pytest "$base_path" -s -v > "output/test_${mod}_${n}.txt" 2>&1
             ;;
         esac
         # Convert to LF
-        dos2unix --force "test_${mod}_output_${n}.txt"
+        dos2unix --force "output/test_${mod}_${n}.txt"
     done
     echo "-----------------------------------------"
 done
