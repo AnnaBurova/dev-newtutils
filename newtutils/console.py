@@ -40,7 +40,7 @@ from colorama import Fore, Style
 
 try:
     import winsound
-except ImportError:
+except ImportError:  # pragma: no cover (Unix-only)
     winsound = None
 
 
