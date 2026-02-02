@@ -12,49 +12,8 @@ Tests cover:
 
 import pytest
 
+from helpers import print_my_func_name, print_my_captured
 import newtutils.utility as NewtUtil
-
-
-def print_my_func_name(func_name):
-    """
-    Print the provided function name in a structured format.
-
-    Args:
-        func_name (str):
-            Name of the function to display.
-    """
-
-    print("Function:", func_name)
-    print("--------------------------------------------")
-
-
-def print_my_captured(captured):
-    """
-    Pretty-print captured standard output and error streams from pytest.
-
-    Args:
-        captured:
-            A pytest `CaptureResult` object returned by `capsys.readouterr()`.
-            Must provide `.out` and `.err` attributes representing captured
-            standard output and standard error text.
-    """
-
-    print()
-    print("START=======================================")
-
-    print("=====captured.out=====")
-    if captured.out:
-        print(captured.out)
-    else:
-        print("(no stdout captured)")
-
-    print("=====captured.err=====")
-    if captured.err:
-        print(captured.err)
-    else:
-        print("(no stderr captured)")
-
-    print("END=========================================")
 
 
 class TestSortingList:
@@ -62,7 +21,7 @@ class TestSortingList:
 
     def test_sorting_list_integers(self, capsys):
         """Test sorting list of integers."""
-        print_my_func_name("test_sorting_list_integers")
+        print_my_func_name()
 
         input_list = [3, 1, 2, 3, 5, 1]
         print(input_list)
@@ -75,7 +34,7 @@ class TestSortingList:
 
     def test_sorting_list_strings(self, capsys):
         """Test sorting list of strings."""
-        print_my_func_name("test_sorting_list_strings")
+        print_my_func_name()
 
         input_list = ["c", "a", "b", "c", "z"]
         print(input_list)
@@ -88,7 +47,7 @@ class TestSortingList:
 
     def test_sorting_list_mixed(self, capsys):
         """Test sorting list with mixed strings and integers."""
-        print_my_func_name("test_sorting_list_mixed")
+        print_my_func_name()
 
         input_list = ["f", 4, "a", 2, "b", 1, "a"]
         print(input_list)
@@ -102,7 +61,7 @@ class TestSortingList:
 
     def test_sorting_list_empty(self, capsys):
         """Test sorting empty list."""
-        print_my_func_name("test_sorting_list_empty")
+        print_my_func_name()
 
         result = NewtUtil.sorting_list([])
         print(result)
@@ -113,7 +72,7 @@ class TestSortingList:
 
     def test_sorting_list_single_element(self, capsys):
         """Test sorting list with single element."""
-        print_my_func_name("test_sorting_list_single_element")
+        print_my_func_name()
 
         print(NewtUtil.sorting_list([1]))
         assert NewtUtil.sorting_list([1]) == [1]
@@ -125,7 +84,7 @@ class TestSortingList:
 
     def test_sorting_list_all_duplicates(self, capsys):
         """Test sorting list with all duplicates."""
-        print_my_func_name("test_sorting_list_all_duplicates")
+        print_my_func_name()
 
         input_list = [1, 1, 1, 1]
         print(input_list)
@@ -138,7 +97,7 @@ class TestSortingList:
 
     def test_sorting_list_invalid_type_no_stop(self, capsys):
         """Test sorting list with invalid types, stop=False."""
-        print_my_func_name("test_sorting_list_invalid_type_no_stop")
+        print_my_func_name()
 
         input_list = [1, 2, 3.5]
         print(input_list)
@@ -154,7 +113,7 @@ class TestSortingList:
 
     def test_sorting_list_invalid_type_with_stop(self, capsys):
         """Test sorting list with invalid types, stop=True."""
-        print_my_func_name("test_sorting_list_invalid_type_with_stop")
+        print_my_func_name()
 
         input_list = [1, 2, 3.5]
         print(input_list)
@@ -167,7 +126,7 @@ class TestSortingList:
 
     def test_sorting_list_not_a_list(self, capsys):
         """Test sorting list with non-list input."""
-        print_my_func_name("test_sorting_list_not_a_list")
+        print_my_func_name()
 
         input_str = "not a list"
         print(input_str)
@@ -180,7 +139,7 @@ class TestSortingList:
 
     def test_sorting_list_with_none(self, capsys):
         """Test sorting list containing None."""
-        print_my_func_name("test_sorting_list_with_none")
+        print_my_func_name()
 
         input_list = [1, None, "a"]
         print(input_list)
@@ -193,7 +152,7 @@ class TestSortingList:
 
     def test_sorting_list_large_numbers(self, capsys):
         """Test sorting list with large numbers."""
-        print_my_func_name("test_sorting_list_large_numbers")
+        print_my_func_name()
 
         input_list = [100, 1, 50, 1000, 5]
         print(input_list)
@@ -210,7 +169,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_by_single_key(self, capsys):
         """Test sorting by a single key."""
-        print_my_func_name("test_sorting_dict_by_single_key")
+        print_my_func_name()
 
         input_dict = [
             {"name": "Charlie", "age": 25},
@@ -229,7 +188,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_by_multiple_keys(self, capsys):
         """Test sorting by multiple keys."""
-        print_my_func_name("test_sorting_dict_by_multiple_keys")
+        print_my_func_name()
 
         input_dict = [
             {"name": "Charlie", "age": 25},
@@ -248,7 +207,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_reverse(self, capsys):
         """Test sorting in reverse order."""
-        print_my_func_name("test_sorting_dict_reverse")
+        print_my_func_name()
 
         input_dict = [
             {"name": "Alice", "age": 30},
@@ -266,7 +225,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_missing_keys(self, capsys):
         """Test sorting with missing keys (should be placed at end)."""
-        print_my_func_name("test_sorting_dict_missing_keys")
+        print_my_func_name()
 
         input_dict = [
             {"name": "Alice", "age": 30},
@@ -285,7 +244,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_none_values(self, capsys):
         """Test sorting with None values (should be placed at end)."""
-        print_my_func_name("test_sorting_dict_none_values")
+        print_my_func_name()
 
         input_dict = [
             {"name": "Alice", "age": 30},
@@ -304,7 +263,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_empty_list(self, capsys):
         """Test sorting empty list."""
-        print_my_func_name("test_sorting_dict_empty_list")
+        print_my_func_name()
 
         result = NewtUtil.sorting_dict_by_keys([])
         print(result)
@@ -315,7 +274,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_no_keys(self, capsys):
         """Test sorting without keys (should return original order)."""
-        print_my_func_name("test_sorting_dict_no_keys")
+        print_my_func_name()
 
         input_dict = [
             {"name": "Charlie"},
@@ -333,7 +292,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_not_list(self, capsys):
         """Test sorting with non-list input."""
-        print_my_func_name("test_sorting_dict_not_list")
+        print_my_func_name()
 
         input_str = "not a list"
         print(input_str)
@@ -346,7 +305,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_not_dicts(self, capsys):
         """Test sorting with list containing non-dicts."""
-        print_my_func_name("test_sorting_dict_not_dicts")
+        print_my_func_name()
 
         input_list = [1, 2, 3]
         print(input_list)
@@ -359,7 +318,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_invalid_key_type(self, capsys):
         """Test sorting with invalid key type."""
-        print_my_func_name("test_sorting_dict_invalid_key_type")
+        print_my_func_name()
 
         input_dict = [{"name": "Alice"}]
         print(input_dict)
@@ -372,7 +331,7 @@ class TestSortingDictByKeys:
 
     def test_sorting_dict_complex_sorting(self, capsys):
         """Test complex multi-key sorting."""
-        print_my_func_name("test_sorting_dict_complex_sorting")
+        print_my_func_name()
 
         input_dict = [
             {"category": "A", "priority": 2, "name": "Item2"},
