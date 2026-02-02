@@ -14,6 +14,11 @@ Functions:
         *keys: str,
         reverse: bool = False
         ) -> list[dict[str, object]]
+    def check_dict_keys(
+        data: dict,
+        expected: set[str],
+        stop: bool = True
+        ) -> bool
 """
 
 from __future__ import annotations
@@ -171,3 +176,48 @@ def sorting_dict_by_keys(
             stop=False
         )
         return [dict(d) for d in data]
+
+
+def check_dict_keys(
+        data: dict,
+        expected: set[str],
+        stop: bool = True
+        ) -> bool:
+    """
+    Validate that a dictionary contains the expected keys.
+
+    Args:
+        data (dict):
+            Dictionary to validate.
+        expected (set[str]):
+            Set of keys that must be present in the dictionary.
+
+    Returns:
+        bool:
+            True if all expected keys are present and no extra keys exist,
+            False otherwise.
+            Default True.
+
+    Example:
+        >>> sample = {"a": 1, "b": 2}
+        >>> check_dict_keys(sample, {"a", "b"})
+        True
+        >>> check_dict_keys(sample, {"a", "b", "c"})
+        False
+    """
+
+    data_keys = set(data.keys())
+    expected_keys = set(expected)
+    missing_keys = expected_keys - data_keys
+    extra_keys = data_keys - expected_keys
+
+    if missing_keys or extra_keys:
+        NewtCons.error_msg(
+            f"Data keys: {', '.join(sorted(data_keys))}",
+            f"Missing keys: {', '.join(sorted(missing_keys))}",
+            f"Unexpected keys: {', '.join(sorted(extra_keys))}",
+            location="mwparser.check_dict_keys",
+            stop=stop
+        )
+        return False
+    return True

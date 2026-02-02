@@ -27,6 +27,7 @@ from .console import (
 from .utility import (
     sorting_list,
     sorting_dict_by_keys,
+    check_dict_keys,
 )
 
 # Files
@@ -65,9 +66,10 @@ __all__ = [
     "validate_input",
     "check_location",
     "select_from_input",
-    # Utility
+    # Utility ----------
     "sorting_list",
     "sorting_dict_by_keys",
+    "check_dict_keys",
     # Files
     "ensure_dir_exists", "check_file_exists",
     "normalize_newlines",
