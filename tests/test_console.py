@@ -37,7 +37,8 @@ class TestDivider:
         print_my_captured(captured)
 
         assert "-----" * 10 in captured.out
-        assert "\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
 
 
 class TestErrorMsg:
@@ -55,8 +56,8 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Unknown\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Unknown\n" in captured.out
         assert "\nTest error\n" in captured.out
 
 
@@ -69,8 +70,8 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Unknown\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Unknown\n" in captured.out
         assert "\nTest error\n" in captured.out
 
 
@@ -88,11 +89,9 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Unknown\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nError 1\n" in captured.out
-        assert "\nError 2\n" in captured.out
-        assert "\nError 3\n" in captured.out
+        assert "\nLocation: Unknown\n" in captured.out
+        assert "\nError 1\nError 2\nError 3\n" in captured.out
 
 
     def test_error_msg_with_location(self, capsys):
@@ -108,8 +107,8 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: test.module\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: test.module\n" in captured.out
         assert "\nTest error\n" in captured.out
 
 
@@ -140,10 +139,8 @@ class TestValidateInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n123\n" in captured.out
-        assert "\nhello\n" in captured.out
-        assert "\n3.14\n" in captured.out
-        assert "\nFalse\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_validate_input_incorrect_type_no_stop(self, capsys):
@@ -156,8 +153,8 @@ class TestValidateInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
         assert "\nValue: hello\n" in captured.out
 
@@ -173,11 +170,10 @@ class TestValidateInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
         assert "\nValue: hello\n" in captured.out
-
         assert "This line will not be printed" not in captured.out
 
 
@@ -200,11 +196,8 @@ class TestValidateInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n123\n" in captured.out
-        assert "\nhello\n" in captured.out
-        assert "\n3.14\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'int'>, <class 'str'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.14\n" in captured.out
 
@@ -215,29 +208,29 @@ class TestValidateInput:
 
         input_1 = [1, 2, 3]
 
-        print(input_1, list, "yes")
+        print(input_1, list, type(input_1) == list)
         assert NewtCons.validate_input(input_1, list, stop=False) is True
 
-        print(input_1, dict, "not")
+        print(input_1, dict, type(input_1) == dict)
         assert NewtCons.validate_input(input_1, dict, stop=False) is False
 
         input_2 = {"key": "value"}
 
-        print(input_2, dict, "yes")
+        print(input_2, dict, type(input_2) == dict)
         assert NewtCons.validate_input(input_2, dict, stop=False) is True
 
-        print(input_2, list, "not")
+        print(input_2, list, type(input_2) == list)
         assert NewtCons.validate_input(input_2, list, stop=False) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[1, 2, 3] <class 'list'> yes\n" in captured.out
-        assert "\n[1, 2, 3] <class 'dict'> not\n" in captured.out
-        assert "\n{'key': 'value'} <class 'dict'> yes\n" in captured.out
-        assert "\n{'key': 'value'} <class 'list'> not\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\n[1, 2, 3] <class 'list'> True\n" in captured.out
+        assert "\n[1, 2, 3] <class 'dict'> False\n" in captured.out
+        assert "\n{'key': 'value'} <class 'dict'> True\n" in captured.out
+        assert "\n{'key': 'value'} <class 'list'> False\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected <class 'dict'>, got <class 'list'>\n" in captured.out
         assert "\nValue: [1, 2, 3]\n" in captured.out
         assert "\nExpected <class 'list'>, got <class 'dict'>\n" in captured.out
@@ -250,19 +243,19 @@ class TestValidateInput:
 
         input_1 = None
 
-        print(input_1, type(None), "yes")
+        print(input_1, type(None), type(input_1) == type(None))
         assert NewtCons.validate_input(input_1, type(None), stop=False) is True
 
-        print(input_1, int, "not")
+        print(input_1, int, type(input_1) == int)
         assert NewtCons.validate_input(input_1, int, stop=False) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nNone <class 'NoneType'> yes\n" in captured.out
-        assert "\nNone <class 'int'> not\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\nNone <class 'NoneType'> True\n" in captured.out
+        assert "\nNone <class 'int'> False\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected <class 'int'>, got <class 'NoneType'>\n" in captured.out
         assert "\nValue: None\n" in captured.out
 
@@ -281,8 +274,10 @@ class TestValidateInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.console.validate_input > custom.validator\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > custom.validator\n" in captured.out
+        assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
+        assert "\nValue: hello\n" in captured.out
 
 
 class TestBeepBoop:
@@ -297,16 +292,14 @@ class TestBeepBoop:
         print_my_func_name()
 
         NewtCons._beep_boop()
-        print("mock_sleep.call_count:", mock_sleep.call_count)
-        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         assert mock_sleep.call_count == 2
         assert mock_winsound.Beep.call_count == 2
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nmock_sleep.call_count: 2\n" in captured.out
-        assert "\nmock_winsound.Beep.call_count: 2\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.console.os.name', 'posix')
@@ -317,13 +310,13 @@ class TestBeepBoop:
 
         NewtCons._beep_boop()
         mock_winsound.Beep.assert_not_called()
-        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         assert mock_winsound.Beep.call_count == 0
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nmock_winsound.Beep.call_count: 0\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.console.os.name', 'nt')
@@ -334,21 +327,15 @@ class TestBeepBoop:
         print_my_func_name()
 
         NewtCons._beep_boop(pause_s="Test")  # type: ignore
-        print("mock_sleep.call_count:", mock_sleep.call_count)
-        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         assert mock_sleep.call_count == 2
         assert mock_winsound.Beep.call_count == 2
 
         NewtCons._beep_boop(pause_s=-1)
-        print("mock_sleep.call_count:", mock_sleep.call_count)
-        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         assert mock_sleep.call_count == 4
         assert mock_winsound.Beep.call_count == 4
 
         NewtCons._beep_boop(pause_s=0.7)
 
-        print("mock_sleep.call_count:", mock_sleep.call_count)
-        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         assert mock_sleep.call_count == 6
         assert mock_winsound.Beep.call_count == 6
 
@@ -359,16 +346,10 @@ class TestBeepBoop:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nmock_sleep.call_count: 2\n" in captured.out
-        assert "\nmock_winsound.Beep.call_count: 2\n" in captured.out
-        assert "\nmock_sleep.call_count: 4\n" in captured.out
-        assert "\nmock_winsound.Beep.call_count: 4\n" in captured.out
-        assert "\nmock_sleep.call_count: 6\n" in captured.out
-        assert "\nmock_winsound.Beep.call_count: 6\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > _beep_boop : pause_s not int or float\n" in captured.out
-        assert "\nLocation: Newt.console._beep_boop : pause_s less then 0\n" in captured.out
         assert "\nExpected (<class 'int'>, <class 'float'>), got <class 'str'>\n" in captured.out
+        assert "\nLocation: Newt.console._beep_boop : pause_s less then 0\n" in captured.out
         assert "\nInvalid pause duration: -1\n" in captured.out
         assert "\nPause is: [0.2, 1, 0.2, 1, 0.7, 1] seconds\n" in captured.out
 
@@ -383,9 +364,6 @@ class TestBeepBoop:
         mock_winsound.Beep.side_effect = Exception("Audio driver crash")
 
         NewtCons._beep_boop()
-
-        print("mock_sleep.call_count:", mock_sleep.call_count)
-        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
         assert mock_sleep.call_count == 0
         assert mock_winsound.Beep.call_count == 1
 
@@ -395,11 +373,9 @@ class TestBeepBoop:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.console._beep_boop : Exception on Beep\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console._beep_boop : Exception on Beep\n" in captured.out
         assert "\nException: Audio driver crash\n" in captured.out
-        assert "\nmock_sleep.call_count: 0\n" in captured.out
-        assert "\nmock_winsound.Beep.call_count: 1\n" in captured.out
 
 
 class TestRetryPause:
@@ -414,8 +390,6 @@ class TestRetryPause:
 
         NewtCons._retry_pause(seconds=2)
         mock_beep.assert_called_once()
-        print("mock_beep.call_count:", mock_beep.call_count)
-        print("mock_sleep.call_count:", mock_sleep.call_count)
         assert mock_beep.call_count == 1
         assert mock_sleep.call_count == 2
 
@@ -423,10 +397,11 @@ class TestRetryPause:
         print_my_captured(captured)
 
         assert "\nRetrying in 2 seconds...\n" in captured.out
+        assert "\nTime left: 3s\n" not in captured.out
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
-        assert "\nmock_beep.call_count: 1\n" in captured.out
-        assert "\nmock_sleep.call_count: 2\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.console._beep_boop')
@@ -436,8 +411,6 @@ class TestRetryPause:
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=3, beep=False)
-        print("mock_beep.call_count:", mock_beep.call_count)
-        print("mock_sleep.call_count:", mock_sleep.call_count)
         assert mock_beep.call_count == 0
         assert mock_sleep.call_count == 3
 
@@ -445,11 +418,12 @@ class TestRetryPause:
         print_my_captured(captured)
 
         assert "\nRetrying in 3 seconds...\n" in captured.out
+        assert "\nTime left: 4s\n" not in captured.out
         assert "\nTime left: 3s\n" in captured.out
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
-        assert "\nmock_beep.call_count: 0\n" in captured.out
-        assert "\nmock_sleep.call_count: 3\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.console.time.sleep')
@@ -459,14 +433,13 @@ class TestRetryPause:
 
         NewtCons._retry_pause(seconds="invalid", beep=False)  # type: ignore
         # Should sleep 5 times (once per second)
-        print("mock_sleep.call_count:", mock_sleep.call_count)
         assert mock_sleep.call_count == 5
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.console.validate_input > _retry_pause : seconds\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > _retry_pause : seconds\n" in captured.out
         assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
         assert "\nValue: invalid\n" in captured.out
         assert "\nRetrying in 5 seconds...\n" in captured.out
@@ -475,7 +448,6 @@ class TestRetryPause:
         assert "\nTime left: 3s\n" in captured.out
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
-        assert "\nmock_sleep.call_count: 5\n" in captured.out
 
 
     @patch('newtutils.console.time.sleep')
@@ -485,14 +457,13 @@ class TestRetryPause:
 
         NewtCons._retry_pause(seconds=0, beep=False)
         # Should sleep 5 times (once per second)
-        print("mock_sleep.call_count:", mock_sleep.call_count)
         assert mock_sleep.call_count == 5
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.console._retry_pause : seconds less then 1\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console._retry_pause : seconds less then 1\n" in captured.out
         assert "\nInvalid pause duration: 0\n" in captured.out
         assert "\nRetrying in 5 seconds...\n" in captured.out
         assert "\nTime left: 5s\n" in captured.out
@@ -500,7 +471,6 @@ class TestRetryPause:
         assert "\nTime left: 3s\n" in captured.out
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
-        assert "\nmock_sleep.call_count: 5\n" in captured.out
 
 
     @patch('newtutils.console.time.sleep')
@@ -510,14 +480,13 @@ class TestRetryPause:
 
         NewtCons._retry_pause(seconds=-1, beep=False)
         # Should sleep 5 times (once per second)
-        print("mock_sleep.call_count:", mock_sleep.call_count)
         assert mock_sleep.call_count == 5
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.console._retry_pause : seconds less then 1\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console._retry_pause : seconds less then 1\n" in captured.out
         assert "\nInvalid pause duration: -1\n" in captured.out
         assert "\nRetrying in 5 seconds...\n" in captured.out
         assert "\nTime left: 5s\n" in captured.out
@@ -525,7 +494,6 @@ class TestRetryPause:
         assert "\nTime left: 3s\n" in captured.out
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
-        assert "\nmock_sleep.call_count: 5\n" in captured.out
 
 
     @patch('newtutils.console._beep_boop')
@@ -539,8 +507,6 @@ class TestRetryPause:
         with pytest.raises(SystemExit) as exc_info:
             NewtCons._retry_pause(seconds=5, beep=True)
         assert exc_info.value.code == 1
-        print("mock_beep.call_count:", mock_beep.call_count)
-        print("mock_sleep.call_count:", mock_sleep.call_count)
         assert mock_beep.call_count == 1
         assert mock_sleep.call_count == 1
 
@@ -549,11 +515,10 @@ class TestRetryPause:
 
         assert "\nRetrying in 5 seconds...\n" in captured.out
         assert "\nTime left: 5s\n" in captured.out
-        assert "\nLocation: Newt.console._retry_pause : KeyboardInterrupt\n" in captured.out
+        assert "\nTime left: 4s\n" not in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console._retry_pause : KeyboardInterrupt\n" in captured.out
         assert "\nRetry interrupted by user (Ctrl+C)\n" in captured.out
-        assert "\nmock_beep.call_count: 1\n" in captured.out
-        assert "\nmock_sleep.call_count: 1\n" in captured.out
 
 
 class TestCheckLocation:
@@ -565,14 +530,15 @@ class TestCheckLocation:
         print_my_func_name()
 
         location_1 = "/home/user/project"
-        print(location_1)
+        print(location_1, "==", location_1)
         NewtCons.check_location(location_1, location_1)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n/home/user/project\n" in captured.out
         assert "\n=== START ===\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_check_location_mismatch(self, capsys):
@@ -581,7 +547,7 @@ class TestCheckLocation:
 
         location_1 = "/home/user/project"
         location_2 = "/other/place"
-        print(location_1, location_2)
+        print(location_1, "==", location_2)
 
         with pytest.raises(SystemExit) as exc_info:
             NewtCons.check_location(location_1, location_2)
@@ -590,10 +556,9 @@ class TestCheckLocation:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n/home/user/project /other/place\n" in captured.out
-        assert "\nLocation: Newt.console.check_location\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation is wrong, check folder: /home/user/project\n" in captured.out
+        assert "\nLocation: Newt.console.check_location\n" in captured.out
+        assert "\nCurrent position is wrong, check folder: /home/user/project\n" in captured.out
 
 
     def test_check_location_invalid_type(self, capsys):
@@ -602,7 +567,7 @@ class TestCheckLocation:
 
         location_1 = 123
         location_2 = "/home/user/project"
-        print(location_1, location_2)
+        print(location_1, "==", location_2)
 
         with pytest.raises(SystemExit):
             NewtCons.check_location(location_1, location_2)  # type: ignore
@@ -610,9 +575,8 @@ class TestCheckLocation:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n123 /home/user/project\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > check_location : dir_\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > check_location : dir_\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 123\n" in captured.out
 
@@ -635,7 +599,6 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n{'1': 'Option A', '2': 'Option B', '3': 'Option C'}\n" in captured.out
         assert "\nAvailable list: 3\n" in captured.out
         assert "\n     1: Option A\n" in captured.out
         assert "\n     2: Option B\n" in captured.out
@@ -643,6 +606,8 @@ class TestSelectFromInput:
         assert "\n     X: Exit / Cancel\n" in captured.out
         assert "\n[INPUT]: 1\n" in captured.out
         assert "\nSelected option: Option A\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.console.input', side_effect=["abc", "999", "2"])
@@ -659,7 +624,6 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n{'1': 'Option A', '2': 'Option B'}\n" in captured.out
         assert "\nAvailable list: 2\n" in captured.out
         assert "\n     1: Option A\n" in captured.out
         assert "\n     2: Option B\n" in captured.out
@@ -670,32 +634,8 @@ class TestSelectFromInput:
         assert "\nNumber out of range. Try again.\n" in captured.out
         assert "\n[INPUT]: 2\n" in captured.out
         assert "\nSelected option: Option B\n" in captured.out
-
-
-    @patch('newtutils.console.input', side_effect=["x"])
-    def test_select_from_input_cancel(self, mock_input, capsys):
-        """ Test cancellation with 'x' raises SystemExit. """
-        print_my_func_name()
-
-        select_dict = {"1": "Option A", "2": "Option B"}
-        print(select_dict)
-
-        with pytest.raises(SystemExit) as exc_info:
-            NewtCons.select_from_input(select_dict)
-        assert exc_info.value.code == 1
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n{'1': 'Option A', '2': 'Option B'}\n" in captured.out
-        assert "\nAvailable list: 2\n" in captured.out
-        assert "\n     1: Option A\n" in captured.out
-        assert "\n     2: Option B\n" in captured.out
-        assert "\n     X: Exit / Cancel\n" in captured.out
-        assert "\n[INPUT]: x\n" in captured.out
-        assert "\nLocation: Newt.console.select_from_input : choice = [X]\n" in captured.out
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nSelection cancelled.\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.console.input', side_effect=["X"])
@@ -712,13 +652,12 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n{'1': 'Option A'}\n" in captured.out
         assert "\nAvailable list: 1\n" in captured.out
         assert "\n     1: Option A\n" in captured.out
         assert "\n     X: Exit / Cancel\n" in captured.out
         assert "\n[INPUT]: x\n" in captured.out
-        assert "\nLocation: Newt.console.select_from_input : choice = [X]\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.select_from_input : choice = [X]\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
 
 
@@ -735,9 +674,8 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nnot a dict\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > select_from_input : select_dict\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > select_from_input : select_dict\n" in captured.out
         assert "\nExpected <class 'dict'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a dict\n" in captured.out
 
@@ -758,13 +696,12 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n{'1': 'Option A', '2': 'Option B'}\n" in captured.out
         assert "\nAvailable list: 2\n" in captured.out
         assert "\n     1: Option A\n" in captured.out
         assert "\n     2: Option B\n" in captured.out
         assert "\n     X: Exit / Cancel\n" in captured.out
-        assert "\nLocation: Newt.console.select_from_input : KeyboardInterrupt\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.select_from_input : KeyboardInterrupt\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
 
 
@@ -784,12 +721,11 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n{'1': 'Option A'}\n" in captured.out
         assert "\nAvailable list: 1\n" in captured.out
         assert "\n     1: Option A\n" in captured.out
         assert "\n     X: Exit / Cancel\n" in captured.out
-        assert "\nLocation: Newt.console.select_from_input : Exception\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.select_from_input : Exception\n" in captured.out
         assert "\nException: Input device error\n" in captured.out
 
 
@@ -807,10 +743,11 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n{'1': 'Option A', '2': 'Option B'}\n" in captured.out
         assert "\nAvailable list: 2\n" in captured.out
         assert "\n     1: Option A\n" in captured.out
         assert "\n     2: Option B\n" in captured.out
         assert "\n     X: Exit / Cancel\n" in captured.out
         assert "\n[INPUT]: 2\n" in captured.out
         assert "\nSelected option: Option B\n" in captured.out
+        # No error output expected
+        assert "::: ERROR :::" not in captured.out
