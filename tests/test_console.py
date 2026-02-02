@@ -402,11 +402,11 @@ class TestRetryPause:
         print_my_captured(captured)
 
         assert "\nRetrying in 2 seconds...\n" in captured.out
-        assert "\nTime left: 3s\n" not in captured.out
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "\nTime left: 3s\n" not in captured.out
 
 
     @patch('newtutils.console._beep_boop')
@@ -423,12 +423,12 @@ class TestRetryPause:
         print_my_captured(captured)
 
         assert "\nRetrying in 3 seconds...\n" in captured.out
-        assert "\nTime left: 4s\n" not in captured.out
         assert "\nTime left: 3s\n" in captured.out
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "\nTime left: 4s\n" not in captured.out
 
 
     @patch('newtutils.console.time.sleep')
@@ -521,12 +521,12 @@ class TestRetryPause:
 
         assert "\nRetrying in 5 seconds...\n" in captured.out
         assert "\nTime left: 5s\n" in captured.out
-        assert "\nTime left: 4s\n" not in captured.out
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console._retry_pause : KeyboardInterrupt\n" in captured.out
         assert "\nRetry interrupted by user (Ctrl+C)\n" in captured.out
         # Expected absence of result
         assert "\nThis line will not be printed\n" not in captured.out
+        assert "\nTime left: 4s\n" not in captured.out
 
 
 class TestCheckLocation:
