@@ -100,11 +100,10 @@ def validate_input(
         stop: bool = True,
         location: str = ""
         ) -> bool:
-    """
-    Validate that a given value matches the expected type.
+    """ Validate that a given value matches the expected type.
 
     If the value does not match the expected type,
-    logs an error message using `NewtCons.error_msg()`.
+    logs an error message using `error_msg()`.
     The function can optionally stop execution depending on the `stop` flag.
 
     Args:
@@ -116,6 +115,9 @@ def validate_input(
             If True, stops execution after logging the error.
             If False, logs the error but continues execution.
             Defaults to True.
+        location (str):
+            Additional location context for error reporting.
+            Defaults to empty string.
 
     Returns:
         out (bool):

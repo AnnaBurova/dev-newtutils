@@ -112,10 +112,11 @@ class TestErrorMsg:
 
 
 class TestValidateInput:
-    """Tests for validate_input function."""
+    """ Tests for validate_input function. """
+
 
     def test_validate_input_correct_type(self, capsys):
-        """Test validation with correct type."""
+        """ Test validation with correct type. """
         print_my_func_name()
 
         input_1 = 123
@@ -137,8 +138,14 @@ class TestValidateInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n123\n" in captured.out
+        assert "\nhello\n" in captured.out
+        assert "\n3.14\n" in captured.out
+        assert "\nFalse\n" in captured.out
+
+
     def test_validate_input_incorrect_type_no_stop(self, capsys):
-        """Test validation with incorrect type, stop=False."""
+        """ Test validation with incorrect type, stop=False. """
         print_my_func_name()
 
         result = NewtCons.validate_input("hello", int, stop=False)
@@ -147,22 +154,33 @@ class TestValidateInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "::: ERROR :::" in captured.out
-        assert "Expected <class 'int'>, got <class 'str'>" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
+        assert "\nValue: hello\n" in captured.out
+
 
     def test_validate_input_incorrect_type_with_stop(self, capsys):
-        """Test validation with incorrect type, stop=True."""
+        """ Test validation with incorrect type, stop=True. """
         print_my_func_name()
 
         with pytest.raises(SystemExit):
-            result = NewtCons.validate_input("hello", int, stop=True)
+            result = NewtCons.validate_input("hello", int)
             print("This line will not be printed:", result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
+        assert "\nValue: hello\n" in captured.out
+
+        assert "This line will not be printed" not in captured.out
+
+
     def test_validate_input_multiple_types(self, capsys):
-        """Test validation with tuple of allowed types."""
+        """ Test validation with tuple of allowed types. """
         print_my_func_name()
 
         input_1 = 123
@@ -180,48 +198,89 @@ class TestValidateInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n123\n" in captured.out
+        assert "\nhello\n" in captured.out
+        assert "\n3.14\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nExpected (<class 'int'>, <class 'str'>), got <class 'float'>\n" in captured.out
+        assert "\nValue: 3.14\n" in captured.out
+
+
     def test_validate_input_list_type(self, capsys):
-        """Test validation with list type."""
+        """ Test validation with list type. """
         print_my_func_name()
 
         input_1 = [1, 2, 3]
 
-        print(input_1, list)
+        print(input_1, list, "yes")
         assert NewtCons.validate_input(input_1, list, stop=False) is True
 
         print(input_1, dict, "not")
         assert NewtCons.validate_input(input_1, dict, stop=False) is False
 
-        captured = capsys.readouterr()
-        print_my_captured(captured)
+        input_2 = {"key": "value"}
 
-    def test_validate_input_dict_type(self, capsys):
-        """Test validation with dict type."""
-        print_my_func_name()
+        print(input_2, dict, "yes")
+        assert NewtCons.validate_input(input_2, dict, stop=False) is True
 
-        input_1 = {"key": "value"}
-
-        print(input_1, dict)
-        assert NewtCons.validate_input(input_1, dict, stop=False) is True
-
-        print(input_1, list, "not")
-        assert NewtCons.validate_input(input_1, list, stop=False) is False
+        print(input_2, list, "not")
+        assert NewtCons.validate_input(input_2, list, stop=False) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n[1, 2, 3] <class 'list'> yes\n" in captured.out
+        assert "\n[1, 2, 3] <class 'dict'> not\n" in captured.out
+        assert "\n{'key': 'value'} <class 'dict'> yes\n" in captured.out
+        assert "\n{'key': 'value'} <class 'list'> not\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nExpected <class 'dict'>, got <class 'list'>\n" in captured.out
+        assert "\nValue: [1, 2, 3]\n" in captured.out
+        assert "\nExpected <class 'list'>, got <class 'dict'>\n" in captured.out
+        assert "\nValue: {'key': 'value'}\n" in captured.out
+
 
     def test_validate_input_none_value(self, capsys):
-        """Test validation with None value."""
+        """ Test validation with None value. """
         print_my_func_name()
 
-        print(None, type(None))
-        assert NewtCons.validate_input(None, type(None), stop=False) is True
+        input_1 = None
 
-        print(None, int, "not")
-        assert NewtCons.validate_input(None, int, stop=False) is False
+        print(input_1, type(None), "yes")
+        assert NewtCons.validate_input(input_1, type(None), stop=False) is True
+
+        print(input_1, int, "not")
+        assert NewtCons.validate_input(input_1, int, stop=False) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\nNone <class 'NoneType'> yes\n" in captured.out
+        assert "\nNone <class 'int'> not\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nExpected <class 'int'>, got <class 'NoneType'>\n" in captured.out
+        assert "\nValue: None\n" in captured.out
+
+
+    def test_validate_input_with_location(self, capsys):
+        """ Test validation with custom location. """
+        print_my_func_name()
+
+        input_1 = "hello"
+
+        assert NewtCons.validate_input(
+            input_1, int, stop=False,
+            location="custom.validator"
+        ) is False
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nLocation: Newt.console.validate_input > custom.validator\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
 
 
 class TestBeepBoop:
