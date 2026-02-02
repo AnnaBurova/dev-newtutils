@@ -20,6 +20,7 @@ from .console import (
     error_msg,
     validate_input,
     check_location,
+    select_from_input,
 )
 
 # Utility
@@ -63,6 +64,7 @@ __all__ = [
     "error_msg",
     "validate_input",
     "check_location",
+    "select_from_input",
     # Utility
     "sorting_list",
     "sorting_dict_by_keys",
