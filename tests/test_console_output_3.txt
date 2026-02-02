@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collected 24 items
+collected 33 items
 
 test_console.py 
 START=======================================
@@ -353,6 +353,24 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
+Function: test_retry_pause_keyboard_interrupt
+============================================
+Retrying in 5 seconds...
+Time left: 5s
+[1m [31m
+Location: Newt.console._retry_pause : KeyboardInterrupt
+::: ERROR :::
+Retry interrupted by user (Ctrl+C)
+[0m
+mock_beep.call_count: 1
+mock_sleep.call_count: 1
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
 Function: test_check_location_match
 ============================================
 /home/user/project
@@ -393,5 +411,153 @@ Value: 123
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_select_from_input_valid_choice
+============================================
+{'1': 'Option A', '2': 'Option B', '3': 'Option C'}
+Available list: 3
+     1: Option A
+     2: Option B
+     3: Option C
+     X: Exit / Cancel
+[INPUT]: 1
+Selected option: Option A
 
-============================= 24 passed in 0.12s ==============================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_select_from_input_invalid_then_valid
+============================================
+{'1': 'Option A', '2': 'Option B'}
+Available list: 2
+     1: Option A
+     2: Option B
+     X: Exit / Cancel
+[INPUT]: abc
+Invalid input. Please enter a number.
+[INPUT]: 999
+Number out of range. Try again.
+[INPUT]: 2
+Selected option: Option B
+
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_select_from_input_cancel
+============================================
+{'1': 'Option A', '2': 'Option B'}
+Available list: 2
+     1: Option A
+     2: Option B
+     X: Exit / Cancel
+[INPUT]: x
+[1m [31m
+Location: Newt.console.select_from_input : choice = [X]
+::: ERROR :::
+Selection cancelled.
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_select_from_input_cancel_uppercase
+============================================
+{'1': 'Option A'}
+Available list: 1
+     1: Option A
+     X: Exit / Cancel
+[INPUT]: x
+[1m [31m
+Location: Newt.console.select_from_input : choice = [X]
+::: ERROR :::
+Selection cancelled.
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_select_from_input_invalid_type
+============================================
+not a dict
+[1m [31m
+Location: Newt.console.validate_input > select_from_input : select_dict
+::: ERROR :::
+Expected <class 'dict'>, got <class 'str'>
+Value: not a dict
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_select_from_input_keyboard_interrupt
+============================================
+{'1': 'Option A', '2': 'Option B'}
+Available list: 2
+     1: Option A
+     2: Option B
+     X: Exit / Cancel
+[1m [31m
+Location: Newt.console.select_from_input : KeyboardInterrupt
+::: ERROR :::
+Selection cancelled.
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_select_from_input_exception
+============================================
+{'1': 'Option A'}
+Available list: 1
+     1: Option A
+     X: Exit / Cancel
+[1m [31m
+Location: Newt.console.select_from_input : Exception
+::: ERROR :::
+Exception: Input device error
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_select_from_input_spaces
+============================================
+{'1': 'Option A', '2': 'Option B'}
+Available list: 2
+     1: Option A
+     2: Option B
+     X: Exit / Cancel
+[INPUT]: 2
+Selected option: Option B
+
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 33 passed in 0.12s ==============================
