@@ -37,6 +37,7 @@ class TestSortingList:
         assert "\n[3, 1, 2, 3, 5, 1]\n" in captured.out
         assert "\n[1, 2, 3, 5]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_list_strings(self, capsys):
@@ -55,6 +56,7 @@ class TestSortingList:
         assert "\n['c', 'a', 'b', 'c', 'z']\n" in captured.out
         assert "\n['a', 'b', 'c', 'z']\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_list_mixed(self, capsys):
@@ -74,6 +76,7 @@ class TestSortingList:
         assert "\n['f', 4, 'a', 2, 'b', 1, 'a']\n" in captured.out
         assert "\n['a', 'b', 'f', 1, 2, 4]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_list_empty(self, capsys):
@@ -88,6 +91,8 @@ class TestSortingList:
         print_my_captured(captured)
 
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_sorting_list_single_element(self, capsys):
         """ Test sorting list with single element. """
@@ -111,6 +116,7 @@ class TestSortingList:
         assert "\n[1]\n" in captured.out
         assert "\n['a']\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_list_all_duplicates(self, capsys):
@@ -129,6 +135,7 @@ class TestSortingList:
         assert "\n[1, 1, 1, 1]\n" in captured.out
         assert "\n[1]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_list_invalid_type_no_stop(self, capsys):
@@ -242,6 +249,7 @@ class TestSortingList:
         assert "\n[100, 1, 50, 1000, 5]\n" in captured.out
         assert "\n[1, 5, 50, 100, 1000]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
 class TestSortingDictByKeys:
@@ -273,6 +281,7 @@ class TestSortingDictByKeys:
         assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]\n" in captured.out
         assert "\n[{'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_dict_by_multiple_keys(self, capsys):
@@ -300,6 +309,7 @@ class TestSortingDictByKeys:
         assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 20}]\n" in captured.out
         assert "\n[{'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 25}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_dict_reverse(self, capsys):
@@ -328,6 +338,7 @@ class TestSortingDictByKeys:
         assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
         assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 20}]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_dict_missing_keys(self, capsys):
@@ -357,6 +368,7 @@ class TestSortingDictByKeys:
         assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob'}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
         assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_dict_none_values(self, capsys):
@@ -386,6 +398,7 @@ class TestSortingDictByKeys:
         assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
         assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_dict_empty_list(self, capsys):
@@ -401,6 +414,7 @@ class TestSortingDictByKeys:
 
         assert "\n[]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_dict_no_keys(self, capsys):
@@ -426,6 +440,7 @@ class TestSortingDictByKeys:
 
         assert "\n[{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}]\n[{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sorting_dict_not_list(self, capsys):
@@ -527,3 +542,4 @@ class TestSortingDictByKeys:
         assert "\n[{'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}]\n" in captured.out
         assert "\n[{'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}]\n" in captured.out
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
