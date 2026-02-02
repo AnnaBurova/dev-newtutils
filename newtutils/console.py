@@ -283,7 +283,7 @@ def check_location(
         return
 
     error_msg(
-        f"Location is wrong, check folder: {dir_}",
+        f"Current position is wrong, check folder: {dir_}",
         location="Newt.console.check_location"
     )
 
