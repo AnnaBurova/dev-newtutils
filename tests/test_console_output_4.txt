@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collecting ... collected 21 items
+collecting ... collected 24 items
 
 test_console.py::TestDivider::test_divider_output 
 START=======================================
@@ -372,5 +372,50 @@ mock_sleep.call_count: 5
 (no stderr captured)
 END=========================================
 PASSED
+test_console.py::TestCheckLocation::test_check_location_match 
+START=======================================
+=====captured.out=====
+Function: test_check_location_match
+============================================
+/home/user/project
+=== START ===
 
-============================= 21 passed in 0.13s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_console.py::TestCheckLocation::test_check_location_mismatch 
+START=======================================
+=====captured.out=====
+Function: test_check_location_mismatch
+============================================
+/home/user/project /other/place
+[1m [31m
+Location: Newt.console.check_location
+::: ERROR :::
+Location is wrong, check folder: /home/user/project
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_console.py::TestCheckLocation::test_check_location_invalid_type 
+START=======================================
+=====captured.out=====
+Function: test_check_location_invalid_type
+============================================
+123 /home/user/project
+[1m [31m
+Location: Newt.console.validate_input > check_location : dir_
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 24 passed in 0.12s ==============================

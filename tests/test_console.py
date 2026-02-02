@@ -524,3 +524,64 @@ class TestRetryPause:
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
         assert "\nmock_sleep.call_count: 5\n" in captured.out
+
+
+class TestCheckLocation:
+    """ Tests for check_location function. """
+
+
+    def test_check_location_match(self, capsys):
+        """ When directories match, prints start message. """
+        print_my_func_name()
+
+        location_1 = "/home/user/project"
+        print(location_1)
+        NewtCons.check_location(location_1, location_1)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n/home/user/project\n" in captured.out
+        assert "\n=== START ===\n" in captured.out
+
+
+    def test_check_location_mismatch(self, capsys):
+        """ When directories differ, raises SystemExit and prints error. """
+        print_my_func_name()
+
+        location_1 = "/home/user/project"
+        location_2 = "/other/place"
+        print(location_1, location_2)
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtCons.check_location(location_1, location_2)
+        assert exc_info.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n/home/user/project /other/place\n" in captured.out
+        assert "\nLocation: Newt.console.check_location\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation is wrong, check folder: /home/user/project\n" in captured.out
+
+
+    def test_check_location_invalid_type(self, capsys):
+        """ Passing non-string `dir_` triggers validate_input SystemExit. """
+        print_my_func_name()
+
+        location_1 = 123
+        location_2 = "/home/user/project"
+        print(location_1, location_2)
+
+        with pytest.raises(SystemExit):
+            NewtCons.check_location(location_1, location_2)  # type: ignore
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n123 /home/user/project\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > check_location : dir_\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out

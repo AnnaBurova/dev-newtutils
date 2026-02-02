@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collected 21 items
+collected 24 items
 
 test_console.py 
 START=======================================
@@ -351,5 +351,47 @@ mock_sleep.call_count: 5
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_check_location_match
+============================================
+/home/user/project
+=== START ===
 
-============================= 21 passed in 0.13s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_check_location_mismatch
+============================================
+/home/user/project /other/place
+[1m [31m
+Location: Newt.console.check_location
+::: ERROR :::
+Location is wrong, check folder: /home/user/project
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_check_location_invalid_type
+============================================
+123 /home/user/project
+[1m [31m
+Location: Newt.console.validate_input > check_location : dir_
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 24 passed in 0.12s ==============================
