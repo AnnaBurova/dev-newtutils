@@ -9,6 +9,7 @@ Comprehensive unit tests for newtutils.utility module.
 Tests cover:
 - TestSortingList
 - TestSortingDictByKeys
+- TestCheckDictKeys
 """
 
 import pytest
@@ -531,3 +532,84 @@ class TestSortingDictByKeys:
         assert "\n[{'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+
+
+class TestCheckDictKeys:
+    """ Tests for check_dict_keys function. """
+
+
+    def test_check_dict_keys_all_present(self, capsys):
+        """When all expected keys are present and no extras, returns True."""
+        print_my_func_name()
+
+        sample_dict = {"a": 1, "b": 2}
+        print(sample_dict)
+        assert NewtUtil.check_dict_keys(sample_dict, {"a", "b"}) is True
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
+    def test_check_dict_keys_missing_keys_no_stop(self, capsys):
+        """Missing keys with stop=False should return False and print details."""
+        print_my_func_name()
+
+        sample = {"a": 1}
+        print(sample)
+        result = NewtUtil.check_dict_keys(sample, {"a", "b"}, stop=False)
+        assert result is False
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: mwparser.check_dict_keys\n" in captured.out
+        assert "\nData keys: a\n" in captured.out
+        assert "\nMissing keys: b\n" in captured.out
+        assert "\nUnexpected keys: \n" in captured.out
+
+
+    def test_check_dict_keys_extra_keys_no_stop(self, capsys):
+        """Extra keys with stop=False should return False and print details."""
+        print_my_func_name()
+
+        sample = {"a": 1, "b": 2, "c": 3}
+        print(sample)
+        result = NewtUtil.check_dict_keys(sample, {"a", "b"}, stop=False)
+        assert result is False
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: mwparser.check_dict_keys\n" in captured.out
+        assert "\nData keys: a, b, c\n" in captured.out
+        assert "\nMissing keys: \n" in captured.out
+        assert "\nUnexpected keys: c\n" in captured.out
+
+
+    def test_check_dict_keys_missing_and_extra_stop(self, capsys):
+        """When missing and extra keys and default stop=True -> SystemExit."""
+        print_my_func_name()
+
+        sample = {"x": 9}
+        print(sample)
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.check_dict_keys(sample, {"a", "b"})
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: mwparser.check_dict_keys\n" in captured.out
+        assert "\nData keys: x\n" in captured.out
+        assert "\nMissing keys: a, b\n" in captured.out
+        assert "\nUnexpected keys: x\n" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
