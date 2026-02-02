@@ -39,10 +39,27 @@ class TestDivider:
 
 
 class TestErrorMsg:
-    """Tests for error_msg function."""
+    """ Tests for error_msg function. """
+
+
+    def test_error_msg_with_stop(self, capsys):
+        """ Test error message with default stop=True raises SystemExit. """
+        print_my_func_name()
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtCons.error_msg("Test error")
+        assert exc_info.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nLocation: Unknown\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nTest error\n" in captured.out
+
 
     def test_error_msg_without_stop(self, capsys):
-        """Test error message without stopping execution."""
+        """ Test error message without stopping execution. """
         print_my_func_name()
 
         NewtCons.error_msg("Test error", stop=False)
@@ -50,44 +67,48 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Location: Unknown" in captured.out
-        assert "::: ERROR :::" in captured.out
-        assert "Test error" in captured.out
+        assert "\nLocation: Unknown\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nTest error\n" in captured.out
 
-    def test_error_msg_with_stop(self, capsys):
-        """Test error message with stop=True raises SystemExit."""
-        print_my_func_name()
-
-        with pytest.raises(SystemExit) as exc_info:
-            NewtCons.error_msg("Test error", stop=True)
-        assert exc_info.value.code == 1
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
 
     def test_error_msg_multiple_args(self, capsys):
-        """Test error message with multiple arguments."""
+        """ Test error message with multiple arguments. """
         print_my_func_name()
 
-        NewtCons.error_msg("Error 1", "Error 2", "Error 3", stop=False)
+        NewtCons.error_msg(
+            "Error 1",
+            "Error 2",
+            "Error 3",
+            stop=False
+        )
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Error 1" in captured.out
-        assert "Error 2" in captured.out
-        assert "Error 3" in captured.out
+        assert "\nLocation: Unknown\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nError 1\n" in captured.out
+        assert "\nError 2\n" in captured.out
+        assert "\nError 3\n" in captured.out
+
 
     def test_error_msg_with_location(self, capsys):
-        """Test error message with custom location."""
+        """ Test error message with custom location. """
         print_my_func_name()
 
-        NewtCons.error_msg("Test error", location="test.module", stop=False)
+        NewtCons.error_msg(
+            "Test error",
+            location="test.module",
+            stop=False
+        )
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Location: test.module" in captured.out
+        assert "\nLocation: test.module\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nTest error\n" in captured.out
 
 
 class TestValidateInput:

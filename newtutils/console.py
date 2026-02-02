@@ -60,10 +60,9 @@ def error_msg(
         location: str = "Unknown",
         stop: bool = True
         ) -> None:
-    """
-    Print error messages in red and optionally terminate the program.
+    """ Print error messages in red and optionally terminate the program.
 
-    This function displays one or more messages in bright red color using Colorama.
+    Displays one or more messages in bright red color using Colorama.
     It is intended for CLI tools and debugging utilities
     that require structured visual feedback in the console.
     The `location` parameter identifies where the error originated.
@@ -74,8 +73,6 @@ def error_msg(
         location (str):
             Name of the function or module where the error occurred.
             Defaults to "Unknown".
-            Example:
-            Newt.console.error_msg
         stop (bool):
             If True, the program terminates with exit code 1 after printing.
             Defaults to True.
