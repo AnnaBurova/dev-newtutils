@@ -1,5 +1,5 @@
 """
-Updated on 2025-11
+Updated on 2026-02
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -123,6 +123,9 @@ def sorting_dict_by_keys(
             Raised when validation fails and `NewtCons.error_msg()` is called
             with `stop=True` (if configured that way).
     """
+
+    if not data:
+        return []
 
     # Validate that data is a list
     if not NewtCons.validate_input(data, list,
