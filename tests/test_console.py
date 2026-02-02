@@ -401,70 +401,126 @@ class TestBeepBoop:
 
 
 class TestRetryPause:
-    """Tests for _retry_pause function."""
+    """ Tests for _retry_pause function. """
 
-    @patch('newtutils.console.time.sleep')
-    def test_retry_pause_countdown(self, mock_sleep, capsys):
-        """Test retry pause countdown."""
-        print_my_func_name()
-
-        NewtCons._retry_pause(seconds=3, beep=False)
-        # Should sleep 3 times (once per second)
-        assert mock_sleep.call_count == 3
-        print("mock_sleep.call_count:", mock_sleep.call_count)
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
 
     @patch('newtutils.console._beep_boop')
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_with_beep(self, mock_sleep, mock_beep, capsys):
-        """Test retry pause with beep enabled."""
+        """ Test retry pause with beep enabled. """
         print_my_func_name()
 
-        NewtCons._retry_pause(seconds=2, beep=True)
+        NewtCons._retry_pause(seconds=2)
         mock_beep.assert_called_once()
-        print("mock_sleep.call_count:", mock_sleep.call_count)
         print("mock_beep.call_count:", mock_beep.call_count)
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        assert mock_beep.call_count == 1
+        assert mock_sleep.call_count == 2
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\nRetrying in 2 seconds...\n" in captured.out
+        assert "\nTime left: 2s\n" in captured.out
+        assert "\nTime left: 1s\n" in captured.out
+        assert "\nmock_beep.call_count: 1\n" in captured.out
+        assert "\nmock_sleep.call_count: 2\n" in captured.out
+
+
+    @patch('newtutils.console._beep_boop')
     @patch('newtutils.console.time.sleep')
-    def test_retry_pause_invalid_seconds(self, mock_sleep, capsys):
-        """Test retry pause with invalid seconds."""
+    def test_retry_pause_countdown(self, mock_sleep, mock_beep, capsys):
+        """ Test retry pause countdown. """
         print_my_func_name()
 
-        NewtCons._retry_pause(seconds=0, beep=False)
-        # Should sleep 5 times (once per second)
-        assert mock_sleep.call_count == 5
+        NewtCons._retry_pause(seconds=3, beep=False)
+        print("mock_beep.call_count:", mock_beep.call_count)
         print("mock_sleep.call_count:", mock_sleep.call_count)
+        assert mock_beep.call_count == 0
+        assert mock_sleep.call_count == 3
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-    @patch('newtutils.console.time.sleep')
-    def test_retry_pause_negative_seconds(self, mock_sleep, capsys):
-        """Test retry pause with negative seconds."""
-        print_my_func_name()
+        assert "\nRetrying in 3 seconds...\n" in captured.out
+        assert "\nTime left: 3s\n" in captured.out
+        assert "\nTime left: 2s\n" in captured.out
+        assert "\nTime left: 1s\n" in captured.out
+        assert "\nmock_beep.call_count: 0\n" in captured.out
+        assert "\nmock_sleep.call_count: 3\n" in captured.out
 
-        NewtCons._retry_pause(seconds=-1, beep=False)
-        # Should sleep 5 times (once per second)
-        assert mock_sleep.call_count == 5
-        print("mock_sleep.call_count:", mock_sleep.call_count)
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
 
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_invalid_type(self, mock_sleep, capsys):
-        """Test retry pause with invalid type."""
+        """ Test retry pause with invalid type. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds="invalid", beep=False)  # type: ignore
         # Should sleep 5 times (once per second)
-        assert mock_sleep.call_count == 5
         print("mock_sleep.call_count:", mock_sleep.call_count)
+        assert mock_sleep.call_count == 5
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\nLocation: Newt.console.validate_input > _retry_pause : seconds\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
+        assert "\nValue: invalid\n" in captured.out
+        assert "\nRetrying in 5 seconds...\n" in captured.out
+        assert "\nTime left: 5s\n" in captured.out
+        assert "\nTime left: 4s\n" in captured.out
+        assert "\nTime left: 3s\n" in captured.out
+        assert "\nTime left: 2s\n" in captured.out
+        assert "\nTime left: 1s\n" in captured.out
+        assert "\nmock_sleep.call_count: 5\n" in captured.out
+
+
+    @patch('newtutils.console.time.sleep')
+    def test_retry_pause_invalid_seconds(self, mock_sleep, capsys):
+        """ Test retry pause with invalid seconds. """
+        print_my_func_name()
+
+        NewtCons._retry_pause(seconds=0, beep=False)
+        # Should sleep 5 times (once per second)
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        assert mock_sleep.call_count == 5
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nLocation: Newt.console._retry_pause : seconds less then 1\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nInvalid pause duration: 0\n" in captured.out
+        assert "\nRetrying in 5 seconds...\n" in captured.out
+        assert "\nTime left: 5s\n" in captured.out
+        assert "\nTime left: 4s\n" in captured.out
+        assert "\nTime left: 3s\n" in captured.out
+        assert "\nTime left: 2s\n" in captured.out
+        assert "\nTime left: 1s\n" in captured.out
+        assert "\nmock_sleep.call_count: 5\n" in captured.out
+
+
+    @patch('newtutils.console.time.sleep')
+    def test_retry_pause_negative_seconds(self, mock_sleep, capsys):
+        """ Test retry pause with negative seconds. """
+        print_my_func_name()
+
+        NewtCons._retry_pause(seconds=-1, beep=False)
+        # Should sleep 5 times (once per second)
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        assert mock_sleep.call_count == 5
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nLocation: Newt.console._retry_pause : seconds less then 1\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nInvalid pause duration: -1\n" in captured.out
+        assert "\nRetrying in 5 seconds...\n" in captured.out
+        assert "\nTime left: 5s\n" in captured.out
+        assert "\nTime left: 4s\n" in captured.out
+        assert "\nTime left: 3s\n" in captured.out
+        assert "\nTime left: 2s\n" in captured.out
+        assert "\nTime left: 1s\n" in captured.out
+        assert "\nmock_sleep.call_count: 5\n" in captured.out
