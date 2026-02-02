@@ -7,11 +7,13 @@ Created on 2025-11
 Comprehensive unit tests for newtutils.console module.
 
 Tests cover:
-- Divider (_divider)
-- Error messaging (error_msg)
-- Input validation (validate_input)
-- Beep notification (_beep_boop)
-- Retry pause (_retry_pause)
+- TestDivider
+- TestErrorMsg
+- TestValidateInput
+- TestBeepBoop
+- TestRetryPause
+- TestCheckLocation
+- TestSelectFromInput
 """
 
 import pytest
