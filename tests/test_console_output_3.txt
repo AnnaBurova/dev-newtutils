@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collected 33 items
+collected 32 items
 
 test_console.py 
 START=======================================
@@ -141,16 +141,16 @@ START=======================================
 =====captured.out=====
 Function: test_validate_input_list_type
 ============================================
-[1, 2, 3] <class 'list'> yes
-[1, 2, 3] <class 'dict'> not
+[1, 2, 3] <class 'list'> True
+[1, 2, 3] <class 'dict'> False
 [1m [31m
 Location: Newt.console.validate_input
 ::: ERROR :::
 Expected <class 'dict'>, got <class 'list'>
 Value: [1, 2, 3]
 [0m
-{'key': 'value'} <class 'dict'> yes
-{'key': 'value'} <class 'list'> not
+{'key': 'value'} <class 'dict'> True
+{'key': 'value'} <class 'list'> False
 [1m [31m
 Location: Newt.console.validate_input
 ::: ERROR :::
@@ -166,8 +166,8 @@ START=======================================
 =====captured.out=====
 Function: test_validate_input_none_value
 ============================================
-None <class 'NoneType'> yes
-None <class 'int'> not
+None <class 'NoneType'> True
+None <class 'int'> False
 [1m [31m
 Location: Newt.console.validate_input
 ::: ERROR :::
@@ -198,8 +198,6 @@ START=======================================
 =====captured.out=====
 Function: test_beep_boop_on_windows
 ============================================
-mock_sleep.call_count: 2
-mock_winsound.Beep.call_count: 2
 
 =====captured.err=====
 (no stderr captured)
@@ -209,7 +207,6 @@ START=======================================
 =====captured.out=====
 Function: test_beep_boop_on_non_windows
 ============================================
-mock_winsound.Beep.call_count: 0
 
 =====captured.err=====
 (no stderr captured)
@@ -225,17 +222,11 @@ Location: Newt.console.validate_input > _beep_boop : pause_s not int or float
 Expected (<class 'int'>, <class 'float'>), got <class 'str'>
 Value: Test
 [0m
-mock_sleep.call_count: 2
-mock_winsound.Beep.call_count: 2
 [1m [31m
 Location: Newt.console._beep_boop : pause_s less then 0
 ::: ERROR :::
 Invalid pause duration: -1
 [0m
-mock_sleep.call_count: 4
-mock_winsound.Beep.call_count: 4
-mock_sleep.call_count: 6
-mock_winsound.Beep.call_count: 6
 Pause is: [0.2, 1, 0.2, 1, 0.7, 1] seconds
 
 =====captured.err=====
@@ -251,8 +242,6 @@ Location: Newt.console._beep_boop : Exception on Beep
 ::: ERROR :::
 Exception: Audio driver crash
 [0m
-mock_sleep.call_count: 0
-mock_winsound.Beep.call_count: 1
 
 =====captured.err=====
 (no stderr captured)
@@ -265,8 +254,6 @@ Function: test_retry_pause_with_beep
 Retrying in 2 seconds...
 Time left: 2s
 Time left: 1s
-mock_beep.call_count: 1
-mock_sleep.call_count: 2
 
 =====captured.err=====
 (no stderr captured)
@@ -280,8 +267,6 @@ Retrying in 3 seconds...
 Time left: 3s
 Time left: 2s
 Time left: 1s
-mock_beep.call_count: 0
-mock_sleep.call_count: 3
 
 =====captured.err=====
 (no stderr captured)
@@ -303,7 +288,6 @@ Time left: 4s
 Time left: 3s
 Time left: 2s
 Time left: 1s
-mock_sleep.call_count: 5
 
 =====captured.err=====
 (no stderr captured)
@@ -324,7 +308,6 @@ Time left: 4s
 Time left: 3s
 Time left: 2s
 Time left: 1s
-mock_sleep.call_count: 5
 
 =====captured.err=====
 (no stderr captured)
@@ -345,7 +328,6 @@ Time left: 4s
 Time left: 3s
 Time left: 2s
 Time left: 1s
-mock_sleep.call_count: 5
 
 =====captured.err=====
 (no stderr captured)
@@ -362,8 +344,6 @@ Location: Newt.console._retry_pause : KeyboardInterrupt
 ::: ERROR :::
 Retry interrupted by user (Ctrl+C)
 [0m
-mock_beep.call_count: 1
-mock_sleep.call_count: 1
 
 =====captured.err=====
 (no stderr captured)
@@ -373,7 +353,7 @@ START=======================================
 =====captured.out=====
 Function: test_check_location_match
 ============================================
-/home/user/project
+/home/user/project == /home/user/project
 === START ===
 
 =====captured.err=====
@@ -384,11 +364,11 @@ START=======================================
 =====captured.out=====
 Function: test_check_location_mismatch
 ============================================
-/home/user/project /other/place
+/home/user/project == /other/place
 [1m [31m
 Location: Newt.console.check_location
 ::: ERROR :::
-Location is wrong, check folder: /home/user/project
+Current position is wrong, check folder: /home/user/project
 [0m
 
 =====captured.err=====
@@ -399,7 +379,7 @@ START=======================================
 =====captured.out=====
 Function: test_check_location_invalid_type
 ============================================
-123 /home/user/project
+123 == /home/user/project
 [1m [31m
 Location: Newt.console.validate_input > check_location : dir_
 ::: ERROR :::
@@ -445,26 +425,6 @@ Number out of range. Try again.
 [INPUT]: 2
 Selected option: Option B
 
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
-Function: test_select_from_input_cancel
-============================================
-{'1': 'Option A', '2': 'Option B'}
-Available list: 2
-     1: Option A
-     2: Option B
-     X: Exit / Cancel
-[INPUT]: x
-[1m [31m
-Location: Newt.console.select_from_input : choice = [X]
-::: ERROR :::
-Selection cancelled.
-[0m
 
 =====captured.err=====
 (no stderr captured)
@@ -560,4 +520,4 @@ Selected option: Option B
 END=========================================
 .
 
-============================= 33 passed in 0.12s ==============================
+============================= 32 passed in 0.12s ==============================
