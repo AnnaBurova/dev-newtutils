@@ -284,63 +284,120 @@ class TestValidateInput:
 
 
 class TestBeepBoop:
-    """Tests for _beep_boop function."""
+    """ Tests for _beep_boop function. """
+
 
     @patch('newtutils.console.os.name', 'nt')
     @patch('newtutils.console.winsound')
     @patch('newtutils.console.time.sleep')
     def test_beep_boop_on_windows(self, mock_sleep, mock_winsound, capsys):
-        """Test beep_boop on Windows."""
+        """ Test _beep_boop on Windows. """
         print_my_func_name()
 
         NewtCons._beep_boop()
-        assert mock_winsound.Beep.call_count == 2
         print("mock_sleep.call_count:", mock_sleep.call_count)
         print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
+        assert mock_sleep.call_count == 2
+        assert mock_winsound.Beep.call_count == 2
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\nmock_sleep.call_count: 2\n" in captured.out
+        assert "\nmock_winsound.Beep.call_count: 2\n" in captured.out
+
+
     @patch('newtutils.console.os.name', 'posix')
     @patch('newtutils.console.winsound')
     def test_beep_boop_on_non_windows(self, mock_winsound, capsys):
-        """Test beep_boop on non-Windows (should not raise)."""
+        """ Test beep_boop on non-Windows (should not raise). """
         print_my_func_name()
 
         NewtCons._beep_boop()
         mock_winsound.Beep.assert_not_called()
         print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
+        assert mock_winsound.Beep.call_count == 0
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\nmock_winsound.Beep.call_count: 0\n" in captured.out
+
+
+    @patch('newtutils.console.os.name', 'nt')
     @patch('newtutils.console.winsound')
     @patch('newtutils.console.time.sleep')
     def test_beep_boop_invalid_pause(self, mock_sleep, mock_winsound, capsys):
-        """Test beep_boop with invalid pause duration."""
+        """ Test _beep_boop with invalid pause duration. """
         print_my_func_name()
+
+        NewtCons._beep_boop(pause_s="Test")  # type: ignore
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
+        assert mock_sleep.call_count == 2
+        assert mock_winsound.Beep.call_count == 2
 
         NewtCons._beep_boop(pause_s=-1)
         print("mock_sleep.call_count:", mock_sleep.call_count)
         print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
+        assert mock_sleep.call_count == 4
+        assert mock_winsound.Beep.call_count == 4
+
+        NewtCons._beep_boop(pause_s=0.7)
+
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
+        assert mock_sleep.call_count == 6
+        assert mock_winsound.Beep.call_count == 6
+
+        pause_duration = [call[0][0] for call in mock_sleep.call_args_list]
+        print(f"Pause is: {pause_duration} seconds")
+        assert pause_duration == [0.2, 1, 0.2, 1, 0.7, 1]
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-    def test_beep_boop_custom_pause(self, capsys):
-        """Test beep_boop with custom pause duration."""
+        assert "\nmock_sleep.call_count: 2\n" in captured.out
+        assert "\nmock_winsound.Beep.call_count: 2\n" in captured.out
+        assert "\nmock_sleep.call_count: 4\n" in captured.out
+        assert "\nmock_winsound.Beep.call_count: 4\n" in captured.out
+        assert "\nmock_sleep.call_count: 6\n" in captured.out
+        assert "\nmock_winsound.Beep.call_count: 6\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > _beep_boop : pause_s not int or float\n" in captured.out
+        assert "\nLocation: Newt.console._beep_boop : pause_s less then 0\n" in captured.out
+        assert "\nExpected (<class 'int'>, <class 'float'>), got <class 'str'>\n" in captured.out
+        assert "\nInvalid pause duration: -1\n" in captured.out
+        assert "\nPause is: [0.2, 1, 0.2, 1, 0.7, 1] seconds\n" in captured.out
+
+
+    @patch('newtutils.console.os.name', 'nt')
+    @patch('newtutils.console.winsound')
+    @patch('newtutils.console.time.sleep')
+    def test_beep_boop_exception(self, mock_sleep, mock_winsound, capsys):
+        """ Test _beep_boop with Exception. """
         print_my_func_name()
 
-        with patch('newtutils.console.winsound') as mock_winsound, \
-             patch('newtutils.console.os.name', 'nt'), \
-             patch('newtutils.console.time.sleep') as mock_sleep:
-            NewtCons._beep_boop(pause_s=0.5)
-            assert mock_winsound.Beep.called
-            print("mock_sleep.call_count:", mock_sleep.call_count)
-            print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
+        mock_winsound.Beep.side_effect = Exception("Audio driver crash")
 
-            captured = capsys.readouterr()
-            print_my_captured(captured)
+        NewtCons._beep_boop()
+
+        print("mock_sleep.call_count:", mock_sleep.call_count)
+        print("mock_winsound.Beep.call_count:", mock_winsound.Beep.call_count)
+        assert mock_sleep.call_count == 0
+        assert mock_winsound.Beep.call_count == 1
+
+        # Be sure Beep was called
+        mock_winsound.Beep.assert_called_once_with(1200, 500)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nLocation: Newt.console._beep_boop : Exception on Beep\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nException: Audio driver crash\n" in captured.out
+        assert "\nmock_sleep.call_count: 0\n" in captured.out
+        assert "\nmock_winsound.Beep.call_count: 1\n" in captured.out
 
 
 class TestRetryPause:
