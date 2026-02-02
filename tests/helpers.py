@@ -1,3 +1,9 @@
+"""
+Created on 2026-02
+
+@author: NewtCode Anna Burova
+"""
+
 import inspect
 
 # def print_my_func_name(func_name):

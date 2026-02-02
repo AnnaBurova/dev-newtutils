@@ -1,4 +1,9 @@
 """
+Updated on 2026-02
+Created on 2025-11
+
+@author: NewtCode Anna Burova
+
 Comprehensive unit tests for newtutils.network module.
 
 Tests cover:
