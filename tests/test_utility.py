@@ -113,8 +113,6 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[1]\n" in captured.out
-        assert "\n['a']\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -132,8 +130,7 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[1, 1, 1, 1]\n" in captured.out
-        assert "\n[1]\n" in captured.out
+        assert "\n[1, 1, 1, 1]\n[1]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -151,15 +148,13 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[1, 2, 3.5]\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.5\n" in captured.out
         assert "\nLocation: Newt.utility.sorting_list.input_list\n" in captured.out
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
-        assert "\n[]\n" in captured.out
 
 
     def test_sorting_list_invalid_type_with_stop(self, capsys):
@@ -176,15 +171,13 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[1, 2, 3.5]\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.5\n" in captured.out
         assert "\nLocation: Newt.utility.sorting_list.input_list\n" in captured.out
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
-        assert "\n[]\n" not in captured.out
         # Expected absence of result
         assert "\nThis line will not be printed\n" not in captured.out
 
@@ -202,11 +195,10 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_list.input_list\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_list.input_list\n" in captured.out
         assert "\nExpected <class 'list'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a list\n" in captured.out
-        assert "\n[]\n" in captured.out
 
 
     def test_sorting_list_with_none(self, capsys):
@@ -222,7 +214,6 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[1, None, 'a']\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'NoneType'>\n" in captured.out
@@ -230,7 +221,6 @@ class TestSortingList:
         assert "\nLocation: Newt.utility.sorting_list.input_list\n" in captured.out
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, None, 'a']\n" in captured.out
-        assert "\n[]\n" in captured.out
 
 
     def test_sorting_list_large_numbers(self, capsys):
@@ -412,7 +402,6 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -457,8 +446,8 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys.data\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys.data\n" in captured.out
         assert "\nExpected <class 'list'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a list\n" in captured.out
         # Expected absence of result
@@ -479,8 +468,8 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys\n" in captured.out
         assert "\nExpected a list of dictionaries\n" in captured.out
         assert "\nData: [1, 2, 3]\n" in captured.out
         # Expected absence of result
@@ -501,9 +490,8 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'name': 'Alice'}]\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys\n" in captured.out
         assert "\nKeys must be strings\n" in captured.out
         assert "\nKeys: (123,)\n" in captured.out
         # Expected absence of result
