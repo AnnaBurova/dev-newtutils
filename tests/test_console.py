@@ -1,4 +1,5 @@
 """
+Updated on 2026-02
 Created on 2025-11
 
 @author: NewtCode Anna Burova
@@ -6,11 +7,11 @@ Created on 2025-11
 Comprehensive unit tests for newtutils.console module.
 
 Tests cover:
+- Divider (_divider)
 - Error messaging (error_msg)
 - Input validation (validate_input)
 - Beep notification (_beep_boop)
 - Retry pause (_retry_pause)
-- Divider (_divider)
 """
 
 import pytest
@@ -18,6 +19,23 @@ from unittest.mock import patch
 
 from helpers import print_my_func_name, print_my_captured
 import newtutils.console as NewtCons
+
+
+class TestDivider:
+    """ Tests for divider function. """
+
+
+    def test_divider_output(self, capsys):
+        """ Test that divider prints correctly. """
+        print_my_func_name()
+
+        NewtCons._divider()
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "-----" * 10 in captured.out
+        assert "\n" in captured.out
 
 
 class TestErrorMsg:
@@ -313,19 +331,3 @@ class TestRetryPause:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-
-
-class TestDivider:
-    """Tests for _divider function."""
-
-    def test_divider_output(self, capsys):
-        """Test that divider prints correctly."""
-        print_my_func_name()
-
-        NewtCons._divider()
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "-" in captured.out
-        assert "\n" in captured.out

@@ -17,7 +17,6 @@ Modules:
 
 # Console
 from .console import (
-    divider,
     error_msg,
     validate_input,
     check_location,
@@ -62,8 +61,7 @@ from .network import (
 # === Metadata ===
 
 __all__ = [
-    # Console
-    "divider",
+    # Console ----------
     "error_msg",
     "validate_input",
     "check_location",

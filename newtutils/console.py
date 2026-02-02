@@ -1,11 +1,11 @@
 """
-Updated on 2025-11
+Updated on 2026-02
 Created on 2025-10
 
 @author: NewtCode Anna Burova
 
 Functions:
-    def divider(
+    def _divider(
         ) -> None
     def error_msg(
         *args: object,
@@ -44,12 +44,11 @@ except ImportError:
     winsound = None
 
 
-def divider(
+def _divider(
         ) -> None:
-    """
-    Print a visual divider between console sections.
+    """ Print a visual divider between console sections.
 
-    This helper function displays a horizontal line to visually separate blocks of console output.
+    Displays a horizontal line to visually separate blocks of console output.
     Primarily used for readability in testing and debugging logs.
     """
 
