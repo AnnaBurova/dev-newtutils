@@ -1,15 +1,29 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- python.exe
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
+plugins: cov-7.0.0
 collecting ... collected 21 items
 
-test_console.py::TestErrorMsg::test_error_msg_without_stop 
+test_console.py::TestDivider::test_divider_output 
 START=======================================
 =====captured.out=====
-Function: test_error_msg_without_stop
---------------------------------------------
+Function: test_divider_output
+============================================
+
+--------------------------------------------------
+
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_console.py::TestErrorMsg::test_error_msg_with_stop 
+START=======================================
+=====captured.out=====
+Function: test_error_msg_with_stop
+============================================
 [1m [31m
 Location: Unknown
 ::: ERROR :::
@@ -20,11 +34,11 @@ Test error
 (no stderr captured)
 END=========================================
 PASSED
-test_console.py::TestErrorMsg::test_error_msg_with_stop 
+test_console.py::TestErrorMsg::test_error_msg_without_stop 
 START=======================================
 =====captured.out=====
-Function: test_error_msg_with_stop
---------------------------------------------
+Function: test_error_msg_without_stop
+============================================
 [1m [31m
 Location: Unknown
 ::: ERROR :::
@@ -39,7 +53,7 @@ test_console.py::TestErrorMsg::test_error_msg_multiple_args
 START=======================================
 =====captured.out=====
 Function: test_error_msg_multiple_args
---------------------------------------------
+============================================
 [1m [31m
 Location: Unknown
 ::: ERROR :::
@@ -56,7 +70,7 @@ test_console.py::TestErrorMsg::test_error_msg_with_location
 START=======================================
 =====captured.out=====
 Function: test_error_msg_with_location
---------------------------------------------
+============================================
 [1m [31m
 Location: test.module
 ::: ERROR :::
@@ -71,7 +85,7 @@ test_console.py::TestValidateInput::test_validate_input_correct_type
 START=======================================
 =====captured.out=====
 Function: test_validate_input_correct_type
---------------------------------------------
+============================================
 123
 hello
 3.14
@@ -85,7 +99,7 @@ test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop
 START=======================================
 =====captured.out=====
 Function: test_validate_input_incorrect_type_no_stop
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input
 ::: ERROR :::
@@ -101,7 +115,7 @@ test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop
 START=======================================
 =====captured.out=====
 Function: test_validate_input_incorrect_type_with_stop
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input
 ::: ERROR :::
@@ -117,7 +131,7 @@ test_console.py::TestValidateInput::test_validate_input_multiple_types
 START=======================================
 =====captured.out=====
 Function: test_validate_input_multiple_types
---------------------------------------------
+============================================
 123
 hello
 3.14
@@ -136,8 +150,8 @@ test_console.py::TestValidateInput::test_validate_input_list_type
 START=======================================
 =====captured.out=====
 Function: test_validate_input_list_type
---------------------------------------------
-[1, 2, 3] <class 'list'>
+============================================
+[1, 2, 3] <class 'list'> yes
 [1, 2, 3] <class 'dict'> not
 [1m [31m
 Location: Newt.console.validate_input
@@ -145,17 +159,7 @@ Location: Newt.console.validate_input
 Expected <class 'dict'>, got <class 'list'>
 Value: [1, 2, 3]
 [0m
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_console.py::TestValidateInput::test_validate_input_dict_type 
-START=======================================
-=====captured.out=====
-Function: test_validate_input_dict_type
---------------------------------------------
-{'key': 'value'} <class 'dict'>
+{'key': 'value'} <class 'dict'> yes
 {'key': 'value'} <class 'list'> not
 [1m [31m
 Location: Newt.console.validate_input
@@ -172,8 +176,8 @@ test_console.py::TestValidateInput::test_validate_input_none_value
 START=======================================
 =====captured.out=====
 Function: test_validate_input_none_value
---------------------------------------------
-None <class 'NoneType'>
+============================================
+None <class 'NoneType'> yes
 None <class 'int'> not
 [1m [31m
 Location: Newt.console.validate_input
@@ -186,11 +190,27 @@ Value: None
 (no stderr captured)
 END=========================================
 PASSED
+test_console.py::TestValidateInput::test_validate_input_with_location 
+START=======================================
+=====captured.out=====
+Function: test_validate_input_with_location
+============================================
+[1m [31m
+Location: Newt.console.validate_input > custom.validator
+::: ERROR :::
+Expected <class 'int'>, got <class 'str'>
+Value: hello
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
 test_console.py::TestBeepBoop::test_beep_boop_on_windows 
 START=======================================
 =====captured.out=====
 Function: test_beep_boop_on_windows
---------------------------------------------
+============================================
 mock_sleep.call_count: 2
 mock_winsound.Beep.call_count: 2
 
@@ -202,7 +222,7 @@ test_console.py::TestBeepBoop::test_beep_boop_on_non_windows
 START=======================================
 =====captured.out=====
 Function: test_beep_boop_on_non_windows
---------------------------------------------
+============================================
 mock_winsound.Beep.call_count: 0
 
 =====captured.err=====
@@ -213,41 +233,42 @@ test_console.py::TestBeepBoop::test_beep_boop_invalid_pause
 START=======================================
 =====captured.out=====
 Function: test_beep_boop_invalid_pause
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.console._beep_boop
+Location: Newt.console.validate_input > _beep_boop : pause_s not int or float
 ::: ERROR :::
-Invalid pause duration: -1
+Expected (<class 'int'>, <class 'float'>), got <class 'str'>
+Value: Test
 [0m
 mock_sleep.call_count: 2
 mock_winsound.Beep.call_count: 2
+[1m [31m
+Location: Newt.console._beep_boop : pause_s less then 0
+::: ERROR :::
+Invalid pause duration: -1
+[0m
+mock_sleep.call_count: 4
+mock_winsound.Beep.call_count: 4
+mock_sleep.call_count: 6
+mock_winsound.Beep.call_count: 6
+Pause is: [0.2, 1, 0.2, 1, 0.7, 1] seconds
 
 =====captured.err=====
 (no stderr captured)
 END=========================================
 PASSED
-test_console.py::TestBeepBoop::test_beep_boop_custom_pause 
+test_console.py::TestBeepBoop::test_beep_boop_exception 
 START=======================================
 =====captured.out=====
-Function: test_beep_boop_custom_pause
---------------------------------------------
-mock_sleep.call_count: 2
-mock_winsound.Beep.call_count: 2
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_console.py::TestRetryPause::test_retry_pause_countdown 
-START=======================================
-=====captured.out=====
-Function: test_retry_pause_countdown
---------------------------------------------
-Retrying in 3 seconds...
-Time left: 3s
-Time left: 2s
-Time left: 1s
-mock_sleep.call_count: 3
+Function: test_beep_boop_exception
+============================================
+[1m [31m
+Location: Newt.console._beep_boop : Exception on Beep
+::: ERROR :::
+Exception: Audio driver crash
+[0m
+mock_sleep.call_count: 0
+mock_winsound.Beep.call_count: 1
 
 =====captured.err=====
 (no stderr captured)
@@ -257,12 +278,51 @@ test_console.py::TestRetryPause::test_retry_pause_with_beep
 START=======================================
 =====captured.out=====
 Function: test_retry_pause_with_beep
---------------------------------------------
+============================================
 Retrying in 2 seconds...
 Time left: 2s
 Time left: 1s
-mock_sleep.call_count: 2
 mock_beep.call_count: 1
+mock_sleep.call_count: 2
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_console.py::TestRetryPause::test_retry_pause_countdown 
+START=======================================
+=====captured.out=====
+Function: test_retry_pause_countdown
+============================================
+Retrying in 3 seconds...
+Time left: 3s
+Time left: 2s
+Time left: 1s
+mock_beep.call_count: 0
+mock_sleep.call_count: 3
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_console.py::TestRetryPause::test_retry_pause_invalid_type 
+START=======================================
+=====captured.out=====
+Function: test_retry_pause_invalid_type
+============================================
+[1m [31m
+Location: Newt.console.validate_input > _retry_pause : seconds
+::: ERROR :::
+Expected <class 'int'>, got <class 'str'>
+Value: invalid
+[0m
+Retrying in 5 seconds...
+Time left: 5s
+Time left: 4s
+Time left: 3s
+Time left: 2s
+Time left: 1s
+mock_sleep.call_count: 5
 
 =====captured.err=====
 (no stderr captured)
@@ -272,9 +332,9 @@ test_console.py::TestRetryPause::test_retry_pause_invalid_seconds
 START=======================================
 =====captured.out=====
 Function: test_retry_pause_invalid_seconds
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.console._retry_pause
+Location: Newt.console._retry_pause : seconds less then 1
 ::: ERROR :::
 Invalid pause duration: 0
 [0m
@@ -294,9 +354,9 @@ test_console.py::TestRetryPause::test_retry_pause_negative_seconds
 START=======================================
 =====captured.out=====
 Function: test_retry_pause_negative_seconds
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.console._retry_pause
+Location: Newt.console._retry_pause : seconds less then 1
 ::: ERROR :::
 Invalid pause duration: -1
 [0m
@@ -307,42 +367,6 @@ Time left: 3s
 Time left: 2s
 Time left: 1s
 mock_sleep.call_count: 5
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_console.py::TestRetryPause::test_retry_pause_invalid_type 
-START=======================================
-=====captured.out=====
-Function: test_retry_pause_invalid_type
---------------------------------------------
-[1m [31m
-Location: Newt.console.validate_input > Newt.console._retry_pause.seconds
-::: ERROR :::
-Expected <class 'int'>, got <class 'str'>
-Value: invalid
-[0m
-Retrying in 5 seconds...
-Time left: 5s
-Time left: 4s
-Time left: 3s
-Time left: 2s
-Time left: 1s
-mock_sleep.call_count: 5
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_console.py::TestDivider::test_divider_output 
-START=======================================
-=====captured.out=====
-Function: test_divider_output
---------------------------------------------
-
---------------------------------------------------
-
 
 =====captured.err=====
 (no stderr captured)

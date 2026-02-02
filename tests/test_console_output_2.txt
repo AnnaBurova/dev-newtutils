@@ -1,30 +1,31 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- python.exe
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
+plugins: cov-7.0.0
 collecting ... collected 21 items
 
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [  4%]
+test_console.py::TestDivider::test_divider_output PASSED                 [  4%]
 test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [  9%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 14%]
-test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 19%]
-test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 23%]
-test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [ 28%]
-test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop PASSED [ 33%]
-test_console.py::TestValidateInput::test_validate_input_multiple_types PASSED [ 38%]
-test_console.py::TestValidateInput::test_validate_input_list_type PASSED [ 42%]
-test_console.py::TestValidateInput::test_validate_input_dict_type PASSED [ 47%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 14%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 19%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 23%]
+test_console.py::TestValidateInput::test_validate_input_correct_type PASSED [ 28%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_no_stop PASSED [ 33%]
+test_console.py::TestValidateInput::test_validate_input_incorrect_type_with_stop PASSED [ 38%]
+test_console.py::TestValidateInput::test_validate_input_multiple_types PASSED [ 42%]
+test_console.py::TestValidateInput::test_validate_input_list_type PASSED [ 47%]
 test_console.py::TestValidateInput::test_validate_input_none_value PASSED [ 52%]
-test_console.py::TestBeepBoop::test_beep_boop_on_windows PASSED          [ 57%]
-test_console.py::TestBeepBoop::test_beep_boop_on_non_windows PASSED      [ 61%]
-test_console.py::TestBeepBoop::test_beep_boop_invalid_pause PASSED       [ 66%]
-test_console.py::TestBeepBoop::test_beep_boop_custom_pause PASSED        [ 71%]
-test_console.py::TestRetryPause::test_retry_pause_countdown PASSED       [ 76%]
+test_console.py::TestValidateInput::test_validate_input_with_location PASSED [ 57%]
+test_console.py::TestBeepBoop::test_beep_boop_on_windows PASSED          [ 61%]
+test_console.py::TestBeepBoop::test_beep_boop_on_non_windows PASSED      [ 66%]
+test_console.py::TestBeepBoop::test_beep_boop_invalid_pause PASSED       [ 71%]
+test_console.py::TestBeepBoop::test_beep_boop_exception PASSED           [ 76%]
 test_console.py::TestRetryPause::test_retry_pause_with_beep PASSED       [ 80%]
-test_console.py::TestRetryPause::test_retry_pause_invalid_seconds PASSED [ 85%]
-test_console.py::TestRetryPause::test_retry_pause_negative_seconds PASSED [ 90%]
-test_console.py::TestRetryPause::test_retry_pause_invalid_type PASSED    [ 95%]
-test_console.py::TestDivider::test_divider_output PASSED                 [100%]
+test_console.py::TestRetryPause::test_retry_pause_countdown PASSED       [ 85%]
+test_console.py::TestRetryPause::test_retry_pause_invalid_type PASSED    [ 90%]
+test_console.py::TestRetryPause::test_retry_pause_invalid_seconds PASSED [ 95%]
+test_console.py::TestRetryPause::test_retry_pause_negative_seconds PASSED [100%]
 
 ============================= 21 passed in 0.13s ==============================
