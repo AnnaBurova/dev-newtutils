@@ -62,13 +62,17 @@ def sorting_list(
             Raised when `stop=True` and the input contains invalid data types.
     """
 
-    if not NewtCons.validate_input(input_list, list, stop=stop,
-                                   location="Newt.utility.sorting_list.input_list"):
+    if not NewtCons.validate_input(
+        input_list, list, stop=stop,
+        location="Newt.utility.sorting_list.input_list"
+    ):
         return []
 
     try:
         # Validate all elements
-        if not all(NewtCons.validate_input(x, (str, int), stop=False) for x in input_list):
+        if not all(NewtCons.validate_input(
+            x, (str, int), stop=False
+        ) for x in input_list):
             NewtCons.error_msg(
                 "input_list must have only str and int types",
                 f"input_list: {input_list}",
@@ -133,8 +137,10 @@ def sorting_dict_by_keys(
         return []
 
     # Validate that data is a list
-    if not NewtCons.validate_input(data, list,
-                                   location="Newt.utility.sorting_dict_by_keys.data"):
+    if not NewtCons.validate_input(
+        data, list,
+        location="Newt.utility.sorting_dict_by_keys.data"
+    ):
         return []
 
     # Validate that each element is a dictionary
