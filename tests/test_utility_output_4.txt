@@ -1,15 +1,16 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- python.exe
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
+plugins: cov-7.0.0
 collecting ... collected 22 items
 
 test_utility.py::TestSortingList::test_sorting_list_integers 
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_integers
---------------------------------------------
+============================================
 [3, 1, 2, 3, 5, 1]
 [1, 2, 3, 5]
 
@@ -21,7 +22,7 @@ test_utility.py::TestSortingList::test_sorting_list_strings
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_strings
---------------------------------------------
+============================================
 ['c', 'a', 'b', 'c', 'z']
 ['a', 'b', 'c', 'z']
 
@@ -33,7 +34,7 @@ test_utility.py::TestSortingList::test_sorting_list_mixed
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_mixed
---------------------------------------------
+============================================
 ['f', 4, 'a', 2, 'b', 1, 'a']
 ['a', 'b', 'f', 1, 2, 4]
 
@@ -45,7 +46,7 @@ test_utility.py::TestSortingList::test_sorting_list_empty
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_empty
---------------------------------------------
+============================================
 []
 
 =====captured.err=====
@@ -56,8 +57,10 @@ test_utility.py::TestSortingList::test_sorting_list_single_element
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_single_element
---------------------------------------------
+============================================
 [1]
+[1]
+['a']
 ['a']
 
 =====captured.err=====
@@ -68,7 +71,7 @@ test_utility.py::TestSortingList::test_sorting_list_all_duplicates
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_all_duplicates
---------------------------------------------
+============================================
 [1, 1, 1, 1]
 [1]
 
@@ -80,7 +83,7 @@ test_utility.py::TestSortingList::test_sorting_list_invalid_type_no_stop
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_invalid_type_no_stop
---------------------------------------------
+============================================
 [1, 2, 3.5]
 [1m [31m
 Location: Newt.console.validate_input
@@ -104,7 +107,7 @@ test_utility.py::TestSortingList::test_sorting_list_invalid_type_with_stop
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_invalid_type_with_stop
---------------------------------------------
+============================================
 [1, 2, 3.5]
 [1m [31m
 Location: Newt.console.validate_input
@@ -127,7 +130,7 @@ test_utility.py::TestSortingList::test_sorting_list_not_a_list
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_not_a_list
---------------------------------------------
+============================================
 not a list
 [1m [31m
 Location: Newt.console.validate_input > Newt.utility.sorting_list.input_list
@@ -145,7 +148,7 @@ test_utility.py::TestSortingList::test_sorting_list_with_none
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_with_none
---------------------------------------------
+============================================
 [1, None, 'a']
 [1m [31m
 Location: Newt.console.validate_input
@@ -169,7 +172,7 @@ test_utility.py::TestSortingList::test_sorting_list_large_numbers
 START=======================================
 =====captured.out=====
 Function: test_sorting_list_large_numbers
---------------------------------------------
+============================================
 [100, 1, 50, 1000, 5]
 [1, 5, 50, 100, 1000]
 
@@ -181,7 +184,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_by_single_key
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_by_single_key
---------------------------------------------
+============================================
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
 [{'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}]
 
@@ -193,7 +196,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_by_multiple_keys
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_by_multiple_keys
---------------------------------------------
+============================================
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 20}]
 [{'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 25}, {'name': 'Charlie', 'age': 25}]
 
@@ -205,7 +208,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_reverse
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_reverse
---------------------------------------------
+============================================
 [{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}]
 [{'name': 'Alice', 'age': 30}, {'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 20}]
 
@@ -217,7 +220,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_missing_keys
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_missing_keys
---------------------------------------------
+============================================
 [{'name': 'Alice', 'age': 30}, {'name': 'Bob'}, {'name': 'Charlie', 'age': 25}]
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]
 
@@ -229,7 +232,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_none_values
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_none_values
---------------------------------------------
+============================================
 [{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}, {'name': 'Charlie', 'age': 25}]
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}]
 
@@ -241,7 +244,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_empty_list
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_empty_list
---------------------------------------------
+============================================
 []
 
 =====captured.err=====
@@ -252,7 +255,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_no_keys
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_no_keys
---------------------------------------------
+============================================
 [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}]
 [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}]
 
@@ -264,7 +267,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_not_list
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_not_list
---------------------------------------------
+============================================
 not a list
 [1m [31m
 Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys.data
@@ -281,7 +284,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_not_dicts
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_not_dicts
---------------------------------------------
+============================================
 [1, 2, 3]
 [1m [31m
 Location: Newt.utility.sorting_dict_by_keys
@@ -298,7 +301,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_invalid_key_type
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_invalid_key_type
---------------------------------------------
+============================================
 [{'name': 'Alice'}]
 [1m [31m
 Location: Newt.utility.sorting_dict_by_keys
@@ -315,7 +318,7 @@ test_utility.py::TestSortingDictByKeys::test_sorting_dict_complex_sorting
 START=======================================
 =====captured.out=====
 Function: test_sorting_dict_complex_sorting
---------------------------------------------
+============================================
 [{'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}]
 [{'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}]
 
