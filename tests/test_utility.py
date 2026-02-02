@@ -161,9 +161,10 @@ class TestSortingList:
 
         input_list = [1, 2, 3.5]
         print(input_list)
-        with pytest.raises(SystemExit):
-            result = NewtUtil.sorting_list(input_list)
-            print("This line will not be printed:", result)
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.sorting_list(input_list)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -177,8 +178,8 @@ class TestSortingList:
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
         assert "\n[]\n" not in captured.out
-        assert "\nThis line will not be printed" not in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     def test_sorting_list_not_a_list(self, capsys):
@@ -433,9 +434,10 @@ class TestSortingDictByKeys:
 
         input_str = "not a list"
         print(input_str)
-        with pytest.raises(SystemExit):
-            result = NewtUtil.sorting_dict_by_keys(input_str, "key")  # type: ignore
-            print("This line will not be printed:", result)
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.sorting_dict_by_keys(input_str, "key")  # type: ignore
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -444,8 +446,8 @@ class TestSortingDictByKeys:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nExpected <class 'list'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a list\n" in captured.out
-        assert "\nThis line will not be printed" not in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     def test_sorting_dict_not_dicts(self, capsys):
@@ -454,9 +456,10 @@ class TestSortingDictByKeys:
 
         input_list = [1, 2, 3]
         print(input_list)
-        with pytest.raises(SystemExit):
-            result = NewtUtil.sorting_dict_by_keys(input_list, "key")  # type: ignore
-            print("This line will not be printed:", result)
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.sorting_dict_by_keys(input_list, "key")  # type: ignore
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -465,8 +468,8 @@ class TestSortingDictByKeys:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nExpected a list of dictionaries\n" in captured.out
         assert "\nData: [1, 2, 3]\n" in captured.out
-        assert "\nThis line will not be printed" not in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     def test_sorting_dict_invalid_key_type(self, capsys):
@@ -475,9 +478,10 @@ class TestSortingDictByKeys:
 
         input_dict = [{"name": "Alice"}]
         print(input_dict)
-        with pytest.raises(SystemExit):
-            result = NewtUtil.sorting_dict_by_keys(input_dict, 123)  # type: ignore
-            print("This line will not be printed:", result)
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.sorting_dict_by_keys(input_dict, 123)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -487,8 +491,8 @@ class TestSortingDictByKeys:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nKeys must be strings\n" in captured.out
         assert "\nKeys: (123,)\n" in captured.out
-        assert "\nThis line will not be printed" not in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     def test_sorting_dict_complex_sorting(self, capsys):
