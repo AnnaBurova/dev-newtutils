@@ -37,7 +37,7 @@ class TestDivider:
         print_my_captured(captured)
 
         assert "-----" * 10 in captured.out
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
@@ -59,6 +59,7 @@ class TestErrorMsg:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Unknown\n" in captured.out
         assert "\nTest error\n" in captured.out
+        # Expected absence of result
 
 
     def test_error_msg_without_stop(self, capsys):
@@ -139,7 +140,7 @@ class TestValidateInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
@@ -175,6 +176,7 @@ class TestValidateInput:
         assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
         assert "\nValue: hello\n" in captured.out
         assert "This line will not be printed" not in captured.out
+        # Expected absence of result
 
 
     def test_validate_input_multiple_types(self, capsys):
@@ -298,7 +300,7 @@ class TestBeepBoop:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
@@ -315,7 +317,7 @@ class TestBeepBoop:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
@@ -400,7 +402,7 @@ class TestRetryPause:
         assert "\nTime left: 3s\n" not in captured.out
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
@@ -422,7 +424,7 @@ class TestRetryPause:
         assert "\nTime left: 3s\n" in captured.out
         assert "\nTime left: 2s\n" in captured.out
         assert "\nTime left: 1s\n" in captured.out
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
@@ -519,6 +521,7 @@ class TestRetryPause:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console._retry_pause : KeyboardInterrupt\n" in captured.out
         assert "\nRetry interrupted by user (Ctrl+C)\n" in captured.out
+        # Expected absence of result
 
 
 class TestCheckLocation:
@@ -537,7 +540,7 @@ class TestCheckLocation:
         print_my_captured(captured)
 
         assert "\n=== START ===\n" in captured.out
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
@@ -559,6 +562,7 @@ class TestCheckLocation:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.check_location\n" in captured.out
         assert "\nCurrent position is wrong, check folder: /home/user/project\n" in captured.out
+        # Expected absence of result
 
 
     def test_check_location_invalid_type(self, capsys):
@@ -579,6 +583,7 @@ class TestCheckLocation:
         assert "\nLocation: Newt.console.validate_input > check_location : dir_\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 123\n" in captured.out
+        # Expected absence of result
 
 
 class TestSelectFromInput:
@@ -606,7 +611,7 @@ class TestSelectFromInput:
         assert "\n     X: Exit / Cancel\n" in captured.out
         assert "\n[INPUT]: 1\n" in captured.out
         assert "\nSelected option: Option A\n" in captured.out
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
@@ -634,7 +639,7 @@ class TestSelectFromInput:
         assert "\nNumber out of range. Try again.\n" in captured.out
         assert "\n[INPUT]: 2\n" in captured.out
         assert "\nSelected option: Option B\n" in captured.out
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
@@ -659,6 +664,7 @@ class TestSelectFromInput:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.select_from_input : choice = [X]\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
+        # Expected absence of result
 
 
     def test_select_from_input_invalid_type(self, capsys):
@@ -678,6 +684,7 @@ class TestSelectFromInput:
         assert "\nLocation: Newt.console.validate_input > select_from_input : select_dict\n" in captured.out
         assert "\nExpected <class 'dict'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a dict\n" in captured.out
+        # Expected absence of result
 
 
     @patch('newtutils.console.input')
@@ -703,6 +710,7 @@ class TestSelectFromInput:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.select_from_input : KeyboardInterrupt\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
+        # Expected absence of result
 
 
     @patch('newtutils.console.input')
@@ -727,6 +735,7 @@ class TestSelectFromInput:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.select_from_input : Exception\n" in captured.out
         assert "\nException: Input device error\n" in captured.out
+        # Expected absence of result
 
 
     @patch('newtutils.console.input', return_value=" 2 ")
@@ -749,5 +758,5 @@ class TestSelectFromInput:
         assert "\n     X: Exit / Cancel\n" in captured.out
         assert "\n[INPUT]: 2\n" in captured.out
         assert "\nSelected option: Option B\n" in captured.out
-        # No error output expected
+        # Expected absence of result
         assert "::: ERROR :::" not in captured.out
