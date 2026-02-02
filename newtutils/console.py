@@ -18,16 +18,16 @@ Functions:
         stop: bool = True,
         location: str = ""
         ) -> bool
+    def _beep_boop(
+        pause_s: float = 0.2
+        ) -> None
+    def _retry_pause(
+        seconds: int = 5,
+        beep: bool = True
+        ) -> None
     def check_location(
         dir_: str,
         must_location: str
-        ) -> None
-    def beep_boop(
-        pause_s: float = 0.2
-        ) -> None
-    def retry_pause(
-        seconds: int = 5,
-        beep: bool = False
         ) -> None
 """
 
@@ -172,11 +172,10 @@ def check_location(
         )
 
 
-def beep_boop(
+def _beep_boop(
         pause_s: float = 0.2
         ) -> None:
-    """
-    Play a short "beep-boop" notification sound on Windows systems.
+    """ Play a short "beep-boop" notification sound on Windows systems.
 
     Produces two tones using the built-in `winsound` module:
     a higher-pitched "beep" followed by a lower "boop".
@@ -188,18 +187,20 @@ def beep_boop(
             Defaults to 0.2.
     """
 
-    # Cross-platform safe beep.
+    # Cross-platform safe beep
     if os.name != "nt" or winsound is None:
         return
 
-    if not validate_input(pause_s, (int, float), stop=False,
-                          location="Newt.console.beep_boop.pause_s"):
+    if not validate_input(
+        pause_s, (int, float), stop=False,
+        location="_beep_boop : pause_s not int or float"
+    ):
         pause_s = 0.2
 
     if pause_s < 0:
         error_msg(
             f"Invalid pause duration: {pause_s}",
-            location="Newt.console.beep_boop",
+            location="Newt.console._beep_boop : pause_s less then 0",
             stop=False
         )
         pause_s = 0.2
@@ -213,21 +214,20 @@ def beep_boop(
     except Exception as e:
         error_msg(
             f"Exception: {e}",
-            location="Newt.console.beep_boop",
+            location="Newt.console._beep_boop : Exception on Beep",
             stop=False
         )
 
 
-def retry_pause(
+def _retry_pause(
         seconds: int = 5,
         beep: bool = False
         ) -> None:
-    """
-    Display a countdown and pause before retrying an operation.
+    """ Display a countdown and pause before retrying an operation.
 
     Used primarily by network-related functions
     to wait between retry attempts after a failed request.
-    Optionally plays a short sound notification using `beep_boop()`.
+    Optionally plays a short sound notification using `_beep_boop()`.
 
     Args:
         seconds (int):
@@ -238,20 +238,22 @@ def retry_pause(
             Defaults to False.
     """
 
-    if not validate_input(seconds, int, stop=False,
-                          location="Newt.console.retry_pause.seconds"):
+    if not validate_input(
+        seconds, int, stop=False,
+        location="_retry_pause : seconds"
+    ):
         seconds = 5
 
-    if seconds <= 0:
+    if seconds < 1:
         error_msg(
             f"Invalid pause duration: {seconds}",
-            location="Newt.console.retry_pause",
+            location="Newt.console._retry_pause : seconds less then 1",
             stop=False
         )
         seconds = 5
 
     if beep:
-        beep_boop()
+        _beep_boop()
 
     print(f"Retrying in {seconds} seconds...")
 

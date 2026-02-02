@@ -20,8 +20,6 @@ from .console import (
     error_msg,
     validate_input,
     check_location,
-    beep_boop,
-    retry_pause,
 )
 
 # Utility
@@ -65,8 +63,6 @@ __all__ = [
     "error_msg",
     "validate_input",
     "check_location",
-    "beep_boop",
-    "retry_pause",
     # Utility
     "sorting_list",
     "sorting_dict_by_keys",
