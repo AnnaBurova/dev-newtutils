@@ -138,6 +138,10 @@ def sorting_dict_by_keys(
         )
         return []
 
+    # If no keys provided — return the data as a list (no sorting)
+    if not keys:
+        return [dict(d) for d in data]
+
     # Validate that all keys are strings
     if not all(isinstance(k, str) for k in keys):
         NewtCons.error_msg(
@@ -146,10 +150,6 @@ def sorting_dict_by_keys(
             location="Newt.utility.sorting_dict_by_keys"
         )
         return []
-
-    # If no keys provided — return the data as a list (no sorting)
-    if not keys:
-        return [dict(d) for d in data]
 
     try:
         def sort_key(d: Mapping[str, object]) -> tuple[object, ...]:
