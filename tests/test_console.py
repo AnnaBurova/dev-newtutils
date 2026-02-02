@@ -51,6 +51,7 @@ class TestErrorMsg:
 
         with pytest.raises(SystemExit) as exc_info:
             NewtCons.error_msg("Test error")
+            print("This line will not be printed")
         assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
@@ -60,6 +61,7 @@ class TestErrorMsg:
         assert "\nLocation: Unknown\n" in captured.out
         assert "\nTest error\n" in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     def test_error_msg_without_stop(self, capsys):
@@ -164,9 +166,10 @@ class TestValidateInput:
         """ Test validation with incorrect type, stop=True. """
         print_my_func_name()
 
-        with pytest.raises(SystemExit):
-            result = NewtCons.validate_input("hello", int)
-            print("This line will not be printed:", result)
+        with pytest.raises(SystemExit) as exc_info:
+            NewtCons.validate_input("hello", int)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -175,8 +178,8 @@ class TestValidateInput:
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
         assert "\nValue: hello\n" in captured.out
-        assert "This line will not be printed" not in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     def test_validate_input_multiple_types(self, capsys):
@@ -508,6 +511,7 @@ class TestRetryPause:
 
         with pytest.raises(SystemExit) as exc_info:
             NewtCons._retry_pause(seconds=5, beep=True)
+            print("This line will not be printed")
         assert exc_info.value.code == 1
         assert mock_beep.call_count == 1
         assert mock_sleep.call_count == 1
@@ -522,6 +526,7 @@ class TestRetryPause:
         assert "\nLocation: Newt.console._retry_pause : KeyboardInterrupt\n" in captured.out
         assert "\nRetry interrupted by user (Ctrl+C)\n" in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
 class TestCheckLocation:
@@ -554,6 +559,7 @@ class TestCheckLocation:
 
         with pytest.raises(SystemExit) as exc_info:
             NewtCons.check_location(location_1, location_2)
+            print("This line will not be printed")
         assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
@@ -563,6 +569,7 @@ class TestCheckLocation:
         assert "\nLocation: Newt.console.check_location\n" in captured.out
         assert "\nCurrent position is wrong, check folder: /home/user/project\n" in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     def test_check_location_invalid_type(self, capsys):
@@ -573,8 +580,10 @@ class TestCheckLocation:
         location_2 = "/home/user/project"
         print(location_1, "==", location_2)
 
-        with pytest.raises(SystemExit):
+        with pytest.raises(SystemExit) as exc_info:
             NewtCons.check_location(location_1, location_2)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -584,6 +593,7 @@ class TestCheckLocation:
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 123\n" in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
 class TestSelectFromInput:
@@ -651,8 +661,10 @@ class TestSelectFromInput:
         select_dict = {"1": "Option A"}
         print(select_dict)
 
-        with pytest.raises(SystemExit):
+        with pytest.raises(SystemExit) as exc_info:
             NewtCons.select_from_input(select_dict)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -665,6 +677,7 @@ class TestSelectFromInput:
         assert "\nLocation: Newt.console.select_from_input : choice = [X]\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     def test_select_from_input_invalid_type(self, capsys):
@@ -674,8 +687,10 @@ class TestSelectFromInput:
         invalid_input = "not a dict"
         print(invalid_input)
 
-        with pytest.raises(SystemExit):
+        with pytest.raises(SystemExit) as exc_info:
             NewtCons.select_from_input(invalid_input)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -685,6 +700,7 @@ class TestSelectFromInput:
         assert "\nExpected <class 'dict'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a dict\n" in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     @patch('newtutils.console.input')
@@ -697,8 +713,10 @@ class TestSelectFromInput:
         select_dict = {"1": "Option A", "2": "Option B"}
         print(select_dict)
 
-        with pytest.raises(SystemExit):
+        with pytest.raises(SystemExit) as exc_info:
             NewtCons.select_from_input(select_dict)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -711,6 +729,7 @@ class TestSelectFromInput:
         assert "\nLocation: Newt.console.select_from_input : KeyboardInterrupt\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     @patch('newtutils.console.input')
@@ -723,8 +742,10 @@ class TestSelectFromInput:
         select_dict = {"1": "Option A"}
         print(select_dict)
 
-        with pytest.raises(SystemExit):
+        with pytest.raises(SystemExit) as exc_info:
             NewtCons.select_from_input(select_dict)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -736,6 +757,7 @@ class TestSelectFromInput:
         assert "\nLocation: Newt.console.select_from_input : Exception\n" in captured.out
         assert "\nException: Input device error\n" in captured.out
         # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
     @patch('newtutils.console.input', return_value=" 2 ")
