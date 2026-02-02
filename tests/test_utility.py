@@ -1,4 +1,5 @@
 """
+Updated on 2026-02
 Created on 2025-11
 
 @author: NewtCode Anna Burova
@@ -6,8 +7,8 @@ Created on 2025-11
 Comprehensive unit tests for newtutils.utility module.
 
 Tests cover:
-- List sorting (sorting_list)
-- Dictionary sorting (sorting_dict_by_keys)
+- TestSortingList
+- TestSortingDictByKeys
 """
 
 import pytest
@@ -17,10 +18,11 @@ import newtutils.utility as NewtUtil
 
 
 class TestSortingList:
-    """Tests for sorting_list function."""
+    """ Tests for sorting_list function. """
+
 
     def test_sorting_list_integers(self, capsys):
-        """Test sorting list of integers."""
+        """ Test sorting list of integers. """
         print_my_func_name()
 
         input_list = [3, 1, 2, 3, 5, 1]
@@ -32,8 +34,9 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_list_strings(self, capsys):
-        """Test sorting list of strings."""
+        """ Test sorting list of strings. """
         print_my_func_name()
 
         input_list = ["c", "a", "b", "c", "z"]
@@ -45,8 +48,9 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_list_mixed(self, capsys):
-        """Test sorting list with mixed strings and integers."""
+        """ Test sorting list with mixed strings and integers. """
         print_my_func_name()
 
         input_list = ["f", 4, "a", 2, "b", 1, "a"]
@@ -59,8 +63,9 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_list_empty(self, capsys):
-        """Test sorting empty list."""
+        """ Test sorting empty list. """
         print_my_func_name()
 
         result = NewtUtil.sorting_list([])
@@ -70,8 +75,9 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_list_single_element(self, capsys):
-        """Test sorting list with single element."""
+        """ Test sorting list with single element. """
         print_my_func_name()
 
         print(NewtUtil.sorting_list([1]))
@@ -82,8 +88,9 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_list_all_duplicates(self, capsys):
-        """Test sorting list with all duplicates."""
+        """ Test sorting list with all duplicates. """
         print_my_func_name()
 
         input_list = [1, 1, 1, 1]
@@ -95,8 +102,9 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_list_invalid_type_no_stop(self, capsys):
-        """Test sorting list with invalid types, stop=False."""
+        """ Test sorting list with invalid types, stop=False. """
         print_my_func_name()
 
         input_list = [1, 2, 3.5]
@@ -111,8 +119,9 @@ class TestSortingList:
         assert "::: ERROR :::" in captured.out
         assert "must have only str and int types" in captured.out
 
+
     def test_sorting_list_invalid_type_with_stop(self, capsys):
-        """Test sorting list with invalid types, stop=True."""
+        """ Test sorting list with invalid types, stop=True. """
         print_my_func_name()
 
         input_list = [1, 2, 3.5]
@@ -124,8 +133,9 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_list_not_a_list(self, capsys):
-        """Test sorting list with non-list input."""
+        """ Test sorting list with non-list input. """
         print_my_func_name()
 
         input_str = "not a list"
@@ -137,8 +147,9 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_list_with_none(self, capsys):
-        """Test sorting list containing None."""
+        """ Test sorting list containing None. """
         print_my_func_name()
 
         input_list = [1, None, "a"]
@@ -150,8 +161,9 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_list_large_numbers(self, capsys):
-        """Test sorting list with large numbers."""
+        """ Test sorting list with large numbers. """
         print_my_func_name()
 
         input_list = [100, 1, 50, 1000, 5]
@@ -165,10 +177,11 @@ class TestSortingList:
 
 
 class TestSortingDictByKeys:
-    """Tests for sorting_dict_by_keys function."""
+    """ Tests for sorting_dict_by_keys function. """
+
 
     def test_sorting_dict_by_single_key(self, capsys):
-        """Test sorting by a single key."""
+        """ Test sorting by a single key. """
         print_my_func_name()
 
         input_dict = [
@@ -186,8 +199,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_by_multiple_keys(self, capsys):
-        """Test sorting by multiple keys."""
+        """ Test sorting by multiple keys. """
         print_my_func_name()
 
         input_dict = [
@@ -205,8 +219,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_reverse(self, capsys):
-        """Test sorting in reverse order."""
+        """ Test sorting in reverse order. """
         print_my_func_name()
 
         input_dict = [
@@ -223,8 +238,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_missing_keys(self, capsys):
-        """Test sorting with missing keys (should be placed at end)."""
+        """ Test sorting with missing keys (should be placed at end). """
         print_my_func_name()
 
         input_dict = [
@@ -242,8 +258,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_none_values(self, capsys):
-        """Test sorting with None values (should be placed at end)."""
+        """ Test sorting with None values (should be placed at end). """
         print_my_func_name()
 
         input_dict = [
@@ -261,8 +278,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_empty_list(self, capsys):
-        """Test sorting empty list."""
+        """ Test sorting empty list. """
         print_my_func_name()
 
         result = NewtUtil.sorting_dict_by_keys([])
@@ -272,8 +290,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_no_keys(self, capsys):
-        """Test sorting without keys (should return original order)."""
+        """ Test sorting without keys (should return original order). """
         print_my_func_name()
 
         input_dict = [
@@ -290,8 +309,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_not_list(self, capsys):
-        """Test sorting with non-list input."""
+        """ Test sorting with non-list input. """
         print_my_func_name()
 
         input_str = "not a list"
@@ -303,8 +323,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_not_dicts(self, capsys):
-        """Test sorting with list containing non-dicts."""
+        """ Test sorting with list containing non-dicts. """
         print_my_func_name()
 
         input_list = [1, 2, 3]
@@ -316,8 +337,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_invalid_key_type(self, capsys):
-        """Test sorting with invalid key type."""
+        """ Test sorting with invalid key type. """
         print_my_func_name()
 
         input_dict = [{"name": "Alice"}]
@@ -329,8 +351,9 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sorting_dict_complex_sorting(self, capsys):
-        """Test complex multi-key sorting."""
+        """ Test complex multi-key sorting. """
         print_my_func_name()
 
         input_dict = [
