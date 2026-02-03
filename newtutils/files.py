@@ -486,8 +486,10 @@ def read_json_from_file(
             data = json.load(f)
 
         # Normalize output to always be a list or dict
-        if NewtCons.validate_input(data, (dict, list),
-                                   location="Newt.files.read_json_from_file.data"):
+        if NewtCons.validate_input(
+            data, (list, dict), stop=False,
+            location="Newt.files.read_json_from_file : data"
+        ):
             if logging:
                 print("[Newt.files.read_json_from_file] Loaded JSON from file:")
                 print(file_name)
@@ -495,10 +497,6 @@ def read_json_from_file(
 
             return data
 
-        # If data is not a list or dict, return empty list
-        if logging:
-            print("[Newt.files.read_json_from_file] JSON content is not list/dict, returning empty list:")
-            print(file_name)
         return []
 
     except Exception as e:
