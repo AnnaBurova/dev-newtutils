@@ -154,6 +154,11 @@ def sorting_dict_by_keys(
 
     # If no keys provided — return the data as a list (no sorting)
     if not keys:
+        all_have_single_key = all(len(d) == 1 for d in data) and len(set(next(iter(d)) for d in data if d)) == 1
+        if all_have_single_key:
+            single_key = next(iter(data[0]))
+            return sorted(data, key=lambda x: x[single_key], reverse=reverse)
+
         return [dict(d) for d in data]
 
     # Validate that all keys are strings
