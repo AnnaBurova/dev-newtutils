@@ -1,4 +1,5 @@
 """
+Updated on 2026-02
 Created on 2025-11
 
 @author: NewtCode Anna Burova
@@ -21,49 +22,8 @@ import tempfile
 
 import os
 
+from helpers import print_my_func_name, print_my_captured
 import newtutils.files as NewtFiles
-
-
-def print_my_func_name(func_name):
-    """
-    Print the provided function name in a structured format.
-
-    Args:
-        func_name (str):
-            Name of the function to display.
-    """
-
-    print("Function:", func_name)
-    print("--------------------------------------------")
-
-
-def print_my_captured(captured):
-    """
-    Pretty-print captured standard output and error streams from pytest.
-
-    Args:
-        captured:
-            A pytest `CaptureResult` object returned by `capsys.readouterr()`.
-            Must provide `.out` and `.err` attributes representing captured
-            standard output and standard error text.
-    """
-
-    print()
-    print("START=======================================")
-
-    print("=====captured.out=====")
-    if captured.out:
-        print(captured.out)
-    else:
-        print("(no stdout captured)")
-
-    print("=====captured.err=====")
-    if captured.err:
-        print(captured.err)
-    else:
-        print("(no stderr captured)")
-
-    print("END=========================================")
 
 
 class TestEnsureDirExists:
@@ -71,7 +31,7 @@ class TestEnsureDirExists:
 
     def test_creates_nested_directory(self, capsys):
         """Test that nested directories are created."""
-        print_my_func_name("test_creates_nested_directory")
+        print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
@@ -86,7 +46,7 @@ class TestEnsureDirExists:
 
     def test_handles_existing_directory(self, capsys):
         """Test that existing directories don't cause errors."""
-        print_my_func_name("test_handles_existing_directory")
+        print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "file.txt")
@@ -104,7 +64,7 @@ class TestEnsureDirExists:
 
     def test_handles_current_directory(self, capsys):
         """Test that empty dir_path (current dir) is handled."""
-        print_my_func_name("test_handles_current_directory")
+        print_my_func_name()
 
         file_path = "file.txt"
         # Should not raise
@@ -119,7 +79,7 @@ class TestCheckFileExists:
 
     def test_returns_true_for_existing_file(self, capsys):
         """Test that existing files return True."""
-        print_my_func_name("test_returns_true_for_existing_file")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(delete=False) as tmp:
             tmp.write(b"test")
@@ -138,7 +98,7 @@ class TestCheckFileExists:
 
     def test_returns_false_for_invalid_input(self, capsys):
         """Test that invalid input returns False."""
-        print_my_func_name("test_returns_false_for_invalid_input")
+        print_my_func_name()
 
         assert NewtFiles._check_file_exists(123) is False  # type: ignore
 
@@ -151,7 +111,7 @@ class TestNormalizeNewlines:
 
     def test_converts_windows_newlines(self, capsys):
         """Test that Windows newlines are converted."""
-        print_my_func_name("test_converts_windows_newlines")
+        print_my_func_name()
 
         text = "line1\r\nline2\r\nline3"
         print(repr(text))
@@ -165,7 +125,7 @@ class TestNormalizeNewlines:
 
     def test_preserves_unix_newlines(self, capsys):
         """Test that Unix newlines are preserved."""
-        print_my_func_name("test_preserves_unix_newlines")
+        print_my_func_name()
 
         text = "line1\nline2\nline3"
         print(repr(text))
@@ -179,7 +139,7 @@ class TestNormalizeNewlines:
 
     def test_handles_mixed_newlines(self, capsys):
         """Test that mixed newlines are normalized."""
-        print_my_func_name("test_handles_mixed_newlines")
+        print_my_func_name()
 
         text = "line1\r\nline2\nline3\r\n"
         print(repr(text))
@@ -194,7 +154,7 @@ class TestNormalizeNewlines:
 
     def test_handles_empty_string(self, capsys):
         """Test that empty string is handled."""
-        print_my_func_name("test_handles_empty_string")
+        print_my_func_name()
 
         assert NewtFiles._normalize_newlines("") == ""
 
@@ -207,7 +167,7 @@ class TestChooseFileFromFolder:
 
     def test_returns_none_for_nonexistent_folder(self, capsys):
         """Test that non-existent folder returns None."""
-        print_my_func_name("test_returns_none_for_nonexistent_folder")
+        print_my_func_name()
 
         with pytest.raises(SystemExit):
             result = NewtFiles.choose_file_from_folder("/nonexistent/folder")
@@ -218,7 +178,7 @@ class TestChooseFileFromFolder:
 
     def test_returns_none_for_empty_folder(self, capsys):
         """Test that empty folder returns None."""
-        print_my_func_name("test_returns_none_for_empty_folder")
+        print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             result = NewtFiles.choose_file_from_folder(tmpdir)
@@ -229,7 +189,7 @@ class TestChooseFileFromFolder:
 
     def test_returns_none_for_input_zero(self, monkeypatch, capsys):
         """Test that non empty folder returns on input zero."""
-        print_my_func_name("test_returns_none_for_input_zero")
+        print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             # Create several files in the temporary directory
@@ -249,7 +209,7 @@ class TestChooseFileFromFolder:
 
     def test_returns_none_for_invalid_input(self, capsys):
         """Test that invalid input returns None."""
-        print_my_func_name("test_returns_none_for_invalid_input")
+        print_my_func_name()
 
         with pytest.raises(SystemExit):
             result = NewtFiles.choose_file_from_folder(123)  # type: ignore
@@ -264,7 +224,7 @@ class TestTextFiles:
 
     def test_save_and_read_text_file(self, capsys):
         """Test saving and reading a text file."""
-        print_my_func_name("test_save_and_read_text_file")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
             tmp_path = tmp.name
@@ -288,7 +248,7 @@ class TestTextFiles:
 
     def test_save_text_creates_directory(self, capsys):
         """Test that save_text_to_file creates parent directories."""
-        print_my_func_name("test_save_text_creates_directory")
+        print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
@@ -300,7 +260,7 @@ class TestTextFiles:
 
     def test_save_text_append_mode(self, capsys):
         """Test appending to a text file."""
-        print_my_func_name("test_save_text_append_mode")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
             tmp_path = tmp.name
@@ -325,7 +285,7 @@ class TestTextFiles:
 
     def test_read_text_from_nonexistent_file(self, capsys):
         """Test reading from non-existent file returns empty string."""
-        print_my_func_name("test_read_text_from_nonexistent_file")
+        print_my_func_name()
 
         result = NewtFiles.read_text_from_file("/nonexistent/file.txt")
         print(repr(result))
@@ -336,7 +296,7 @@ class TestTextFiles:
 
     def test_save_text_normalizes_newlines(self, capsys):
         """Test that save_text_to_file normalizes newlines."""
-        print_my_func_name("test_save_text_normalizes_newlines")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
             tmp_path = tmp.name
@@ -361,7 +321,7 @@ class TestTextFiles:
 
     def test_save_text_invalid_input(self, capsys):
         """Test that invalid input is handled gracefully."""
-        print_my_func_name("test_save_text_invalid_input")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
             tmp_path = tmp.name
@@ -388,7 +348,7 @@ class TestConvertStrToJson:
 
     def test_parses_valid_json_dict(self, capsys):
         """Test parsing a valid JSON dictionary string."""
-        print_my_func_name("test_parses_valid_json_dict")
+        print_my_func_name()
 
         json_str = '{"name": "test", "value": 123, "items": [1, 2, 3]}'
         print(repr(json_str))
@@ -403,7 +363,7 @@ class TestConvertStrToJson:
 
     def test_parses_valid_json_list(self, capsys):
         """Test parsing a valid JSON list string."""
-        print_my_func_name("test_parses_valid_json_list")
+        print_my_func_name()
 
         json_str = '[1, 2, 3, {"key": "value"}]'
         print(repr(json_str))
@@ -418,7 +378,7 @@ class TestConvertStrToJson:
 
     def test_parses_single_quotes_dict(self, capsys):
         """Test parsing a dictionary string with single quotes."""
-        print_my_func_name("test_parses_single_quotes_dict")
+        print_my_func_name()
 
         json_str = "{'name': 'test', 'value': 123}"
         print(repr(json_str))
@@ -433,7 +393,7 @@ class TestConvertStrToJson:
 
     def test_parses_single_quotes_list(self, capsys):
         """Test parsing a list string with single quotes."""
-        print_my_func_name("test_parses_single_quotes_list")
+        print_my_func_name()
 
         json_str = "['item1', 'item2', 'item3']"
         print(repr(json_str))
@@ -448,7 +408,7 @@ class TestConvertStrToJson:
 
     def test_returns_none_for_empty_string(self, capsys):
         """Test that empty string returns None."""
-        print_my_func_name("test_returns_none_for_empty_string")
+        print_my_func_name()
 
         result = NewtFiles.convert_str_to_json("")
         print(repr(result))
@@ -463,7 +423,7 @@ class TestConvertStrToJson:
 
     def test_returns_none_for_invalid_input(self, capsys):
         """Test that invalid input (not a string) returns None."""
-        print_my_func_name("test_returns_none_for_invalid_input")
+        print_my_func_name()
 
         result = NewtFiles.convert_str_to_json(123)  # type: ignore
         print(repr(result))
@@ -482,7 +442,7 @@ class TestConvertStrToJson:
 
     def test_returns_none_for_invalid_json(self, capsys):
         """Test that invalid JSON string returns None."""
-        print_my_func_name("test_returns_none_for_invalid_json")
+        print_my_func_name()
 
         invalid_json = "{ invalid json }"
         print(repr(invalid_json))
@@ -501,7 +461,7 @@ class TestConvertStrToJson:
 
     def test_returns_none_for_non_list_or_dict_json(self, capsys):
         """Test that JSON that is not a list or dict returns None."""
-        print_my_func_name("test_returns_none_for_non_list_or_dict_json")
+        print_my_func_name()
 
         json_str = '"just a string"'
         print(repr(json_str))
@@ -526,7 +486,7 @@ class TestConvertStrToJson:
 
     def test_handles_whitespace(self, capsys):
         """Test that whitespace around JSON is handled correctly."""
-        print_my_func_name("test_handles_whitespace")
+        print_my_func_name()
 
         json_str = '   {"key": "value"}   '
         print(repr(json_str))
@@ -541,7 +501,7 @@ class TestConvertStrToJson:
 
     def test_handles_nested_structures(self, capsys):
         """Test parsing nested JSON structures."""
-        print_my_func_name("test_handles_nested_structures")
+        print_my_func_name()
 
         json_str = '{"outer": {"inner": {"deep": [1, 2, 3]}}}'
         print(repr(json_str))
@@ -560,7 +520,7 @@ class TestJsonFiles:
 
     def test_save_and_read_json_dict(self, capsys):
         """Test saving and reading a JSON dictionary."""
-        print_my_func_name("test_save_and_read_json_dict")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
             tmp_path = tmp.name
@@ -588,7 +548,7 @@ class TestJsonFiles:
 
     def test_save_and_read_json_list(self, capsys):
         """Test saving and reading a JSON list."""
-        print_my_func_name("test_save_and_read_json_list")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
             tmp_path = tmp.name
@@ -616,7 +576,7 @@ class TestJsonFiles:
 
     def test_read_json_from_nonexistent_file(self, capsys):
         """Test reading from non-existent JSON file returns empty list."""
-        print_my_func_name("test_read_json_from_nonexistent_file")
+        print_my_func_name()
 
         result = NewtFiles.read_json_from_file("/nonexistent/file.json")
         print(repr(result))
@@ -627,7 +587,7 @@ class TestJsonFiles:
 
     def test_save_json_creates_directory(self, capsys):
         """Test that save_json_to_file creates parent directories."""
-        print_my_func_name("test_save_json_creates_directory")
+        print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.json")
@@ -643,7 +603,7 @@ class TestJsonFiles:
 
     def test_save_json_custom_indent(self, capsys):
         """Test saving JSON with custom indent."""
-        print_my_func_name("test_save_json_custom_indent")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
             tmp_path = tmp.name
@@ -670,7 +630,7 @@ class TestJsonFiles:
 
     def test_read_json_invalid_file(self, capsys):
         """Test reading invalid JSON returns empty list."""
-        print_my_func_name("test_read_json_invalid_file")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
             tmp.write("{ invalid json }")
@@ -690,7 +650,7 @@ class TestJsonFiles:
 
     def test_save_json_invalid_input(self, capsys):
         """Test that invalid input is handled gracefully."""
-        print_my_func_name("test_save_json_invalid_input")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
             tmp_path = tmp.name
@@ -725,7 +685,7 @@ class TestCsvFiles:
 
     def test_save_and_read_csv(self, capsys):
         """Test saving and reading a CSV file."""
-        print_my_func_name("test_save_and_read_csv")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
             tmp_path = tmp.name
@@ -757,7 +717,7 @@ class TestCsvFiles:
 
     def test_save_and_read_csv_custom_delimiter(self, capsys):
         """Test saving and reading CSV with custom delimiter."""
-        print_my_func_name("test_save_and_read_csv_custom_delimiter")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
             tmp_path = tmp.name
@@ -785,7 +745,7 @@ class TestCsvFiles:
 
     def test_read_csv_from_nonexistent_file(self, capsys):
         """Test reading from non-existent CSV file returns empty list."""
-        print_my_func_name("test_read_csv_from_nonexistent_file")
+        print_my_func_name()
 
         result = NewtFiles.read_csv_from_file("/nonexistent/file.csv")
         print(repr(result))
@@ -796,7 +756,7 @@ class TestCsvFiles:
 
     def test_save_csv_creates_directory(self, capsys):
         """Test that save_csv_to_file creates parent directories."""
-        print_my_func_name("test_save_csv_creates_directory")
+        print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.csv")
@@ -812,7 +772,7 @@ class TestCsvFiles:
 
     def test_save_csv_normalizes_newlines_in_cells(self, capsys):
         """Test that CSV cells with Windows newlines are normalized."""
-        print_my_func_name("test_save_csv_normalizes_newlines_in_cells")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
             tmp_path = tmp.name
@@ -841,7 +801,7 @@ class TestCsvFiles:
 
     def test_save_csv_with_various_types(self, capsys):
         """Test saving CSV with various data types."""
-        print_my_func_name("test_save_csv_with_various_types")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
             tmp_path = tmp.name
@@ -870,7 +830,7 @@ class TestCsvFiles:
 
     def test_save_csv_invalid_input(self, capsys):
         """Test that invalid input is handled gracefully."""
-        print_my_func_name("test_save_csv_invalid_input")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
             tmp_path = tmp.name
@@ -901,7 +861,7 @@ class TestCsvFiles:
 
     def test_read_csv_invalid_delimiter(self, capsys):
         """Test reading CSV with invalid delimiter returns empty list."""
-        print_my_func_name("test_read_csv_invalid_delimiter")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
             tmp.write("A;B\n1;2")
