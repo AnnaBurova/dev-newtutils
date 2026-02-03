@@ -27,7 +27,7 @@ import newtutils.files as NewtFiles
 
 
 class TestEnsureDirExists:
-    """Tests for _ensure_dir_exists function."""
+    """Tests for ensure_dir_exists function."""
 
     def test_creates_nested_directory(self, capsys):
         """Test that nested directories are created."""
@@ -36,7 +36,7 @@ class TestEnsureDirExists:
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
 
-            NewtFiles._ensure_dir_exists(nested_path)
+            NewtFiles.ensure_dir_exists(nested_path)
             assert os.path.exists(os.path.dirname(nested_path))
 
         assert not os.path.exists(os.path.dirname(nested_path))
@@ -51,10 +51,10 @@ class TestEnsureDirExists:
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "file.txt")
 
-            NewtFiles._ensure_dir_exists(file_path)
+            NewtFiles.ensure_dir_exists(file_path)
 
             # Call again - should not raise
-            NewtFiles._ensure_dir_exists(file_path)
+            NewtFiles.ensure_dir_exists(file_path)
             assert os.path.exists(tmpdir)
 
         assert not os.path.exists(os.path.dirname(file_path))
@@ -68,14 +68,14 @@ class TestEnsureDirExists:
 
         file_path = "file.txt"
         # Should not raise
-        NewtFiles._ensure_dir_exists(file_path)
+        NewtFiles.ensure_dir_exists(file_path)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
 
 class TestCheckFileExists:
-    """Tests for _check_file_exists function."""
+    """Tests for check_file_exists function."""
 
     def test_returns_true_for_existing_file(self, capsys):
         """Test that existing files return True."""
@@ -86,12 +86,12 @@ class TestCheckFileExists:
             tmp_path = tmp.name
 
         try:
-            assert NewtFiles._check_file_exists(tmp_path) is True
+            assert NewtFiles.check_file_exists(tmp_path) is True
 
         finally:
             os.unlink(tmp_path)
 
-        assert NewtFiles._check_file_exists(tmp_path) is False
+        assert NewtFiles.check_file_exists(tmp_path) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -100,7 +100,7 @@ class TestCheckFileExists:
         """Test that invalid input returns False."""
         print_my_func_name()
 
-        assert NewtFiles._check_file_exists(123) is False  # type: ignore
+        assert NewtFiles.check_file_exists(123) is False  # type: ignore
 
         captured = capsys.readouterr()
         print_my_captured(captured)
