@@ -5,15 +5,24 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
-def sorting_list(
+    def sorting_list(
         input_list: list,
         stop: bool = True
-        ) -> list[str | int]:
-def sorting_dict_by_keys(
-        data: Sequence[Mapping[str, object]],
+        ) -> list[str | int]
+    def sorting_dict_by_keys(
+        data: Sequence[Mapping[str, Any]],
         *keys: str,
-        reverse: bool = False
-        ) -> list[dict[str, object]]:
+        reverse: bool = False,
+        stop: bool = True
+        ) -> list[Mapping[str, Any]]
+            def sort_key(
+                d: Mapping[str, object]
+                ) -> tuple[object, ...]
+    def check_dict_keys(
+        data: Mapping[str, object],
+        expected: set[str],
+        stop: bool = True
+        ) -> bool
 """
 
 from __future__ import annotations
@@ -183,7 +192,9 @@ def sorting_dict_by_keys(
         return []
 
     try:
-        def sort_key(d: Mapping[str, object]) -> tuple[object, ...]:
+        def sort_key(
+                d: Mapping[str, object]
+                ) -> tuple[object, ...]:
             """
             Generate a sorting key that moves missing or None values to the end.
             """
