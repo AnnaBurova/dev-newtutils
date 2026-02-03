@@ -34,7 +34,6 @@ from .utility import (
 # Files
 from .files import (
     ensure_dir_exists, check_file_exists,
-    normalize_newlines,
     choose_file_from_folder,
     read_text_from_file, save_text_to_file,
     convert_str_to_json,
@@ -71,9 +70,8 @@ __all__ = [
     "sorting_list",
     "sorting_dict_by_keys",
     "check_dict_keys",
-    # Files
+    # Files ----------
     "ensure_dir_exists", "check_file_exists",
-    "normalize_newlines",
     "choose_file_from_folder",
     "read_text_from_file", "save_text_to_file",
     "convert_str_to_json",

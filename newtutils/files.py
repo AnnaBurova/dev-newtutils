@@ -13,7 +13,7 @@ Functions:
         stop: bool = False,
         print_error: bool = True
         ) -> bool
-    def normalize_newlines(
+    def _normalize_newlines(
         text: str
         ) -> str
     def choose_file_from_folder(
@@ -152,7 +152,7 @@ def check_file_exists(
     return False
 
 
-def normalize_newlines(
+def _normalize_newlines(
         text: str
         ) -> str:
     """
