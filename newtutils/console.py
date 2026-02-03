@@ -133,13 +133,13 @@ def validate_input(
     """
 
     if location:
-        location = " > "+location
+        location = " > " + location
 
     if not isinstance(value, expected_type):
         error_msg(
             f"Expected {expected_type}, got {type(value)}",
             f"Value: {value}",
-            location="Newt.console.validate_input"+location,
+            location="Newt.console.validate_input" + location,
             stop=stop
         )
         return False
@@ -175,7 +175,7 @@ def _beep_boop(
     if pause_s < 0:
         error_msg(
             f"Invalid pause duration: {pause_s}",
-            location="Newt.console._beep_boop : pause_s less then 0",
+            location="Newt.console._beep_boop : pause_s < 0",
             stop=False
         )
         pause_s = 0.2
@@ -189,7 +189,7 @@ def _beep_boop(
     except Exception as e:
         error_msg(
             f"Exception: {e}",
-            location="Newt.console._beep_boop : Exception on Beep",
+            location="Newt.console._beep_boop : Exception",
             stop=False
         )
 
@@ -220,14 +220,14 @@ def _retry_pause(
 
     if not validate_input(
         seconds, int, stop=False,
-        location="_retry_pause : seconds"
+        location="_retry_pause : seconds not int"
     ):
         seconds = 5
 
     if seconds < 1:
         error_msg(
             f"Invalid pause duration: {seconds}",
-            location="Newt.console._retry_pause : seconds less then 1",
+            location="Newt.console._retry_pause : seconds < 1",
             stop=False
         )
         seconds = 5
@@ -271,11 +271,12 @@ def check_location(
 
     validate_input(
         dir_, str,
-        location="check_location : dir_"
+        location="check_location : dir_ not str"
     )
+
     validate_input(
         must_location, str,
-        location="check_location : must_location"
+        location="check_location : must_location not str"
     )
 
     if dir_ == must_location:
@@ -284,7 +285,7 @@ def check_location(
 
     error_msg(
         f"Current position is wrong, check folder: {dir_}",
-        location="Newt.console.check_location"
+        location="Newt.console.check_location : no return"
     )
 
 
@@ -322,7 +323,7 @@ def select_from_input(
 
     validate_input(
         select_dict, dict,
-        location="select_from_input : select_dict"
+        location="select_from_input : select_dict not dict"
     )
 
     # Display numbered list

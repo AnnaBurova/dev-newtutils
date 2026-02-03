@@ -238,7 +238,7 @@ Expected (<class 'int'>, <class 'float'>), got <class 'str'>
 Value: Test
 [0m
 [1m [31m
-Location: Newt.console._beep_boop : pause_s less then 0
+Location: Newt.console._beep_boop : pause_s < 0
 ::: ERROR :::
 Invalid pause duration: -1
 [0m
@@ -254,7 +254,7 @@ START=======================================
 Function: test_beep_boop_exception
 ============================================
 [1m [31m
-Location: Newt.console._beep_boop : Exception on Beep
+Location: Newt.console._beep_boop : Exception
 ::: ERROR :::
 Exception: Audio driver crash
 [0m
@@ -296,7 +296,7 @@ START=======================================
 Function: test_retry_pause_invalid_type
 ============================================
 [1m [31m
-Location: Newt.console.validate_input > _retry_pause : seconds
+Location: Newt.console.validate_input > _retry_pause : seconds not int
 ::: ERROR :::
 Expected <class 'int'>, got <class 'str'>
 Value: invalid
@@ -318,7 +318,7 @@ START=======================================
 Function: test_retry_pause_invalid_seconds
 ============================================
 [1m [31m
-Location: Newt.console._retry_pause : seconds less then 1
+Location: Newt.console._retry_pause : seconds < 1
 ::: ERROR :::
 Invalid pause duration: 0
 [0m
@@ -339,7 +339,7 @@ START=======================================
 Function: test_retry_pause_negative_seconds
 ============================================
 [1m [31m
-Location: Newt.console._retry_pause : seconds less then 1
+Location: Newt.console._retry_pause : seconds < 1
 ::: ERROR :::
 Invalid pause duration: -1
 [0m
@@ -390,7 +390,7 @@ Function: test_check_location_mismatch
 ============================================
 /home/user/project == /other/place
 [1m [31m
-Location: Newt.console.check_location
+Location: Newt.console.check_location : no return
 ::: ERROR :::
 Current position is wrong, check folder: /home/user/project
 [0m
@@ -406,7 +406,7 @@ Function: test_check_location_invalid_type
 ============================================
 123 == /home/user/project
 [1m [31m
-Location: Newt.console.validate_input > check_location : dir_
+Location: Newt.console.validate_input > check_location : dir_ not str
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
@@ -484,7 +484,7 @@ Function: test_select_from_input_invalid_type
 ============================================
 not a dict
 [1m [31m
-Location: Newt.console.validate_input > select_from_input : select_dict
+Location: Newt.console.validate_input > select_from_input : select_dict not dict
 ::: ERROR :::
 Expected <class 'dict'>, got <class 'str'>
 Value: not a dict

@@ -354,7 +354,7 @@ class TestBeepBoop:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > _beep_boop : pause_s not int or float\n" in captured.out
         assert "\nExpected (<class 'int'>, <class 'float'>), got <class 'str'>\n" in captured.out
-        assert "\nLocation: Newt.console._beep_boop : pause_s less then 0\n" in captured.out
+        assert "\nLocation: Newt.console._beep_boop : pause_s < 0\n" in captured.out
         assert "\nInvalid pause duration: -1\n" in captured.out
         assert "\nPause is: [0.2, 1, 0.2, 1, 0.7, 1] seconds\n" in captured.out
 
@@ -379,7 +379,7 @@ class TestBeepBoop:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console._beep_boop : Exception on Beep\n" in captured.out
+        assert "\nLocation: Newt.console._beep_boop : Exception\n" in captured.out
         assert "\nException: Audio driver crash\n" in captured.out
 
 
@@ -444,7 +444,7 @@ class TestRetryPause:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > _retry_pause : seconds\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > _retry_pause : seconds not int\n" in captured.out
         assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
         assert "\nValue: invalid\n" in captured.out
         assert "\nRetrying in 5 seconds...\n" in captured.out
@@ -468,7 +468,7 @@ class TestRetryPause:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console._retry_pause : seconds less then 1\n" in captured.out
+        assert "\nLocation: Newt.console._retry_pause : seconds < 1\n" in captured.out
         assert "\nInvalid pause duration: 0\n" in captured.out
         assert "\nRetrying in 5 seconds...\n" in captured.out
         assert "\nTime left: 5s\n" in captured.out
@@ -491,7 +491,7 @@ class TestRetryPause:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console._retry_pause : seconds less then 1\n" in captured.out
+        assert "\nLocation: Newt.console._retry_pause : seconds < 1\n" in captured.out
         assert "\nInvalid pause duration: -1\n" in captured.out
         assert "\nRetrying in 5 seconds...\n" in captured.out
         assert "\nTime left: 5s\n" in captured.out
@@ -566,7 +566,7 @@ class TestCheckLocation:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.check_location\n" in captured.out
+        assert "\nLocation: Newt.console.check_location : no return\n" in captured.out
         assert "\nCurrent position is wrong, check folder: /home/user/project\n" in captured.out
         # Expected absence of result
         assert "\nThis line will not be printed\n" not in captured.out
@@ -589,7 +589,7 @@ class TestCheckLocation:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > check_location : dir_\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > check_location : dir_ not str\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 123\n" in captured.out
         # Expected absence of result
@@ -696,7 +696,7 @@ class TestSelectFromInput:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > select_from_input : select_dict\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > select_from_input : select_dict not dict\n" in captured.out
         assert "\nExpected <class 'dict'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a dict\n" in captured.out
         # Expected absence of result
