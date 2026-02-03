@@ -85,7 +85,7 @@ Expected (<class 'str'>, <class 'int'>), got <class 'float'>
 Value: 3.5
 [0m
 [1m [31m
-Location: Newt.utility.sorting_list.input_list
+Location: Newt.utility.sorting_list : input_list not all are str or int
 ::: ERROR :::
 input_list must have only str and int types
 input_list: [1, 2, 3.5]
@@ -108,7 +108,7 @@ Expected (<class 'str'>, <class 'int'>), got <class 'float'>
 Value: 3.5
 [0m
 [1m [31m
-Location: Newt.utility.sorting_list.input_list
+Location: Newt.utility.sorting_list : input_list not all are str or int
 ::: ERROR :::
 input_list must have only str and int types
 input_list: [1, 2, 3.5]
@@ -124,7 +124,7 @@ Function: test_sorting_list_not_a_list
 ============================================
 not a list
 [1m [31m
-Location: Newt.console.validate_input > Newt.utility.sorting_list.input_list
+Location: Newt.console.validate_input > Newt.utility.sorting_list : input_list not list
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a list
@@ -147,7 +147,7 @@ Expected (<class 'str'>, <class 'int'>), got <class 'NoneType'>
 Value: None
 [0m
 [1m [31m
-Location: Newt.utility.sorting_list.input_list
+Location: Newt.utility.sorting_list : input_list not all are str or int
 ::: ERROR :::
 input_list must have only str and int types
 input_list: [1, None, 'a']
@@ -239,7 +239,7 @@ START=======================================
 Function: test_sorting_dict_no_keys
 ============================================
 [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}]
-[{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}]
+[{'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Charlie'}]
 
 =====captured.err=====
 (no stderr captured)
@@ -251,7 +251,7 @@ Function: test_sorting_dict_not_list
 ============================================
 not a list
 [1m [31m
-Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys.data
+Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data not list
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a list
@@ -267,7 +267,13 @@ Function: test_sorting_dict_not_dicts
 ============================================
 [1, 2, 3]
 [1m [31m
-Location: Newt.utility.sorting_dict_by_keys
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'dict'>, got <class 'int'>
+Value: 1
+[0m
+[1m [31m
+Location: Newt.utility.sorting_dict_by_keys : data not all are dict
 ::: ERROR :::
 Expected a list of dictionaries
 Data: [1, 2, 3]
@@ -283,7 +289,13 @@ Function: test_sorting_dict_invalid_key_type
 ============================================
 [{'name': 'Alice'}]
 [1m [31m
-Location: Newt.utility.sorting_dict_by_keys
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+[1m [31m
+Location: Newt.utility.sorting_dict_by_keys : keys not all are str
 ::: ERROR :::
 Keys must be strings
 Keys: (123,)
@@ -320,7 +332,7 @@ Function: test_check_dict_keys_missing_keys_no_stop
 ============================================
 {'a': 1}
 [1m [31m
-Location: mwparser.check_dict_keys
+Location: Newt.utility.check_dict_keys : missing_keys or extra_keys
 ::: ERROR :::
 Data keys: a
 Missing keys: b
@@ -337,7 +349,7 @@ Function: test_check_dict_keys_extra_keys_no_stop
 ============================================
 {'a': 1, 'b': 2, 'c': 3}
 [1m [31m
-Location: mwparser.check_dict_keys
+Location: Newt.utility.check_dict_keys : missing_keys or extra_keys
 ::: ERROR :::
 Data keys: a, b, c
 Missing keys: 
@@ -354,7 +366,7 @@ Function: test_check_dict_keys_missing_and_extra_stop
 ============================================
 {'x': 9}
 [1m [31m
-Location: mwparser.check_dict_keys
+Location: Newt.utility.check_dict_keys : missing_keys or extra_keys
 ::: ERROR :::
 Data keys: x
 Missing keys: a, b
