@@ -5,25 +5,22 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
-    def sorting_list(
+def sorting_list(
         input_list: list,
         stop: bool = True
-        ) -> list[str | int]
-    def sorting_dict_by_keys(
+        ) -> list[str | int]:
+def sorting_dict_by_keys(
         data: Sequence[Mapping[str, object]],
         *keys: str,
         reverse: bool = False
-        ) -> list[dict[str, object]]
-    def check_dict_keys(
-        data: dict,
-        expected: set[str],
-        stop: bool = True
-        ) -> bool
+        ) -> list[dict[str, object]]:
 """
 
 from __future__ import annotations
 
 from collections.abc import Sequence, Mapping
+from typing import Any
+
 import newtutils.console as NewtCons
 
 
@@ -31,8 +28,7 @@ def sorting_list(
         input_list: list,
         stop: bool = True
         ) -> list[str | int]:
-    """
-    Remove duplicates from a list and return a sorted result.
+    """ Remove duplicates from a list and return a sorted result.
 
     The function accepts a list containing only strings and integers,
     removes duplicate entries, and returns all unique items in ascending order:
@@ -64,19 +60,21 @@ def sorting_list(
 
     if not NewtCons.validate_input(
         input_list, list, stop=stop,
-        location="Newt.utility.sorting_list.input_list"
+        location="Newt.utility.sorting_list : input_list not list"
     ):
         return []
 
     try:
         # Validate all elements
-        if not all(NewtCons.validate_input(
-            x, (str, int), stop=False
-        ) for x in input_list):
+        if not all(
+            NewtCons.validate_input(
+                x, (str, int), stop=False
+            ) for x in input_list
+        ):
             NewtCons.error_msg(
                 "input_list must have only str and int types",
                 f"input_list: {input_list}",
-                location="Newt.utility.sorting_list.input_list",
+                location="Newt.utility.sorting_list : input_list not all are str or int",
                 stop=stop
             )
             return []
@@ -94,19 +92,19 @@ def sorting_list(
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.utility.sorting_list",
+            location="Newt.utility.sorting_list : Exception",
             stop=stop
         )
         return []
 
 
 def sorting_dict_by_keys(
-        data: Sequence[Mapping[str, object]],
+        data: Sequence[Mapping[str, Any]],
         *keys: str,
-        reverse: bool = False
-        ) -> list[dict[str, object]]:
-    """
-    Sort a sequence of mappings (dictionaries) by one or more keys.
+        reverse: bool = False,
+        stop: bool = True
+        ) -> list[Mapping[str, Any]]:
+    """ Sort a sequence of mappings (dictionaries) by one or more keys.
 
     This function validates the input sequence and its elements,
     ensuring each entry is a mapping with string keys.
@@ -121,6 +119,10 @@ def sorting_dict_by_keys(
         reverse (bool):
             If True, sorts in descending order.
             Defaults to False.
+        stop (bool):
+            If True, stops execution when invalid data is detected.
+            If False, logs the error and returns an empty list.
+            Defaults to True.
 
     Returns:
         out (list[dict[str, object]]):
@@ -138,17 +140,22 @@ def sorting_dict_by_keys(
 
     # Validate that data is a list
     if not NewtCons.validate_input(
-        data, list,
-        location="Newt.utility.sorting_dict_by_keys.data"
+        data, list, stop=stop,
+        location="Newt.utility.sorting_dict_by_keys : data not list"
     ):
         return []
 
     # Validate that each element is a dictionary
-    if not all(isinstance(d, dict) for d in data):
+    if not all(
+        NewtCons.validate_input(
+            d, dict, stop=False
+        ) for d in data
+    ):
         NewtCons.error_msg(
             "Expected a list of dictionaries",
             f"Data: {data}",
-            location="Newt.utility.sorting_dict_by_keys"
+            location="Newt.utility.sorting_dict_by_keys : data not all are dict",
+            stop=stop
         )
         return []
 
@@ -162,11 +169,16 @@ def sorting_dict_by_keys(
         return [dict(d) for d in data]
 
     # Validate that all keys are strings
-    if not all(isinstance(k, str) for k in keys):
+    if not all(
+        NewtCons.validate_input(
+            k, str, stop=False
+        ) for k in keys
+    ):
         NewtCons.error_msg(
             "Keys must be strings",
             f"Keys: {keys}",
-            location="Newt.utility.sorting_dict_by_keys"
+            location="Newt.utility.sorting_dict_by_keys : keys not all are str",
+            stop=stop
         )
         return []
 
@@ -183,31 +195,32 @@ def sorting_dict_by_keys(
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.utility.sorting_dict_by_keys",
-            stop=False
+            location="Newt.utility.sorting_dict_by_keys : Exception",
+            stop=stop
         )
         return [dict(d) for d in data]
 
 
 def check_dict_keys(
-        data: dict,
+        data: Mapping[str, object],
         expected: set[str],
         stop: bool = True
         ) -> bool:
-    """
-    Validate that a dictionary contains the expected keys.
+    """ Validate that a dictionary contains the expected keys.
 
     Args:
-        data (dict):
+        data (dict[str, object]):
             Dictionary to validate.
         expected (set[str]):
             Set of keys that must be present in the dictionary.
+        stop (bool):
+            If True, stops execution on validation failure.
+            Defaults to True.
 
     Returns:
-        bool:
+        out (bool):
             True if all expected keys are present and no extra keys exist,
             False otherwise.
-            Default True.
 
     Example:
         >>> sample = {"a": 1, "b": 2}
@@ -227,8 +240,9 @@ def check_dict_keys(
             f"Data keys: {', '.join(sorted(data_keys))}",
             f"Missing keys: {', '.join(sorted(missing_keys))}",
             f"Unexpected keys: {', '.join(sorted(extra_keys))}",
-            location="mwparser.check_dict_keys",
+            location="Newt.utility.check_dict_keys : missing_keys or extra_keys",
             stop=stop
         )
         return False
+
     return True
