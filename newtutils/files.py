@@ -236,20 +236,24 @@ def choose_file_from_folder(
         )
 
     # Display numbered list
-    print("\nAvailable files:", len(file_list))
+    print("Available files:", len(file_list))
     for idx, name in enumerate(file_list, start=1):
-        print(f"{idx:>3}: {name}")
-    print("  0: Exit / Cancel")
+        print(f"{idx:>6}: {name}")
+    print("     X: Exit / Cancel")
 
     # Loop until valid input
     while True:
         try:
-            choice = input("\nEnter file number (0 to exit): ").strip()
+            choice = input(
+                "\nEnter number from list ([X] to exit): "
+            ).strip().lower()
             print(f"[INPUT]: {choice}")
 
-            if choice == "0":
-                print("Selection cancelled.")
-                return None
+            if choice == "x":
+                NewtCons.error_msg(
+                    "Selection cancelled.",
+                    location="Newt.files.choose_file_from_folder : choice = [X]"
+                )
 
             if not choice.isdigit():
                 print("Invalid input. Please enter a number.")
@@ -259,15 +263,17 @@ def choose_file_from_folder(
 
             if 1 <= index <= len(file_list):
                 selected_file = file_list[index - 1]
-                print(f"Selected file: {selected_file}\n")
+                print(f"Selected file: {selected_file}")
+                print()
                 return selected_file
 
-            else:
-                print("Number out of range. Try again.")
+            print("Number out of range. Try again.")
 
         except KeyboardInterrupt:
-            print("\nSelection cancelled by user.")
-            return None
+            NewtCons.error_msg(
+                "Selection cancelled.",
+                location="Newt.files.choose_file_from_folder : KeyboardInterrupt"
+            )
 
         except Exception as e:
             NewtCons.error_msg(
