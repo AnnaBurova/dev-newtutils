@@ -412,9 +412,13 @@ def convert_str_to_json(
     # Try standard JSON first
     try:
         data = json.loads(text_strip)
-        if isinstance(data, (list, dict)):
+
+        if NewtCons.validate_input(
+            data, (list, dict), stop=False,
+            location="Newt.files.convert_str_to_json : json.loads(text_strip)"
+        ):
             return data
-        return None
+
     except Exception as e:
         NewtCons.error_msg(
             f"Failed to parse string to JSON: {e}",
@@ -422,21 +426,31 @@ def convert_str_to_json(
             stop=False
         )
 
+    print("Trying to replace single quotes with double quotes...")
+
     # Try to replace single quotes with double quotes and try JSON again
     try:
         text_replace = text_strip.replace("'", '"')
         data = json.loads(text_replace)
-        if isinstance(data, (list, dict)):
+
+        if NewtCons.validate_input(
+            data, (list, dict), stop=False,
+            location="Newt.files.convert_str_to_json : json.loads(text_replace)"
+        ):
             return data
+
     except Exception as e:
         NewtCons.error_msg(
             f"Failed to parse string to JSON: {e}",
             location="Newt.files.convert_str_to_json : Exception replace single quotes with double quotes",
             stop=False
         )
-        NewtCons.validate_input(text_replace, (list, dict),
-                                location="Newt.files.str_to_json.validate_input", stop=False)
 
+    NewtCons.error_msg(
+        "Something goes wrong.",
+        location="Newt.files.convert_str_to_json : Unknown",
+        stop=False
+    )
     return None
 
 
