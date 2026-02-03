@@ -1,5 +1,5 @@
 """
-Updated on 2025-11
+Updated on 2026-02
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -10,7 +10,7 @@ Functions:
         ) -> None
     def check_file_exists(
         file_path: str,
-        stop: bool = False,
+        stop: bool = True,
         print_error: bool = True
         ) -> bool
     def _normalize_newlines(
@@ -18,7 +18,7 @@ Functions:
         ) -> str
     def choose_file_from_folder(
         folder_path: str
-        ) -> str | None
+        ) -> str
     === TEXT ===
     def read_text_from_file(
         file_name: str,
@@ -27,7 +27,7 @@ Functions:
     def save_text_to_file(
         file_name: str,
         text: str,
-        append: bool = False,
+        append: bool = True,
         logging: bool = True
         ) -> None
     === JSON ===
@@ -113,7 +113,7 @@ def ensure_dir_exists(
 
 def check_file_exists(
         file_path: str,
-        stop: bool = False,
+        stop: bool = True,
         print_error: bool = True
         ) -> bool:
     """
@@ -129,7 +129,7 @@ def check_file_exists(
         stop (bool):
             If True, stops execution on error.
             If False, continues execution.
-            Defaults to False.
+            Defaults to True.
         print_error (bool):
             If True, prints an error message when the file is not found.
             If False, silently returns False without logging.
@@ -187,7 +187,7 @@ def _normalize_newlines(
 
 def choose_file_from_folder(
         folder_path: str
-        ) -> str | None:
+        ) -> str:
     """
     Display files in a folder and allow the user to choose one.
 
@@ -201,7 +201,7 @@ def choose_file_from_folder(
             Path to the folder containing files.
 
     Returns:
-        out (str | None):
+        out (str):
             The selected file name,
             or None if cancelled or an error occurred.
     """
@@ -216,7 +216,6 @@ def choose_file_from_folder(
             f"Folder not found: {folder_path}",
             location="Newt.files.choose_file_from_folder : folder_path not dir"
         )
-        return None
 
     # Get file list
     try:
@@ -229,11 +228,12 @@ def choose_file_from_folder(
             f"Failed to list directory: {e}",
             location="Newt.files.choose_file_from_folder : Exception file_list sorted"
         )
-        return None
 
     if not file_list:
-        print("No files found in this folder.")
-        return None
+        NewtCons.error_msg(
+            "No files found in this folder.",
+            location="Newt.files.choose_file_from_folder : file_list empty"
+        )
 
     # Display numbered list
     print("\nAvailable files:", len(file_list))
@@ -274,7 +274,6 @@ def choose_file_from_folder(
                 f"Exception: {e}",
                 location="Newt.files.choose_file_from_folder : Exception while choice"
             )
-            return None
 
 
 # === TEXT ===
@@ -326,7 +325,7 @@ def read_text_from_file(
 def save_text_to_file(
         file_name: str,
         text: str,
-        append: bool = False,
+        append: bool = True,
         logging: bool = True
         ) -> None:
     """
@@ -342,7 +341,7 @@ def save_text_to_file(
             Text content to write.
         append (bool):
             If True, appends instead of overwriting.
-            Defaults to False.
+            Defaults to True.
         logging (bool):
             If True, prints a confirmation message after saving.
             Defaults to True.
@@ -472,6 +471,7 @@ def read_json_from_file(
                 print("[Newt.files.read_json_from_file] Loaded JSON from file:")
                 print(file_name)
                 print(f"(type={type(data)})")
+
             return data
 
         # If data is not a list or dict, return empty list
@@ -733,7 +733,7 @@ def cleanup_logging(
         file_target: str
         ) -> None:
     """
-    Restore original stdout/stderr and move log file to target location.
+    Restore original stdout/stderr and move log file to target path file.
 
     Closes the log file, restores original sys.stdout, moves the timestamped log
     to the specified target path, ensuring target directory exists.
