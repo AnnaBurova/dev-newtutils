@@ -96,6 +96,11 @@ def ensure_dir_exists(
             Full path to the target file (including the file name).
     """
 
+    NewtCons.validate_input(
+        file_path, str,
+        location="Newt.files.ensure_dir_exists : file_path"
+    )
+
     dir_path = os.path.dirname(file_path)
 
     if not dir_path:
@@ -136,9 +141,10 @@ def check_file_exists(
             otherwise False.
     """
 
-    if not NewtCons.validate_input(file_path, str, stop=stop,
-                                   location="Newt.files.check_file_exists.file_path"):
-        return False
+    NewtCons.validate_input(
+        file_path, str,
+        location="Newt.files.check_file_exists : file_path"
+    )
 
     if os.path.isfile(file_path):
         return True
@@ -171,6 +177,11 @@ def _normalize_newlines(
             Normalized text with Unix-style newlines.
     """
 
+    NewtCons.validate_input(
+        text, str,
+        location="Newt.files._normalize_newlines : text"
+    )
+
     return text.replace("\r\n", "\n").rstrip()
 
 
@@ -195,10 +206,10 @@ def choose_file_from_folder(
             or None if cancelled or an error occurred.
     """
 
-    # Validate folder path
-    if not NewtCons.validate_input(folder_path, str,
-                                   location="Newt.files.choose_file_from_folder.folder_path"):
-        return None
+    NewtCons.validate_input(
+        folder_path, str,
+        location="Newt.files.choose_file_from_folder : folder_path"
+    )
 
     if not os.path.isdir(folder_path):
         NewtCons.error_msg(
@@ -337,10 +348,10 @@ def save_text_to_file(
             Defaults to True.
     """
 
-    NewtCons.validate_input(file_name, str,
-                            location="Newt.files.save_text_to_file.file_name")
-    NewtCons.validate_input(text, str,
-                            location="Newt.files.save_text_to_file.text")
+    NewtCons.validate_input(
+        text, str,
+        location="Newt.files.save_text_to_file : text"
+    )
 
     ensure_dir_exists(file_name)
     text = normalize_newlines(text)
@@ -383,9 +394,10 @@ def convert_str_to_json(
         out (list | dict | None): Parsed Python object on success, otherwise None.
     """
 
-    if not NewtCons.validate_input(text, str,
-                                   location="Newt.files.str_to_json.text", stop=False):
-        return None
+    NewtCons.validate_input(
+        text, str,
+        location="Newt.files.convert_str_to_json : text"
+    )
 
     text_strip = text.strip()
     if not text_strip:
@@ -502,10 +514,15 @@ def save_json_to_file(
             Defaults to True.
     """
 
-    NewtCons.validate_input(file_name, str,
-                            location="Newt.files.save_json_to_file.file_name")
-    NewtCons.validate_input(data, (list, dict),
-                            location="Newt.files.save_json_to_file.data")
+    NewtCons.validate_input(
+        data, (list, dict),
+        location="Newt.files.save_json_to_file : data"
+    )
+
+    NewtCons.validate_input(
+        indent, int,
+        location="Newt.files.save_json_to_file : indent"
+    )
 
     ensure_dir_exists(file_name)
 
@@ -557,9 +574,10 @@ def read_csv_from_file(
             or an empty list on failure.
     """
 
-    if not NewtCons.validate_input(delimiter, str, stop=False,
-                                   location="Newt.files.read_csv_from_file.delimiter"):
-        return []
+    NewtCons.validate_input(
+        delimiter, str,
+        location="Newt.files.read_csv_from_file : delimiter"
+    )
 
     if not check_file_exists(file_name):
         return []
@@ -613,12 +631,15 @@ def save_csv_to_file(
             Defaults to True.
     """
 
-    NewtCons.validate_input(file_name, str,
-                            location="Newt.files.save_csv_to_file.file_name")
-    NewtCons.validate_input(rows, (list, tuple),
-                            location="Newt.files.save_csv_to_file.rows")
-    NewtCons.validate_input(delimiter, str,
-                            location="Newt.files.save_csv_to_file.delimiter")
+    NewtCons.validate_input(
+        rows, (list, tuple),
+        location="Newt.files.save_csv_to_file : rows"
+    )
+
+    NewtCons.validate_input(
+        delimiter, str,
+        location="Newt.files.save_csv_to_file : delimiter"
+    )
 
     ensure_dir_exists(file_name)
 
@@ -675,6 +696,11 @@ def setup_logging(
         >>> cleanup_logging(setup_data, "path/to/target/logfile.txt")
     """
 
+    NewtCons.validate_input(
+        _dir, str,
+        location="Newt.files.setup_logging : _dir"
+    )
+
     time_now = datetime.now(timezone.utc)
     time_file_name = time_now.strftime('%Y-%m-%d-%H-%M-%S') + ".txt"
 
@@ -718,6 +744,12 @@ def cleanup_logging(
         file_target (str):
             Target path where the log file should be moved.
     """
+
+    NewtCons.validate_input(
+        setup_data, tuple,
+        location="Newt.files.cleanup_logging : setup_data"
+    )
+
     time_file, file_content, origin_stdout = setup_data
 
     sys.stdout = origin_stdout
