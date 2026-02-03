@@ -359,18 +359,19 @@ def save_text_to_file(
     )
 
     ensure_dir_exists(file_name)
-    text = normalize_newlines(text)
-    mode = "a" if append else "w"
+    text = _normalize_newlines(text)
+    mode_file = "a" if append else "w"
+    mode_text = "append" if append else "write"
 
     try:
-        with open(file_name, mode, encoding="utf-8", newline="\n") as f:
+        with open(file_name, mode_file, encoding="utf-8", newline="\n") as f:
             f.write(text)
             f.write("\n")
 
         if logging:
             print("[Newt.files.save_text_to_file] Saved text to file:")
             print(file_name)
-            print(f"(mode={'append' if append else 'write'}, length={len(text)})")
+            print(f"(mode={mode_text}, length={len(text)})")
 
     except Exception as e:
         NewtCons.error_msg(
@@ -649,23 +650,24 @@ def save_csv_to_file(
 
     ensure_dir_exists(file_name)
 
-    mode = "a" if append else "w"
+    mode_file = "a" if append else "w"
+    mode_text = "append" if append else "write"
 
     try:
         # Normalize newlines in cell data
         normalized_rows = [
-            [normalize_newlines(str(cell)) for cell in row]
+            [_normalize_newlines(str(cell)) for cell in row]
             for row in rows
         ]
 
-        with open(file_name, mode, encoding="utf-8", newline="\n") as f:
+        with open(file_name, mode_file, encoding="utf-8", newline="\n") as f:
             writer = csv.writer(f, delimiter=delimiter, lineterminator="\n")
             writer.writerows(normalized_rows)
 
         if logging:
             print("[Newt.files.save_csv_to_file] Saved CSV to file:")
             print(file_name)
-            print(f"(rows={len(normalized_rows)+1}, mode={'append' if append else 'write'}, delimiter='{delimiter}')")
+            print(f"(rows={len(normalized_rows)+1}, mode={mode_text}, delimiter='{delimiter}')")
 
     except Exception as e:
         NewtCons.error_msg(
