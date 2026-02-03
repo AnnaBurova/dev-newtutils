@@ -7,14 +7,14 @@ Created on 2025-11
 Comprehensive unit tests for newtutils.files module.
 
 Tests cover:
-- Directory operations (_ensure_dir_exists)
-- File existence checks (_check_file_exists)
-- Newline normalization (_normalize_newlines)
-- File selection (choose_file_from_folder)
-- Text file operations (read_text_from_file, save_text_to_file)
-- JSON string parsing (convert_str_to_json)
-- JSON file operations (read_json_from_file, save_json_to_file)
-- CSV file operations (read_csv_from_file, save_csv_to_file)
+- TestEnsureDirExists
+- TestCheckFileExists
+- TestNormalizeNewlines
+- TestChooseFileFromFolder
+- TestTextFiles
+- TestConvertStrToJson
+- TestJsonFiles
+- TestCsvFiles
 """
 
 import pytest
