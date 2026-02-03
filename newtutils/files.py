@@ -146,7 +146,7 @@ def check_file_exists(
     if print_error:
         NewtCons.error_msg(
             f"File not found: {file_path}",
-            location="Newt.files.check_file_exists",
+            location="Newt.files.check_file_exists : print_error",
             stop=stop
         )
     return False
@@ -203,7 +203,7 @@ def choose_file_from_folder(
     if not os.path.isdir(folder_path):
         NewtCons.error_msg(
             f"Folder not found: {folder_path}",
-            location="Newt.files.choose_file_from_folder"
+            location="Newt.files.choose_file_from_folder : folder_path not dir"
         )
         return None
 
@@ -216,8 +216,7 @@ def choose_file_from_folder(
     except Exception as e:
         NewtCons.error_msg(
             f"Failed to list directory: {e}",
-            location="Newt.files.choose_file_from_folder",
-            stop=False
+            location="Newt.files.choose_file_from_folder : Exception file_list sorted"
         )
         return None
 
@@ -262,8 +261,7 @@ def choose_file_from_folder(
         except Exception as e:
             NewtCons.error_msg(
                 f"Exception: {e}",
-                location="Newt.files.choose_file_from_folder",
-                stop=False
+                location="Newt.files.choose_file_from_folder : Exception while choice"
             )
             return None
 
@@ -309,8 +307,7 @@ def read_text_from_file(
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.files.read_text_from_file",
-            stop=False
+            location="Newt.files.read_text_from_file : Exception"
         )
         return ""
 
@@ -362,7 +359,7 @@ def save_text_to_file(
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.files.save_text_to_file",
+            location="Newt.files.save_text_to_file : Exception",
             stop=False
         )
 
@@ -403,8 +400,7 @@ def convert_str_to_json(
     except Exception as e:
         NewtCons.error_msg(
             f"Failed to parse string to JSON: {e}",
-            "Trying to replace single quotes with double quotes...",
-            location="Newt.files.str_to_json.standard",
+            location="Newt.files.convert_str_to_json : Exception standard JSON",
             stop=False
         )
 
@@ -417,7 +413,7 @@ def convert_str_to_json(
     except Exception as e:
         NewtCons.error_msg(
             f"Failed to parse string to JSON: {e}",
-            location="Newt.files.str_to_json.replace",
+            location="Newt.files.convert_str_to_json : Exception replace single quotes with double quotes",
             stop=False
         )
         NewtCons.validate_input(text_replace, (list, dict),
@@ -475,7 +471,7 @@ def read_json_from_file(
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.files.read_json_from_file"
+            location="Newt.files.read_json_from_file : Exception"
         )
         return []
 
@@ -526,7 +522,7 @@ def save_json_to_file(
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.files.save_json_to_file",
+            location="Newt.files.save_json_to_file : Exception",
             stop=False
         )
 
@@ -582,7 +578,7 @@ def read_csv_from_file(
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.files.read_csv_from_file",
+            location="Newt.files.read_csv_from_file : Exception",
             stop=False
         )
         return []
@@ -647,7 +643,7 @@ def save_csv_to_file(
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.files.save_csv_to_file",
+            location="Newt.files.save_csv_to_file : Exception",
             stop=False
         )
 

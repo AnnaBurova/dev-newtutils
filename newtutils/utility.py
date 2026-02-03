@@ -69,7 +69,7 @@ def sorting_list(
 
     if not NewtCons.validate_input(
         input_list, list, stop=stop,
-        location="Newt.utility.sorting_list : input_list not list"
+        location="Newt.utility.sorting_list : input_list"
     ):
         return []
 
@@ -83,7 +83,7 @@ def sorting_list(
             NewtCons.error_msg(
                 "input_list must have only str and int types",
                 f"input_list: {input_list}",
-                location="Newt.utility.sorting_list : input_list not all are str or int",
+                location="Newt.utility.sorting_list : input_list not all",
                 stop=stop
             )
             return []
@@ -150,7 +150,7 @@ def sorting_dict_by_keys(
     # Validate that data is a list
     if not NewtCons.validate_input(
         data, list, stop=stop,
-        location="Newt.utility.sorting_dict_by_keys : data not list"
+        location="Newt.utility.sorting_dict_by_keys : data"
     ):
         return []
 
@@ -163,7 +163,7 @@ def sorting_dict_by_keys(
         NewtCons.error_msg(
             "Expected a list of dictionaries",
             f"Data: {data}",
-            location="Newt.utility.sorting_dict_by_keys : data not all are dict",
+            location="Newt.utility.sorting_dict_by_keys : data not all",
             stop=stop
         )
         return []
@@ -186,7 +186,7 @@ def sorting_dict_by_keys(
         NewtCons.error_msg(
             "Keys must be strings",
             f"Keys: {keys}",
-            location="Newt.utility.sorting_dict_by_keys : keys not all are str",
+            location="Newt.utility.sorting_dict_by_keys : keys not all",
             stop=stop
         )
         return []

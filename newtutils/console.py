@@ -168,7 +168,7 @@ def _beep_boop(
 
     if not validate_input(
         pause_s, (int, float), stop=False,
-        location="_beep_boop : pause_s not int or float"
+        location="_beep_boop : pause_s"
     ):
         pause_s = 0.2
 
@@ -220,7 +220,7 @@ def _retry_pause(
 
     if not validate_input(
         seconds, int, stop=False,
-        location="_retry_pause : seconds not int"
+        location="_retry_pause : seconds"
     ):
         seconds = 5
 
@@ -271,12 +271,12 @@ def check_location(
 
     validate_input(
         dir_, str,
-        location="check_location : dir_ not str"
+        location="check_location : dir_"
     )
 
     validate_input(
         must_location, str,
-        location="check_location : must_location not str"
+        location="check_location : must_location"
     )
 
     if dir_ == must_location:
@@ -323,7 +323,7 @@ def select_from_input(
 
     validate_input(
         select_dict, dict,
-        location="select_from_input : select_dict not dict"
+        location="select_from_input : select_dict"
     )
 
     # Display numbered list
