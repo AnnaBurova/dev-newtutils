@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collected 26 items
+collected 30 items
 
 test_utility.py 
 START=======================================
@@ -171,6 +171,27 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
+Function: test_sorting_list_exception
+============================================
+[1, 2, 3]
+[1m [31m
+Location: Newt.utility.sorting_list : Exception
+::: ERROR :::
+Exception: Sorting failed
+[0m
+[1m [31m
+Location: Newt.utility.sorting_list : Exception
+::: ERROR :::
+Exception: Sorting failed
+[0m
+[]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
 Function: test_sorting_dict_by_single_key
 ============================================
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
@@ -247,6 +268,28 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
+Function: test_sorting_dict_no_keys_multiple_keys
+============================================
+[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
+[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_no_keys_mixed_structure
+============================================
+[{'name': 'Charlie'}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]
+[{'name': 'Charlie'}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
 Function: test_sorting_dict_not_list
 ============================================
 not a list
@@ -256,6 +299,13 @@ Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data
 Expected <class 'list'>, got <class 'str'>
 Value: not a list
 [0m
+[1m [31m
+Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data not list
+::: ERROR :::
+Expected <class 'list'>, got <class 'str'>
+Value: not a list
+[0m
+[]
 
 =====captured.err=====
 (no stderr captured)
@@ -278,6 +328,19 @@ Location: Newt.utility.sorting_dict_by_keys : data not all are dict
 Expected a list of dictionaries
 Data: [1, 2, 3]
 [0m
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'dict'>, got <class 'int'>
+Value: 1
+[0m
+[1m [31m
+Location: Newt.utility.sorting_dict_by_keys : data not all are dict
+::: ERROR :::
+Expected a list of dictionaries
+Data: [1, 2, 3]
+[0m
+[]
 
 =====captured.err=====
 (no stderr captured)
@@ -300,6 +363,19 @@ Location: Newt.utility.sorting_dict_by_keys : keys not all are str
 Keys must be strings
 Keys: (123,)
 [0m
+[1m [31m
+Location: Newt.console.validate_input
+::: ERROR :::
+Expected <class 'str'>, got <class 'int'>
+Value: 123
+[0m
+[1m [31m
+Location: Newt.utility.sorting_dict_by_keys : keys not all are str
+::: ERROR :::
+Keys must be strings
+Keys: (123,)
+[0m
+[]
 
 =====captured.err=====
 (no stderr captured)
@@ -311,6 +387,27 @@ Function: test_sorting_dict_complex_sorting
 ============================================
 [{'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}]
 [{'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_exception_no_stop
+============================================
+[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
+[1m [31m
+Location: Newt.utility.sorting_dict_by_keys : Exception
+::: ERROR :::
+Exception: Dict sorting failed
+[0m
+[1m [31m
+Location: Newt.utility.sorting_dict_by_keys : Exception
+::: ERROR :::
+Exception: Dict sorting failed
+[0m
+[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
 
 =====captured.err=====
 (no stderr captured)
@@ -378,4 +475,4 @@ Unexpected keys: x
 END=========================================
 .
 
-============================= 26 passed in 0.11s ==============================
+============================= 30 passed in 0.13s ==============================

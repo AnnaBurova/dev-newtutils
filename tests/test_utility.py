@@ -13,6 +13,7 @@ Tests cover:
 """
 
 import pytest
+from unittest.mock import patch
 
 from helpers import print_my_func_name, print_my_captured
 import newtutils.utility as NewtUtil
@@ -243,6 +244,35 @@ class TestSortingList:
         assert "::: ERROR :::" not in captured.out
 
 
+    @patch('newtutils.utility.sorted')
+    def test_sorting_list_exception(self, mock_sorted, capsys):
+        """ Test exception handling in sorting_list. """
+        print_my_func_name()
+
+        mock_sorted.side_effect = RuntimeError("Sorting failed")
+
+        input_list = [1, 2, 3]
+        print(input_list)
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.sorting_list(input_list)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        result = NewtUtil.sorting_list(input_list, stop=False)
+        print(result)
+        assert result == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_list : Exception\n" in captured.out
+        assert "\nException: Sorting failed\n" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
+
+
 class TestSortingDictByKeys:
     """ Tests for sorting_dict_by_keys function. """
 
@@ -434,6 +464,64 @@ class TestSortingDictByKeys:
         assert "::: ERROR :::" not in captured.out
 
 
+    def test_sorting_dict_no_keys_multiple_keys(self, capsys):
+        """ Test sorting without keys - dict with multiple keys (should return unchanged). """
+        print_my_func_name()
+
+        input_dict = [
+            {"name": "Charlie", "age": 25},
+            {"name": "Alice", "age": 30},
+            {"name": "Bob", "age": 20}
+        ]
+        print(input_dict)
+        result = NewtUtil.sorting_dict_by_keys(input_dict)
+        print(result)
+        # Should return in original order since no keys specified and dicts have multiple keys
+        assert result[0]["age"] == 25
+        assert result[1]["age"] == 30
+        assert result[2]["age"] == 20
+        assert result[0]["name"] == "Charlie"
+        assert result[1]["name"] == "Alice"
+        assert result[2]["name"] == "Bob"
+        assert len(result) == 3
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
+    def test_sorting_dict_no_keys_mixed_structure(self, capsys):
+        """ Test sorting without keys - dicts with different structures. """
+        print_my_func_name()
+
+        input_dict = [
+            {"name": "Charlie"},
+            {"name": "Alice", "age": 30},
+            {"name": "Bob"}
+        ]
+        print(input_dict)
+        result = NewtUtil.sorting_dict_by_keys(input_dict)
+        print(result)
+        # Should return in original order since no keys specified and dicts have different structures
+        assert "age" not in result[0]  # Expected absence of result
+        assert result[1]["age"] == 30
+        assert "age" not in result[2]  # Expected absence of result
+        assert result[0]["name"] == "Charlie"
+        assert result[1]["name"] == "Alice"
+        assert result[2]["name"] == "Bob"
+        assert len(result) == 3
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n[{'name': 'Charlie'}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]\n[{'name': 'Charlie'}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_sorting_dict_not_list(self, capsys):
         """ Test sorting with non-list input. """
         print_my_func_name()
@@ -444,6 +532,9 @@ class TestSortingDictByKeys:
             NewtUtil.sorting_dict_by_keys(input_str, "key")  # type: ignore
             print("This line will not be printed")
         assert exc_info.value.code == 1
+
+        result = NewtUtil.sorting_dict_by_keys(input_str, "key", stop=False)  # type: ignore
+        print(result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -466,6 +557,9 @@ class TestSortingDictByKeys:
             NewtUtil.sorting_dict_by_keys(input_list, "key")  # type: ignore
             print("This line will not be printed")
         assert exc_info.value.code == 1
+
+        result = NewtUtil.sorting_dict_by_keys(input_list, "key", stop=False)  # type: ignore
+        print(result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -491,6 +585,9 @@ class TestSortingDictByKeys:
             NewtUtil.sorting_dict_by_keys(input_dict, 123)  # type: ignore
             print("This line will not be printed")
         assert exc_info.value.code == 1
+
+        result = NewtUtil.sorting_dict_by_keys(input_dict, 123, stop=False)  # type: ignore
+        print(result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -539,6 +636,43 @@ class TestSortingDictByKeys:
         assert "\n[{'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+
+
+    @patch('newtutils.utility.sorted')
+    def test_sorting_dict_exception_no_stop(self, mock_sorted, capsys):
+        """ Test exception handling in sorting_dict_by_keys with stop=False. """
+        print_my_func_name()
+
+        mock_sorted.side_effect = RuntimeError("Dict sorting failed")
+
+        input_dict = [
+            {"name": "Alice", "age": 30},
+            {"name": "Bob", "age": 20}
+        ]
+        print(input_dict)
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.sorting_dict_by_keys(input_dict, "age")
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        result = NewtUtil.sorting_dict_by_keys(input_dict, "age", stop=False)
+        print(result)
+        assert result == input_dict
+        # Should return in original order since no keys specified and dicts have multiple keys
+        assert result[0]["age"] == 30
+        assert result[1]["age"] == 20
+        assert result[0]["name"] == "Alice"
+        assert result[1]["name"] == "Bob"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : Exception\n" in captured.out
+        assert "\nException: Dict sorting failed\n" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
 
 
 class TestCheckDictKeys:
