@@ -79,13 +79,13 @@ Function: test_converts_windows_newlines
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_nonexistent_folder 
+test_files.py::TestChooseFileFromFolder::test_nonexistent_folder_raises_exit 
 START=======================================
 =====captured.out=====
-Function: test_returns_none_for_nonexistent_folder
---------------------------------------------
+Function: test_nonexistent_folder_raises_exit
+============================================
 [1m [31m
-Location: Newt.files.choose_file_from_folder
+Location: Newt.files.choose_file_from_folder : folder_path not dir
 ::: ERROR :::
 Folder not found: /nonexistent/folder
 [0m
@@ -94,42 +94,53 @@ Folder not found: /nonexistent/folder
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_empty_folder 
+test_files.py::TestChooseFileFromFolder::test_empty_folder_raises_exit 
 START=======================================
 =====captured.out=====
-Function: test_returns_none_for_empty_folder
---------------------------------------------
-No files found in this folder.
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_input_zero 
-START=======================================
-=====captured.out=====
-Function: test_returns_none_for_input_zero
---------------------------------------------
-
-Available files: 3
-  1: dummy_file_0.txt
-  2: dummy_file_1.txt
-  3: dummy_file_2.txt
-  0: Exit / Cancel
-[INPUT]: 0
-Selection cancelled.
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_files.py::TestChooseFileFromFolder::test_returns_none_for_invalid_input 
-START=======================================
-=====captured.out=====
-Function: test_returns_none_for_invalid_input
---------------------------------------------
+Function: test_empty_folder_raises_exit
+============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.choose_file_from_folder.folder_path
+Location: Newt.files.choose_file_from_folder : file_list empty
+::: ERROR :::
+No files found in this folder.
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestChooseFileFromFolder::test_user_cancel_x_raises_exit 
+START=======================================
+=====captured.out=====
+Function: test_user_cancel_x_raises_exit
+============================================
+Available files: 3
+     1: dummy_file_0.txt
+     2: dummy_file_1.txt
+     3: dummy_file_2.txt
+     X: Exit / Cancel
+[INPUT]: abc
+Invalid input. Please enter a number.
+[INPUT]: 999
+Number out of range. Try again.
+[INPUT]: x
+[1m [31m
+Location: Newt.files.choose_file_from_folder : choice = [X]
+::: ERROR :::
+Selection cancelled.
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestChooseFileFromFolder::test_invalid_folderpath_raises_exit 
+START=======================================
+=====captured.out=====
+Function: test_invalid_folderpath_raises_exit
+============================================
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.choose_file_from_folder : folder_path
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123

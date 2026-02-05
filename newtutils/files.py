@@ -223,9 +223,9 @@ def choose_file_from_folder(
             f for f in os.listdir(folder_path)
             if check_file_exists(os.path.join(folder_path, f))
         ])
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Failed to list directory: {e}",
+            f"Failed to list directory: {e} (found? write test!)",  # TODO
             location="Newt.files.choose_file_from_folder : Exception file_list sorted"
         )
 
@@ -275,9 +275,9 @@ def choose_file_from_folder(
                 location="Newt.files.choose_file_from_folder : KeyboardInterrupt"
             )
 
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             NewtCons.error_msg(
-                f"Exception: {e}",
+                f"Exception: {e} (found? write test!)",  # TODO
                 location="Newt.files.choose_file_from_folder : Exception while choice"
             )
 
