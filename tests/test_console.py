@@ -622,12 +622,9 @@ class TestSelectFromInput:
         assert "\n     1: Option A\n" in captured.out
         assert "\n     2: Option B\n" in captured.out
         assert "\n     X: Exit / Cancel\n" in captured.out
-        assert "\n[INPUT]: abc\n" in captured.out
-        assert "\nInvalid input. Please enter a number.\n" in captured.out
-        assert "\n[INPUT]: 999\n" in captured.out
-        assert "\nNumber out of range. Try again.\n" in captured.out
-        assert "\n[INPUT]: 2\n" in captured.out
-        assert "\nSelected option: Option B\n" in captured.out
+        assert "\n[INPUT]: abc\nInvalid input. Please enter a number.\n" in captured.out
+        assert "\n[INPUT]: 999\nNumber out of range. Try again.\n" in captured.out
+        assert "\n[INPUT]: 2\nSelected option: Option B\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
