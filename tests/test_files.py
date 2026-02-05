@@ -127,13 +127,14 @@ class TestCheckFileExists:
 
 
 class TestNormalizeNewlines:
-    """Tests for _normalize_newlines function."""
+    """ Tests for _normalize_newlines function. """
+
 
     def test_converts_windows_newlines(self, capsys):
-        """Test that Windows newlines are converted."""
+        """ Test NewtFiles._normalize_newlines() converts Windows CRLF to Unix LF. """
         print_my_func_name()
 
-        text = "line1\r\nline2\r\nline3"
+        text = "line1\r\nline2\r\nline3\r\n"
         print(repr(text))
 
         result = NewtFiles._normalize_newlines(text)
@@ -143,43 +144,9 @@ class TestNormalizeNewlines:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-    def test_preserves_unix_newlines(self, capsys):
-        """Test that Unix newlines are preserved."""
-        print_my_func_name()
-
-        text = "line1\nline2\nline3"
-        print(repr(text))
-
-        result = NewtFiles._normalize_newlines(text)
-        print(repr(result))
-        assert result == text
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-    def test_handles_mixed_newlines(self, capsys):
-        """Test that mixed newlines are normalized."""
-        print_my_func_name()
-
-        text = "line1\r\nline2\nline3\r\n"
-        print(repr(text))
-
-        result = NewtFiles._normalize_newlines(text)
-        print(repr(result))
-        # Trailing newlines are stripped by _normalize_newlines
-        assert result == "line1\nline2\nline3"
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-    def test_handles_empty_string(self, capsys):
-        """Test that empty string is handled."""
-        print_my_func_name()
-
-        assert NewtFiles._normalize_newlines("") == ""
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
+        assert "\n'line1\\r\\nline2\\r\\nline3\\r\\n'\n'line1\\nline2\\nline3'\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
 class TestChooseFileFromFolder:

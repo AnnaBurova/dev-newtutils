@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collecting ... collected 43 items
+collecting ... collected 40 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory 
 START=======================================
@@ -71,43 +71,9 @@ test_files.py::TestNormalizeNewlines::test_converts_windows_newlines
 START=======================================
 =====captured.out=====
 Function: test_converts_windows_newlines
---------------------------------------------
-'line1\r\nline2\r\nline3'
+============================================
+'line1\r\nline2\r\nline3\r\n'
 'line1\nline2\nline3'
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines 
-START=======================================
-=====captured.out=====
-Function: test_preserves_unix_newlines
---------------------------------------------
-'line1\nline2\nline3'
-'line1\nline2\nline3'
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines 
-START=======================================
-=====captured.out=====
-Function: test_handles_mixed_newlines
---------------------------------------------
-'line1\r\nline2\nline3\r\n'
-'line1\nline2\nline3'
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_files.py::TestNormalizeNewlines::test_handles_empty_string 
-START=======================================
-=====captured.out=====
-Function: test_handles_empty_string
---------------------------------------------
 
 =====captured.err=====
 (no stderr captured)
@@ -814,4 +780,4 @@ C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 END=========================================
 PASSED
 
-============================= 43 passed in 0.16s ==============================
+============================= 40 passed in 0.16s ==============================

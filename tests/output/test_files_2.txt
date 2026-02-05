@@ -4,16 +4,13 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collecting ... collected 43 items
+collecting ... collected 40 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [  2%]
-test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [  4%]
-test_files.py::TestCheckFileExists::test_existing_file_returns PASSED    [  6%]
-test_files.py::TestCheckFileExists::test_invalid_filepath_raises_exit PASSED [  9%]
-test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 13%]
-test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 15%]
-test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 18%]
-test_files.py::TestNormalizeNewlines::test_handles_empty_string PASSED   [ 20%]
+test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [  5%]
+test_files.py::TestCheckFileExists::test_existing_file_returns PASSED    [  7%]
+test_files.py::TestCheckFileExists::test_invalid_filepath_raises_exit PASSED [ 10%]
+test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 12%]
 test_files.py::TestChooseFileFromFolder::test_returns_none_for_nonexistent_folder PASSED [ 22%]
 test_files.py::TestChooseFileFromFolder::test_returns_none_for_empty_folder PASSED [ 25%]
 test_files.py::TestChooseFileFromFolder::test_returns_none_for_input_zero PASSED [ 27%]
@@ -50,4 +47,4 @@ test_files.py::TestCsvFiles::test_save_csv_with_various_types PASSED     [ 95%]
 test_files.py::TestCsvFiles::test_save_csv_invalid_input PASSED          [ 97%]
 test_files.py::TestCsvFiles::test_read_csv_invalid_delimiter PASSED      [100%]
 
-============================= 43 passed in 0.17s ==============================
+============================= 40 passed in 0.17s ==============================
