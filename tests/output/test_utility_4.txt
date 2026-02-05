@@ -382,7 +382,7 @@ Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.utility.sorting_dict_by_keys : keys not all are str
+Location: Newt.utility.sorting_dict_by_keys : keys not all
 ::: ERROR :::
 Keys must be strings
 Keys: (123,)
@@ -394,7 +394,7 @@ Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.utility.sorting_dict_by_keys : keys not all are str
+Location: Newt.utility.sorting_dict_by_keys : keys not all
 ::: ERROR :::
 Keys must be strings
 Keys: (123,)

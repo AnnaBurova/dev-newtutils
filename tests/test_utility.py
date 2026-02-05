@@ -594,7 +594,7 @@ class TestSortingDictByKeys:
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 123\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : keys not all are str\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : keys not all\n" in captured.out
         assert "\nKeys must be strings\n" in captured.out
         assert "\nKeys: (123,)\n" in captured.out
         # Expected absence of result
