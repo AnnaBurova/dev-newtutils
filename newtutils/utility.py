@@ -6,7 +6,7 @@ Created on 2025-10
 
 Functions:
     def sorting_list(
-        input_list: list,
+        input_list: Sequence[str | int],
         stop: bool = True
         ) -> list[str | int]
     def sorting_dict_by_keys(
@@ -34,7 +34,7 @@ import newtutils.console as NewtCons
 
 
 def sorting_list(
-        input_list: list,
+        input_list: Sequence[str | int],
         stop: bool = True
         ) -> list[str | int]:
     """ Remove duplicates from a list and return a sorted result.
