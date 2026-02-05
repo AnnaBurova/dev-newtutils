@@ -447,7 +447,7 @@ class TestRetryPause:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > _retry_pause : seconds not int\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > _retry_pause : seconds\n" in captured.out
         assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
         assert "\nValue: invalid\n" in captured.out
         assert "\nRetrying in 5 seconds...\n" in captured.out
