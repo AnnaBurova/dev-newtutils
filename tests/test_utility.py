@@ -36,8 +36,7 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[3, 1, 2, 3, 5, 1]\n" in captured.out
-        assert "\n[1, 2, 3, 5]\n" in captured.out
+        assert "\n[3, 1, 2, 3, 5, 1]\n[1, 2, 3, 5]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -55,8 +54,7 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n['c', 'a', 'b', 'c', 'z']\n" in captured.out
-        assert "\n['a', 'b', 'c', 'z']\n" in captured.out
+        assert "\n['c', 'a', 'b', 'c', 'z']\n['a', 'b', 'c', 'z']\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -75,8 +73,7 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n['f', 4, 'a', 2, 'b', 1, 'a']\n" in captured.out
-        assert "\n['a', 'b', 'f', 1, 2, 4]\n" in captured.out
+        assert "\n['f', 4, 'a', 2, 'b', 1, 'a']\n['a', 'b', 'f', 1, 2, 4]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -115,6 +112,7 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[1]\n[1]\n['a']\n['a']\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -238,8 +236,7 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[100, 1, 50, 1000, 5]\n" in captured.out
-        assert "\n[1, 5, 50, 100, 1000]\n" in captured.out
+        assert "\n[100, 1, 50, 1000, 5]\n[1, 5, 50, 100, 1000]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -299,8 +296,7 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]\n" in captured.out
-        assert "\n[{'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}]\n" in captured.out
+        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]\n[{'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -327,8 +323,7 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 20}]\n" in captured.out
-        assert "\n[{'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 25}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
+        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 20}]\n[{'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 25}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -356,8 +351,7 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
-        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 20}]\n" in captured.out
+        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}]\n[{'name': 'Alice', 'age': 30}, {'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 20}]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -386,8 +380,7 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob'}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
-        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]\n" in captured.out
+        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob'}, {'name': 'Charlie', 'age': 25}]\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -416,8 +409,7 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
-        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}]\n" in captured.out
+        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}, {'name': 'Charlie', 'age': 25}]\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -630,8 +622,7 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}]\n" in captured.out
-        assert "\n[{'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}]\n" in captured.out
+        assert "\n[{'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}]\n[{'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -706,9 +697,7 @@ class TestCheckDictKeys:
 
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.utility.check_dict_keys : missing_keys or extra_keys\n" in captured.out
-        assert "\nData keys: a\n" in captured.out
-        assert "\nMissing keys: b\n" in captured.out
-        assert "\nUnexpected keys: \n" in captured.out
+        assert "\nData keys: a\nMissing keys: b\nUnexpected keys: \n" in captured.out
 
 
     def test_check_dict_keys_extra_keys_no_stop(self, capsys):
@@ -725,9 +714,7 @@ class TestCheckDictKeys:
 
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.utility.check_dict_keys : missing_keys or extra_keys\n" in captured.out
-        assert "\nData keys: a, b, c\n" in captured.out
-        assert "\nMissing keys: \n" in captured.out
-        assert "\nUnexpected keys: c\n" in captured.out
+        assert "\nData keys: a, b, c\nMissing keys: \nUnexpected keys: c\n" in captured.out
 
 
     def test_check_dict_keys_missing_and_extra_stop(self, capsys):
@@ -747,8 +734,6 @@ class TestCheckDictKeys:
 
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.utility.check_dict_keys : missing_keys or extra_keys\n" in captured.out
-        assert "\nData keys: x\n" in captured.out
-        assert "\nMissing keys: a, b\n" in captured.out
-        assert "\nUnexpected keys: x\n" in captured.out
+        assert "\nData keys: x\nMissing keys: a, b\nUnexpected keys: x\n" in captured.out
         # Expected absence of result
         assert "\nThis line will not be printed\n" not in captured.out
