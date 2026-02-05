@@ -26,10 +26,15 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_returns_true_for_existing_file
---------------------------------------------
+Function: test_existing_file_returns
+============================================
 [1m [31m
-Location: Newt.files._check_file_exists
+Location: Newt.files.check_file_exists : logging
+::: ERROR :::
+File not found: C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx
+[0m
+[1m [31m
+Location: Newt.files.check_file_exists : logging
 ::: ERROR :::
 File not found: C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx
 [0m
@@ -40,13 +45,18 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_returns_false_for_invalid_input
---------------------------------------------
+Function: test_invalid_filepath_raises_exit
+============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.files._check_file_exists.file_path
+Location: Newt.console.validate_input > Newt.files.check_file_exists : file_path
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
+[0m
+[1m [31m
+Location: Newt.files.check_file_exists : logging
+::: ERROR :::
+File not found: 123
 [0m
 
 =====captured.err=====

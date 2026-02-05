@@ -8,8 +8,8 @@ collecting ... collected 43 items
 
 test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [  2%]
 test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [  4%]
-test_files.py::TestCheckFileExists::test_returns_true_for_existing_file PASSED [  9%]
-test_files.py::TestCheckFileExists::test_returns_false_for_invalid_input PASSED [ 11%]
+test_files.py::TestCheckFileExists::test_existing_file_returns PASSED    [  6%]
+test_files.py::TestCheckFileExists::test_invalid_filepath_raises_exit PASSED [  9%]
 test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 13%]
 test_files.py::TestNormalizeNewlines::test_preserves_unix_newlines PASSED [ 15%]
 test_files.py::TestNormalizeNewlines::test_handles_mixed_newlines PASSED [ 18%]

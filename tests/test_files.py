@@ -64,10 +64,11 @@ class TestEnsureDirExists:
 
 
 class TestCheckFileExists:
-    """Tests for check_file_exists function."""
+    """ Tests for check_file_exists function. """
 
-    def test_returns_true_for_existing_file(self, capsys):
-        """Test that existing files return True."""
+
+    def test_existing_file_returns(self, capsys):
+        """ Test NewtFiles.check_file_exists(): True for existing, False for missing, SystemExit with stop=True. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(delete=False) as tmp:
@@ -78,21 +79,51 @@ class TestCheckFileExists:
             assert NewtFiles.check_file_exists(tmp_path) is True
 
         finally:
-            os.unlink(tmp_path)
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
 
-        assert NewtFiles.check_file_exists(tmp_path) is False
+        with pytest.raises(SystemExit) as exc_info:
+            NewtFiles.check_file_exists(tmp_path)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        assert NewtFiles.check_file_exists(tmp_path, stop=False) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-    def test_returns_false_for_invalid_input(self, capsys):
-        """Test that invalid input returns False."""
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
+        assert "\nFile not found: C:\\Users\\" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
+
+
+    def test_invalid_filepath_raises_exit(self, capsys):
+        """ Test NewtFiles.check_file_exists() raises SystemExit or returns False for invalid input. """
         print_my_func_name()
 
-        assert NewtFiles.check_file_exists(123) is False  # type: ignore
+        with pytest.raises(SystemExit) as exc_info:
+            NewtFiles.check_file_exists(123)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        assert NewtFiles.check_file_exists("123", stop=False) is False
+
+        assert NewtFiles.check_file_exists("abc", stop=False, logging=False) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.check_file_exists : file_path\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
+        assert "\nFile not found: 123\n" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
+        assert "\nFile not found: abc\n" not in captured.out
 
 
 class TestNormalizeNewlines:
