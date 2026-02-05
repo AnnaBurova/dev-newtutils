@@ -24,7 +24,7 @@ class TestSortingList:
 
 
     def test_sorting_list_integers(self, capsys):
-        """ Test sorting list of integers. """
+        """ Test sorting_list removes duplicates from integers, returns unique sorted. """
         print_my_func_name()
 
         input_list = [3, 1, 2, 3, 5, 1]
@@ -43,7 +43,7 @@ class TestSortingList:
 
 
     def test_sorting_list_strings(self, capsys):
-        """ Test sorting list of strings. """
+        """ Test sorting_list removes duplicates from strings, returns unique sorted. """
         print_my_func_name()
 
         input_list = ["c", "a", "b", "c", "z"]
@@ -62,7 +62,7 @@ class TestSortingList:
 
 
     def test_sorting_list_mixed(self, capsys):
-        """ Test sorting list with mixed strings and integers. """
+        """ Test sorting_list handles mixed str/int, removes duplicates, sorts uniquely. """
         print_my_func_name()
 
         input_list = ["f", 4, "a", 2, "b", 1, "a"]
@@ -82,7 +82,7 @@ class TestSortingList:
 
 
     def test_sorting_list_empty(self, capsys):
-        """ Test sorting empty list. """
+        """ Test sorting_list returns empty list for empty input. """
         print_my_func_name()
 
         result = NewtUtil.sorting_list([])
@@ -97,7 +97,7 @@ class TestSortingList:
 
 
     def test_sorting_list_single_element(self, capsys):
-        """ Test sorting list with single element. """
+        """ Test sorting_list returns unchanged single int or str element. """
         print_my_func_name()
 
         input_list_1 = [1]
@@ -120,7 +120,7 @@ class TestSortingList:
 
 
     def test_sorting_list_all_duplicates(self, capsys):
-        """ Test sorting list with all duplicates. """
+        """ Test sorting_list all duplicates returns single sorted element. """
         print_my_func_name()
 
         input_list = [1, 1, 1, 1]
@@ -138,7 +138,7 @@ class TestSortingList:
 
 
     def test_sorting_list_invalid_type_no_stop(self, capsys):
-        """ Test sorting list with invalid types, stop=False. """
+        """ Test sorting_list float input with stop=False returns empty, logs errors. """
         print_my_func_name()
 
         input_list = [1, 2, 3.5]
@@ -160,7 +160,7 @@ class TestSortingList:
 
 
     def test_sorting_list_invalid_type_with_stop(self, capsys):
-        """ Test sorting list with invalid types, stop=True. """
+        """ Test sorting_list float input with stop=True raises SystemExit. """
         print_my_func_name()
 
         input_list = [1, 2, 3.5]
@@ -185,7 +185,7 @@ class TestSortingList:
 
 
     def test_sorting_list_not_a_list(self, capsys):
-        """ Test sorting list with non-list input. """
+        """ Test sorting_list non-list input returns empty list with error logged. """
         print_my_func_name()
 
         input_str = "not a list"
@@ -204,7 +204,7 @@ class TestSortingList:
 
 
     def test_sorting_list_with_none(self, capsys):
-        """ Test sorting list containing None. """
+        """ Test sorting_list with None returns empty list, logs validation errors. """
         print_my_func_name()
 
         input_list = [1, None, "a"]
@@ -226,7 +226,7 @@ class TestSortingList:
 
 
     def test_sorting_list_large_numbers(self, capsys):
-        """ Test sorting list with large numbers. """
+        """ Test sorting_list handles large integers, removes duplicates correctly. """
         print_my_func_name()
 
         input_list = [100, 1, 50, 1000, 5]
@@ -246,7 +246,7 @@ class TestSortingList:
 
     @patch('newtutils.utility.sorted')
     def test_sorting_list_exception(self, mock_sorted, capsys):
-        """ Test exception handling in sorting_list. """
+        """ Test sorting_list catches sorted exception, raises SystemExit or returns empty. """
         print_my_func_name()
 
         mock_sorted.side_effect = RuntimeError("Sorting failed")
@@ -277,8 +277,8 @@ class TestSortingDictByKeys:
     """ Tests for sorting_dict_by_keys function. """
 
 
-    def test_sorting_dict_by_single_key(self, capsys):
-        """ Test sorting by a single key. """
+    def test_sorting_dict_single_key(self, capsys):
+        """ Test sorting_dict_by_keys sorts list of dicts ascending by single key. """
         print_my_func_name()
 
         input_dict = [
@@ -305,8 +305,8 @@ class TestSortingDictByKeys:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_dict_by_multiple_keys(self, capsys):
-        """ Test sorting by multiple keys. """
+    def test_sorting_dict_multiple_keys(self, capsys):
+        """ Test sorting_dict_by_keys sorts list of dicts by age then name. """
         print_my_func_name()
 
         input_dict = [
@@ -333,8 +333,8 @@ class TestSortingDictByKeys:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_dict_reverse(self, capsys):
-        """ Test sorting in reverse order. """
+    def test_sorting_dict_reverse_order(self, capsys):
+        """ Test sorting_dict_by_keys with reverse=True sorts descending by age. """
         print_my_func_name()
 
         input_dict = [
@@ -362,8 +362,8 @@ class TestSortingDictByKeys:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_dict_missing_keys(self, capsys):
-        """ Test sorting with missing keys (should be placed at end). """
+    def test_sorting_dict_missing_key(self, capsys):
+        """ Test sorting_dict_by_keys places missing key dicts at end. """
         print_my_func_name()
 
         input_dict = [
@@ -393,7 +393,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_none_values(self, capsys):
-        """ Test sorting with None values (should be placed at end). """
+        """ Test sorting_dict_by_keys places None values at end. """
         print_my_func_name()
 
         input_dict = [
@@ -423,7 +423,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_empty_list(self, capsys):
-        """ Test sorting empty list. """
+        """ Test sorting_dict_by_keys returns empty list for empty input. """
         print_my_func_name()
 
         result = NewtUtil.sorting_dict_by_keys([])
@@ -438,9 +438,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_no_keys(self, capsys):
-        """ Test sorting without keys.
-        Should return sorted by value order, if dict has only one value.
-        """
+        """ Test sorting_dict_by_keys no args sorts list by dict value order. """
         print_my_func_name()
 
         input_dict = [
@@ -464,8 +462,8 @@ class TestSortingDictByKeys:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_dict_no_keys_multiple_keys(self, capsys):
-        """ Test sorting without keys - dict with multiple keys (should return unchanged). """
+    def test_sorting_dict_multi_keys_no_args(self, capsys):
+        """ Test sorting_dict_by_keys no args returns unchanged multi-key dict list. """
         print_my_func_name()
 
         input_dict = [
@@ -493,8 +491,8 @@ class TestSortingDictByKeys:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_dict_no_keys_mixed_structure(self, capsys):
-        """ Test sorting without keys - dicts with different structures. """
+    def test_sorting_dict_mixed_struct_no_keys(self, capsys):
+        """ Test sorting_dict_by_keys no args unchanged for mixed dict structures. """
         print_my_func_name()
 
         input_dict = [
@@ -523,7 +521,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_not_list(self, capsys):
-        """ Test sorting with non-list input. """
+        """ Test sorting_dict_by_keys non-list input raises SystemExit or returns result. """
         print_my_func_name()
 
         input_str = "not a list"
@@ -548,7 +546,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_not_dicts(self, capsys):
-        """ Test sorting with list containing non-dicts. """
+        """ Test sorting_dict_by_keys non-dict list items raise SystemExit. """
         print_my_func_name()
 
         input_list = [1, 2, 3]
@@ -576,7 +574,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_invalid_key_type(self, capsys):
-        """ Test sorting with invalid key type. """
+        """ Test sorting_dict_by_keys non-str key raises SystemExit. """
         print_my_func_name()
 
         input_dict = [{"name": "Alice"}]
@@ -603,8 +601,8 @@ class TestSortingDictByKeys:
         assert "\nThis line will not be printed\n" not in captured.out
 
 
-    def test_sorting_dict_complex_sorting(self, capsys):
-        """ Test complex multi-key sorting. """
+    def test_sorting_dict_complex_keys(self, capsys):
+        """ Test sorting_dict_by_keys multi-level sort: category, priority, name. """
         print_my_func_name()
 
         input_dict = [
@@ -640,7 +638,7 @@ class TestSortingDictByKeys:
 
     @patch('newtutils.utility.sorted')
     def test_sorting_dict_exception_no_stop(self, mock_sorted, capsys):
-        """ Test exception handling in sorting_dict_by_keys with stop=False. """
+        """ Test sorting_dict_by_keys catches sorted exception, handles stop=False. """
         print_my_func_name()
 
         mock_sorted.side_effect = RuntimeError("Dict sorting failed")
@@ -680,7 +678,7 @@ class TestCheckDictKeys:
 
 
     def test_check_dict_keys_all_present(self, capsys):
-        """When all expected keys are present and no extras, returns True."""
+        """ Test check_dict_keys returns True for exact key match. """
         print_my_func_name()
 
         sample_dict = {"a": 1, "b": 2}
@@ -695,7 +693,7 @@ class TestCheckDictKeys:
 
 
     def test_check_dict_keys_missing_keys_no_stop(self, capsys):
-        """Missing keys with stop=False should return False and print details."""
+        """ Test check_dict_keys missing key returns False, logs details with stop=False. """
         print_my_func_name()
 
         sample = {"a": 1}
@@ -714,7 +712,7 @@ class TestCheckDictKeys:
 
 
     def test_check_dict_keys_extra_keys_no_stop(self, capsys):
-        """Extra keys with stop=False should return False and print details."""
+        """ Test check_dict_keys extra key returns False, logs details with stop=False. """
         print_my_func_name()
 
         sample = {"a": 1, "b": 2, "c": 3}
@@ -733,7 +731,7 @@ class TestCheckDictKeys:
 
 
     def test_check_dict_keys_missing_and_extra_stop(self, capsys):
-        """When missing and extra keys and default stop=True -> SystemExit."""
+        """ Test check_dict_keys mismatch with stop=True raises SystemExit. """
         print_my_func_name()
 
         sample = {"x": 9}
