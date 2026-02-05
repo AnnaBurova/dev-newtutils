@@ -381,7 +381,7 @@ Function: test_check_location_invalid_type
 ============================================
 123 == /home/user/project
 [1m [31m
-Location: Newt.console.validate_input > check_location : dir_ not str
+Location: Newt.console.validate_input > check_location : dir_
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123

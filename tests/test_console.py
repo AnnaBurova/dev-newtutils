@@ -592,7 +592,7 @@ class TestCheckLocation:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > check_location : dir_ not str\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > check_location : dir_\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 123\n" in captured.out
         # Expected absence of result
