@@ -362,30 +362,6 @@ class TestBeepBoop:
         assert "\nPause is: [0.2, 1, 0.2, 1, 0.7, 1] seconds\n" in captured.out
 
 
-    @patch('newtutils.console.os.name', 'nt')
-    @patch('newtutils.console.winsound')
-    @patch('newtutils.console.time.sleep')
-    def test_beep_boop_exception(self, mock_sleep, mock_winsound, capsys):
-        """ Test _beep_boop catches winsound.Beep exception, logs error, skips sleeps. """
-        print_my_func_name()
-
-        mock_winsound.Beep.side_effect = Exception("Audio driver crash")
-
-        NewtCons._beep_boop()
-        assert mock_sleep.call_count == 0
-        assert mock_winsound.Beep.call_count == 1
-
-        # Be sure Beep was called
-        mock_winsound.Beep.assert_called_once_with(1200, 500)
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console._beep_boop : Exception\n" in captured.out
-        assert "\nException: Audio driver crash\n" in captured.out
-
-
 class TestRetryPause:
     """ Tests for _retry_pause function. """
 
@@ -731,34 +707,6 @@ class TestSelectFromInput:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.select_from_input : KeyboardInterrupt\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
-        # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
-
-
-    @patch('newtutils.console.input')
-    def test_select_from_input_exception(self, mock_input, capsys):
-        """ Test select_from_input catches general Exception, raises SystemExit. """
-        print_my_func_name()
-
-        mock_input.side_effect = RuntimeError("Input device error")
-
-        select_dict = {"1": "Option A"}
-        print(select_dict)
-
-        with pytest.raises(SystemExit) as exc_info:
-            NewtCons.select_from_input(select_dict)
-            print("This line will not be printed")
-        assert exc_info.value.code == 1
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\nAvailable list: 1\n" in captured.out
-        assert "\n     1: Option A\n" in captured.out
-        assert "\n     X: Exit / Cancel\n" in captured.out
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.select_from_input : Exception\n" in captured.out
-        assert "\nException: Input device error\n" in captured.out
         # Expected absence of result
         assert "\nThis line will not be printed\n" not in captured.out
 

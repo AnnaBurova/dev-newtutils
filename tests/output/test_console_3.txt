@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collected 32 items
+collected 30 items
 
 test_console.py 
 START=======================================
@@ -228,20 +228,6 @@ Location: Newt.console._beep_boop : pause_s < 0
 Invalid pause duration: -1
 [0m
 Pause is: [0.2, 1, 0.2, 1, 0.7, 1] seconds
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
-Function: test_beep_boop_exception
-============================================
-[1m [31m
-Location: Newt.console._beep_boop : Exception
-::: ERROR :::
-Exception: Audio driver crash
-[0m
 
 =====captured.err=====
 (no stderr captured)
@@ -486,24 +472,6 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_select_from_input_exception
-============================================
-{'1': 'Option A'}
-Available list: 1
-     1: Option A
-     X: Exit / Cancel
-[1m [31m
-Location: Newt.console.select_from_input : Exception
-::: ERROR :::
-Exception: Input device error
-[0m
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
 Function: test_select_from_input_spaces
 ============================================
 {'1': 'Option A', '2': 'Option B'}
@@ -520,4 +488,4 @@ Selected option: Option B
 END=========================================
 .
 
-============================= 32 passed in 0.12s ==============================
+============================= 30 passed in 0.13s ==============================

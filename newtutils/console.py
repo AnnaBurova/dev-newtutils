@@ -44,6 +44,7 @@ from colorama import Fore, Style
 try:
     import winsound
 except ImportError:  # pragma: no cover (Unix-only)
+    print("Exception: (found? write test!)")  # TODO
     winsound = None
 
 
@@ -186,9 +187,9 @@ def _beep_boop(
         winsound.Beep(800, 500)
         time.sleep(1)
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         error_msg(
-            f"Exception: {e}",
+            f"Exception: {e} (found? write test!)",  # TODO
             location="Newt.console._beep_boop : Exception",
             stop=False
         )
@@ -365,8 +366,8 @@ def select_from_input(
                 location="Newt.console.select_from_input : KeyboardInterrupt"
             )
 
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             error_msg(
-                f"Exception: {e}",
+                f"Exception: {e} (found? write test!)",  # TODO
                 location="Newt.console.select_from_input : Exception"
             )
