@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collected 30 items
+collected 28 items
 
 test_utility.py 
 START=======================================
@@ -164,27 +164,6 @@ Function: test_sorting_list_large_numbers
 ============================================
 [100, 1, 50, 1000, 5]
 [1, 5, 50, 100, 1000]
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
-Function: test_sorting_list_exception
-============================================
-[1, 2, 3]
-[1m [31m
-Location: Newt.utility.sorting_list : Exception
-::: ERROR :::
-Exception: Sorting failed
-[0m
-[1m [31m
-Location: Newt.utility.sorting_list : Exception
-::: ERROR :::
-Exception: Sorting failed
-[0m
-[]
 
 =====captured.err=====
 (no stderr captured)
@@ -394,27 +373,6 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_exception_no_stop
-============================================
-[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
-[1m [31m
-Location: Newt.utility.sorting_dict_by_keys : Exception
-::: ERROR :::
-Exception: Dict sorting failed
-[0m
-[1m [31m
-Location: Newt.utility.sorting_dict_by_keys : Exception
-::: ERROR :::
-Exception: Dict sorting failed
-[0m
-[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
 Function: test_check_dict_keys_all_present
 ============================================
 {'a': 1, 'b': 2}
@@ -475,4 +433,4 @@ Unexpected keys: x
 END=========================================
 .
 
-============================= 30 passed in 0.13s ==============================
+============================= 28 passed in 0.12s ==============================

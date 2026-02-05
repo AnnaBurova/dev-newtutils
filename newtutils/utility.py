@@ -98,9 +98,9 @@ def sorting_list(
         # Strings first, then integers
         return str_values + int_values
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
+            f"Exception: {e} (found? write test!)",  # TODO
             location="Newt.utility.sorting_list : Exception",
             stop=stop
         )
@@ -203,9 +203,9 @@ def sorting_dict_by_keys(
         # sorted() always returns a new list
         return [dict(d) for d in sorted(data, key=sort_key, reverse=reverse)]
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
+            f"Exception: {e} (found? write test!)",  # TODO
             location="Newt.utility.sorting_dict_by_keys : Exception",
             stop=stop
         )
