@@ -28,7 +28,7 @@ class TestDivider:
 
 
     def test_divider_output(self, capsys):
-        """ Test that divider prints correctly. """
+        """ Verify that NewtCons._divider() prints the expected divider line and no error message. """
         print_my_func_name()
 
         NewtCons._divider()
@@ -46,7 +46,7 @@ class TestErrorMsg:
 
 
     def test_error_msg_with_stop(self, capsys):
-        """ Test error message with default stop=True raises SystemExit. """
+        """ Ensure that NewtCons.error_msg() with stop=True raises SystemExit and prints the correct error output. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info:
@@ -65,7 +65,7 @@ class TestErrorMsg:
 
 
     def test_error_msg_without_stop(self, capsys):
-        """ Test error message without stopping execution. """
+        """ Verify that NewtCons.error_msg() with stop=False prints the error message without raising SystemExit. """
         print_my_func_name()
 
         NewtCons.error_msg("Test error", stop=False)
@@ -79,7 +79,7 @@ class TestErrorMsg:
 
 
     def test_error_msg_multiple_args(self, capsys):
-        """ Test error message with multiple arguments. """
+        """ Check that NewtCons.error_msg() correctly prints multiple error messages when given several arguments. """
         print_my_func_name()
 
         NewtCons.error_msg(
@@ -98,7 +98,7 @@ class TestErrorMsg:
 
 
     def test_error_msg_with_location(self, capsys):
-        """ Test error message with custom location. """
+        """ Verify that NewtCons.error_msg() prints the provided custom location in the error message output. """
         print_my_func_name()
 
         NewtCons.error_msg(
@@ -120,7 +120,7 @@ class TestValidateInput:
 
 
     def test_validate_input_correct_type(self, capsys):
-        """ Test validation with correct type. """
+        """ Test that NewtCons.validate_input() returns True for inputs matching the expected type (int, str, float, bool). """
         print_my_func_name()
 
         input_1 = 123
@@ -147,7 +147,7 @@ class TestValidateInput:
 
 
     def test_validate_input_incorrect_type_no_stop(self, capsys):
-        """ Test validation with incorrect type, stop=False. """
+        """ Verify that NewtCons.validate_input() returns False and prints error for incorrect type when stop=False. """
         print_my_func_name()
 
         result = NewtCons.validate_input("hello", int, stop=False)
@@ -163,7 +163,7 @@ class TestValidateInput:
 
 
     def test_validate_input_incorrect_type_with_stop(self, capsys):
-        """ Test validation with incorrect type, stop=True. """
+        """ Test that NewtCons.validate_input() raises SystemExit with correct error output for invalid type when stop=True. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info:
@@ -183,7 +183,7 @@ class TestValidateInput:
 
 
     def test_validate_input_multiple_types(self, capsys):
-        """ Test validation with tuple of allowed types. """
+        """ Verify NewtCons.validate_input() handles tuple of allowed types correctly, accepting valid ones and rejecting invalid. """
         print_my_func_name()
 
         input_1 = 123
@@ -207,8 +207,8 @@ class TestValidateInput:
         assert "\nValue: 3.14\n" in captured.out
 
 
-    def test_validate_input_list_type(self, capsys):
-        """ Test validation with list type. """
+    def test_validate_input_collection_types(self, capsys):
+        """ Test NewtCons.validate_input() correctly handles collection types (list, dict), accepting valid ones and rejecting others. """
         print_my_func_name()
 
         input_1 = [1, 2, 3]
@@ -243,7 +243,7 @@ class TestValidateInput:
 
 
     def test_validate_input_none_value(self, capsys):
-        """ Test validation with None value. """
+        """ Verify NewtCons.validate_input() correctly handles None values, accepting type(None) and rejecting other types. """
         print_my_func_name()
 
         input_1 = None
@@ -266,7 +266,7 @@ class TestValidateInput:
 
 
     def test_validate_input_with_location(self, capsys):
-        """ Test validation with custom location. """
+        """ Test NewtCons.validate_input() returns False for string input expecting int with custom location. """
         print_my_func_name()
 
         input_1 = "hello"
@@ -293,7 +293,7 @@ class TestBeepBoop:
     @patch('newtutils.console.winsound')
     @patch('newtutils.console.time.sleep')
     def test_beep_boop_on_windows(self, mock_sleep, mock_winsound, capsys):
-        """ Test _beep_boop on Windows. """
+        """ Test that _beep_boop on Windows triggers two beeps and two sleeps without error output. """
         print_my_func_name()
 
         NewtCons._beep_boop()
@@ -310,7 +310,7 @@ class TestBeepBoop:
     @patch('newtutils.console.os.name', 'posix')
     @patch('newtutils.console.winsound')
     def test_beep_boop_on_non_windows(self, mock_winsound, capsys):
-        """ Test beep_boop on non-Windows (should not raise). """
+        """ Test _beep_boop on non-Windows skips winsound.Beep and produces no error output. """
         print_my_func_name()
 
         NewtCons._beep_boop()
@@ -327,8 +327,8 @@ class TestBeepBoop:
     @patch('newtutils.console.os.name', 'nt')
     @patch('newtutils.console.winsound')
     @patch('newtutils.console.time.sleep')
-    def test_beep_boop_invalid_pause(self, mock_sleep, mock_winsound, capsys):
-        """ Test _beep_boop with invalid pause duration. """
+    def test_beep_boop_invalid_pause_values(self, mock_sleep, mock_winsound, capsys):
+        """ Test _beep_boop handles invalid pause_s (str, negative) with errors and correct calls. """
         print_my_func_name()
 
         NewtCons._beep_boop(pause_s="Test")  # type: ignore
@@ -363,7 +363,7 @@ class TestBeepBoop:
     @patch('newtutils.console.winsound')
     @patch('newtutils.console.time.sleep')
     def test_beep_boop_exception(self, mock_sleep, mock_winsound, capsys):
-        """ Test _beep_boop with Exception. """
+        """ Test _beep_boop catches winsound.Beep exception, logs error, skips sleeps. """
         print_my_func_name()
 
         mock_winsound.Beep.side_effect = Exception("Audio driver crash")
@@ -390,7 +390,7 @@ class TestRetryPause:
     @patch('newtutils.console._beep_boop')
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_with_beep(self, mock_sleep, mock_beep, capsys):
-        """ Test retry pause with beep enabled. """
+        """ Test _retry_pause(2) calls _beep_boop once, two sleeps, prints countdown. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=2)
@@ -412,7 +412,7 @@ class TestRetryPause:
     @patch('newtutils.console._beep_boop')
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_countdown(self, mock_sleep, mock_beep, capsys):
-        """ Test retry pause countdown. """
+        """ Test _retry_pause(3, beep=False) skips beep, does three sleeps, prints countdown. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=3, beep=False)
@@ -433,7 +433,7 @@ class TestRetryPause:
 
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_invalid_type(self, mock_sleep, capsys):
-        """ Test retry pause with invalid type. """
+        """ Test _retry_pause invalid seconds str uses default 5s countdown with error. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds="invalid", beep=False)  # type: ignore
@@ -457,7 +457,7 @@ class TestRetryPause:
 
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_invalid_seconds(self, mock_sleep, capsys):
-        """ Test retry pause with invalid seconds. """
+        """ Test _retry_pause(0) falls back to 5s countdown, logs invalid duration error. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=0, beep=False)
@@ -480,7 +480,7 @@ class TestRetryPause:
 
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_negative_seconds(self, mock_sleep, capsys):
-        """ Test retry pause with negative seconds. """
+        """ Test _retry_pause(-1) defaults to 5s countdown, logs invalid duration error. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=-1, beep=False)
@@ -504,7 +504,7 @@ class TestRetryPause:
     @patch('newtutils.console._beep_boop')
     @patch('newtutils.console.time.sleep')
     def test_retry_pause_keyboard_interrupt(self, mock_sleep, mock_beep, capsys):
-        """ Test KeyboardInterrupt (Ctrl+C) during countdown. """
+        """ Test _retry_pause raises SystemExit on KeyboardInterrupt during sleep. """
         print_my_func_name()
 
         mock_sleep.side_effect = KeyboardInterrupt()
@@ -534,7 +534,7 @@ class TestCheckLocation:
 
 
     def test_check_location_match(self, capsys):
-        """ When directories match, prints start message. """
+        """ Test check_location matching paths prints START message. """
         print_my_func_name()
 
         location_1 = "/home/user/project"
@@ -550,7 +550,7 @@ class TestCheckLocation:
 
 
     def test_check_location_mismatch(self, capsys):
-        """ When directories differ, raises SystemExit and prints error. """
+        """ Test check_location mismatch raises SystemExit with error message. """
         print_my_func_name()
 
         location_1 = "/home/user/project"
@@ -573,7 +573,7 @@ class TestCheckLocation:
 
 
     def test_check_location_invalid_type(self, capsys):
-        """ Passing non-string `dir_` triggers validate_input SystemExit. """
+        """ Test check_location non-str arg triggers validate_input SystemExit. """
         print_my_func_name()
 
         location_1 = 123
@@ -602,7 +602,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input', side_effect=["1"])
     def test_select_from_input_valid_choice(self, mock_input, capsys):
-        """ Test valid selection from list. """
+        """ Test select_from_input returns key for valid numbered user choice. """
         print_my_func_name()
 
         select_dict = {"1": "Option A", "2": "Option B", "3": "Option C"}
@@ -627,7 +627,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input', side_effect=["abc", "999", "2"])
     def test_select_from_input_invalid_then_valid(self, mock_input, capsys):
-        """ Test invalid inputs followed by valid selection. """
+        """ Test select_from_input handles invalid inputs before valid selection. """
         print_my_func_name()
 
         select_dict = {"1": "Option A", "2": "Option B"}
@@ -655,7 +655,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input', side_effect=["X"])
     def test_select_from_input_cancel_uppercase(self, mock_input, capsys):
-        """ Test cancellation with uppercase 'X' raises SystemExit. """
+        """ Test select_from_input 'X' input raises SystemExit for cancel. """
         print_my_func_name()
 
         select_dict = {"1": "Option A"}
@@ -681,7 +681,7 @@ class TestSelectFromInput:
 
 
     def test_select_from_input_invalid_type(self, capsys):
-        """ Test invalid type for select_dict triggers validate_input. """
+        """ Test select_from_input non-dict arg triggers validate_input SystemExit. """
         print_my_func_name()
 
         invalid_input = "not a dict"
@@ -705,7 +705,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input')
     def test_select_from_input_keyboard_interrupt(self, mock_input, capsys):
-        """ Test KeyboardInterrupt raises SystemExit. """
+        """ Test select_from_input KeyboardInterrupt raises SystemExit. """
         print_my_func_name()
 
         mock_input.side_effect = KeyboardInterrupt()
@@ -734,7 +734,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input')
     def test_select_from_input_exception(self, mock_input, capsys):
-        """ Test general Exception is caught and raises SystemExit. """
+        """ Test select_from_input catches general Exception, raises SystemExit. """
         print_my_func_name()
 
         mock_input.side_effect = RuntimeError("Input device error")
@@ -762,7 +762,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input', return_value=" 2 ")
     def test_select_from_input_spaces(self, mock_input, capsys):
-        """ Test input with leading/trailing spaces is handled correctly. """
+        """ Test select_from_input trims spaces from input for valid selection. """
         print_my_func_name()
 
         select_dict = {"1": "Option A", "2": "Option B"}
