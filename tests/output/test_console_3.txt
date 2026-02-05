@@ -139,7 +139,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_validate_input_list_type
+Function: test_validate_input_collection_types
 ============================================
 [1, 2, 3] <class 'list'> True
 [1, 2, 3] <class 'dict'> False
