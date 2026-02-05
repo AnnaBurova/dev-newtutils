@@ -205,6 +205,9 @@ class TestValidateInput:
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'int'>, <class 'str'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.14\n" in captured.out
+        # Expected absence of result
+        assert "\nValue: 123\n" not in captured.out
+        assert "\nValue: hello\n" not in captured.out
 
 
     def test_validate_input_collection_types(self, capsys):
