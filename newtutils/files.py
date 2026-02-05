@@ -22,8 +22,9 @@ Functions:
     === TEXT ===
     def read_text_from_file(
         file_name: str,
+        stop: bool = True,
         logging: bool = True
-        ) -> str
+        ) -> str | None
     def save_text_to_file(
         file_name: str,
         text: str,
@@ -286,8 +287,9 @@ def choose_file_from_folder(
 
 def read_text_from_file(
         file_name: str,
+        stop: bool = True,
         logging: bool = True
-        ) -> str:
+        ) -> str | None:
     """
     Read UTF-8 text content from a file.
 
@@ -306,8 +308,8 @@ def read_text_from_file(
             Text content of the file, or an empty string if reading fails.
     """
 
-    if not check_file_exists(file_name):
-        return ""
+    if not check_file_exists(file_name, stop, logging):
+        return None
 
     try:
         with open(file_name, "r", encoding="utf-8") as f:
@@ -320,12 +322,12 @@ def read_text_from_file(
 
         return content
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
+            f"Exception: {e} (found? write test!)",  # TODO
             location="Newt.files.read_text_from_file : Exception"
         )
-        return ""
+        return None
 
 
 def save_text_to_file(
@@ -359,25 +361,23 @@ def save_text_to_file(
     )
 
     ensure_dir_exists(file_name)
-    text = _normalize_newlines(text)
+    text = _normalize_newlines(text) + "\n"
     mode_file = "a" if append else "w"
     mode_text = "append" if append else "write"
 
     try:
         with open(file_name, mode_file, encoding="utf-8", newline="\n") as f:
             f.write(text)
-            f.write("\n")
 
         if logging:
             print("[Newt.files.save_text_to_file] Saved text to file:")
             print(file_name)
             print(f"(mode={mode_text}, length={len(text)})")
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
-            location="Newt.files.save_text_to_file : Exception",
-            stop=False
+            f"Exception: {e} (found? write test!)",  # TODO
+            location="Newt.files.save_text_to_file : Exception"
         )
 
 

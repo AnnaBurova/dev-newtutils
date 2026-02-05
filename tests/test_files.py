@@ -249,10 +249,11 @@ class TestChooseFileFromFolder:
 
 
 class TestTextFiles:
-    """Tests for text file operations."""
+    """ Tests for text file operations. """
+
 
     def test_save_and_read_text_file(self, capsys):
-        """Test saving and reading a text file."""
+        """ Test NewtFiles.save_text_to_file() and read_text_from_file() work correctly. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
@@ -260,7 +261,7 @@ class TestTextFiles:
 
         try:
             content = "Hello\nWorld!"
-            NewtFiles.save_text_to_file(tmp_path, content)
+            NewtFiles.save_text_to_file(tmp_path, content, append=False)
 
             result = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result))
@@ -275,33 +276,45 @@ class TestTextFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
+        assert "\n(mode=write, length=13)\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=13)\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_save_text_creates_directory(self, capsys):
-        """Test that save_text_to_file creates parent directories."""
+        """ Test NewtFiles.save_text_to_file() creates parent directories if needed. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
-            NewtFiles.save_text_to_file(nested_path, "test")
+            NewtFiles.save_text_to_file(nested_path, "test", append=False)
             assert os.path.exists(nested_path)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
+        assert "\n(mode=write, length=5)\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_save_text_append_mode(self, capsys):
-        """Test appending to a text file."""
+        """ Test NewtFiles.save_text_to_file() append mode adds content correctly. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
             tmp_path = tmp.name
 
         try:
-            NewtFiles.save_text_to_file(tmp_path, "Line 1\n")
-            NewtFiles.save_text_to_file(tmp_path, "Line 2\n", append=True)
+            NewtFiles.save_text_to_file(tmp_path, "Line 1\n", append=False)
+            NewtFiles.save_text_to_file(tmp_path, "Line 2\n")
 
             result = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result))
-            assert "Line 1" in result
-            assert "Line 2" in result
             # New implementation normalizes and avoids extra blank lines
             assert result == "Line 1\nLine 2\n"
 
@@ -312,19 +325,34 @@ class TestTextFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
+        assert "\n(mode=write, length=7)\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=14)\n" in captured.out
+        assert "\n'Line 1\\nLine 2\\n'\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_read_text_from_nonexistent_file(self, capsys):
-        """Test reading from non-existent file returns empty string."""
+        """ Test NewtFiles.read_text_from_file() raises SystemExit for nonexistent file. """
         print_my_func_name()
 
-        result = NewtFiles.read_text_from_file("/nonexistent/file.txt")
-        print(repr(result))
-        assert result == ""
+        result = NewtFiles.read_text_from_file("/nonexistent/file.txt", stop=False)
+        assert result is None
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
+        assert "\nFile not found: /nonexistent/file.txt\n" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
+
+
     def test_save_text_normalizes_newlines(self, capsys):
-        """Test that save_text_to_file normalizes newlines."""
+        """ Test NewtFiles.save_text_to_file() normalizes Windows newlines to Unix LF. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
@@ -334,11 +362,12 @@ class TestTextFiles:
             content = "line1\r\nline2\r\n"
             print(repr(content))
 
-            NewtFiles.save_text_to_file(tmp_path, content)
+            NewtFiles.save_text_to_file(tmp_path, content, append=False)
 
-            result = NewtFiles.read_text_from_file(tmp_path)
+            result = NewtFiles.read_text_from_file(tmp_path, logging=False)
             print(repr(result))
             # Should have Unix newlines
+            assert result is not None
             assert "\r\n" not in result
 
         finally:
@@ -348,21 +377,31 @@ class TestTextFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" not in captured.out
+
+
     def test_save_text_invalid_input(self, capsys):
-        """Test that invalid input is handled gracefully."""
+        """ Test NewtFiles.save_text_to_file() raises SystemExit for invalid file/text inputs. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
             tmp_path = tmp.name
 
         try:
-            with pytest.raises(SystemExit):
+            with pytest.raises(SystemExit) as exc_info_1:
                 # Invalid file_name
                 NewtFiles.save_text_to_file(123, "test")  # type: ignore
+                print("This line will not be printed 01")
+            assert exc_info_1.value.code == 1
 
-            with pytest.raises(SystemExit):
+            with pytest.raises(SystemExit) as exc_info_2:
                 # Invalid text
                 NewtFiles.save_text_to_file(tmp_path, 456)  # type: ignore
+                print("This line will not be printed 02")
+            assert exc_info_2.value.code == 1
 
         finally:
             if os.path.exists(tmp_path):
@@ -370,6 +409,16 @@ class TestTextFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.save_text_to_file : text\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        assert "\nValue: 456\n" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed 01\n" not in captured.out
+        assert "\nThis line will not be printed 02\n" not in captured.out
 
 
 class TestConvertStrToJson:

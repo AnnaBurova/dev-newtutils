@@ -154,10 +154,10 @@ test_files.py::TestTextFiles::test_save_and_read_text_file
 START=======================================
 =====captured.out=====
 Function: test_save_and_read_text_file
---------------------------------------------
+============================================
 [Newt.files.save_text_to_file] Saved text to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
-(mode=write, length=12)
+(mode=write, length=13)
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
 (length=13)
@@ -171,10 +171,10 @@ test_files.py::TestTextFiles::test_save_text_creates_directory
 START=======================================
 =====captured.out=====
 Function: test_save_text_creates_directory
---------------------------------------------
+============================================
 [Newt.files.save_text_to_file] Saved text to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.txt
-(mode=write, length=4)
+(mode=write, length=5)
 
 =====captured.err=====
 (no stderr captured)
@@ -184,13 +184,13 @@ test_files.py::TestTextFiles::test_save_text_append_mode
 START=======================================
 =====captured.out=====
 Function: test_save_text_append_mode
---------------------------------------------
+============================================
 [Newt.files.save_text_to_file] Saved text to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
-(mode=write, length=6)
+(mode=write, length=7)
 [Newt.files.save_text_to_file] Saved text to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
-(mode=append, length=6)
+(mode=append, length=7)
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
 (length=14)
@@ -204,13 +204,12 @@ test_files.py::TestTextFiles::test_read_text_from_nonexistent_file
 START=======================================
 =====captured.out=====
 Function: test_read_text_from_nonexistent_file
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.files._check_file_exists
+Location: Newt.files.check_file_exists : logging
 ::: ERROR :::
 File not found: /nonexistent/file.txt
 [0m
-''
 
 =====captured.err=====
 (no stderr captured)
@@ -220,14 +219,11 @@ test_files.py::TestTextFiles::test_save_text_normalizes_newlines
 START=======================================
 =====captured.out=====
 Function: test_save_text_normalizes_newlines
---------------------------------------------
+============================================
 'line1\r\nline2\r\n'
 [Newt.files.save_text_to_file] Saved text to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
-(mode=write, length=11)
-[Newt.files.read_text_from_file] Loaded text from file:
-C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
-(length=12)
+(mode=write, length=12)
 'line1\nline2\n'
 
 =====captured.err=====
@@ -238,15 +234,15 @@ test_files.py::TestTextFiles::test_save_text_invalid_input
 START=======================================
 =====captured.out=====
 Function: test_save_text_invalid_input
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.save_text_to_file.file_name
+Location: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.save_text_to_file.text
+Location: Newt.console.validate_input > Newt.files.save_text_to_file : text
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 456
