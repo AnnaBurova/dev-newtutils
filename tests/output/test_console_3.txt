@@ -214,10 +214,10 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_beep_boop_invalid_pause
+Function: test_beep_boop_invalid_pause_values
 ============================================
 [1m [31m
-Location: Newt.console.validate_input > _beep_boop : pause_s not int or float
+Location: Newt.console.validate_input > _beep_boop : pause_s
 ::: ERROR :::
 Expected (<class 'int'>, <class 'float'>), got <class 'str'>
 Value: Test

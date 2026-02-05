@@ -355,7 +355,7 @@ class TestBeepBoop:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > _beep_boop : pause_s not int or float\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > _beep_boop : pause_s\n" in captured.out
         assert "\nExpected (<class 'int'>, <class 'float'>), got <class 'str'>\n" in captured.out
         assert "\nLocation: Newt.console._beep_boop : pause_s < 0\n" in captured.out
         assert "\nInvalid pause duration: -1\n" in captured.out
