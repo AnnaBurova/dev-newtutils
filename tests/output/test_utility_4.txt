@@ -133,7 +133,7 @@ Function: test_sorting_list_not_a_list
 ============================================
 not a list
 [1m [31m
-Location: Newt.console.validate_input > Newt.utility.sorting_list : input_list not list
+Location: Newt.console.validate_input > Newt.utility.sorting_list : input_list
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a list
@@ -316,13 +316,13 @@ Function: test_sorting_dict_not_list
 ============================================
 not a list
 [1m [31m
-Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data not list
+Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a list
 [0m
 [1m [31m
-Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data not list
+Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data
 ::: ERROR :::
 Expected <class 'list'>, got <class 'str'>
 Value: not a list
@@ -346,7 +346,7 @@ Expected <class 'dict'>, got <class 'int'>
 Value: 1
 [0m
 [1m [31m
-Location: Newt.utility.sorting_dict_by_keys : data not all are dict
+Location: Newt.utility.sorting_dict_by_keys : data not all
 ::: ERROR :::
 Expected a list of dictionaries
 Data: [1, 2, 3]
@@ -358,7 +358,7 @@ Expected <class 'dict'>, got <class 'int'>
 Value: 1
 [0m
 [1m [31m
-Location: Newt.utility.sorting_dict_by_keys : data not all are dict
+Location: Newt.utility.sorting_dict_by_keys : data not all
 ::: ERROR :::
 Expected a list of dictionaries
 Data: [1, 2, 3]

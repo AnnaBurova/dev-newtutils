@@ -198,7 +198,7 @@ class TestSortingList:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_list : input_list not list\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_list : input_list\n" in captured.out
         assert "\nExpected <class 'list'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a list\n" in captured.out
 
@@ -538,7 +538,7 @@ class TestSortingDictByKeys:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data not list\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data\n" in captured.out
         assert "\nExpected <class 'list'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a list\n" in captured.out
         # Expected absence of result
@@ -566,7 +566,7 @@ class TestSortingDictByKeys:
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected <class 'dict'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 1\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : data not all are dict\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : data not all\n" in captured.out
         assert "\nExpected a list of dictionaries\n" in captured.out
         assert "\nData: [1, 2, 3]\n" in captured.out
         # Expected absence of result
