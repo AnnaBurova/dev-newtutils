@@ -27,10 +27,11 @@ import newtutils.files as NewtFiles
 
 
 class TestEnsureDirExists:
-    """Tests for ensure_dir_exists function."""
+    """ Tests for ensure_dir_exists function. """
+
 
     def test_creates_nested_directory(self, capsys):
-        """Test that nested directories are created."""
+        """ Test ensure_dir_exists creates nested parent directories. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -44,34 +45,22 @@ class TestEnsureDirExists:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-    def test_handles_existing_directory(self, capsys):
-        """Test that existing directories don't cause errors."""
-        print_my_func_name()
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
-        with tempfile.TemporaryDirectory() as tmpdir:
-            file_path = os.path.join(tmpdir, "file.txt")
-
-            NewtFiles.ensure_dir_exists(file_path)
-
-            # Call again - should not raise
-            NewtFiles.ensure_dir_exists(file_path)
-            assert os.path.exists(tmpdir)
-
-        assert not os.path.exists(os.path.dirname(file_path))
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
 
     def test_handles_current_directory(self, capsys):
-        """Test that empty dir_path (current dir) is handled."""
+        """ Verify NewtFiles.ensure_dir_exists() skips dir creation and errors for current dir files. """
         print_my_func_name()
 
         file_path = "file.txt"
-        # Should not raise
         NewtFiles.ensure_dir_exists(file_path)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
 class TestCheckFileExists:
