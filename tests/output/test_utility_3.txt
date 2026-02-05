@@ -192,7 +192,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_by_single_key
+Function: test_sorting_dict_single_key
 ============================================
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
 [{'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}]
@@ -203,7 +203,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_by_multiple_keys
+Function: test_sorting_dict_multiple_keys
 ============================================
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 20}]
 [{'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 25}, {'name': 'Charlie', 'age': 25}]
@@ -214,7 +214,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_reverse
+Function: test_sorting_dict_reverse_order
 ============================================
 [{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}]
 [{'name': 'Alice', 'age': 30}, {'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 20}]
@@ -225,7 +225,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_missing_keys
+Function: test_sorting_dict_missing_key
 ============================================
 [{'name': 'Alice', 'age': 30}, {'name': 'Bob'}, {'name': 'Charlie', 'age': 25}]
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]
@@ -268,7 +268,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_no_keys_multiple_keys
+Function: test_sorting_dict_multi_keys_no_args
 ============================================
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
 [{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]
@@ -279,7 +279,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_no_keys_mixed_structure
+Function: test_sorting_dict_mixed_struct_no_keys
 ============================================
 [{'name': 'Charlie'}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]
 [{'name': 'Charlie'}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]
@@ -383,7 +383,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_complex_sorting
+Function: test_sorting_dict_complex_keys
 ============================================
 [{'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}]
 [{'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}]
