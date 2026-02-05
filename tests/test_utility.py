@@ -154,7 +154,7 @@ class TestSortingList:
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.5\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_list : input_list not all are str or int\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_list : input_list not all\n" in captured.out
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
 
@@ -177,7 +177,7 @@ class TestSortingList:
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.5\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_list : input_list not all are str or int\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_list : input_list not all\n" in captured.out
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
         # Expected absence of result
@@ -220,7 +220,7 @@ class TestSortingList:
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'NoneType'>\n" in captured.out
         assert "\nValue: None\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_list : input_list not all are str or int\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_list : input_list not all\n" in captured.out
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, None, 'a']\n" in captured.out
 
