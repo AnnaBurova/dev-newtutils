@@ -484,7 +484,7 @@ Function: test_select_from_input_invalid_type
 ============================================
 not a dict
 [1m [31m
-Location: Newt.console.validate_input > select_from_input : select_dict not dict
+Location: Newt.console.validate_input > select_from_input : select_dict
 ::: ERROR :::
 Expected <class 'dict'>, got <class 'str'>
 Value: not a dict

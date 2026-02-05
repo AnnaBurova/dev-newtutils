@@ -699,7 +699,7 @@ class TestSelectFromInput:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > select_from_input : select_dict not dict\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > select_from_input : select_dict\n" in captured.out
         assert "\nExpected <class 'dict'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a dict\n" in captured.out
         # Expected absence of result
