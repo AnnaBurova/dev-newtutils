@@ -326,7 +326,7 @@ def read_text_from_file(
             Raised when `stop=True` and file not found.
     """
 
-    if not check_file_exists(file_name, stop, logging):
+    if not check_file_exists(file_name, stop=stop, logging=logging):
         return None
 
     try:
@@ -477,30 +477,38 @@ def convert_str_to_json(
 
 def read_json_from_file(
         file_name: str,
+        stop: bool = True,
         logging: bool = True
-        ) -> list | dict:
+        ) -> list | dict | None:
     """
     Read and parse JSON data from a file.
 
     Opens and deserializes JSON content from a UTF-8 encoded file.
     Supports both list and dict structures.
-    Returns an empty list if the file is missing or invalid.
+    Returns None if the file is missing or invalid.
 
     Args:
         file_name (str):
             Path to the JSON file.
+        stop (bool):
+            If True, stops execution when file not found.
+            Defaults to True.
         logging (bool):
-            If True, prints a confirmation message after saving.
+            If True, prints a confirmation message after loading.
             Defaults to True.
 
     Returns:
-        out (list | dict):
+        out (list | dict | None):
             Parsed JSON data,
-            or an empty list if missing or invalid.
+            or None if missing or invalid.
+
+    Raises:
+        SystemExit:
+            Raised when `stop=True` and file not found.
     """
 
-    if not check_file_exists(file_name):
-        return []
+    if not check_file_exists(file_name, stop=stop, logging=logging):
+        return None
 
     try:
         with open(file_name, "r", encoding="utf-8") as f:
@@ -518,14 +526,14 @@ def read_json_from_file(
 
             return data
 
-        return []
+        return None
 
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
             location="Newt.files.read_json_from_file : Exception"
         )
-        return []
+        return None
 
 
 def save_json_to_file(
@@ -589,14 +597,15 @@ def save_json_to_file(
 def read_csv_from_file(
         file_name: str,
         delimiter: str = ";",
+        stop: bool = True,
         logging: bool = True
-        ) -> list[list[str]]:
+        ) -> list[list[str]] | None:
     """
     Read CSV data from a UTF-8 file.
 
     Loads CSV content into a list of string lists.
     Each sublist represents one row of data.
-    Returns an empty list if reading fails.
+    Returns None if reading fails.
 
     Args:
         file_name (str):
@@ -604,14 +613,21 @@ def read_csv_from_file(
         delimiter (str):
             Column separator character.
             Defaults to `;`.
+        stop (bool):
+            If True, stops execution when file not found.
+            Defaults to True.
         logging (bool):
-            If True, prints a confirmation message after saving.
+            If True, prints a confirmation message after loading.
             Defaults to True.
 
     Returns:
-        out (list[list[str]]):
+        out (list[list[str]] | None):
             List of CSV rows,
-            or an empty list on failure.
+            or None on failure.
+
+    Raises:
+        SystemExit:
+            Raised when `stop=True` and file not found.
     """
 
     NewtCons.validate_input(
@@ -619,8 +635,8 @@ def read_csv_from_file(
         location="Newt.files.read_csv_from_file : delimiter"
     )
 
-    if not check_file_exists(file_name):
-        return []
+    if not check_file_exists(file_name, stop=stop, logging=logging):
+        return None
 
     try:
         with open(file_name, "r", encoding="utf-8", newline="") as f:
@@ -639,7 +655,7 @@ def read_csv_from_file(
             location="Newt.files.read_csv_from_file : Exception",
             stop=False
         )
-        return []
+        return None
 
 
 def save_csv_to_file(
@@ -700,7 +716,7 @@ def save_csv_to_file(
         if logging:
             print("[Newt.files.save_csv_to_file] Saved CSV to file:")
             print(file_name)
-            print(f"(rows={len(normalized_rows)+1}, mode={mode_text}, delimiter='{delimiter}')")
+            print(f"(rows={len(normalized_rows)}, mode={mode_text}, delimiter='{delimiter}')")
 
     except Exception as e:
         NewtCons.error_msg(
