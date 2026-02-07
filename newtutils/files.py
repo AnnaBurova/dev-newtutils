@@ -89,7 +89,7 @@ def ensure_dir_exists(
     """
     Ensure that the directory for a given file path exists.
 
-    Creates the target directory if it does not exist.
+    Creates the target directory and any necessary parent directories if they do not exist.
     The function does not create or modify the file itself.
 
     Args:
@@ -120,26 +120,24 @@ def check_file_exists(
     """
     Check whether a file exists at the specified path.
 
-    Verifies file existence and accessibility.
-    If missing, logs an error message
-    via `NewtCons.error_msg()` without stopping execution.
+    Verifies file existence and accessibility using os.path.isfile().
+    If missing and logging is enabled, logs an error via NewtCons.error_msg().
+    Optionally stops execution based on the stop parameter.
 
     Args:
         file_path (str):
             Full path to the file to verify.
-        stop (bool):
-            If True, stops execution on file not found.
-            If False, continues execution.
+        stop (bool, optional):
+            If True, stops execution when file not found.
             Defaults to True.
-        logging (bool):
-            If True, prints an error message when the file is not found.
-            If False, silently returns False without logging.
+        logging (bool, optional):
+            If True, logs error message when file not found.
             Defaults to True.
 
     Returns:
         out (bool):
-            True if the file exists,
-            otherwise False.
+            True if file exists and is accessible,
+            False otherwise.
     """
 
     NewtCons.validate_input(
@@ -163,19 +161,18 @@ def _normalize_newlines(
         text: str
         ) -> str:
     """
-    Normalize newline characters in a text string.
+    Normalize newline characters in a text string to Unix-style newlines.
 
-    Converts Windows-style newlines (`\\r\\n`)
-    to Unix-style (`\\n`)
-    for consistent text formatting across platforms.
+    Converts Windows-style newlines (`\r\n`) and old Mac-style (`\r`) to Unix-style (`\n`).
+    Strips trailing whitespace from the end of the normalized text.
 
     Args:
         text (str):
-            Input text to normalize.
+            Input text containing mixed newline characters.
 
     Returns:
         out (str):
-            Normalized text with Unix-style newlines.
+            Normalized text with consistent Unix-style newlines (`\n`).
     """
 
     NewtCons.validate_input(
@@ -190,21 +187,25 @@ def choose_file_from_folder(
         folder_path: str
         ) -> str:
     """
-    Display files in a folder and allow the user to choose one.
+    Display files in a folder and let user interactively select one.
 
-    Lists all files in the given directory, assigns numeric indices,
-    and prompts the user to select a file by number.
-    Returns the selected file name
-    or None if cancelled.
+    Lists existing files in the directory (sorted alphabetically), shows numbered menu,
+    prompts for selection (1-N or X to cancel), with 5 attempts max before timeout.
+    Uses check_file_exists() to verify files are accessible.
 
     Args:
         folder_path (str):
-            Path to the folder containing files.
+            Path to directory containing files to choose from.
 
     Returns:
         out (str):
-            The selected file name,
-            or None if cancelled or an error occurred.
+            Selected filename if valid choice made.
+            Empty string if cancelled, no files found, or selection failed.
+
+    Raises:
+        SystemExit:
+            Raised if folder not found, no files in folder, selection cancelled,
+            or max attempts exceeded.
     """
 
     NewtCons.validate_input(
@@ -222,7 +223,7 @@ def choose_file_from_folder(
     try:
         file_list = sorted([
             f for f in os.listdir(folder_path)
-            if check_file_exists(os.path.join(folder_path, f))
+            if check_file_exists(os.path.join(folder_path, f), stop=False, logging=False)
         ])
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
@@ -294,18 +295,26 @@ def read_text_from_file(
     Read UTF-8 text content from a file.
 
     Opens a text file and returns its content.
-    Returns an empty string if the file does not exist or cannot be read.
+    Returns None if the file does not exist or cannot be read.
 
     Args:
         file_name (str):
             Full path to the text file.
+        stop (bool):
+            If True, stops execution when file not found.
+            Defaults to True.
         logging (bool):
-            If True, prints a confirmation message after saving.
+            If True, prints a confirmation message after loading.
             Defaults to True.
 
     Returns:
-        out (str):
-            Text content of the file, or an empty string if reading fails.
+        out (str | None):
+            Text content of the file,
+            or None if reading fails.
+
+    Raises:
+        SystemExit:
+            Raised when `stop=True` and file not found.
     """
 
     if not check_file_exists(file_name, stop, logging):
@@ -394,10 +403,13 @@ def convert_str_to_json(
     substitution before retrying `json.loads`.
 
     Args:
-        text (str): Input string containing JSON-like data.
+        text (str):
+            Input string containing JSON-like data.
 
     Returns:
-        out (list | dict | None): Parsed Python object on success, otherwise None.
+        out (list | dict | None):
+            Parsed Python object on success,
+            otherwise None.
     """
 
     NewtCons.validate_input(
