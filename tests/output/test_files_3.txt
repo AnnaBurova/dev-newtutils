@@ -656,16 +656,19 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_save_and_read_csv
---------------------------------------------
+Function: test_save_and_read_csv_basic_settings
+============================================
 [['Name', 'Age', 'City'], ['Alice', '30', 'New York'], ['Bob', '25', 'London']]
+
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=4, mode=write, delimiter=';')
+(rows=3, mode=write, delimiter=';')
+
 [Newt.files.read_csv_from_file] Loaded CSV from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=3, delimiter=';')
 [['Name', 'Age', 'City'], ['Alice', '30', 'New York'], ['Bob', '25', 'London']]
+
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (length=46)
@@ -682,15 +685,18 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_save_and_read_csv_custom_delimiter
---------------------------------------------
+============================================
 [['A', 'B'], ['1', '2']]
+
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=3, mode=write, delimiter=',')
+(rows=2, mode=write, delimiter=',')
+
 [Newt.files.read_csv_from_file] Loaded CSV from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=2, delimiter=',')
 [['A', 'B'], ['1', '2']]
+
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (length=8)
@@ -706,13 +712,13 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_read_csv_from_nonexistent_file
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.files._check_file_exists
+Location: Newt.files.check_file_exists : logging
 ::: ERROR :::
 File not found: /nonexistent/file.csv
 [0m
-[]
+None
 
 =====captured.err=====
 (no stderr captured)
@@ -721,11 +727,11 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_save_csv_creates_directory
---------------------------------------------
+============================================
 [['Header'], ['Data']]
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.csv
-(rows=3, mode=write, delimiter=';')
+(rows=2, mode=write, delimiter=';')
 
 =====captured.err=====
 (no stderr captured)
@@ -734,15 +740,18 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_save_csv_normalizes_newlines_in_cells
---------------------------------------------
+============================================
 [['Cell1\r\nLine2', 'Cell2']]
+
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=2, mode=write, delimiter=';')
+(rows=1, mode=write, delimiter=';')
+
 [Newt.files.read_csv_from_file] Loaded CSV from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=1, delimiter=';')
 [['Cell1\nLine2', 'Cell2']]
+
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (length=20)
@@ -758,15 +767,18 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_save_csv_with_various_types
---------------------------------------------
+============================================
 [['String', 123, 45.67, True]]
+
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=2, mode=write, delimiter=';')
+(rows=1, mode=write, delimiter=';')
+
 [Newt.files.read_csv_from_file] Loaded CSV from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=1, delimiter=';')
 [['String', '123', '45.67', 'True']]
+
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (length=22)
@@ -781,21 +793,23 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_save_csv_invalid_input
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.save_csv_to_file.file_name
+Location: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
+
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.save_csv_to_file.rows
+Location: Newt.console.validate_input > Newt.files.save_csv_to_file : rows
 ::: ERROR :::
 Expected (<class 'list'>, <class 'tuple'>), got <class 'str'>
 Value: not a list
 [0m
+
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.save_csv_to_file.delimiter
+Location: Newt.console.validate_input > Newt.files.save_csv_to_file : delimiter
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
@@ -812,7 +826,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_read_csv_invalid_delimiter
---------------------------------------------
+============================================
 [Newt.files.read_csv_from_file] Loaded CSV from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=2, delimiter=',')

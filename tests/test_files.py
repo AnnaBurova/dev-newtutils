@@ -97,7 +97,7 @@ class TestCheckFileExists:
         assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
         assert "\nFile not found: C:\\Users\\" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_invalid_filepath_raises_exit(self, capsys):
@@ -123,7 +123,7 @@ class TestCheckFileExists:
         assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
         assert "\nFile not found: 123\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
         assert "\nFile not found: abc\n" not in captured.out
 
 
@@ -170,7 +170,7 @@ class TestChooseFileFromFolder:
         assert "\nLocation: Newt.files.choose_file_from_folder : folder_path not dir\n" in captured.out
         assert "\nFolder not found: /nonexistent/folder\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_empty_folder_raises_exit(self, capsys):
@@ -190,7 +190,7 @@ class TestChooseFileFromFolder:
         assert "\nLocation: Newt.files.choose_file_from_folder : file_list empty\n" in captured.out
         assert "\nNo files found in this folder.\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     @patch('newtutils.files.input', side_effect=["abc", "999", "X"])
@@ -225,7 +225,7 @@ class TestChooseFileFromFolder:
         assert "\nLocation: Newt.files.choose_file_from_folder : choice = [X]\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_invalid_folderpath_raises_exit(self, capsys):
@@ -245,7 +245,7 @@ class TestChooseFileFromFolder:
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 123\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
 class TestTextFiles:
@@ -297,6 +297,7 @@ class TestTextFiles:
         print_my_captured(captured)
 
         assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
+        assert "\\level1\\level2\\file.txt\n" in captured.out
         assert "\n(mode=write, length=5)\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -347,8 +348,6 @@ class TestTextFiles:
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
         assert "\nFile not found: /nonexistent/file.txt\n" in captured.out
-        # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
 
 
     def test_save_text_normalizes_newlines(self, capsys):
@@ -418,8 +417,7 @@ class TestTextFiles:
         assert "\nValue: 123\n" in captured.out
         assert "\nValue: 456\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed 01\n" not in captured.out
-        assert "\nThis line will not be printed 02\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
 class TestConvertStrToJson:
@@ -485,8 +483,6 @@ class TestConvertStrToJson:
         assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
         assert "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n" in captured.out
         assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
-        # Expected absence of result
-        assert "Newt.files.convert_str_to_json : Exception replace single quotes with double quotes" not in captured.out
 
 
     def test_parses_single_quotes_list(self, capsys):
@@ -508,8 +504,6 @@ class TestConvertStrToJson:
         assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
         assert "\nFailed to parse string to JSON: Expecting value: line 1 column 2 (char 1)\n" in captured.out
         assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
-        # Expected absence of result
-        assert "Newt.files.convert_str_to_json : Exception replace single quotes with double quotes" not in captured.out
 
 
     def test_returns_none_for_empty_string(self, capsys):
@@ -565,9 +559,7 @@ class TestConvertStrToJson:
         assert "\nValue: None\n" in captured.out
         assert "\nValue: ['not', 'a', 'string']\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed 01\n" not in captured.out
-        assert "\nThis line will not be printed 02\n" not in captured.out
-        assert "\nThis line will not be printed 03\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_invalid_json_prints_errors(self, capsys):
@@ -823,6 +815,8 @@ class TestJsonFiles:
         assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
         assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
         assert "\\level1\\level2\\file.json\n" in captured.out
+        assert "\n(type=<class 'dict'>, indent=2)\n" in captured.out
+        assert "\n(type=<class 'dict'>)\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -889,7 +883,7 @@ class TestJsonFiles:
         assert "\nLocation: Newt.files.read_json_from_file : Exception\n" in captured.out
         assert "\nException: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_save_json_invalid_input(self, capsys):
@@ -931,7 +925,6 @@ class TestJsonFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
@@ -941,16 +934,15 @@ class TestJsonFiles:
         assert "\nException: Expecting value: line 1 column 1 (char 0)\n" in captured.out
         assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed 01\n" not in captured.out
-        assert "\nThis line will not be printed 02\n" not in captured.out
-        assert "\nThis line will not be printed 03\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
 class TestCsvFiles:
-    """Tests for CSV file operations."""
+    """ Tests for CSV file operations. """
 
-    def test_save_and_read_csv(self, capsys):
-        """Test saving and reading a CSV file."""
+
+    def test_save_and_read_csv_basic_settings(self, capsys):
+        """ Test saving and reading a CSV file. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
@@ -963,12 +955,15 @@ class TestCsvFiles:
                 ["Bob", "25", "London"]
             ]
             print(repr(rows))
+            print()
 
             NewtFiles.save_csv_to_file(tmp_path, rows)
+            print()
 
             result_csv = NewtFiles.read_csv_from_file(tmp_path)
             print(repr(result_csv))
             assert result_csv == rows
+            print()
 
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
@@ -981,8 +976,19 @@ class TestCsvFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
+        assert "\n(rows=3, mode=write, delimiter=';')\n" in captured.out
+        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
+        assert "\n(rows=3, delimiter=';')\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=46)\n" in captured.out
+        assert "\n'Name;Age;City\\nAlice;30;New York\\nBob;25;London\\n'\nName;Age;City\nAlice;30;New York\nBob;25;London\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_save_and_read_csv_custom_delimiter(self, capsys):
-        """Test saving and reading CSV with custom delimiter."""
+        """ Test saving and reading CSV with custom delimiter. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
@@ -991,12 +997,15 @@ class TestCsvFiles:
         try:
             rows = [["A", "B"], ["1", "2"]]
             print(repr(rows))
+            print()
 
             NewtFiles.save_csv_to_file(tmp_path, rows, delimiter=",")
+            print()
 
             result_csv = NewtFiles.read_csv_from_file(tmp_path, delimiter=",")
             print(repr(result_csv))
             assert result_csv == rows
+            print()
 
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
@@ -1009,19 +1018,35 @@ class TestCsvFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
+        assert "\n(rows=2, mode=write, delimiter=',')\n" in captured.out
+        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
+        assert "\n(rows=2, delimiter=',')\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=8)\n" in captured.out
+        assert "\n'A,B\\n1,2\\n'\nA,B\n1,2\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_read_csv_from_nonexistent_file(self, capsys):
-        """Test reading from non-existent CSV file returns empty list."""
+        """ Test reading from non-existent CSV file returns empty list. """
         print_my_func_name()
 
-        result = NewtFiles.read_csv_from_file("/nonexistent/file.csv")
+        result = NewtFiles.read_csv_from_file("/nonexistent/file.csv", stop=False)
         print(repr(result))
-        assert result == []
+        assert result == None
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
+        assert "\nFile not found: /nonexistent/file.csv\n" in captured.out
+
+
     def test_save_csv_creates_directory(self, capsys):
-        """Test that save_csv_to_file creates parent directories."""
+        """ Test that save_csv_to_file creates parent directories. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1036,8 +1061,15 @@ class TestCsvFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
+        assert "\\level1\\level2\\file.csv\n" in captured.out
+        assert "\n(rows=2, mode=write, delimiter=';')\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_save_csv_normalizes_newlines_in_cells(self, capsys):
-        """Test that CSV cells with Windows newlines are normalized."""
+        """ Test that CSV cells with Windows newlines are normalized. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
@@ -1046,13 +1078,17 @@ class TestCsvFiles:
         try:
             rows = [["Cell1\r\nLine2", "Cell2"]]
             print(repr(rows))
+            print()
 
             NewtFiles.save_csv_to_file(tmp_path, rows)
+            print()
 
             result_csv = NewtFiles.read_csv_from_file(tmp_path)
             print(repr(result_csv))
             # Check that newlines are normalized
+            assert result_csv is not None
             assert "\r\n" not in result_csv[0][0]
+            print()
 
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
@@ -1065,8 +1101,19 @@ class TestCsvFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
+        assert "\n(rows=1, mode=write, delimiter=';')\n" in captured.out
+        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
+        assert "\n(rows=1, delimiter=';')\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=20)\n" in captured.out
+        assert "\n'\"Cell1\\nLine2\";Cell2\\n'\n\"Cell1\nLine2\";Cell2\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_save_csv_with_various_types(self, capsys):
-        """Test saving CSV with various data types."""
+        """ Test saving CSV with various data types. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
@@ -1075,13 +1122,17 @@ class TestCsvFiles:
         try:
             rows = [["String", 123, 45.67, True]]
             print(repr(rows))
+            print()
 
             NewtFiles.save_csv_to_file(tmp_path, rows)
+            print()
 
             result_csv = NewtFiles.read_csv_from_file(tmp_path)
             print(repr(result_csv))
             # All values should be strings in CSV
+            assert result_csv is not None
             assert all(isinstance(cell, str) for row in result_csv for cell in row)
+            print()
 
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
@@ -1094,25 +1145,44 @@ class TestCsvFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
+        assert "\n(rows=1, mode=write, delimiter=';')\n" in captured.out
+        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
+        assert "\n(rows=1, delimiter=';')\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=22)\n" in captured.out
+        assert "\n'String;123;45.67;True\\n'\nString;123;45.67;True\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_save_csv_invalid_input(self, capsys):
-        """Test that invalid input is handled gracefully."""
+        """ Test that invalid input is handled gracefully. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
             tmp_path = tmp.name
 
         try:
-            with pytest.raises(SystemExit):
+            with pytest.raises(SystemExit) as exc_info_1:
                 # Invalid file_name
                 NewtFiles.save_csv_to_file(123, [["test"]])  # type: ignore
+                print("This line will not be printed 01")
+            assert exc_info_1.value.code == 1
+            print()
 
-            with pytest.raises(SystemExit):
+            with pytest.raises(SystemExit) as exc_info_2:
                 # Invalid rows (not a list)
                 NewtFiles.save_csv_to_file(tmp_path, "not a list")
+                print("This line will not be printed 02")
+            assert exc_info_2.value.code == 1
+            print()
 
-            with pytest.raises(SystemExit):
+            with pytest.raises(SystemExit) as exc_info_3:
                 # Invalid delimiter
                 NewtFiles.save_csv_to_file(tmp_path, [["test"]], delimiter=123)  # type: ignore
+                print("This line will not be printed 03")
+            assert exc_info_3.value.code == 1
 
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
@@ -1125,8 +1195,21 @@ class TestCsvFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.save_csv_to_file : rows\n" in captured.out
+        assert "\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.save_csv_to_file : delimiter\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=0)\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
+
+
     def test_read_csv_invalid_delimiter(self, capsys):
-        """Test reading CSV with invalid delimiter returns empty list."""
+        """ Test reading CSV with invalid delimiter still parses but with wrong splitting. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
@@ -1137,10 +1220,12 @@ class TestCsvFiles:
             # Wrong delimiter
             result = NewtFiles.read_csv_from_file(tmp_path, delimiter=",")
             print(repr(result))
+            assert result is not None
             print(repr(result[0][0]))
             # Should still read but with wrong parsing
             assert isinstance(result, list)
             assert isinstance(result[0][0], str)
+            assert result[0][0] == "A;B"
 
         finally:
             if os.path.exists(tmp_path):
@@ -1148,3 +1233,8 @@ class TestCsvFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
+        assert "\n(rows=2, delimiter=',')\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out

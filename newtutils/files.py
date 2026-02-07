@@ -651,9 +651,9 @@ def read_csv_from_file(
 
         return rows
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
+            f"Exception: {e} (found? write test!)",  # TODO
             location="Newt.files.read_csv_from_file : Exception",
             stop=False
         )
@@ -720,9 +720,9 @@ def save_csv_to_file(
             print(file_name)
             print(f"(rows={len(normalized_rows)}, mode={mode_text}, delimiter='{delimiter}')")
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
+            f"Exception: {e} (found? write test!)",  # TODO
             location="Newt.files.save_csv_to_file : Exception",
             stop=False
         )
