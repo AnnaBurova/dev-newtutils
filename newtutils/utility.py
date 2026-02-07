@@ -39,18 +39,18 @@ def sorting_list(
         ) -> list[str | int]:
     """ Remove duplicates from a list and return a sorted result.
 
-    The function accepts a list containing only strings and integers,
+    The function accepts a sequence containing only strings and integers,
     removes duplicate entries, and returns all unique items in ascending order:
     1. Strings (sorted alphabetically)
     2. Integers (sorted numerically)
 
-    If the list contains elements of other types,
+    If the sequence contains elements of other types,
     an error message is logged using `NewtCons.error_msg()`.
     The function stops execution if `stop=True`.
 
     Args:
-        input_list (list):
-            The input list to process.
+        input_list (Sequence[str | int]):
+            The input sequence to process.
             Must contain only `str` or `int` values.
         stop (bool):
             If True, stops execution when invalid data is detected.
@@ -59,7 +59,7 @@ def sorting_list(
 
     Returns:
         out (list[str | int]):
-            Unique elements from the input list,
+            Unique elements from the input sequence,
             sorted alphabetically (strings) and numerically (integers).
 
     Raises:
@@ -68,7 +68,7 @@ def sorting_list(
     """
 
     if not NewtCons.validate_input(
-        input_list, list, stop=stop,
+        input_list, (list, tuple), stop=stop,
         location="Newt.utility.sorting_list : input_list"
     ):
         return []
@@ -121,7 +121,7 @@ def sorting_dict_by_keys(
     Missing or None-valued keys are placed at the end of the sorted list.
 
     Args:
-        data (Sequence[Mapping[str, object]]):
+        data (Sequence[Mapping[str, Any]]):
             Sequence of mapping-like objects to sort.
         *keys (str):
             One or more keys to sort by, in priority order.
@@ -134,8 +134,8 @@ def sorting_dict_by_keys(
             Defaults to True.
 
     Returns:
-        out (list[dict[str, object]]):
-            A new list of dictionaries sorted by the specified keys.
+        out (list[Mapping[str, Any]]):
+            A new list of mappings sorted by the specified keys.
             Items with missing or None-valued keys are placed at the end.
 
     Raises:
@@ -147,9 +147,9 @@ def sorting_dict_by_keys(
     if not data:
         return []
 
-    # Validate that data is a list
+    # Validate that data is a sequence
     if not NewtCons.validate_input(
-        data, list, stop=stop,
+        data, (list, tuple), stop=stop,
         location="Newt.utility.sorting_dict_by_keys : data"
     ):
         return []
@@ -217,13 +217,13 @@ def check_dict_keys(
         expected: set[str],
         stop: bool = True
         ) -> bool:
-    """ Validate that a dictionary contains the expected keys.
+    """ Validate that a mapping contains the expected keys.
 
     Args:
-        data (dict[str, object]):
-            Dictionary to validate.
+        data (Mapping[str, object]):
+            Mapping to validate.
         expected (set[str]):
-            Set of keys that must be present in the dictionary.
+            Set of keys that must be present in the mapping.
         stop (bool):
             If True, stops execution on validation failure.
             Defaults to True.
@@ -232,13 +232,6 @@ def check_dict_keys(
         out (bool):
             True if all expected keys are present and no extra keys exist,
             False otherwise.
-
-    Example:
-        >>> sample = {"a": 1, "b": 2}
-        >>> check_dict_keys(sample, {"a", "b"})
-        True
-        >>> check_dict_keys(sample, {"a", "b", "c"})
-        False
     """
 
     data_keys = set(data.keys())
