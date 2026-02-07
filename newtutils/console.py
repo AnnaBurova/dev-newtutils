@@ -31,7 +31,7 @@ Functions:
         ) -> None
     def select_from_input(
         select_dict: dict[str, str]
-        ) -> str | None
+        ) -> str
 """
 
 from __future__ import annotations
@@ -208,7 +208,7 @@ def _retry_pause(
     Args:
         seconds (int):
             Total wait time in seconds.
-            Minimal 1.
+            Must be at least 1.
             Defaults to 5.
         beep (bool):
             If True, plays a "beep-boop" notification before the countdown.
@@ -292,7 +292,7 @@ def check_location(
 
 def select_from_input(
         select_dict: dict[str, str]
-        ) -> str | None:
+        ) -> str:
     """ Display a numbered list of options and prompt user to select one.
 
     Loops until a valid choice is made or user cancels with 'x'.
@@ -308,18 +308,6 @@ def select_from_input(
     Raises:
         SystemExit:
             Raised if selection cancelled (user enters 'x' or presses Ctrl+C).
-
-    Example:
-        >>> options = {"1": "Option A", "2": "Option B"}
-        >>> select_from_input(options)
-        Available list: 2
-            1: Option A
-            2: Option B
-            X: Exit / Cancel
-        Enter number from list ([X] to exit): 1
-        [INPUT]: 1
-        Selected option: Option A
-        returns '1'
     """
 
     validate_input(
@@ -371,3 +359,6 @@ def select_from_input(
                 f"Exception: {e} (found? write test!)",  # TODO
                 location="Newt.console.select_from_input : Exception"
             )
+
+    # Fallback return to satisfy type checker; should never be reached
+    return choice
