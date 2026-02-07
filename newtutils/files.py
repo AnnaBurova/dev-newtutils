@@ -37,8 +37,9 @@ Functions:
         ) -> list | dict | None
     def read_json_from_file(
         file_name: str,
+        stop: bool = True,
         logging: bool = True
-        ) -> list | dict
+        ) -> list | dict | None
     def save_json_to_file(
         file_name: str,
         data: list | dict,
@@ -49,8 +50,9 @@ Functions:
     def read_csv_from_file(
         file_name: str,
         delimiter: str = ";",
+        stop: bool = True,
         logging: bool = True
-        ) -> list[list[str]]
+        ) -> list[list[str]] | None
     def save_csv_to_file(
         file_name: str,
         rows: Sequence[Sequence[object]],
