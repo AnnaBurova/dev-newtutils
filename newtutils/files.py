@@ -447,8 +447,8 @@ def convert_str_to_json(
         )
 
     NewtCons.error_msg(
-        "Something goes wrong.",
-        location="Newt.files.convert_str_to_json : Unknown",
+        "Cannot convert STR to JSON.",
+        location="Newt.files.convert_str_to_json : Unknown type",
         stop=False
     )
     return None

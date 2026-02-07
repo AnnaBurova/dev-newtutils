@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.0.0
-collected 40 items
+collected 41 items
 
 test_files.py 
 START=======================================
@@ -240,7 +240,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_parses_valid_json_dict
---------------------------------------------
+============================================
 '{"name": "test", "value": 123, "items": [1, 2, 3]}'
 {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
 
@@ -251,7 +251,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_parses_valid_json_list
---------------------------------------------
+============================================
 '[1, 2, 3, {"key": "value"}]'
 [1, 2, 3, {'key': 'value'}]
 
@@ -262,14 +262,14 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_parses_single_quotes_dict
---------------------------------------------
+============================================
 "{'name': 'test', 'value': 123}"
 [1m [31m
-Location: Newt.files.str_to_json.standard
+Location: Newt.files.convert_str_to_json : Exception standard JSON
 ::: ERROR :::
 Failed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
-Trying to replace single quotes with double quotes...
 [0m
+Trying to replace single quotes with double quotes...
 {'name': 'test', 'value': 123}
 
 =====captured.err=====
@@ -279,14 +279,14 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_parses_single_quotes_list
---------------------------------------------
+============================================
 "['item1', 'item2', 'item3']"
 [1m [31m
-Location: Newt.files.str_to_json.standard
+Location: Newt.files.convert_str_to_json : Exception standard JSON
 ::: ERROR :::
 Failed to parse string to JSON: Expecting value: line 1 column 2 (char 1)
-Trying to replace single quotes with double quotes...
 [0m
+Trying to replace single quotes with double quotes...
 ['item1', 'item2', 'item3']
 
 =====captured.err=====
@@ -296,7 +296,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_returns_none_for_empty_string
---------------------------------------------
+============================================
 None
 None
 
@@ -306,27 +306,51 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_returns_none_for_invalid_input
---------------------------------------------
+Function: test_invalid_json_input_raises_exit
+============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.str_to_json.text
+Location: Newt.console.validate_input > Newt.files.convert_str_to_json : text
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
-None
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.str_to_json.text
+Location: Newt.console.validate_input > Newt.files.convert_str_to_json : text
 ::: ERROR :::
 Expected <class 'str'>, got <class 'NoneType'>
 Value: None
 [0m
-None
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.str_to_json.text
+Location: Newt.console.validate_input > Newt.files.convert_str_to_json : text
 ::: ERROR :::
 Expected <class 'str'>, got <class 'list'>
 Value: ['not', 'a', 'string']
+[0m
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_invalid_json_prints_errors
+============================================
+'{ invalid json }'
+[1m [31m
+Location: Newt.files.convert_str_to_json : Exception standard JSON
+::: ERROR :::
+Failed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+[0m
+Trying to replace single quotes with double quotes...
+[1m [31m
+Location: Newt.files.convert_str_to_json : Exception replace single quotes with double quotes
+::: ERROR :::
+Failed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+[0m
+[1m [31m
+Location: Newt.files.convert_str_to_json : Unknown type
+::: ERROR :::
+Cannot convert STR to JSON.
 [0m
 None
 
@@ -336,44 +360,24 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_returns_none_for_invalid_json
---------------------------------------------
-'{ invalid json }'
-[1m [31m
-Location: Newt.files.str_to_json.standard
-::: ERROR :::
-Failed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
-Trying to replace single quotes with double quotes...
-[0m
-[1m [31m
-Location: Newt.files.str_to_json.replace
-::: ERROR :::
-Failed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
-[0m
-[1m [31m
-Location: Newt.console.validate_input > Newt.files.str_to_json.validate_input
-::: ERROR :::
-Expected (<class 'list'>, <class 'dict'>), got <class 'str'>
-Value: { invalid json }
-[0m
-None
+Function: test_nonjson_str_prints_errors
+============================================
 'not json at all'
 [1m [31m
-Location: Newt.files.str_to_json.standard
+Location: Newt.files.convert_str_to_json : Exception standard JSON
 ::: ERROR :::
 Failed to parse string to JSON: Expecting value: line 1 column 1 (char 0)
+[0m
 Trying to replace single quotes with double quotes...
-[0m
 [1m [31m
-Location: Newt.files.str_to_json.replace
+Location: Newt.files.convert_str_to_json : Exception replace single quotes with double quotes
 ::: ERROR :::
 Failed to parse string to JSON: Expecting value: line 1 column 1 (char 0)
 [0m
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.str_to_json.validate_input
+Location: Newt.files.convert_str_to_json : Unknown type
 ::: ERROR :::
-Expected (<class 'list'>, <class 'dict'>), got <class 'str'>
-Value: not json at all
+Cannot convert STR to JSON.
 [0m
 None
 
@@ -384,12 +388,68 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_returns_none_for_non_list_or_dict_json
---------------------------------------------
+============================================
 '"just a string"'
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_strip)
+::: ERROR :::
+Expected (<class 'list'>, <class 'dict'>), got <class 'str'>
+Value: just a string
+[0m
+Trying to replace single quotes with double quotes...
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_replace)
+::: ERROR :::
+Expected (<class 'list'>, <class 'dict'>), got <class 'str'>
+Value: just a string
+[0m
+[1m [31m
+Location: Newt.files.convert_str_to_json : Unknown type
+::: ERROR :::
+Cannot convert STR to JSON.
+[0m
 None
+
 '123'
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_strip)
+::: ERROR :::
+Expected (<class 'list'>, <class 'dict'>), got <class 'int'>
+Value: 123
+[0m
+Trying to replace single quotes with double quotes...
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_replace)
+::: ERROR :::
+Expected (<class 'list'>, <class 'dict'>), got <class 'int'>
+Value: 123
+[0m
+[1m [31m
+Location: Newt.files.convert_str_to_json : Unknown type
+::: ERROR :::
+Cannot convert STR to JSON.
+[0m
 None
+
 'true'
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_strip)
+::: ERROR :::
+Expected (<class 'list'>, <class 'dict'>), got <class 'bool'>
+Value: True
+[0m
+Trying to replace single quotes with double quotes...
+[1m [31m
+Location: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_replace)
+::: ERROR :::
+Expected (<class 'list'>, <class 'dict'>), got <class 'bool'>
+Value: True
+[0m
+[1m [31m
+Location: Newt.files.convert_str_to_json : Unknown type
+::: ERROR :::
+Cannot convert STR to JSON.
+[0m
 None
 
 =====captured.err=====
@@ -399,7 +459,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_handles_whitespace
---------------------------------------------
+============================================
 '   {"key": "value"}   '
 {'key': 'value'}
 
@@ -410,7 +470,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_handles_nested_structures
---------------------------------------------
+============================================
 '{"outer": {"inner": {"deep": [1, 2, 3]}}}'
 {'outer': {'inner': {'deep': [1, 2, 3]}}}
 
@@ -747,4 +807,4 @@ C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 END=========================================
 .
 
-============================= 40 passed in 0.16s ==============================
+============================= 41 passed in 0.16s ==============================

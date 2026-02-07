@@ -396,6 +396,7 @@ class TestTextFiles:
                 NewtFiles.save_text_to_file(123, "test")  # type: ignore
                 print("This line will not be printed 01")
             assert exc_info_1.value.code == 1
+            print()
 
             with pytest.raises(SystemExit) as exc_info_2:
                 # Invalid text
@@ -422,10 +423,11 @@ class TestTextFiles:
 
 
 class TestConvertStrToJson:
-    """Tests for convert_str_to_json function."""
+    """ Tests for convert_str_to_json function. """
+
 
     def test_parses_valid_json_dict(self, capsys):
-        """Test parsing a valid JSON dictionary string."""
+        """ Test NewtFiles.convert_str_to_json() parses valid JSON dict correctly. """
         print_my_func_name()
 
         json_str = '{"name": "test", "value": 123, "items": [1, 2, 3]}'
@@ -439,8 +441,13 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n'{\"name\": \"test\", \"value\": 123, \"items\": [1, 2, 3]}'\n{'name': 'test', 'value': 123, 'items': [1, 2, 3]}\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_parses_valid_json_list(self, capsys):
-        """Test parsing a valid JSON list string."""
+        """ Test NewtFiles.convert_str_to_json() parses valid JSON list correctly. """
         print_my_func_name()
 
         json_str = '[1, 2, 3, {"key": "value"}]'
@@ -454,8 +461,13 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n'[1, 2, 3, {\"key\": \"value\"}]'\n[1, 2, 3, {'key': 'value'}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_parses_single_quotes_dict(self, capsys):
-        """Test parsing a dictionary string with single quotes."""
+        """ Test NewtFiles.convert_str_to_json() handles single quotes in dict string. """
         print_my_func_name()
 
         json_str = "{'name': 'test', 'value': 123}"
@@ -469,8 +481,16 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
+        assert "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n" in captured.out
+        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
+        # Expected absence of result
+        assert "Newt.files.convert_str_to_json : Exception replace single quotes with double quotes" not in captured.out
+
+
     def test_parses_single_quotes_list(self, capsys):
-        """Test parsing a list string with single quotes."""
+        """ Test NewtFiles.convert_str_to_json() handles single quotes in list string. """
         print_my_func_name()
 
         json_str = "['item1', 'item2', 'item3']"
@@ -484,42 +504,74 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
+        assert "\nFailed to parse string to JSON: Expecting value: line 1 column 2 (char 1)\n" in captured.out
+        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
+        # Expected absence of result
+        assert "Newt.files.convert_str_to_json : Exception replace single quotes with double quotes" not in captured.out
+
+
     def test_returns_none_for_empty_string(self, capsys):
-        """Test that empty string returns None."""
+        """ Test NewtFiles.convert_str_to_json() returns None for empty/whitespace strings. """
         print_my_func_name()
 
-        result = NewtFiles.convert_str_to_json("")
-        print(repr(result))
-        assert result is None
+        result_1 = NewtFiles.convert_str_to_json("")
+        print(repr(result_1))
+        assert result_1 is None
+        print()
 
-        result = NewtFiles.convert_str_to_json("   ")
-        print(repr(result))
-        assert result is None
+        result_2 = NewtFiles.convert_str_to_json("   ")
+        print(repr(result_2))
+        assert result_2 is None
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-    def test_returns_none_for_invalid_input(self, capsys):
-        """Test that invalid input (not a string) returns None."""
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
+    def test_invalid_json_input_raises_exit(self, capsys):
+        """ Test NewtFiles.convert_str_to_json() raises SystemExit for non-string inputs. """
         print_my_func_name()
 
-        result = NewtFiles.convert_str_to_json(123)  # type: ignore
-        print(repr(result))
-        assert result is None
+        with pytest.raises(SystemExit) as exc_info_1:
+            NewtFiles.convert_str_to_json(123)  # type: ignore
+            print("This line will not be printed 01")
+        assert exc_info_1.value.code == 1
+        print()
 
-        result = NewtFiles.convert_str_to_json(None)  # type: ignore
-        print(repr(result))
-        assert result is None
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtFiles.convert_str_to_json(None)  # type: ignore
+            print("This line will not be printed 02")
+        assert exc_info_2.value.code == 1
+        print()
 
-        result = NewtFiles.convert_str_to_json(["not", "a", "string"])  # type: ignore
-        print(repr(result))
-        assert result is None
+        with pytest.raises(SystemExit) as exc_info_3:
+            NewtFiles.convert_str_to_json(["not", "a", "string"])  # type: ignore
+            print("This line will not be printed 03")
+        assert exc_info_3.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-    def test_returns_none_for_invalid_json(self, capsys):
-        """Test that invalid JSON string returns None."""
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : text\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'NoneType'>\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'list'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        assert "\nValue: None\n" in captured.out
+        assert "\nValue: ['not', 'a', 'string']\n" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed 01\n" not in captured.out
+        assert "\nThis line will not be printed 02\n" not in captured.out
+        assert "\nThis line will not be printed 03\n" not in captured.out
+
+
+    def test_invalid_json_prints_errors(self, capsys):
+        """ Ensure invalid JSON returns None and prints expected error messages. """
         print_my_func_name()
 
         invalid_json = "{ invalid json }"
@@ -527,6 +579,22 @@ class TestConvertStrToJson:
         result = NewtFiles.convert_str_to_json(invalid_json)
         print(repr(result))
         assert result is None
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
+        assert "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)\n" in captured.out
+        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
+        assert "\nLocation: Newt.files.convert_str_to_json : Exception replace single quotes with double quotes\n" in captured.out
+        assert "\nLocation: Newt.files.convert_str_to_json : Unknown type\n" in captured.out
+        assert "\nCannot convert STR to JSON.\n" in captured.out
+
+
+    def test_nonjson_str_prints_errors(self, capsys):
+        """ Ensure non-JSON strings return None and print expected errors. """
+        print_my_func_name()
 
         invalid_json = "not json at all"
         print(repr(invalid_json))
@@ -537,8 +605,18 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
+        assert "\nFailed to parse string to JSON: Expecting value: line 1 column 1 (char 0)\n" in captured.out
+        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
+        assert "\nLocation: Newt.files.convert_str_to_json : Exception replace single quotes with double quotes\n" in captured.out
+        assert "\nFailed to parse string to JSON: Expecting value: line 1 column 1 (char 0)\n" in captured.out
+        assert "\nLocation: Newt.files.convert_str_to_json : Unknown type\n" in captured.out
+        assert "\nCannot convert STR to JSON.\n" in captured.out
+
+
     def test_returns_none_for_non_list_or_dict_json(self, capsys):
-        """Test that JSON that is not a list or dict returns None."""
+        """ Test NewtFiles.convert_str_to_json() returns None for non-list/dict JSON. """
         print_my_func_name()
 
         json_str = '"just a string"'
@@ -546,12 +624,14 @@ class TestConvertStrToJson:
         result = NewtFiles.convert_str_to_json(json_str)
         print(repr(result))
         assert result is None
+        print()
 
         json_str = "123"
         print(repr(json_str))
         result = NewtFiles.convert_str_to_json(json_str)
         print(repr(result))
         assert result is None
+        print()
 
         json_str = "true"
         print(repr(json_str))
@@ -562,8 +642,22 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_strip)\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_replace)\n" in captured.out
+        assert "\nExpected (<class 'list'>, <class 'dict'>), got <class 'str'>\n" in captured.out
+        assert "\nValue: just a string\n" in captured.out
+        assert "\nExpected (<class 'list'>, <class 'dict'>), got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        assert "\nExpected (<class 'list'>, <class 'dict'>), got <class 'bool'>\n" in captured.out
+        assert "\nValue: True\n" in captured.out
+        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
+        assert "\nLocation: Newt.files.convert_str_to_json : Unknown type\n" in captured.out
+        assert "\nCannot convert STR to JSON.\n" in captured.out
+
+
     def test_handles_whitespace(self, capsys):
-        """Test that whitespace around JSON is handled correctly."""
+        """ Test NewtFiles.convert_str_to_json() trims whitespace correctly. """
         print_my_func_name()
 
         json_str = '   {"key": "value"}   '
@@ -577,8 +671,12 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_handles_nested_structures(self, capsys):
-        """Test parsing nested JSON structures."""
+        """ Test NewtFiles.convert_str_to_json() parses nested dict/list structures. """
         print_my_func_name()
 
         json_str = '{"outer": {"inner": {"deep": [1, 2, 3]}}}'
@@ -591,6 +689,9 @@ class TestConvertStrToJson:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
 class TestJsonFiles:
