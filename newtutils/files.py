@@ -243,8 +243,9 @@ def choose_file_from_folder(
         print(f"{idx:>6}: {name}")
     print("     X: Exit / Cancel")
 
+    attempt = 1
     # Loop until valid input
-    while True:
+    while attempt < 6:
         try:
             choice = input(
                 "\nEnter number from list ([X] to exit): "
@@ -282,6 +283,14 @@ def choose_file_from_folder(
                 f"Exception: {e} (found? write test!)",  # TODO
                 location="Newt.files.choose_file_from_folder : Exception while choice"
             )
+
+        attempt += 1
+
+    NewtCons.error_msg(
+        f"No correct selection after {attempt} attempt.",
+        location="Newt.files.choose_file_from_folder : while attempt"
+    )
+    return ""
 
 
 # === TEXT ===
