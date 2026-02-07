@@ -335,7 +335,7 @@ class TestTextFiles:
 
 
     def test_read_text_from_nonexistent_file(self, capsys):
-        """ Test NewtFiles.read_text_from_file() raises SystemExit for nonexistent file. """
+        """ Test NewtFiles.read_text_from_file() returns None for nonexistent file with stop=False. """
         print_my_func_name()
 
         result = NewtFiles.read_text_from_file("/nonexistent/file.txt", stop=False)
@@ -695,10 +695,11 @@ class TestConvertStrToJson:
 
 
 class TestJsonFiles:
-    """Tests for JSON file operations."""
+    """ Tests for JSON file operations. """
+
 
     def test_save_and_read_json_dict(self, capsys):
-        """Test saving and reading a JSON dictionary."""
+        """ Test NewtFiles.save_json_to_file() and read_json_from_file() correctly persist JSON dict. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
@@ -707,12 +708,15 @@ class TestJsonFiles:
         try:
             data = {"name": "test", "value": 123, "items": [1, 2, 3]}
             print(repr(data))
+            print()
 
             NewtFiles.save_json_to_file(tmp_path, data)
+            print()
 
             result_json = NewtFiles.read_json_from_file(tmp_path)
             print(repr(result_json))
             assert result_json == data
+            print()
 
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
@@ -725,8 +729,20 @@ class TestJsonFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
+        assert "\n(type=<class 'dict'>, indent=2)\n" in captured.out
+        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
+        assert "\n(type=<class 'dict'>)\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=75)\n" in captured.out
+        assert "\n\'{\\n  \"name\": \"test\",\\n  \"value\": 123,\\n  \"items\": [\\n    1,\\n    2,\\n    3\\n  ]\\n}\\n\'\n" in captured.out
+        assert "\n{\n  \"name\": \"test\",\n  \"value\": 123,\n  \"items\": [\n    1,\n    2,\n    3\n  ]\n}\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_save_and_read_json_list(self, capsys):
-        """Test saving and reading a JSON list."""
+        """ Test NewtFiles.save_json_to_file() and read_json_from_file() correctly persist JSON list. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
@@ -737,10 +753,12 @@ class TestJsonFiles:
             print(repr(data))
 
             NewtFiles.save_json_to_file(tmp_path, data)
+            print()
 
             result_json = NewtFiles.read_json_from_file(tmp_path)
             print(repr(result_json))
             assert result_json == data
+            print()
 
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
@@ -753,19 +771,37 @@ class TestJsonFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
+        assert "\n(type=<class 'list'>, indent=2)\n" in captured.out
+        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
+        assert "\n(type=<class 'list'>)\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=46)\n" in captured.out
+        assert "\n\'[\\n  1,\\n  2,\\n  3,\\n  {\\n    \"key\": \"value\"\\n  }\\n]\\n'\n" in captured.out
+        assert "\n[\n  1,\n  2,\n  3,\n  {\n    \"key\": \"value\"\n  }\n]\n" in captured.out
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_read_json_from_nonexistent_file(self, capsys):
-        """Test reading from non-existent JSON file returns empty list."""
+        """ Test NewtFiles.read_json_from_file(stop=False) returns None for nonexistent file. """
         print_my_func_name()
 
-        result = NewtFiles.read_json_from_file("/nonexistent/file.json")
+        result = NewtFiles.read_json_from_file("/nonexistent/file.json", stop=False)
         print(repr(result))
-        assert result == []
+        assert result == None
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
+        assert "\nFile not found: /nonexistent/file.json\n" in captured.out
+
+
     def test_save_json_creates_directory(self, capsys):
-        """Test that save_json_to_file creates parent directories."""
+        """ Test that save_json_to_file creates parent directories. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -777,11 +813,22 @@ class TestJsonFiles:
             NewtFiles.save_json_to_file(nested_path, data)
             assert os.path.exists(nested_path)
 
+            result = NewtFiles.read_json_from_file(nested_path)
+            print(repr(result))
+            assert result == {"test": "data"}
+
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
+        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
+        assert "\\level1\\level2\\file.json\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_save_json_custom_indent(self, capsys):
-        """Test saving JSON with custom indent."""
+        """ Test saving JSON with custom indent. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
@@ -791,10 +838,12 @@ class TestJsonFiles:
             data = {"a": 1, "b": 2}
             print(repr(data))
             NewtFiles.save_json_to_file(tmp_path, data, indent=4)
+            print()
 
             result_json = NewtFiles.read_json_from_file(tmp_path)
             print(repr(result_json))
             assert result_json == data
+            print()
 
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
@@ -807,8 +856,16 @@ class TestJsonFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
+        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "'{\\n    \"a\": 1,\\n    \"b\": 2\\n}\\n'\n{\n    \"a\": 1,\n    \"b\": 2\n}\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_read_json_invalid_file(self, capsys):
-        """Test reading invalid JSON returns empty list."""
+        """ Test reading invalid JSON raises SystemExit. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
@@ -816,9 +873,10 @@ class TestJsonFiles:
             tmp_path = tmp.name
 
         try:
-            with pytest.raises(SystemExit):
+            with pytest.raises(SystemExit) as exc_info:
                 result = NewtFiles.read_json_from_file(tmp_path)
-                print("This line will not be printed:", result)
+                print("This line will not be printed")
+            assert exc_info.value.code == 1
 
         finally:
             if os.path.exists(tmp_path):
@@ -827,25 +885,40 @@ class TestJsonFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.read_json_from_file : Exception\n" in captured.out
+        assert "\nException: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)\n" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed\n" not in captured.out
+
+
     def test_save_json_invalid_input(self, capsys):
-        """Test that invalid input is handled gracefully."""
+        """ Test that invalid input is handled gracefully. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
             tmp_path = tmp.name
 
         try:
-            with pytest.raises(SystemExit):
+            with pytest.raises(SystemExit) as exc_info_1:
                 # Invalid file_name
                 NewtFiles.save_json_to_file(123, {"test": "data"})  # type: ignore
+                print("This line will not be printed 01")
+            assert exc_info_1.value.code == 1
+            print()
 
-            with pytest.raises(SystemExit):
+            with pytest.raises(SystemExit) as exc_info_2:
                 # Invalid data (not list or dict)
                 NewtFiles.save_json_to_file(tmp_path, "not a dict or list")  # type: ignore
+                print("This line will not be printed 02")
+            assert exc_info_2.value.code == 1
+            print()
 
-            with pytest.raises(SystemExit):
+            with pytest.raises(SystemExit) as exc_info_3:
                 result_json = NewtFiles.read_json_from_file(tmp_path)
                 print("This line will not be printed:", result_json)
+                print("This line will not be printed 03")
+            assert exc_info_3.value.code == 1
 
             result_text = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result_text))
@@ -857,6 +930,20 @@ class TestJsonFiles:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.files.save_json_to_file : data\n" in captured.out
+        assert "\nExpected (<class 'list'>, <class 'dict'>), got <class 'str'>\n" in captured.out
+        assert "\nLocation: Newt.files.read_json_from_file : Exception\n" in captured.out
+        assert "\nException: Expecting value: line 1 column 1 (char 0)\n" in captured.out
+        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        # Expected absence of result
+        assert "\nThis line will not be printed 01\n" not in captured.out
+        assert "\nThis line will not be printed 02\n" not in captured.out
+        assert "\nThis line will not be printed 03\n" not in captured.out
 
 
 class TestCsvFiles:

@@ -586,9 +586,9 @@ def save_json_to_file(
             print(file_name)
             print(f"(type={type(data)}, indent={indent})")
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
+            f"Exception: {e} (found? write test!)",  # TODO
             location="Newt.files.save_json_to_file : Exception",
             stop=False
         )

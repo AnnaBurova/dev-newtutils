@@ -512,15 +512,18 @@ test_files.py::TestJsonFiles::test_save_and_read_json_dict
 START=======================================
 =====captured.out=====
 Function: test_save_and_read_json_dict
---------------------------------------------
+============================================
 {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
+
 [Newt.files.save_json_to_file] Saved JSON to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'dict'>, indent=2)
+
 [Newt.files.read_json_from_file] Loaded JSON from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'dict'>)
 {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
+
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (length=75)
@@ -544,15 +547,17 @@ test_files.py::TestJsonFiles::test_save_and_read_json_list
 START=======================================
 =====captured.out=====
 Function: test_save_and_read_json_list
---------------------------------------------
+============================================
 [1, 2, 3, {'key': 'value'}]
 [Newt.files.save_json_to_file] Saved JSON to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'list'>, indent=2)
+
 [Newt.files.read_json_from_file] Loaded JSON from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'list'>)
 [1, 2, 3, {'key': 'value'}]
+
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (length=46)
@@ -575,13 +580,13 @@ test_files.py::TestJsonFiles::test_read_json_from_nonexistent_file
 START=======================================
 =====captured.out=====
 Function: test_read_json_from_nonexistent_file
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.files._check_file_exists
+Location: Newt.files.check_file_exists : logging
 ::: ERROR :::
 File not found: /nonexistent/file.json
 [0m
-[]
+None
 
 =====captured.err=====
 (no stderr captured)
@@ -591,11 +596,15 @@ test_files.py::TestJsonFiles::test_save_json_creates_directory
 START=======================================
 =====captured.out=====
 Function: test_save_json_creates_directory
---------------------------------------------
+============================================
 {'test': 'data'}
 [Newt.files.save_json_to_file] Saved JSON to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.json
 (type=<class 'dict'>, indent=2)
+[Newt.files.read_json_from_file] Loaded JSON from file:
+C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx\level1\level2\file.json
+(type=<class 'dict'>)
+{'test': 'data'}
 
 =====captured.err=====
 (no stderr captured)
@@ -605,15 +614,17 @@ test_files.py::TestJsonFiles::test_save_json_custom_indent
 START=======================================
 =====captured.out=====
 Function: test_save_json_custom_indent
---------------------------------------------
+============================================
 {'a': 1, 'b': 2}
 [Newt.files.save_json_to_file] Saved JSON to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'dict'>, indent=4)
+
 [Newt.files.read_json_from_file] Loaded JSON from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (type=<class 'dict'>)
 {'a': 1, 'b': 2}
+
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.json
 (length=27)
@@ -632,9 +643,9 @@ test_files.py::TestJsonFiles::test_read_json_invalid_file
 START=======================================
 =====captured.out=====
 Function: test_read_json_invalid_file
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.files.read_json_from_file
+Location: Newt.files.read_json_from_file : Exception
 ::: ERROR :::
 Exception: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
 [0m
@@ -647,21 +658,23 @@ test_files.py::TestJsonFiles::test_save_json_invalid_input
 START=======================================
 =====captured.out=====
 Function: test_save_json_invalid_input
---------------------------------------------
+============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.save_json_to_file.file_name
+Location: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
+
 [1m [31m
-Location: Newt.console.validate_input > Newt.files.save_json_to_file.data
+Location: Newt.console.validate_input > Newt.files.save_json_to_file : data
 ::: ERROR :::
 Expected (<class 'list'>, <class 'dict'>), got <class 'str'>
 Value: not a dict or list
 [0m
+
 [1m [31m
-Location: Newt.files.read_json_from_file
+Location: Newt.files.read_json_from_file : Exception
 ::: ERROR :::
 Exception: Expecting value: line 1 column 1 (char 0)
 [0m
