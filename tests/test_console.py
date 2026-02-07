@@ -606,7 +606,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input', side_effect=["abc", "999", "2"])
     def test_select_from_input_invalid_then_valid(self, mock_input, capsys):
-        """ Test select_from_input handles invalid inputs before valid selection. """
+        """ Test select_from_input handles invalid input followed by valid choice. """
         print_my_func_name()
 
         select_dict = {"1": "Option A", "2": "Option B"}
@@ -631,7 +631,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input', side_effect=["X"])
     def test_select_from_input_cancel_uppercase(self, mock_input, capsys):
-        """ Test select_from_input 'X' input raises SystemExit for cancel. """
+        """ Test select_from_input handles uppercase cancel input correctly. """
         print_my_func_name()
 
         select_dict = {"1": "Option A"}
@@ -681,7 +681,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input')
     def test_select_from_input_keyboard_interrupt(self, mock_input, capsys):
-        """ Test select_from_input KeyboardInterrupt raises SystemExit. """
+        """ Test select_from_input raises SystemExit on KeyboardInterrupt. """
         print_my_func_name()
 
         mock_input.side_effect = KeyboardInterrupt()
@@ -710,7 +710,7 @@ class TestSelectFromInput:
 
     @patch('newtutils.console.input', return_value=" 2 ")
     def test_select_from_input_spaces(self, mock_input, capsys):
-        """ Test select_from_input trims spaces from input for valid selection. """
+        """ Test select_from_input handles input with leading and trailing spaces correctly. """
         print_my_func_name()
 
         select_dict = {"1": "Option A", "2": "Option B"}
