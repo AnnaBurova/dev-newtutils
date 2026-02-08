@@ -255,7 +255,7 @@ def _retry_pause(
     """
 
     if not validate_input(
-        seconds, int, stop=False,
+        seconds, int, check_non_empty=True, stop=False,
         location="_retry_pause : seconds"
     ):
         seconds = 5
@@ -306,12 +306,12 @@ def check_location(
     """
 
     validate_input(
-        dir_, str,
+        dir_, str, check_non_empty=True,
         location="check_location : dir_"
     )
 
     validate_input(
-        must_location, str,
+        must_location, str, check_non_empty=True,
         location="check_location : must_location"
     )
 
@@ -346,7 +346,7 @@ def select_from_input(
     """
 
     validate_input(
-        select_dict, dict,
+        select_dict, dict, check_non_empty=True,
         location="select_from_input : select_dict"
     )
 
