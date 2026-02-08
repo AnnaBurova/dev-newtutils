@@ -15,6 +15,7 @@ Functions:
     def validate_input(
         value: object,
         expected_type: type | tuple[type, ...],
+        check_non_empty: bool = False,
         stop: bool = True,
         location: str = ""
         ) -> bool
@@ -101,6 +102,7 @@ def error_msg(
 def validate_input(
         value: object,
         expected_type: type | tuple[type, ...],
+        check_non_empty: bool = False,
         stop: bool = True,
         location: str = ""
         ) -> bool:
@@ -115,6 +117,10 @@ def validate_input(
             The value to validate.
         expected_type (type | tuple[type, ...]):
             The expected type or tuple of allowed types.
+        check_non_empty (bool):
+            If True, also validate that the value is not empty.
+            Works for str, list, tuple, dict, set and None.
+            Defaults to False.
         stop (bool):
             If True, stops execution after logging the error.
             If False, logs the error but continues execution.
@@ -144,6 +150,35 @@ def validate_input(
             stop=stop
         )
         return False
+
+    if check_non_empty:
+        is_empty = False
+
+        if value is None:
+            is_empty = True
+        elif isinstance(value, int):
+            is_empty = True if value == 0 else False
+        elif isinstance(value, str):
+            is_empty = not value.strip()
+        elif isinstance(value, (list, tuple, dict, set)):
+            is_empty = len(value) == 0
+        else:
+            error_msg(
+                "check_non_empty is not supported for this type",
+                f"Type: {type(value)}",
+                location="Newt.console.validate_input : check_non_empty unsupported type",
+                stop=stop
+            )
+            return False
+
+        if is_empty:
+            error_msg(
+                "Value must be non-empty",
+                f"Value: {value}",
+                location="Newt.console.validate_input : is_empty",
+                stop=stop
+            )
+            return False
 
     return True
 
