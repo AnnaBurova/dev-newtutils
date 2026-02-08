@@ -5,6 +5,11 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
+    def check_dict_keys(
+        data: Mapping[str, object],
+        expected: set[str],
+        stop: bool = True
+        ) -> bool
     def sorting_list(
         input_list: Sequence[str | int],
         stop: bool = True
@@ -18,11 +23,6 @@ Functions:
             def sort_key(
                 d: Mapping[str, object]
                 ) -> tuple[object, ...]
-    def check_dict_keys(
-        data: Mapping[str, object],
-        expected: set[str],
-        stop: bool = True
-        ) -> bool
 """
 
 from __future__ import annotations
@@ -31,6 +31,46 @@ from collections.abc import Sequence, Mapping
 from typing import Any
 
 import newtutils.console as NewtCons
+
+
+def check_dict_keys(
+        data: Mapping[str, object],
+        expected: set[str],
+        stop: bool = True
+        ) -> bool:
+    """ Validate that a mapping contains the expected keys.
+
+    Args:
+        data (Mapping[str, object]):
+            Mapping to validate.
+        expected (set[str]):
+            Set of keys that must be present in the mapping.
+        stop (bool):
+            If True, stops execution on validation failure.
+            Defaults to True.
+
+    Returns:
+        out (bool):
+            True if all expected keys are present and no extra keys exist,
+            False otherwise.
+    """
+
+    data_keys = set(data.keys())
+    expected_keys = set(expected)
+    missing_keys = expected_keys - data_keys
+    extra_keys = data_keys - expected_keys
+
+    if missing_keys or extra_keys:
+        NewtCons.error_msg(
+            f"Data keys: {', '.join(sorted(data_keys))}",
+            f"Missing keys: {', '.join(sorted(missing_keys))}",
+            f"Unexpected keys: {', '.join(sorted(extra_keys))}",
+            location="Newt.utility.check_dict_keys : missing_keys or extra_keys",
+            stop=stop
+        )
+        return False
+
+    return True
 
 
 def sorting_list(
@@ -210,43 +250,3 @@ def sorting_dict_by_keys(
             stop=stop
         )
         return [dict(d) for d in data]
-
-
-def check_dict_keys(
-        data: Mapping[str, object],
-        expected: set[str],
-        stop: bool = True
-        ) -> bool:
-    """ Validate that a mapping contains the expected keys.
-
-    Args:
-        data (Mapping[str, object]):
-            Mapping to validate.
-        expected (set[str]):
-            Set of keys that must be present in the mapping.
-        stop (bool):
-            If True, stops execution on validation failure.
-            Defaults to True.
-
-    Returns:
-        out (bool):
-            True if all expected keys are present and no extra keys exist,
-            False otherwise.
-    """
-
-    data_keys = set(data.keys())
-    expected_keys = set(expected)
-    missing_keys = expected_keys - data_keys
-    extra_keys = data_keys - expected_keys
-
-    if missing_keys or extra_keys:
-        NewtCons.error_msg(
-            f"Data keys: {', '.join(sorted(data_keys))}",
-            f"Missing keys: {', '.join(sorted(missing_keys))}",
-            f"Unexpected keys: {', '.join(sorted(extra_keys))}",
-            location="Newt.utility.check_dict_keys : missing_keys or extra_keys",
-            stop=stop
-        )
-        return False
-
-    return True
