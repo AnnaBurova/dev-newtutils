@@ -1,5 +1,5 @@
 """
-Updated on 2025-11
+Updated on 2026-02
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -81,10 +81,10 @@ def db_delayed_close(
 
         return True
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
-            location="Newt.sql.db_delayed_close",
+            f"Exception: {e} (found? write test!)",  # TODO
+            location="Newt.sql.db_delayed_close : Exception",
             stop=False
         )
         return False
@@ -121,18 +121,18 @@ def sql_execute_query(
 
     NewtCons.validate_input(
         database, str,
-        location="Newt.sql.sql_execute_query.database"
+        location="Newt.sql.sql_execute_query : database"
     )
 
     NewtCons.validate_input(
         query, str,
-        location="Newt.sql.sql_execute_query.query"
+        location="Newt.sql.sql_execute_query : query"
     )
 
     if params:
         NewtCons.validate_input(
             params, (list, tuple),
-            location="Newt.sql.sql_execute_query.params"
+            location="Newt.sql.sql_execute_query : params"
         )
 
     normalized_query = query.strip()
@@ -140,7 +140,7 @@ def sql_execute_query(
     if not normalized_query:
         NewtCons.error_msg(
             "SQL query is empty after stripping whitespace",
-            location="Newt.sql.sql_execute_query",
+            location="Newt.sql.sql_execute_query : normalized_query",
             stop=False,
         )
         return None
@@ -151,7 +151,7 @@ def sql_execute_query(
     if len(parts_query) != 1:
         NewtCons.error_msg(
             "SQL query must contain exactly one statement",
-            location="Newt.sql.sql_execute_query",
+            location="Newt.sql.sql_execute_query : parts_query",
             stop=False,
         )
         return None
@@ -170,7 +170,7 @@ def sql_execute_query(
         if token in f" {lowered_query} ":
             NewtCons.error_msg(
                 f"SQL query contains potentially dangerous token: {token.strip()}",
-                location="Newt.sql.sql_execute_query",
+                location="Newt.sql.sql_execute_query : dangerous_tokens",
                 stop=False,
             )
             return None
@@ -183,7 +183,7 @@ def sql_execute_query(
             NewtCons.error_msg(
                 "All items in 'params' list must be tuples for executemany().",
                 f"params: {params}",
-                location="Newt.sql.sql_execute_query.params"
+                location="Newt.sql.sql_execute_query : executemany"
             )
             return None
 
@@ -216,10 +216,10 @@ def sql_execute_query(
 
         return result
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
-            location="Newt.sql.sql_execute_query"
+            f"Exception: {e} (found? write test!)",  # TODO
+            location="Newt.sql.sql_execute_query : Exception"
         )
         return None
 
@@ -250,8 +250,10 @@ def sql_select_rows(
     if isinstance(result, list):
         return result
 
-    NewtCons.validate_input(result, list, stop=False,
-                            location="Newt.sql.sql_select_rows.result")
+    NewtCons.validate_input(
+        result, list,
+        location="Newt.sql.sql_select_rows : result"
+    )
     return []
 
 
@@ -274,18 +276,19 @@ def sql_insert_row(
 
     Returns:
         out (int):
-            Number of inserted rows, or 0 on failure.
+            Number of inserted rows,
+            or 0 on failure.
     """
 
     NewtCons.validate_input(
         table, str,
-        location="Newt.sql.sql_insert_row.table"
+        location="Newt.sql.sql_insert_row : table"
     )
 
     if not data:
         NewtCons.error_msg(
             f"Empty data: {data}",
-            location="Newt.sql.sql_insert_row",
+            location="Newt.sql.sql_insert_row : not data",
             stop=False
         )
         return 0
@@ -296,7 +299,7 @@ def sql_insert_row(
 
     NewtCons.validate_input(
         data, list,
-        location="Newt.sql.sql_insert_row.data"
+        location="Newt.sql.sql_insert_row : data"
     )
 
     # Build SQL template
@@ -310,7 +313,7 @@ def sql_insert_row(
             NewtCons.error_msg(
                 "All dictionaries must have identical keys and same length",
                 f"Expected keys: {first_keys}, got: {set(row.keys())}",
-                location="Newt.sql.sql_insert_row",
+                location="Newt.sql.sql_insert_row : first_keys",
                 stop=False
             )
             return 0
@@ -329,7 +332,7 @@ def sql_insert_row(
 
     NewtCons.validate_input(
         result, int,
-        location="Newt.sql.sql_insert_row.result"
+        location="Newt.sql.sql_insert_row : result"
     )
 
 
@@ -365,18 +368,18 @@ def sql_update_rows(
 
     NewtCons.validate_input(
         table, str,
-        location="Newt.sql.sql_update_rows.table"
+        location="Newt.sql.sql_update_rows : table"
     )
 
     NewtCons.validate_input(
         where_condition, str,
-        location="Newt.sql.sql_update_rows.where_condition"
+        location="Newt.sql.sql_update_rows : where_condition"
     )
 
     if not set_data:
         NewtCons.error_msg(
             f"Empty data: {set_data}",
-            location="Newt.sql.sql_update_rows",
+            location="Newt.sql.sql_update_rows : set_data",
             stop=False
         )
         return 0
@@ -392,7 +395,7 @@ def sql_update_rows(
 
     NewtCons.validate_input(
         result, int,
-        location="Newt.sql.sql_update_rows.result"
+        location="Newt.sql.sql_update_rows : result"
     )
 
 
@@ -427,32 +430,32 @@ def export_sql_query_to_csv(
 
     NewtCons.validate_input(
         database, str,
-        location="Newt.sql.export_sql_query_to_csv.database"
+        location="Newt.sql.export_sql_query_to_csv : database"
     )
 
     NewtCons.validate_input(
         query, str,
-        location="Newt.sql.export_sql_query_to_csv.query"
+        location="Newt.sql.export_sql_query_to_csv : query"
     )
 
     NewtCons.validate_input(
         csv_file, str,
-        location="Newt.sql.export_sql_query_to_csv.csv_file"
+        location="Newt.sql.export_sql_query_to_csv : csv_file"
     )
 
     NewtCons.validate_input(
         delimiter, str,
-        location="Newt.sql.export_sql_query_to_csv.delimiter"
+        location="Newt.sql.export_sql_query_to_csv : delimiter"
     )
 
     try:
         # Step 1: run select query
         result = sql_select_rows(database, query, params)
 
-        if not result:
+        if result is None:
             NewtCons.error_msg(
                 f"Empty result: {result}",
-                location="Newt.sql.export_sql_query_to_csv",
+                location="Newt.sql.export_sql_query_to_csv : result",
                 stop=False
             )
             return False
@@ -466,10 +469,10 @@ def export_sql_query_to_csv(
 
         return True
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e}",
-            location="Newt.sql.export_sql_query_to_csv",
+            f"Exception: {e} (found? write test!)",  # TODO
+            location="Newt.sql.export_sql_query_to_csv : Exception",
             stop=False
         )
         return False
