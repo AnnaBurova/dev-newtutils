@@ -51,11 +51,13 @@ def db_delayed_close(
         database: str
         ) -> bool:
     """
-    Safely close a SQLite database and release all file handles.
+    Trigger garbage collection to release SQLite file handles.
 
     Performs strict input validation, checks that the target path exists,
     then triggers Python's garbage collector to finalize any remaining
     SQLite connection or cursor objects that may still hold a file handle.
+    Note: gc.collect() does not guarantee immediate file release if other
+    references to connections/cursors exist.
 
     Args:
         database (str):
@@ -63,9 +65,8 @@ def db_delayed_close(
 
     Returns:
         out (bool):
-            True if the input is valid and
-            the database path either does not exist or appears to be released;
-            False if validation fails.
+            True if the input is valid and garbage collection succeeds;
+            False if validation fails or exception occurs.
     """
 
     if not NewtFiles.check_file_exists(database):
