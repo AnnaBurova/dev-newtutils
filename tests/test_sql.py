@@ -44,6 +44,9 @@ class TestDbDelayedClose:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_db_delayed_close_nonexistent_db(self, capsys):
         """ Test closing a non-existent database returns True. """
@@ -54,6 +57,10 @@ class TestDbDelayedClose:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
+        assert "\nFile not found: /nonexistent/database.db\n" in captured.out
 
 
 class TestSqlExecuteQuery:
@@ -83,6 +90,9 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_sql_execute_query_insert(self, capsys):
         """ Test INSERT query. """
@@ -111,6 +121,9 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_sql_execute_query_select(self, capsys):
         """ Test SELECT query. """
@@ -133,6 +146,8 @@ class TestSqlExecuteQuery:
             assert len(result) == 2
             assert result[0]["id"] == 1
             assert result[0]["name"] == "Alice"
+            assert result[1]["id"] == 2
+            assert result[1]["name"] == "Bob"
 
         finally:
             NewtSQL.db_delayed_close(db_path)
@@ -141,6 +156,10 @@ class TestSqlExecuteQuery:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\nresult: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sql_execute_query_update(self, capsys):
@@ -178,6 +197,10 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\nselect_result: [{'id': 1, 'name': 'Alice Updated'}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_sql_execute_query_delete(self, capsys):
         """ Test DELETE query. """
@@ -205,6 +228,8 @@ class TestSqlExecuteQuery:
             print("select_result:", select_result)
             assert isinstance(select_result, list)
             assert len(select_result) == 1
+            assert select_result[0]["id"] == 2
+            assert select_result[0]["name"] == "Bob"
 
         finally:
             NewtSQL.db_delayed_close(db_path)
@@ -213,6 +238,10 @@ class TestSqlExecuteQuery:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\nselect_result: [{'id': 2, 'name': 'Bob'}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sql_execute_query_executemany(self, capsys):
@@ -239,6 +268,12 @@ class TestSqlExecuteQuery:
             print("select_result:", select_result)
             assert isinstance(select_result, list)
             assert len(select_result) == 3
+            assert select_result[0]["id"] == 1
+            assert select_result[0]["name"] == "Alice"
+            assert select_result[1]["id"] == 2
+            assert select_result[1]["name"] == "Bob"
+            assert select_result[2]["id"] == 3
+            assert select_result[2]["name"] == "Charlie"
 
         finally:
             NewtSQL.db_delayed_close(db_path)
@@ -247,6 +282,10 @@ class TestSqlExecuteQuery:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\nselect_result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sql_execute_query_invalid_input(self, capsys):
@@ -266,6 +305,15 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_execute_query : database\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_execute_query : query\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        assert "\nValue: 456\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
+
 
     def test_sql_execute_query_creates_directory(self, capsys):
         """ Test that sql_execute_query creates parent directories. """
@@ -281,6 +329,9 @@ class TestSqlExecuteQuery:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
 class TestSqlSelectRows:
@@ -314,6 +365,10 @@ class TestSqlSelectRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\nresult: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_sql_select_rows_with_params(self, capsys):
         """ Test select with parameters. """
@@ -342,6 +397,10 @@ class TestSqlSelectRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\nresult: [{'id': 1, 'name': 'Alice'}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_sql_select_rows_empty_result(self, capsys):
         """ Test select with no results. """
@@ -367,6 +426,10 @@ class TestSqlSelectRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\nresult: []\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_sql_select_rows_invalid_query(self, capsys):
         """ Test select with invalid query. """
@@ -388,6 +451,15 @@ class TestSqlSelectRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.sql.sql_execute_query : OperationalError in Syntax\n" in captured.out
+        assert "\nSyntax error: near \"INVALID\": syntax error\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_select_rows : result\n" in captured.out
+        assert "\nExpected <class 'list'>, got <class 'NoneType'>\n" in captured.out
+        assert "\nValue: None\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
 
 
 class TestSqlInsertRow:
@@ -426,6 +498,10 @@ class TestSqlInsertRow:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\nselect_result: [{'id': 1, 'name': 'Alice', 'age': 30}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_sql_insert_row_multiple_dicts(self, capsys):
         """ Test inserting multiple rows from list of dicts. """
@@ -454,6 +530,12 @@ class TestSqlInsertRow:
             select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
             print("select_result:", select_result)
             assert len(select_result) == 3
+            assert select_result[0]["id"] == 1
+            assert select_result[0]["name"] == "Alice"
+            assert select_result[1]["id"] == 2
+            assert select_result[1]["name"] == "Bob"
+            assert select_result[2]["id"] == 3
+            assert select_result[2]["name"] == "Charlie"
 
         finally:
             NewtSQL.db_delayed_close(db_path)
@@ -462,6 +544,10 @@ class TestSqlInsertRow:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\nselect_result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sql_insert_row_empty_data(self, capsys):
@@ -484,6 +570,11 @@ class TestSqlInsertRow:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input : is_empty > Newt.sql.sql_insert_row : data\n" in captured.out
+        assert "\nValue must be non-empty\n" in captured.out
+        assert "\nValue: {}\n" in captured.out
 
 
     def test_sql_insert_row_invalid_input(self, capsys):
@@ -509,6 +600,18 @@ class TestSqlInsertRow:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_execute_query : database\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_insert_row : table\n" in captured.out
+        assert "\nValue: 456\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_insert_row : data\n" in captured.out
+        assert "\nExpected (<class 'dict'>, <class 'list'>), got <class 'str'>\n" in captured.out
+        assert "\nValue: not a dict\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
+
 
 class TestSqlUpdateRows:
     """ Tests for sql_update_rows function. """
@@ -533,9 +636,19 @@ class TestSqlUpdateRows:
             NewtSQL.sql_insert_row(db_path, "test", data)
 
             # Select with no data
-            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
-            print("select_result:", select_result)
-            assert len(select_result) == 3
+            select_result_1 = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            print("select_result_1:", select_result_1)
+            assert len(select_result_1) == 3
+            assert select_result_1[0]["id"] == 1
+            assert select_result_1[0]["name"] == "Alice"
+            assert select_result_1[0]["age"] == 30
+            assert select_result_1[1]["id"] == 2
+            assert select_result_1[1]["name"] == "Bob"
+            assert select_result_1[1]["age"] == 35
+            assert select_result_1[2]["id"] == 3
+            assert select_result_1[2]["name"] == "Charlie"
+            assert select_result_1[2]["age"] == 40
+
 
             # Update row
             update_result = NewtSQL.sql_update_rows(
@@ -549,10 +662,18 @@ class TestSqlUpdateRows:
             assert update_result == 1
 
             # Verify update
-            select_result_1 = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test WHERE id = 1")
-            print("select_result_1:", select_result_1)
-            assert select_result_1[0]["age"] == 31
-            assert len(select_result_1) == 1
+            select_result_2 = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            print("select_result_2:", select_result_2)
+            assert len(select_result_2) == 3
+            assert select_result_2[0]["id"] == 1
+            assert select_result_2[0]["name"] == "Alice"
+            assert select_result_2[0]["age"] == 31
+            assert select_result_2[1]["id"] == 2
+            assert select_result_2[1]["name"] == "Bob"
+            assert select_result_2[1]["age"] == 35
+            assert select_result_2[2]["id"] == 3
+            assert select_result_2[2]["name"] == "Charlie"
+            assert select_result_2[2]["age"] == 40
 
         finally:
             NewtSQL.db_delayed_close(db_path)
@@ -561,6 +682,12 @@ class TestSqlUpdateRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\nselect_result_1: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]\n" in captured.out
+        assert "\nupdate_result: 1\n" in captured.out
+        assert "\nselect_result_2: [{'id': 1, 'name': 'Alice', 'age': 31}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sql_update_rows_multiple_columns(self, capsys):
@@ -582,22 +709,28 @@ class TestSqlUpdateRows:
             NewtSQL.sql_insert_row(db_path, "test", data)
 
             # Update multiple columns
-            result = NewtSQL.sql_update_rows(
+            update_result = NewtSQL.sql_update_rows(
                 db_path, "test",
                 {"name": "Alice Updated", "age": 31},
                 "id = ?",
                 (1,)
             )
-            print("result:", result)
-            assert result == 1
+            print("update_result:", update_result)
+            assert update_result == 1
 
             # Verify update
-            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test WHERE id = 1")
+            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
             print("select_result:", select_result)
-            assert select_result[0]["age"] == 31
+            assert len(select_result) == 3
+            assert select_result[0]["id"] == 1
             assert select_result[0]["name"] == "Alice Updated"
-            assert len(select_result) == 1
-
+            assert select_result[0]["age"] == 31
+            assert select_result[1]["id"] == 2
+            assert select_result[1]["name"] == "Bob"
+            assert select_result[1]["age"] == 35
+            assert select_result[2]["id"] == 3
+            assert select_result[2]["name"] == "Charlie"
+            assert select_result[2]["age"] == 40
         finally:
             NewtSQL.db_delayed_close(db_path)
             if os.path.exists(db_path):
@@ -605,6 +738,11 @@ class TestSqlUpdateRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\nupdate_result: 1\n" in captured.out
+        assert "\nselect_result: [{'id': 1, 'name': 'Alice Updated', 'age': 31}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_sql_update_rows_no_match(self, capsys):
@@ -636,6 +774,9 @@ class TestSqlUpdateRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_sql_update_rows_empty_data(self, capsys):
         """ Test update with empty data. """
@@ -658,6 +799,11 @@ class TestSqlUpdateRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input : is_empty > Newt.sql.sql_update_rows : set_data\n" in captured.out
+        assert "\nValue must be non-empty\n" in captured.out
+        assert "\nValue: {}\n" in captured.out
+
 
     def test_sql_update_rows_invalid_input(self, capsys):
         """ Test update with invalid input. """
@@ -676,6 +822,13 @@ class TestSqlUpdateRows:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_execute_query : database\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
 
 
 class TestExportSqlQueryToCsv:
@@ -707,6 +860,7 @@ class TestExportSqlQueryToCsv:
             print("result:", result)
             assert result is True
             assert os.path.exists(csv_path)
+            print()
 
             # Verify CSV content
             csv_data = NewtFiles.read_csv_from_file(csv_path)
@@ -725,6 +879,14 @@ class TestExportSqlQueryToCsv:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
+        assert "\n(rows=3, mode=write, delimiter=';')\n" in captured.out
+        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
+        assert "\n(rows=3, delimiter=';')\n" in captured.out
+        assert "\ncsv_data: [['id', 'name', 'age'], ['1', 'Alice', '30'], ['2', 'Bob', '25']]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_export_sql_query_to_csv_empty_result(self, capsys):
@@ -760,6 +922,10 @@ class TestExportSqlQueryToCsv:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.sql.export_sql_query_to_csv : result\n" in captured.out
+        assert "\nEmpty result: []\n" in captured.out
+
 
     def test_export_sql_query_to_csv_custom_delimiter(self, capsys):
         """ Test export with custom delimiter. """
@@ -785,6 +951,7 @@ class TestExportSqlQueryToCsv:
             )
             print("result:", result)
             assert result is True
+            print()
 
             # Verify CSV content
             csv_data = NewtFiles.read_csv_from_file(csv_path, ",")
@@ -799,6 +966,14 @@ class TestExportSqlQueryToCsv:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
+        assert "\n(rows=2, mode=write, delimiter=',')\n" in captured.out
+        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
+        assert "\n(rows=2, delimiter=',')\n" in captured.out
+        assert "\ncsv_data: [['id', 'name'], ['1', 'Alice']]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_export_sql_query_to_csv_with_params(self, capsys):
@@ -826,6 +1001,7 @@ class TestExportSqlQueryToCsv:
             )
             print("result:", result)
             assert result is True
+            print()
 
             # Verify CSV content
             csv_data = NewtFiles.read_csv_from_file(csv_path)
@@ -840,6 +1016,14 @@ class TestExportSqlQueryToCsv:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
+        assert "\n(rows=2, mode=write, delimiter=';')\n" in captured.out
+        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
+        assert "\n(rows=2, delimiter=';')\n" in captured.out
+        assert "\ncsv_data: [['id', 'name'], ['1', 'Alice']]\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_export_sql_query_to_csv_invalid_input(self, capsys):
@@ -867,3 +1051,12 @@ class TestExportSqlQueryToCsv:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv : database\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv : query\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        assert "\nValue: 456\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
