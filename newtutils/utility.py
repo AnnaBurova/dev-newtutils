@@ -108,7 +108,7 @@ def sorting_list(
     """
 
     if not NewtCons.validate_input(
-        input_list, (list, tuple), stop=stop,
+        input_list, (list, tuple), check_non_empty=True, stop=stop,
         location="Newt.utility.sorting_list : input_list"
     ):
         return []
@@ -184,12 +184,9 @@ def sorting_dict_by_keys(
             with `stop=True` (if configured that way).
     """
 
-    if not data:
-        return []
-
     # Validate that data is a sequence
     if not NewtCons.validate_input(
-        data, (list, tuple), stop=stop,
+        data, (list, tuple), check_non_empty=True, stop=stop,
         location="Newt.utility.sorting_dict_by_keys : data"
     ):
         return []
