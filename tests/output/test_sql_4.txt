@@ -1,15 +1,16 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- python.exe
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
+plugins: cov-7.0.0
 collecting ... collected 28 items
 
 test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db 
 START=======================================
 =====captured.out=====
 Function: test_db_delayed_close_existing_db
---------------------------------------------
+============================================
 
 =====captured.err=====
 (no stderr captured)
@@ -19,7 +20,7 @@ test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db
 START=======================================
 =====captured.out=====
 Function: test_db_delayed_close_nonexistent_db
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
@@ -34,7 +35,7 @@ test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_create_table
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_create_table
---------------------------------------------
+============================================
 result: -1
 
 =====captured.err=====
@@ -45,7 +46,7 @@ test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_insert
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_insert
---------------------------------------------
+============================================
 result: 1
 
 =====captured.err=====
@@ -56,7 +57,7 @@ test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_select
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_select
---------------------------------------------
+============================================
 result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
 
 =====captured.err=====
@@ -67,7 +68,7 @@ test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_update
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_update
---------------------------------------------
+============================================
 update_result: 1
 select_result: [{'id': 1, 'name': 'Alice Updated'}]
 
@@ -79,7 +80,7 @@ test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_delete
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_delete
---------------------------------------------
+============================================
 delete_result: 1
 select_result: [{'id': 2, 'name': 'Bob'}]
 
@@ -91,7 +92,7 @@ test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_executemany
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_executemany
---------------------------------------------
+============================================
 result: 3
 select_result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]
 
@@ -103,7 +104,7 @@ test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_invalid_input
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_invalid_input
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
 ::: ERROR :::
@@ -125,7 +126,7 @@ test_sql.py::TestSqlExecuteQuery::test_sql_execute_query_creates_directory
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_creates_directory
---------------------------------------------
+============================================
 result: -1
 
 =====captured.err=====
@@ -136,7 +137,7 @@ test_sql.py::TestSqlSelectRows::test_sql_select_rows_basic
 START=======================================
 =====captured.out=====
 Function: test_sql_select_rows_basic
---------------------------------------------
+============================================
 result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
 
 =====captured.err=====
@@ -147,7 +148,7 @@ test_sql.py::TestSqlSelectRows::test_sql_select_rows_with_params
 START=======================================
 =====captured.out=====
 Function: test_sql_select_rows_with_params
---------------------------------------------
+============================================
 result: [{'id': 1, 'name': 'Alice'}]
 
 =====captured.err=====
@@ -158,7 +159,7 @@ test_sql.py::TestSqlSelectRows::test_sql_select_rows_empty_result
 START=======================================
 =====captured.out=====
 Function: test_sql_select_rows_empty_result
---------------------------------------------
+============================================
 result: []
 
 =====captured.err=====
@@ -169,7 +170,7 @@ test_sql.py::TestSqlSelectRows::test_sql_select_rows_invalid_query
 START=======================================
 =====captured.out=====
 Function: test_sql_select_rows_invalid_query
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.sql.sql_execute_query
 ::: ERROR :::
@@ -184,7 +185,7 @@ test_sql.py::TestSqlInsertRow::test_sql_insert_row_single_dict
 START=======================================
 =====captured.out=====
 Function: test_sql_insert_row_single_dict
---------------------------------------------
+============================================
 data: {'id': 1, 'name': 'Alice', 'age': 30}
 insert_result: 1
 select_result: [{'id': 1, 'name': 'Alice', 'age': 30}]
@@ -197,7 +198,7 @@ test_sql.py::TestSqlInsertRow::test_sql_insert_row_multiple_dicts
 START=======================================
 =====captured.out=====
 Function: test_sql_insert_row_multiple_dicts
---------------------------------------------
+============================================
 data: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]
 insert_result: 3
 select_result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]
@@ -210,7 +211,7 @@ test_sql.py::TestSqlInsertRow::test_sql_insert_row_empty_data
 START=======================================
 =====captured.out=====
 Function: test_sql_insert_row_empty_data
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.sql.sql_insert_row
 ::: ERROR :::
@@ -226,7 +227,7 @@ test_sql.py::TestSqlInsertRow::test_sql_insert_row_invalid_input
 START=======================================
 =====captured.out=====
 Function: test_sql_insert_row_invalid_input
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
 ::: ERROR :::
@@ -263,7 +264,7 @@ test_sql.py::TestSqlUpdateRows::test_sql_update_rows_basic
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_basic
---------------------------------------------
+============================================
 data: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
 select_result: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
 update_result: 1
@@ -277,7 +278,7 @@ test_sql.py::TestSqlUpdateRows::test_sql_update_rows_multiple_columns
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_multiple_columns
---------------------------------------------
+============================================
 data: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
 result: 1
 select_result: [{'id': 1, 'name': 'Alice Updated', 'age': 31}]
@@ -290,7 +291,7 @@ test_sql.py::TestSqlUpdateRows::test_sql_update_rows_no_match
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_no_match
---------------------------------------------
+============================================
 result: 0
 
 =====captured.err=====
@@ -301,7 +302,7 @@ test_sql.py::TestSqlUpdateRows::test_sql_update_rows_empty_data
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_empty_data
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.sql.sql_update_rows
 ::: ERROR :::
@@ -317,7 +318,7 @@ test_sql.py::TestSqlUpdateRows::test_sql_update_rows_invalid_input
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_invalid_input
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
 ::: ERROR :::
@@ -340,7 +341,7 @@ test_sql.py::TestExportSqlQueryToCsv::test_export_sql_query_to_csv_basic
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_basic
---------------------------------------------
+============================================
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=4, mode=write, delimiter=';')
@@ -358,7 +359,7 @@ test_sql.py::TestExportSqlQueryToCsv::test_export_sql_query_to_csv_empty_result
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_empty_result
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.sql.export_sql_query_to_csv
 ::: ERROR :::
@@ -374,7 +375,7 @@ test_sql.py::TestExportSqlQueryToCsv::test_export_sql_query_to_csv_custom_delimi
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_custom_delimiter
---------------------------------------------
+============================================
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=3, mode=write, delimiter=',')
@@ -392,7 +393,7 @@ test_sql.py::TestExportSqlQueryToCsv::test_export_sql_query_to_csv_with_params
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_with_params
---------------------------------------------
+============================================
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=3, mode=write, delimiter=';')
@@ -410,7 +411,7 @@ test_sql.py::TestExportSqlQueryToCsv::test_export_sql_query_to_csv_invalid_input
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_invalid_input
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv.database
 ::: ERROR :::

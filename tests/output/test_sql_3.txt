@@ -8,7 +8,7 @@ test_sql.py
 START=======================================
 =====captured.out=====
 Function: test_db_delayed_close_existing_db
---------------------------------------------
+============================================
 
 =====captured.err=====
 (no stderr captured)
@@ -17,7 +17,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_db_delayed_close_nonexistent_db
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.files._check_file_exists
 ::: ERROR :::
@@ -31,7 +31,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_create_table
---------------------------------------------
+============================================
 result: -1
 
 =====captured.err=====
@@ -41,7 +41,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_insert
---------------------------------------------
+============================================
 result: 1
 
 =====captured.err=====
@@ -51,7 +51,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_select
---------------------------------------------
+============================================
 result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
 
 =====captured.err=====
@@ -61,7 +61,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_update
---------------------------------------------
+============================================
 update_result: 1
 select_result: [{'id': 1, 'name': 'Alice Updated'}]
 
@@ -72,7 +72,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_delete
---------------------------------------------
+============================================
 delete_result: 1
 select_result: [{'id': 2, 'name': 'Bob'}]
 
@@ -83,7 +83,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_executemany
---------------------------------------------
+============================================
 result: 3
 select_result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]
 
@@ -94,7 +94,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_invalid_input
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
 ::: ERROR :::
@@ -115,7 +115,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_execute_query_creates_directory
---------------------------------------------
+============================================
 result: -1
 
 =====captured.err=====
@@ -125,7 +125,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_select_rows_basic
---------------------------------------------
+============================================
 result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
 
 =====captured.err=====
@@ -135,7 +135,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_select_rows_with_params
---------------------------------------------
+============================================
 result: [{'id': 1, 'name': 'Alice'}]
 
 =====captured.err=====
@@ -145,7 +145,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_select_rows_empty_result
---------------------------------------------
+============================================
 result: []
 
 =====captured.err=====
@@ -155,7 +155,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_select_rows_invalid_query
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.sql.sql_execute_query
 ::: ERROR :::
@@ -169,7 +169,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_insert_row_single_dict
---------------------------------------------
+============================================
 data: {'id': 1, 'name': 'Alice', 'age': 30}
 insert_result: 1
 select_result: [{'id': 1, 'name': 'Alice', 'age': 30}]
@@ -181,7 +181,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_insert_row_multiple_dicts
---------------------------------------------
+============================================
 data: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]
 insert_result: 3
 select_result: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]
@@ -193,7 +193,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_insert_row_empty_data
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.sql.sql_insert_row
 ::: ERROR :::
@@ -208,7 +208,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_insert_row_invalid_input
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
 ::: ERROR :::
@@ -244,7 +244,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_basic
---------------------------------------------
+============================================
 data: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
 select_result: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
 update_result: 1
@@ -257,7 +257,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_multiple_columns
---------------------------------------------
+============================================
 data: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
 result: 1
 select_result: [{'id': 1, 'name': 'Alice Updated', 'age': 31}]
@@ -269,7 +269,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_no_match
---------------------------------------------
+============================================
 result: 0
 
 =====captured.err=====
@@ -279,7 +279,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_empty_data
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.sql.sql_update_rows
 ::: ERROR :::
@@ -294,7 +294,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_sql_update_rows_invalid_input
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
 ::: ERROR :::
@@ -316,7 +316,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_basic
---------------------------------------------
+============================================
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=4, mode=write, delimiter=';')
@@ -333,7 +333,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_empty_result
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.sql.export_sql_query_to_csv
 ::: ERROR :::
@@ -348,7 +348,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_custom_delimiter
---------------------------------------------
+============================================
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=3, mode=write, delimiter=',')
@@ -365,7 +365,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_with_params
---------------------------------------------
+============================================
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=3, mode=write, delimiter=';')
@@ -382,7 +382,7 @@ END=========================================
 START=======================================
 =====captured.out=====
 Function: test_export_sql_query_to_csv_invalid_input
---------------------------------------------
+============================================
 [1m [31m
 Location: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv.database
 ::: ERROR :::
