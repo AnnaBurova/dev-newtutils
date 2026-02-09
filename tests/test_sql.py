@@ -2,12 +2,12 @@
 Comprehensive unit tests for newtutils.sql module.
 
 Tests cover:
-- Database delayed close (db_delayed_close)
-- SQL query execution (sql_execute_query)
-- SQL select operations (sql_select_rows)
-- SQL insert operations (sql_insert_row)
-- SQL update operations (sql_update_rows)
-- CSV export (export_sql_query_to_csv)
+TestDbDelayedClose
+TestSqlExecuteQuery
+TestSqlSelectRows
+TestSqlInsertRow
+TestSqlUpdateRows
+TestExportSqlQueryToCsv
 """
 
 import pytest
@@ -61,10 +61,11 @@ def print_my_captured(captured):
 
 
 class TestDbDelayedClose:
-    """Tests for db_delayed_close function."""
+    """ Tests for db_delayed_close function. """
+
 
     def test_db_delayed_close_existing_db(self, capsys):
-        """Test closing an existing database."""
+        """ Test closing an existing database. """
         print_my_func_name("test_db_delayed_close_existing_db")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -83,8 +84,9 @@ class TestDbDelayedClose:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_db_delayed_close_nonexistent_db(self, capsys):
-        """Test closing a non-existent database returns True."""
+        """ Test closing a non-existent database returns True. """
         print_my_func_name("test_db_delayed_close_nonexistent_db")
 
         result = NewtSQL.db_delayed_close("/nonexistent/database.db")
@@ -95,10 +97,11 @@ class TestDbDelayedClose:
 
 
 class TestSqlExecuteQuery:
-    """Tests for sql_execute_query function."""
+    """ Tests for sql_execute_query function. """
+
 
     def test_sql_execute_query_create_table(self, capsys):
-        """Test creating a table."""
+        """ Test creating a table. """
         print_my_func_name("test_sql_execute_query_create_table")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -120,8 +123,9 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_execute_query_insert(self, capsys):
-        """Test INSERT query."""
+        """ Test INSERT query. """
         print_my_func_name("test_sql_execute_query_insert")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -147,8 +151,9 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_execute_query_select(self, capsys):
-        """Test SELECT query."""
+        """ Test SELECT query. """
         print_my_func_name("test_sql_execute_query_select")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -177,8 +182,9 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_execute_query_update(self, capsys):
-        """Test UPDATE query."""
+        """ Test UPDATE query. """
         print_my_func_name("test_sql_execute_query_update")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -212,8 +218,9 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_execute_query_delete(self, capsys):
-        """Test DELETE query."""
+        """ Test DELETE query. """
         print_my_func_name("test_sql_execute_query_delete")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -247,8 +254,9 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_execute_query_executemany(self, capsys):
-        """Test executemany with list of tuples."""
+        """ Test executemany with list of tuples. """
         print_my_func_name("test_sql_execute_query_executemany")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -280,8 +288,9 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_execute_query_invalid_input(self, capsys):
-        """Test with invalid input."""
+        """ Test with invalid input. """
         print_my_func_name("test_sql_execute_query_invalid_input")
 
         result = NewtSQL.sql_execute_query(123, "SELECT 1")  # type: ignore
@@ -293,8 +302,9 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_execute_query_creates_directory(self, capsys):
-        """Test that sql_execute_query creates parent directories."""
+        """ Test that sql_execute_query creates parent directories. """
         print_my_func_name("test_sql_execute_query_creates_directory")
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -310,10 +320,11 @@ class TestSqlExecuteQuery:
 
 
 class TestSqlSelectRows:
-    """Tests for sql_select_rows function."""
+    """ Tests for sql_select_rows function. """
+
 
     def test_sql_select_rows_basic(self, capsys):
-        """Test basic select operation."""
+        """ Test basic select operation. """
         print_my_func_name("test_sql_select_rows_basic")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -339,8 +350,9 @@ class TestSqlSelectRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_select_rows_with_params(self, capsys):
-        """Test select with parameters."""
+        """ Test select with parameters. """
         print_my_func_name("test_sql_select_rows_with_params")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -366,8 +378,9 @@ class TestSqlSelectRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_select_rows_empty_result(self, capsys):
-        """Test select with no results."""
+        """ Test select with no results. """
         print_my_func_name("test_sql_select_rows_empty_result")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -390,8 +403,9 @@ class TestSqlSelectRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_select_rows_invalid_query(self, capsys):
-        """Test select with invalid query."""
+        """ Test select with invalid query. """
         print_my_func_name("test_sql_select_rows_invalid_query")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -412,10 +426,11 @@ class TestSqlSelectRows:
 
 
 class TestSqlInsertRow:
-    """Tests for sql_insert_row function."""
+    """ Tests for sql_insert_row function. """
+
 
     def test_sql_insert_row_single_dict(self, capsys):
-        """Test inserting a single row from dict."""
+        """ Test inserting a single row from dict. """
         print_my_func_name("test_sql_insert_row_single_dict")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -446,8 +461,9 @@ class TestSqlInsertRow:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_insert_row_multiple_dicts(self, capsys):
-        """Test inserting multiple rows from list of dicts."""
+        """ Test inserting multiple rows from list of dicts. """
         print_my_func_name("test_sql_insert_row_multiple_dicts")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -482,8 +498,9 @@ class TestSqlInsertRow:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_insert_row_empty_data(self, capsys):
-        """Test inserting with empty data."""
+        """ Test inserting with empty data. """
         print_my_func_name("test_sql_insert_row_empty_data")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -503,8 +520,9 @@ class TestSqlInsertRow:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_insert_row_invalid_input(self, capsys):
-        """Test inserting with invalid input."""
+        """ Test inserting with invalid input. """
         print_my_func_name("test_sql_insert_row_invalid_input")
 
         result_1 = NewtSQL.sql_insert_row(123, "test", {"id": 1})  # type: ignore
@@ -524,10 +542,11 @@ class TestSqlInsertRow:
 
 
 class TestSqlUpdateRows:
-    """Tests for sql_update_rows function."""
+    """ Tests for sql_update_rows function. """
+
 
     def test_sql_update_rows_basic(self, capsys):
-        """Test basic update operation."""
+        """ Test basic update operation. """
         print_my_func_name("test_sql_update_rows_basic")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -574,8 +593,9 @@ class TestSqlUpdateRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_update_rows_multiple_columns(self, capsys):
-        """Test updating multiple columns."""
+        """ Test updating multiple columns. """
         print_my_func_name("test_sql_update_rows_multiple_columns")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -617,8 +637,9 @@ class TestSqlUpdateRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_update_rows_no_match(self, capsys):
-        """Test update with no matching rows."""
+        """ Test update with no matching rows. """
         print_my_func_name("test_sql_update_rows_no_match")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -646,8 +667,9 @@ class TestSqlUpdateRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_update_rows_empty_data(self, capsys):
-        """Test update with empty data."""
+        """ Test update with empty data. """
         print_my_func_name("test_sql_update_rows_empty_data")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -667,8 +689,9 @@ class TestSqlUpdateRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_sql_update_rows_invalid_input(self, capsys):
-        """Test update with invalid input."""
+        """ Test update with invalid input. """
         print_my_func_name("test_sql_update_rows_invalid_input")
 
         result = NewtSQL.sql_update_rows(
@@ -686,10 +709,11 @@ class TestSqlUpdateRows:
 
 
 class TestExportSqlQueryToCsv:
-    """Tests for export_sql_query_to_csv function."""
+    """ Tests for export_sql_query_to_csv function. """
+
 
     def test_export_sql_query_to_csv_basic(self, capsys):
-        """Test basic CSV export."""
+        """ Test basic CSV export. """
         print_my_func_name("test_export_sql_query_to_csv_basic")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -731,8 +755,9 @@ class TestExportSqlQueryToCsv:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_export_sql_query_to_csv_empty_result(self, capsys):
-        """Test export with empty query result."""
+        """ Test export with empty query result. """
         print_my_func_name("test_export_sql_query_to_csv_empty_result")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -764,8 +789,9 @@ class TestExportSqlQueryToCsv:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_export_sql_query_to_csv_custom_delimiter(self, capsys):
-        """Test export with custom delimiter."""
+        """ Test export with custom delimiter. """
         print_my_func_name("test_export_sql_query_to_csv_custom_delimiter")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -803,8 +829,9 @@ class TestExportSqlQueryToCsv:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_export_sql_query_to_csv_with_params(self, capsys):
-        """Test export with query parameters."""
+        """ Test export with query parameters. """
         print_my_func_name("test_export_sql_query_to_csv_with_params")
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
@@ -843,8 +870,9 @@ class TestExportSqlQueryToCsv:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+
     def test_export_sql_query_to_csv_invalid_input(self, capsys):
-        """Test export with invalid input."""
+        """ Test export with invalid input. """
         print_my_func_name("test_export_sql_query_to_csv_invalid_input")
 
         result = NewtSQL.export_sql_query_to_csv(
