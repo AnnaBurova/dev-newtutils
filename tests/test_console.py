@@ -447,8 +447,9 @@ class TestRetryPause:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console._retry_pause : seconds < 1\n" in captured.out
-        assert "\nInvalid pause duration: 0\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input : is_empty\n" in captured.out
+        assert "\nValue must be non-empty\n" in captured.out
+        assert "\nValue: 0\n" in captured.out
         assert "\nRetrying in 5 seconds...\n" in captured.out
         assert "\nTime left: 5s\n" in captured.out
         assert "\nTime left: 4s\n" in captured.out
