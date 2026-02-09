@@ -78,14 +78,14 @@ __all__ = [
     "read_json_from_file", "save_json_to_file",
     "read_csv_from_file", "save_csv_to_file",
     "setup_logging", "cleanup_logging",
-    # SQL
+    # SQL ----------
     "db_delayed_close",
     "sql_execute_query",
     "sql_select_rows",
     "sql_insert_row",
     "sql_update_rows",
     "export_sql_query_to_csv",
-    # Network
+    # Network ----------
     "fetch_data_from_url",
     "download_file_from_url",
 ]
