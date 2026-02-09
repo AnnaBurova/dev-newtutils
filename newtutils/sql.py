@@ -138,24 +138,14 @@ def sql_execute_query(
 
     normalized_query = query.strip()
 
-    if not normalized_query:
-        NewtCons.error_msg(
-            "SQL query is empty after stripping whitespace",
-            location="Newt.sql.sql_execute_query : normalized_query",
-            stop=False,
-        )
-        return None
-
     # Very basic multiple-statement protection
     # Reject queries with more than one non-empty segment separated by ';'
     parts_query = [p.strip() for p in normalized_query.split(";") if p.strip()]
     if len(parts_query) != 1:
         NewtCons.error_msg(
             "SQL query must contain exactly one statement",
-            location="Newt.sql.sql_execute_query : parts_query",
-            stop=False,
+            location="Newt.sql.sql_execute_query : parts_query"
         )
-        return None
 
     lowered_query = normalized_query.lower()
     dangerous_tokens = (
@@ -171,10 +161,8 @@ def sql_execute_query(
         if token in f" {lowered_query} ":
             NewtCons.error_msg(
                 f"SQL query contains potentially dangerous token: {token.strip()}",
-                location="Newt.sql.sql_execute_query : dangerous_tokens",
-                stop=False,
+                location="Newt.sql.sql_execute_query : dangerous_tokens"
             )
-            return None
 
     # EXECUTEMANY - list of tuples
     if isinstance(params, list):
@@ -186,7 +174,6 @@ def sql_execute_query(
                 f"params: {params}",
                 location="Newt.sql.sql_execute_query : executemany"
             )
-            return None
 
     NewtFiles.ensure_dir_exists(database)
 
@@ -202,16 +189,19 @@ def sql_execute_query(
                 if isinstance(params, list):
                     cursor.executemany(query, params)
 
-                # Normal single execution
+                # Normal single execution with params as tuple
                 else:
                     cursor.execute(query, params)
+
+            # No parameters
             else:
                 cursor.execute(query)
 
+            # DQL - SELECT
             if query.strip().lower().startswith("select"):
                 result = [dict(row) for row in cursor.fetchall()]
 
-            # DML/DLL
+            # DML - INSERT, UPDATE, DELETE, etc.
             else:
                 conn.commit()
                 result = cursor.rowcount
@@ -223,7 +213,8 @@ def sql_execute_query(
             f"Exception: {e} (found? write test!)",  # TODO
             location="Newt.sql.sql_execute_query : Exception"
         )
-        return None
+
+    return None
 
 
 def sql_select_rows(
@@ -287,13 +278,10 @@ def sql_insert_row(
         location="Newt.sql.sql_insert_row : table"
     )
 
-    if not data:
-        NewtCons.error_msg(
-            f"Empty data: {data}",
-            location="Newt.sql.sql_insert_row : not data",
-            stop=False
-        )
-        return 0
+    NewtCons.validate_input(
+        data, (dict, list), check_non_empty=True,
+        location="Newt.sql.sql_insert_row : data"
+    )
 
     # Normalize input to list[dict]
     if isinstance(data, dict):
@@ -337,6 +325,8 @@ def sql_insert_row(
         location="Newt.sql.sql_insert_row : result"
     )
 
+    return 0  # Default return value if no rows are inserted
+
 
 def sql_update_rows(
         database: str,
@@ -374,17 +364,14 @@ def sql_update_rows(
     )
 
     NewtCons.validate_input(
+        set_data, dict, check_non_empty=True,
+        location="Newt.sql.sql_update_rows : set_data"
+    )
+
+    NewtCons.validate_input(
         where_condition, str, check_non_empty=True,
         location="Newt.sql.sql_update_rows : where_condition"
     )
-
-    if not set_data:
-        NewtCons.error_msg(
-            f"Empty data: {set_data}",
-            location="Newt.sql.sql_update_rows : set_data",
-            stop=False
-        )
-        return 0
 
     set_clause = ", ".join([f"{k} = ?" for k in set_data])
     params = tuple(set_data.values()) + (where_params or ())
@@ -399,6 +386,8 @@ def sql_update_rows(
         result, int,
         location="Newt.sql.sql_update_rows : result"
     )
+
+    return 0  # Default return value if no rows are updated
 
 
 def export_sql_query_to_csv(
