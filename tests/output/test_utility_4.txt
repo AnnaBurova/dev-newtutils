@@ -47,6 +47,12 @@ START=======================================
 =====captured.out=====
 Function: test_sorting_list_empty
 ============================================
+[1m [31m
+Location: Newt.console.validate_input : is_empty
+::: ERROR :::
+Value must be non-empty
+Value: []
+[0m
 []
 
 =====captured.err=====
@@ -135,7 +141,7 @@ not a list
 [1m [31m
 Location: Newt.console.validate_input > Newt.utility.sorting_list : input_list
 ::: ERROR :::
-Expected <class 'list'>, got <class 'str'>
+Expected (<class 'list'>, <class 'tuple'>), got <class 'str'>
 Value: not a list
 [0m
 []
@@ -245,6 +251,12 @@ START=======================================
 =====captured.out=====
 Function: test_sorting_dict_empty_list
 ============================================
+[1m [31m
+Location: Newt.console.validate_input : is_empty
+::: ERROR :::
+Value must be non-empty
+Value: []
+[0m
 []
 
 =====captured.err=====
@@ -296,13 +308,13 @@ not a list
 [1m [31m
 Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data
 ::: ERROR :::
-Expected <class 'list'>, got <class 'str'>
+Expected (<class 'list'>, <class 'tuple'>), got <class 'str'>
 Value: not a list
 [0m
 [1m [31m
 Location: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data
 ::: ERROR :::
-Expected <class 'list'>, got <class 'str'>
+Expected (<class 'list'>, <class 'tuple'>), got <class 'str'>
 Value: not a list
 [0m
 []

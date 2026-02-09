@@ -82,15 +82,17 @@ class TestSortingList:
         """ Test sorting_list returns empty list for empty input. """
         print_my_func_name()
 
-        result = NewtUtil.sorting_list([])
+        result = NewtUtil.sorting_list([], stop=False)
         print(result)
         assert result == []
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input : is_empty\n" in captured.out
+        assert "\nValue must be non-empty\n" in captured.out
+        assert "\nValue: []\n" in captured.out
 
 
     def test_sorting_list_single_element(self, capsys):
@@ -197,7 +199,7 @@ class TestSortingList:
 
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_list : input_list\n" in captured.out
-        assert "\nExpected <class 'list'>, got <class 'str'>\n" in captured.out
+        assert "\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n" in captured.out
         assert "\nValue: not a list\n" in captured.out
 
 
@@ -389,15 +391,17 @@ class TestSortingDictByKeys:
         """ Test sorting_dict_by_keys returns empty list for empty input. """
         print_my_func_name()
 
-        result = NewtUtil.sorting_dict_by_keys([])
+        result = NewtUtil.sorting_dict_by_keys([], stop=False)
         print(result)
         assert result == []
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input : is_empty\n" in captured.out
+        assert "\nValue must be non-empty\n" in captured.out
+        assert "\nValue: []\n" in captured.out
 
 
     def test_sorting_dict_no_keys(self, capsys):
@@ -502,7 +506,7 @@ class TestSortingDictByKeys:
 
         assert "\n::: ERROR :::\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data\n" in captured.out
-        assert "\nExpected <class 'list'>, got <class 'str'>\n" in captured.out
+        assert "\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n" in captured.out
         assert "\nValue: not a list\n" in captured.out
         # Expected absence of result
         assert "\nThis line will not be printed\n" not in captured.out
