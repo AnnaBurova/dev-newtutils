@@ -44,6 +44,7 @@ from __future__ import annotations
 import sqlite3
 import gc
 import newtutils.console as NewtCons
+import newtutils.utility as NewtUtil
 import newtutils.files as NewtFiles
 
 
@@ -292,21 +293,20 @@ def sql_insert_row(
         location="Newt.sql.sql_insert_row : data"
     )
 
+    # Validate that all dictionaries have the same keys and length
+    expected_keys = set(data[0].keys())
+    if not all(NewtUtil.check_dict_keys(
+        row, expected_keys, stop=False
+    ) for row in data):
+        NewtCons.error_msg(
+            "All dictionaries must have identical keys and same length",
+            f"Expected keys: {expected_keys}",
+            location="Newt.sql.sql_insert_row : expected_keys"
+        )
+
     # Build SQL template
     columns = ", ".join(data[0].keys())
     placeholders = ", ".join(["?"] * len(data[0]))
-
-    # Validate that all dictionaries have the same keys and length
-    first_keys = set(data[0].keys())
-    for row in data:
-        if set(row.keys()) != first_keys or len(row) != len(data[0]):
-            NewtCons.error_msg(
-                "All dictionaries must have identical keys and same length",
-                f"Expected keys: {first_keys}, got: {set(row.keys())}",
-                location="Newt.sql.sql_insert_row : first_keys",
-                stop=False
-            )
-            return 0
 
     params = [tuple(row.values()) for row in data]
 
