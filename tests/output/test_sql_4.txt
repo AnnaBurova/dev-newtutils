@@ -22,7 +22,7 @@ START=======================================
 Function: test_db_delayed_close_nonexistent_db
 ============================================
 [1m [31m
-Location: Newt.files._check_file_exists
+Location: Newt.files.check_file_exists : logging
 ::: ERROR :::
 File not found: /nonexistent/database.db
 [0m
@@ -106,13 +106,13 @@ START=======================================
 Function: test_sql_execute_query_invalid_input
 ============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
+Location: Newt.console.validate_input > Newt.sql.sql_execute_query : database
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
 [1m [31m
-Location: Newt.console.validate_input > Newt.sql.sql_execute_query.query
+Location: Newt.console.validate_input > Newt.sql.sql_execute_query : query
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 456
@@ -172,9 +172,15 @@ START=======================================
 Function: test_sql_select_rows_invalid_query
 ============================================
 [1m [31m
-Location: Newt.sql.sql_execute_query
+Location: Newt.sql.sql_execute_query : OperationalError in Syntax
 ::: ERROR :::
-Exception: near "INVALID": syntax error
+Syntax error: near "INVALID": syntax error
+[0m
+[1m [31m
+Location: Newt.console.validate_input > Newt.sql.sql_select_rows : result
+::: ERROR :::
+Expected <class 'list'>, got <class 'NoneType'>
+Value: None
 [0m
 
 =====captured.err=====
@@ -213,9 +219,10 @@ START=======================================
 Function: test_sql_insert_row_empty_data
 ============================================
 [1m [31m
-Location: Newt.sql.sql_insert_row
+Location: Newt.console.validate_input : is_empty > Newt.sql.sql_insert_row : data
 ::: ERROR :::
-Empty data: {}
+Value must be non-empty
+Value: {}
 [0m
 result: 0
 
@@ -229,29 +236,23 @@ START=======================================
 Function: test_sql_insert_row_invalid_input
 ============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
+Location: Newt.console.validate_input > Newt.sql.sql_execute_query : database
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
+
 [1m [31m
-Location: Newt.console.validate_input > Newt.sql.sql_insert_row.result
-::: ERROR :::
-Expected <class 'int'>, got <class 'NoneType'>
-Value: None
-[0m
-result_1: 0
-[1m [31m
-Location: Newt.console.validate_input > Newt.sql.sql_insert_row.table
+Location: Newt.console.validate_input > Newt.sql.sql_insert_row : table
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 456
 [0m
-result: 0
+
 [1m [31m
-Location: Newt.console.validate_input > Newt.sql.sql_insert_row.data
+Location: Newt.console.validate_input > Newt.sql.sql_insert_row : data
 ::: ERROR :::
-Expected <class 'list'>, got <class 'str'>
+Expected (<class 'dict'>, <class 'list'>), got <class 'str'>
 Value: not a dict
 [0m
 result: 0
@@ -266,9 +267,9 @@ START=======================================
 Function: test_sql_update_rows_basic
 ============================================
 data: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
-select_result: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
+select_result_1: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
 update_result: 1
-select_result_1: [{'id': 1, 'name': 'Alice', 'age': 31}]
+select_result_2: [{'id': 1, 'name': 'Alice', 'age': 31}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
 
 =====captured.err=====
 (no stderr captured)
@@ -280,8 +281,8 @@ START=======================================
 Function: test_sql_update_rows_multiple_columns
 ============================================
 data: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
-result: 1
-select_result: [{'id': 1, 'name': 'Alice Updated', 'age': 31}]
+update_result: 1
+select_result: [{'id': 1, 'name': 'Alice Updated', 'age': 31}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
 
 =====captured.err=====
 (no stderr captured)
@@ -304,9 +305,10 @@ START=======================================
 Function: test_sql_update_rows_empty_data
 ============================================
 [1m [31m
-Location: Newt.sql.sql_update_rows
+Location: Newt.console.validate_input : is_empty > Newt.sql.sql_update_rows : set_data
 ::: ERROR :::
-Empty data: {}
+Value must be non-empty
+Value: {}
 [0m
 result: 0
 
@@ -320,18 +322,11 @@ START=======================================
 Function: test_sql_update_rows_invalid_input
 ============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.sql.sql_execute_query.database
+Location: Newt.console.validate_input > Newt.sql.sql_execute_query : database
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
-[1m [31m
-Location: Newt.console.validate_input > Newt.sql.sql_update_rows.result
-::: ERROR :::
-Expected <class 'int'>, got <class 'NoneType'>
-Value: None
-[0m
-result: 0
 
 =====captured.err=====
 (no stderr captured)
@@ -344,8 +339,9 @@ Function: test_export_sql_query_to_csv_basic
 ============================================
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=4, mode=write, delimiter=';')
+(rows=3, mode=write, delimiter=';')
 result: True
+
 [Newt.files.read_csv_from_file] Loaded CSV from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=3, delimiter=';')
@@ -361,7 +357,7 @@ START=======================================
 Function: test_export_sql_query_to_csv_empty_result
 ============================================
 [1m [31m
-Location: Newt.sql.export_sql_query_to_csv
+Location: Newt.sql.export_sql_query_to_csv : result
 ::: ERROR :::
 Empty result: []
 [0m
@@ -378,8 +374,9 @@ Function: test_export_sql_query_to_csv_custom_delimiter
 ============================================
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=3, mode=write, delimiter=',')
+(rows=2, mode=write, delimiter=',')
 result: True
+
 [Newt.files.read_csv_from_file] Loaded CSV from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=2, delimiter=',')
@@ -396,8 +393,9 @@ Function: test_export_sql_query_to_csv_with_params
 ============================================
 [Newt.files.save_csv_to_file] Saved CSV to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
-(rows=3, mode=write, delimiter=';')
+(rows=2, mode=write, delimiter=';')
 result: True
+
 [Newt.files.read_csv_from_file] Loaded CSV from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.csv
 (rows=2, delimiter=';')
@@ -413,19 +411,18 @@ START=======================================
 Function: test_export_sql_query_to_csv_invalid_input
 ============================================
 [1m [31m
-Location: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv.database
+Location: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv : database
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
-result: False
+
 [1m [31m
-Location: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv.query
+Location: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv : query
 ::: ERROR :::
 Expected <class 'str'>, got <class 'int'>
 Value: 456
 [0m
-result: False
 
 =====captured.err=====
 (no stderr captured)
