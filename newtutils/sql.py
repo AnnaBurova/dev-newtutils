@@ -121,18 +121,18 @@ def sql_execute_query(
     """
 
     NewtCons.validate_input(
-        database, str,
+        database, str, check_non_empty=True,
         location="Newt.sql.sql_execute_query : database"
     )
 
     NewtCons.validate_input(
-        query, str,
+        query, str, check_non_empty=True,
         location="Newt.sql.sql_execute_query : query"
     )
 
-    if params:
+    if params is not None:
         NewtCons.validate_input(
-            params, (list, tuple),
+            params, (list, tuple), check_non_empty=True,
             location="Newt.sql.sql_execute_query : params"
         )
 
@@ -189,6 +189,7 @@ def sql_execute_query(
             return None
 
     NewtFiles.ensure_dir_exists(database)
+
     result = None
 
     try:
@@ -282,7 +283,7 @@ def sql_insert_row(
     """
 
     NewtCons.validate_input(
-        table, str,
+        table, str, check_non_empty=True,
         location="Newt.sql.sql_insert_row : table"
     )
 
@@ -368,12 +369,12 @@ def sql_update_rows(
     """
 
     NewtCons.validate_input(
-        table, str,
+        table, str, check_non_empty=True,
         location="Newt.sql.sql_update_rows : table"
     )
 
     NewtCons.validate_input(
-        where_condition, str,
+        where_condition, str, check_non_empty=True,
         location="Newt.sql.sql_update_rows : where_condition"
     )
 
@@ -430,22 +431,22 @@ def export_sql_query_to_csv(
     """
 
     NewtCons.validate_input(
-        database, str,
+        database, str, check_non_empty=True,
         location="Newt.sql.export_sql_query_to_csv : database"
     )
 
     NewtCons.validate_input(
-        query, str,
+        query, str, check_non_empty=True,
         location="Newt.sql.export_sql_query_to_csv : query"
     )
 
     NewtCons.validate_input(
-        csv_file, str,
+        csv_file, str, check_non_empty=True,
         location="Newt.sql.export_sql_query_to_csv : csv_file"
     )
 
     NewtCons.validate_input(
-        delimiter, str,
+        delimiter, str, check_non_empty=True,
         location="Newt.sql.export_sql_query_to_csv : delimiter"
     )
 
