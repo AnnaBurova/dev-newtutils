@@ -471,7 +471,7 @@ def export_sql_query_to_csv(
         # Step 1: run select query
         result = sql_select_rows(database, query, params)
 
-        if result is None:
+        if result is None or len(result) == 0:
             NewtCons.error_msg(
                 f"Empty result: {result}",
                 location="Newt.sql.export_sql_query_to_csv : result",
