@@ -219,10 +219,11 @@ def sql_execute_query(
 
         return result
 
-    except Exception as e:  # pragma: no cover
+    except Exception as e:
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
-            location="Newt.sql.sql_execute_query : Exception"
+            f"Exception: {e}",
+            location="Newt.sql.sql_execute_query : Exception",
+            stop=False
         )
 
     return None
@@ -289,10 +290,11 @@ def sql_insert_row(
         location="Newt.sql.sql_insert_row : table"
     )
 
-    NewtCons.validate_input(
-        data, (dict, list), check_non_empty=True,
+    if not NewtCons.validate_input(
+        data, (dict, list), check_non_empty=True, stop=False,
         location="Newt.sql.sql_insert_row : data"
-    )
+    ):
+        return 0
 
     # Normalize input to list[dict]
     if isinstance(data, dict):
@@ -373,10 +375,11 @@ def sql_update_rows(
         location="Newt.sql.sql_update_rows : table"
     )
 
-    NewtCons.validate_input(
-        set_data, dict, check_non_empty=True,
+    if not NewtCons.validate_input(
+        set_data, dict, check_non_empty=True, stop=False,
         location="Newt.sql.sql_update_rows : set_data"
-    )
+    ):
+        return 0
 
     NewtCons.validate_input(
         where_condition, str, check_non_empty=True,
