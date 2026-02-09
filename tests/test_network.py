@@ -7,8 +7,8 @@ Created on 2025-11
 Comprehensive unit tests for newtutils.network module.
 
 Tests cover:
-- URL data fetching (fetch_data_from_url)
-- File downloading (download_file_from_url)
+- TestFetchDataFromUrl
+- TestDownloadFileFromUrl
 """
 
 import pytest
@@ -61,11 +61,12 @@ def print_my_captured(captured):
 
 
 class TestFetchDataFromUrl:
-    """Tests for fetch_data_from_url function."""
+    """ Tests for fetch_data_from_url function. """
+
 
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_success(self, mock_get, capsys):
-        """Test successful data fetch."""
+        """ Test successful data fetch. """
         print_my_func_name("test_fetch_data_from_url_success")
 
         # Mock successful response
@@ -84,9 +85,10 @@ class TestFetchDataFromUrl:
         print_my_captured(captured)
         assert "Status: 200" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_with_params(self, mock_get, capsys):
-        """Test fetch with query parameters."""
+        """ Test fetch with query parameters. """
         print_my_func_name("test_fetch_data_from_url_with_params")
 
         mock_response = Mock()
@@ -114,9 +116,10 @@ class TestFetchDataFromUrl:
         print_my_captured(captured)
         assert "Status: 200" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_with_custom_headers(self, mock_get, capsys):
-        """Test fetch with custom headers."""
+        """ Test fetch with custom headers. """
         print_my_func_name("test_fetch_data_from_url_with_custom_headers")
 
         mock_response = Mock()
@@ -143,9 +146,10 @@ class TestFetchDataFromUrl:
         assert "Status: 200" in captured.out
         assert "User-Agent" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_status_206(self, mock_get, capsys):
-        """Test fetch with status 206 (Partial Content)."""
+        """ Test fetch with status 206 (Partial Content) ."""
         print_my_func_name("test_fetch_data_from_url_status_206")
 
         mock_response = Mock()
@@ -162,9 +166,10 @@ class TestFetchDataFromUrl:
         print_my_captured(captured)
         assert "Status: 206" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_status_404(self, mock_get, capsys):
-        """Test fetch with 404 status."""
+        """ Test fetch with 404 status. """
         print_my_func_name("test_fetch_data_from_url_status_404")
 
         mock_response = Mock()
@@ -183,9 +188,10 @@ class TestFetchDataFromUrl:
         assert "::: ERROR :::" in captured.out
         assert "HTTP 404 for" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_status_500(self, mock_get, capsys):
-        """Test fetch with 500 status."""
+        """ Test fetch with 500 status. """
         print_my_func_name("test_fetch_data_from_url_status_500")
 
         mock_response = Mock()
@@ -203,9 +209,10 @@ class TestFetchDataFromUrl:
         assert "::: ERROR :::" in captured.out
         assert "HTTP 500 for" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_timeout(self, mock_get, capsys):
-        """Test fetch with timeout error."""
+        """ Test fetch with timeout error. """
         print_my_func_name("test_fetch_data_from_url_timeout")
 
         mock_get.side_effect = requests.exceptions.ReadTimeout("Timeout")
@@ -221,9 +228,10 @@ class TestFetchDataFromUrl:
         assert "Timeout (45s)" in captured.out
         assert "Request failed after" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_request_exception(self, mock_get, capsys):
-        """Test fetch with general request exception."""
+        """ Test fetch with general request exception. """
         print_my_func_name("test_fetch_data_from_url_request_exception")
 
         mock_get.side_effect = requests.exceptions.RequestException("Connection error")
@@ -238,10 +246,11 @@ class TestFetchDataFromUrl:
         assert "Request failed after" in captured.out
         assert "RequestException: Connection error" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     @patch('newtutils.console._retry_pause')
     def test_fetch_data_from_url_retry_on_fail(self, mock_retry, mock_get, capsys):
-        """Test retry behavior on failure."""
+        """ Test retry behavior on failure. """
         print_my_func_name("test_fetch_data_from_url_retry_on_fail")
 
         # First call fails, second succeeds
@@ -270,9 +279,10 @@ class TestFetchDataFromUrl:
         assert "Status: 500" in captured.out
         assert "Status: 200" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_custom_timeout(self, mock_get, capsys):
-        """Test fetch with custom timeout."""
+        """ Test fetch with custom timeout. """
         print_my_func_name("test_fetch_data_from_url_custom_timeout")
 
         mock_response = Mock()
@@ -293,8 +303,9 @@ class TestFetchDataFromUrl:
         print_my_captured(captured)
         assert "Status: 200" in captured.out
 
+
     def test_fetch_data_from_url_invalid_input(self, capsys):
-        """Test fetch with invalid input."""
+        """ Test fetch with invalid input. """
         print_my_func_name("test_fetch_data_from_url_invalid_input")
 
         with pytest.raises(SystemExit):
@@ -307,9 +318,10 @@ class TestFetchDataFromUrl:
         assert "Expected <class 'str'>, got <class 'int'>" in captured.out
         assert "Value: 123" in captured.out
 
+
     @patch('newtutils.network.requests.get')
     def test_fetch_data_from_url_mode_alert(self, mock_get, capsys):
-        """Test fetch with alert mode."""
+        """ Test fetch with alert mode. """
         print_my_func_name("test_fetch_data_from_url_mode_alert")
 
         mock_response = Mock()
@@ -337,7 +349,8 @@ class TestFetchDataFromUrl:
 
 
 class TestDownloadFileFromUrl:
-    """Tests for download_file_from_url function."""
+    """ Tests for download_file_from_url function. """
+
 
     @patch('newtutils.network.os.path.getsize')
     @patch('newtutils.network.NewtFiles._check_file_exists')
@@ -345,7 +358,7 @@ class TestDownloadFileFromUrl:
     @patch('newtutils.network.requests.head')
     @patch('newtutils.files.save_text_to_file')
     def test_download_file_from_url_text(self, mock_save, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
-        """Test downloading a text file."""
+        """ Test downloading a text file. """
         print_my_func_name("test_download_file_from_url_text")
 
         mock_check_file.return_value = False  # File doesn't exist
@@ -383,13 +396,14 @@ class TestDownloadFileFromUrl:
         assert "Content-Type: " in captured.out
         assert "Saved to: " in captured.out
 
+
     @patch('newtutils.network.os.path.getsize')
     @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     @patch('builtins.open', create=True)
     def test_download_file_from_url_binary(self, mock_open, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
-        """Test downloading a binary file."""
+        """ Test downloading a binary file. """
         print_my_func_name("test_download_file_from_url_binary")
 
         mock_check_file.return_value = False  # File doesn't exist
@@ -430,12 +444,13 @@ class TestDownloadFileFromUrl:
         assert "Content-Type: application/octet-stream" in captured.out
         assert "Saved to: " in captured.out
 
+
     @patch('newtutils.network.os.path.getsize')
     @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     def test_download_file_from_url_status_404(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
-        """Test download with 404 status."""
+        """ Test download with 404 status. """
         print_my_func_name("test_download_file_from_url_status_404")
 
         mock_check_file.return_value = False  # File doesn't exist
@@ -471,12 +486,13 @@ class TestDownloadFileFromUrl:
 
         assert "Saved to: " not in captured.out
 
+
     @patch('newtutils.network.os.path.getsize')
     @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     def test_download_file_from_url_timeout(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
-        """Test download with timeout."""
+        """ Test download with timeout. """
         print_my_func_name("test_download_file_from_url_timeout")
 
         mock_check_file.return_value = False  # File doesn't exist
@@ -508,12 +524,13 @@ class TestDownloadFileFromUrl:
 
         assert "Saved to: " not in captured.out
 
+
     @patch('newtutils.network.os.path.getsize')
     @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     def test_download_file_from_url_request_exception(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
-        """Test download with request exception."""
+        """ Test download with request exception. """
         print_my_func_name("test_download_file_from_url_request_exception")
 
         mock_check_file.return_value = False  # File doesn't exist
@@ -544,6 +561,7 @@ class TestDownloadFileFromUrl:
 
         assert "Saved to: " not in captured.out
 
+
     @patch('newtutils.network.os.path.getsize')
     @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
@@ -551,7 +569,7 @@ class TestDownloadFileFromUrl:
     @patch('newtutils.console._retry_pause')
     @patch('newtutils.files.save_text_to_file')
     def test_download_file_from_url_retry(self, mock_save, mock_retry, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
-        """Test download with retry on failure."""
+        """ Test download with retry on failure. """
         print_my_func_name("test_download_file_from_url_retry")
 
         mock_check_file.return_value = False  # File doesn't exist
@@ -599,8 +617,9 @@ class TestDownloadFileFromUrl:
         assert "Content-Type: text/plain" in captured.out
         assert "Saved to: " in captured.out
 
+
     def test_download_file_from_url_invalid_input(self, capsys):
-        """Test download with invalid input."""
+        """ Test download with invalid input. """
         print_my_func_name("test_download_file_from_url_invalid_input")
 
         with pytest.raises(SystemExit):
@@ -625,13 +644,14 @@ class TestDownloadFileFromUrl:
         assert captured.out.count("::: ERROR :::") == 2
         assert captured.out.count("Expected <class 'str'>, got <class 'int'>") == 2
 
+
     @patch('newtutils.network.os.path.getsize')
     @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     @patch('newtutils.files.save_text_to_file')
     def test_download_file_from_url_json_content_type(self, mock_save, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
-        """Test download with JSON content type."""
+        """ Test download with JSON content type. """
         print_my_func_name("test_download_file_from_url_json_content_type")
 
         mock_check_file.return_value = False  # File doesn't exist
@@ -668,12 +688,13 @@ class TestDownloadFileFromUrl:
         assert "Content-Type: application/json" in captured.out
         assert "Saved to: " in captured.out
 
+
     @patch('newtutils.network.os.path.getsize')
     @patch('newtutils.network.NewtFiles._check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     def test_download_file_from_url_custom_headers(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
-        """Test download with custom headers."""
+        """ Test download with custom headers. """
         print_my_func_name("test_download_file_from_url_custom_headers")
 
         mock_check_file.return_value = False  # File doesn't exist
