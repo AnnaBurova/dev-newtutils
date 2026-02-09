@@ -253,11 +253,15 @@ class TestSqlExecuteQuery:
         """ Test with invalid input. """
         print_my_func_name()
 
-        result = NewtSQL.sql_execute_query(123, "SELECT 1")  # type: ignore
-        assert result is None
+        with pytest.raises(SystemExit) as exc_info_1:
+            NewtSQL.sql_execute_query(123, "SELECT 1")  # type: ignore
+            print("This line will not be printed 01")
+        assert exc_info_1.value.code == 1
 
-        result = NewtSQL.sql_execute_query("test.db", 456)  # type: ignore
-        assert result is None
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtSQL.sql_execute_query("test.db", 456)  # type: ignore
+            print("This line will not be printed 02")
+        assert exc_info_2.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -372,9 +376,10 @@ class TestSqlSelectRows:
             db_path = tmp.name
 
         try:
-            with pytest.raises(SystemExit):
-                result = NewtSQL.sql_select_rows(db_path, "INVALID SQL QUERY")
-                print("This line will not be printed:", result)
+            with pytest.raises(SystemExit) as exc_info:
+                NewtSQL.sql_select_rows(db_path, "INVALID SQL QUERY")
+                print("This line will not be printed")
+            assert exc_info.value.code == 1
 
         finally:
             NewtSQL.db_delayed_close(db_path)
@@ -485,13 +490,17 @@ class TestSqlInsertRow:
         """ Test inserting with invalid input. """
         print_my_func_name()
 
-        result_1 = NewtSQL.sql_insert_row(123, "test", {"id": 1})  # type: ignore
-        print("result_1:", result_1)
-        assert result_1 == 0
+        with pytest.raises(SystemExit) as exc_info_1:
+            NewtSQL.sql_insert_row(123, "test", {"id": 1})  # type: ignore
+            print("This line will not be printed 01")
+        assert exc_info_1.value.code == 1
+        print()
 
-        result_2 = NewtSQL.sql_insert_row("test.db", 456, {"id": 2})  # type: ignore
-        print("result:", result_2)
-        assert result_2 == 0
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtSQL.sql_insert_row("test.db", 456, {"id": 2})  # type: ignore
+            print("This line will not be printed 02")
+        assert exc_info_2.value.code == 1
+        print()
 
         result_3 = NewtSQL.sql_insert_row("test.db", "test", "not a dict")  # type: ignore
         print("result:", result_3)
@@ -654,15 +663,16 @@ class TestSqlUpdateRows:
         """ Test update with invalid input. """
         print_my_func_name()
 
-        result = NewtSQL.sql_update_rows(
-            123,  # type: ignore
-            "test",
-            {"name": "test"},
-            "id = ?",
-            (1,)
+        with pytest.raises(SystemExit) as exc_info:
+            NewtSQL.sql_update_rows(
+                123,  # type: ignore
+                "test",
+                {"name": "test"},
+                "id = ?",
+                (1,)
             )
-        print("result:", result)
-        assert result == 0
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -701,6 +711,7 @@ class TestExportSqlQueryToCsv:
             # Verify CSV content
             csv_data = NewtFiles.read_csv_from_file(csv_path)
             print("csv_data:", csv_data)
+            assert isinstance(csv_data, list)
             assert len(csv_data) == 3  # Header + 2 rows
             assert "id" in csv_data[0]
             assert "name" in csv_data[0]
@@ -835,21 +846,24 @@ class TestExportSqlQueryToCsv:
         """ Test export with invalid input. """
         print_my_func_name()
 
-        result = NewtSQL.export_sql_query_to_csv(
-            123,  # type: ignore
-            "SELECT 1",
-            "test.csv"
+        with pytest.raises(SystemExit) as exc_info_1:
+            NewtSQL.export_sql_query_to_csv(
+                123,  # type: ignore
+                "SELECT 1",
+                "test.csv"
             )
-        print("result:", result)
-        assert result is False
+            print("This line will not be printed 01")
+        assert exc_info_1.value.code == 1
+        print()
 
-        result = NewtSQL.export_sql_query_to_csv(
-            "test.db",
-            456,  # type: ignore
-            "test.csv"
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtSQL.export_sql_query_to_csv(
+                "test.db",
+                456,  # type: ignore
+                "test.csv"
             )
-        print("result:", result)
-        assert result is False
+            print("This line will not be printed 02")
+        assert exc_info_2.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
