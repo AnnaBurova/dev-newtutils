@@ -14,50 +14,10 @@ import pytest
 import tempfile
 
 import os
+
+from helpers import print_my_func_name, print_my_captured
 import newtutils.files as NewtFiles
 import newtutils.sql as NewtSQL
-
-
-def print_my_func_name(func_name):
-    """
-    Print the provided function name in a structured format.
-
-    Args:
-        func_name (str):
-            Name of the function to display.
-    """
-
-    print("Function:", func_name)
-    print("--------------------------------------------")
-
-
-def print_my_captured(captured):
-    """
-    Pretty-print captured standard output and error streams from pytest.
-
-    Args:
-        captured:
-            A pytest `CaptureResult` object returned by `capsys.readouterr()`.
-            Must provide `.out` and `.err` attributes representing captured
-            standard output and standard error text.
-    """
-
-    print()
-    print("START=======================================")
-
-    print("=====captured.out=====")
-    if captured.out:
-        print(captured.out)
-    else:
-        print("(no stdout captured)")
-
-    print("=====captured.err=====")
-    if captured.err:
-        print(captured.err)
-    else:
-        print("(no stderr captured)")
-
-    print("END=========================================")
 
 
 class TestDbDelayedClose:
@@ -66,7 +26,7 @@ class TestDbDelayedClose:
 
     def test_db_delayed_close_existing_db(self, capsys):
         """ Test closing an existing database. """
-        print_my_func_name("test_db_delayed_close_existing_db")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -87,7 +47,7 @@ class TestDbDelayedClose:
 
     def test_db_delayed_close_nonexistent_db(self, capsys):
         """ Test closing a non-existent database returns True. """
-        print_my_func_name("test_db_delayed_close_nonexistent_db")
+        print_my_func_name()
 
         result = NewtSQL.db_delayed_close("/nonexistent/database.db")
         assert result is True
@@ -102,7 +62,7 @@ class TestSqlExecuteQuery:
 
     def test_sql_execute_query_create_table(self, capsys):
         """ Test creating a table. """
-        print_my_func_name("test_sql_execute_query_create_table")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -126,7 +86,7 @@ class TestSqlExecuteQuery:
 
     def test_sql_execute_query_insert(self, capsys):
         """ Test INSERT query. """
-        print_my_func_name("test_sql_execute_query_insert")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -154,7 +114,7 @@ class TestSqlExecuteQuery:
 
     def test_sql_execute_query_select(self, capsys):
         """ Test SELECT query. """
-        print_my_func_name("test_sql_execute_query_select")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -185,7 +145,7 @@ class TestSqlExecuteQuery:
 
     def test_sql_execute_query_update(self, capsys):
         """ Test UPDATE query. """
-        print_my_func_name("test_sql_execute_query_update")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -221,7 +181,7 @@ class TestSqlExecuteQuery:
 
     def test_sql_execute_query_delete(self, capsys):
         """ Test DELETE query. """
-        print_my_func_name("test_sql_execute_query_delete")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -257,7 +217,7 @@ class TestSqlExecuteQuery:
 
     def test_sql_execute_query_executemany(self, capsys):
         """ Test executemany with list of tuples. """
-        print_my_func_name("test_sql_execute_query_executemany")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -291,7 +251,7 @@ class TestSqlExecuteQuery:
 
     def test_sql_execute_query_invalid_input(self, capsys):
         """ Test with invalid input. """
-        print_my_func_name("test_sql_execute_query_invalid_input")
+        print_my_func_name()
 
         result = NewtSQL.sql_execute_query(123, "SELECT 1")  # type: ignore
         assert result is None
@@ -305,7 +265,7 @@ class TestSqlExecuteQuery:
 
     def test_sql_execute_query_creates_directory(self, capsys):
         """ Test that sql_execute_query creates parent directories. """
-        print_my_func_name("test_sql_execute_query_creates_directory")
+        print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = os.path.join(tmpdir, "level1", "level2", "test.db")
@@ -325,7 +285,7 @@ class TestSqlSelectRows:
 
     def test_sql_select_rows_basic(self, capsys):
         """ Test basic select operation. """
-        print_my_func_name("test_sql_select_rows_basic")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -353,7 +313,7 @@ class TestSqlSelectRows:
 
     def test_sql_select_rows_with_params(self, capsys):
         """ Test select with parameters. """
-        print_my_func_name("test_sql_select_rows_with_params")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -381,7 +341,7 @@ class TestSqlSelectRows:
 
     def test_sql_select_rows_empty_result(self, capsys):
         """ Test select with no results. """
-        print_my_func_name("test_sql_select_rows_empty_result")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -406,7 +366,7 @@ class TestSqlSelectRows:
 
     def test_sql_select_rows_invalid_query(self, capsys):
         """ Test select with invalid query. """
-        print_my_func_name("test_sql_select_rows_invalid_query")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -431,7 +391,7 @@ class TestSqlInsertRow:
 
     def test_sql_insert_row_single_dict(self, capsys):
         """ Test inserting a single row from dict. """
-        print_my_func_name("test_sql_insert_row_single_dict")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -464,7 +424,7 @@ class TestSqlInsertRow:
 
     def test_sql_insert_row_multiple_dicts(self, capsys):
         """ Test inserting multiple rows from list of dicts. """
-        print_my_func_name("test_sql_insert_row_multiple_dicts")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -501,7 +461,7 @@ class TestSqlInsertRow:
 
     def test_sql_insert_row_empty_data(self, capsys):
         """ Test inserting with empty data. """
-        print_my_func_name("test_sql_insert_row_empty_data")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -523,7 +483,7 @@ class TestSqlInsertRow:
 
     def test_sql_insert_row_invalid_input(self, capsys):
         """ Test inserting with invalid input. """
-        print_my_func_name("test_sql_insert_row_invalid_input")
+        print_my_func_name()
 
         result_1 = NewtSQL.sql_insert_row(123, "test", {"id": 1})  # type: ignore
         print("result_1:", result_1)
@@ -547,7 +507,7 @@ class TestSqlUpdateRows:
 
     def test_sql_update_rows_basic(self, capsys):
         """ Test basic update operation. """
-        print_my_func_name("test_sql_update_rows_basic")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -596,7 +556,7 @@ class TestSqlUpdateRows:
 
     def test_sql_update_rows_multiple_columns(self, capsys):
         """ Test updating multiple columns. """
-        print_my_func_name("test_sql_update_rows_multiple_columns")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -640,7 +600,7 @@ class TestSqlUpdateRows:
 
     def test_sql_update_rows_no_match(self, capsys):
         """ Test update with no matching rows. """
-        print_my_func_name("test_sql_update_rows_no_match")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -670,7 +630,7 @@ class TestSqlUpdateRows:
 
     def test_sql_update_rows_empty_data(self, capsys):
         """ Test update with empty data. """
-        print_my_func_name("test_sql_update_rows_empty_data")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -692,7 +652,7 @@ class TestSqlUpdateRows:
 
     def test_sql_update_rows_invalid_input(self, capsys):
         """ Test update with invalid input. """
-        print_my_func_name("test_sql_update_rows_invalid_input")
+        print_my_func_name()
 
         result = NewtSQL.sql_update_rows(
             123,  # type: ignore
@@ -714,7 +674,7 @@ class TestExportSqlQueryToCsv:
 
     def test_export_sql_query_to_csv_basic(self, capsys):
         """ Test basic CSV export. """
-        print_my_func_name("test_export_sql_query_to_csv_basic")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -758,7 +718,7 @@ class TestExportSqlQueryToCsv:
 
     def test_export_sql_query_to_csv_empty_result(self, capsys):
         """ Test export with empty query result. """
-        print_my_func_name("test_export_sql_query_to_csv_empty_result")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -792,7 +752,7 @@ class TestExportSqlQueryToCsv:
 
     def test_export_sql_query_to_csv_custom_delimiter(self, capsys):
         """ Test export with custom delimiter. """
-        print_my_func_name("test_export_sql_query_to_csv_custom_delimiter")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -832,7 +792,7 @@ class TestExportSqlQueryToCsv:
 
     def test_export_sql_query_to_csv_with_params(self, capsys):
         """ Test export with query parameters. """
-        print_my_func_name("test_export_sql_query_to_csv_with_params")
+        print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
             db_path = tmp.name
@@ -873,7 +833,7 @@ class TestExportSqlQueryToCsv:
 
     def test_export_sql_query_to_csv_invalid_input(self, capsys):
         """ Test export with invalid input. """
-        print_my_func_name("test_export_sql_query_to_csv_invalid_input")
+        print_my_func_name()
 
         result = NewtSQL.export_sql_query_to_csv(
             123,  # type: ignore
