@@ -2,12 +2,12 @@
 Comprehensive unit tests for newtutils.sql module.
 
 Tests cover:
-TestDbDelayedClose
-TestSqlExecuteQuery
-TestSqlSelectRows
-TestSqlInsertRow
-TestSqlUpdateRows
-TestExportSqlQueryToCsv
+- TestDbDelayedClose
+- TestSqlExecuteQuery
+- TestSqlSelectRows
+- TestSqlInsertRow
+- TestSqlUpdateRows
+- TestExportSqlQueryToCsv
 """
 
 import pytest
@@ -25,7 +25,7 @@ class TestDbDelayedClose:
 
 
     def test_db_delayed_close_existing_db(self, capsys):
-        """ Test closing an existing database. """
+        """ Test behavior of db_delayed_close when closing an existing database. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
