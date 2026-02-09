@@ -298,8 +298,20 @@ START=======================================
 =====captured.out=====
 Function: test_returns_none_for_empty_string
 ============================================
+[1m [31m
+Location: Newt.console.validate_input : is_empty
+::: ERROR :::
+Value must be non-empty
+Value: 
+[0m
 None
 
+[1m [31m
+Location: Newt.console.validate_input : is_empty
+::: ERROR :::
+Value must be non-empty
+Value:    
+[0m
 None
 
 =====captured.err=====
@@ -316,6 +328,7 @@ Location: Newt.console.validate_input > Newt.files.convert_str_to_json : text
 Expected <class 'str'>, got <class 'int'>
 Value: 123
 [0m
+None
 
 [1m [31m
 Location: Newt.console.validate_input > Newt.files.convert_str_to_json : text
@@ -323,6 +336,7 @@ Location: Newt.console.validate_input > Newt.files.convert_str_to_json : text
 Expected <class 'str'>, got <class 'NoneType'>
 Value: None
 [0m
+None
 
 [1m [31m
 Location: Newt.console.validate_input > Newt.files.convert_str_to_json : text
@@ -330,6 +344,7 @@ Location: Newt.console.validate_input > Newt.files.convert_str_to_json : text
 Expected <class 'str'>, got <class 'list'>
 Value: ['not', 'a', 'string']
 [0m
+None
 
 =====captured.err=====
 (no stderr captured)

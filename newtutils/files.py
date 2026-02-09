@@ -100,7 +100,7 @@ def ensure_dir_exists(
     """
 
     NewtCons.validate_input(
-        file_path, str,
+        file_path, str, check_non_empty=True,
         location="Newt.files.ensure_dir_exists : file_path"
     )
 
@@ -142,10 +142,11 @@ def check_file_exists(
             False otherwise.
     """
 
-    NewtCons.validate_input(
-        file_path, str,
+    if not NewtCons.validate_input(
+        file_path, str, check_non_empty=True, stop=stop,
         location="Newt.files.check_file_exists : file_path"
-    )
+    ):
+        return False
 
     if os.path.isfile(file_path):
         return True
@@ -211,7 +212,7 @@ def choose_file_from_folder(
     """
 
     NewtCons.validate_input(
-        folder_path, str,
+        folder_path, str, check_non_empty=True,
         location="Newt.files.choose_file_from_folder : folder_path"
     )
 
@@ -423,14 +424,13 @@ def convert_str_to_json(
             otherwise None.
     """
 
-    NewtCons.validate_input(
-        text, str,
+    if not NewtCons.validate_input(
+        text, str, check_non_empty=True, stop=False,
         location="Newt.files.convert_str_to_json : text"
-    )
+    ):
+        return None
 
     text_strip = text.strip()
-    if not text_strip:
-        return None
 
     # Try standard JSON first
     try:
@@ -570,9 +570,15 @@ def save_json_to_file(
     )
 
     NewtCons.validate_input(
-        indent, int,
+        indent, int, check_non_empty=True,
         location="Newt.files.save_json_to_file : indent"
     )
+
+    if indent < 0:
+        NewtCons.error_msg(
+            "Indent must be a non-negative integer.",
+            location="Newt.files.save_json_to_file : indent < 0"
+        )
 
     ensure_dir_exists(file_name)
 
@@ -633,7 +639,7 @@ def read_csv_from_file(
     """
 
     NewtCons.validate_input(
-        delimiter, str,
+        delimiter, str, check_non_empty=True,
         location="Newt.files.read_csv_from_file : delimiter"
     )
 
@@ -695,7 +701,7 @@ def save_csv_to_file(
     )
 
     NewtCons.validate_input(
-        delimiter, str,
+        delimiter, str, check_non_empty=True,
         location="Newt.files.save_csv_to_file : delimiter"
     )
 
@@ -756,7 +762,7 @@ def setup_logging(
     """
 
     NewtCons.validate_input(
-        _dir, str,
+        _dir, str, check_non_empty=True,
         location="Newt.files.setup_logging : _dir"
     )
 
@@ -805,7 +811,7 @@ def cleanup_logging(
     """
 
     NewtCons.validate_input(
-        setup_data, tuple,
+        setup_data, tuple, check_non_empty=True,
         location="Newt.files.cleanup_logging : setup_data"
     )
 

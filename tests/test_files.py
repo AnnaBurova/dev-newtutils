@@ -522,30 +522,30 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input : is_empty\n" in captured.out
+        assert "\nValue must be non-empty\n" in captured.out
+        assert "\nValue: \n" in captured.out
+        assert "\nValue:    \n" in captured.out
 
 
     def test_invalid_json_input_raises_exit(self, capsys):
         """ Test NewtFiles.convert_str_to_json() raises SystemExit for non-string inputs. """
         print_my_func_name()
 
-        with pytest.raises(SystemExit) as exc_info_1:
-            NewtFiles.convert_str_to_json(123)  # type: ignore
-            print("This line will not be printed 01")
-        assert exc_info_1.value.code == 1
+        result_1 = NewtFiles.convert_str_to_json(123)  # type: ignore
+        print(repr(result_1))
+        assert result_1 is None
         print()
 
-        with pytest.raises(SystemExit) as exc_info_2:
-            NewtFiles.convert_str_to_json(None)  # type: ignore
-            print("This line will not be printed 02")
-        assert exc_info_2.value.code == 1
+        result_2 = NewtFiles.convert_str_to_json(None)  # type: ignore
+        print(repr(result_2))
+        assert result_2 is None
         print()
 
-        with pytest.raises(SystemExit) as exc_info_3:
-            NewtFiles.convert_str_to_json(["not", "a", "string"])  # type: ignore
-            print("This line will not be printed 03")
-        assert exc_info_3.value.code == 1
+        result_3 = NewtFiles.convert_str_to_json(["not", "a", "string"])  # type: ignore
+        print(repr(result_3))
+        assert result_3 is None
 
         captured = capsys.readouterr()
         print_my_captured(captured)
