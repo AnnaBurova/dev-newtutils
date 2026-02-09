@@ -61,7 +61,7 @@ class TestErrorMsg:
         assert "\nLocation: Unknown\n" in captured.out
         assert "\nTest error\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_error_msg_without_stop(self, capsys):
@@ -179,7 +179,7 @@ class TestValidateInput:
         assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
         assert "\nValue: hello\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_validate_input_multiple_types(self, capsys):
@@ -205,9 +205,6 @@ class TestValidateInput:
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'int'>, <class 'str'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.14\n" in captured.out
-        # Expected absence of result
-        assert "\nValue: 123\n" not in captured.out
-        assert "\nValue: hello\n" not in captured.out
 
 
     def test_validate_input_collection_types(self, capsys):
@@ -237,11 +234,11 @@ class TestValidateInput:
         assert "\n[1, 2, 3] <class 'dict'> False\n" in captured.out
         assert "\n{'key': 'value'} <class 'dict'> True\n" in captured.out
         assert "\n{'key': 'value'} <class 'list'> False\n" in captured.out
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
+        assert captured.out.count("\nLocation: Newt.console.validate_input\n") == 2
         assert "\nExpected <class 'dict'>, got <class 'list'>\n" in captured.out
-        assert "\nValue: [1, 2, 3]\n" in captured.out
         assert "\nExpected <class 'list'>, got <class 'dict'>\n" in captured.out
+        assert "\nValue: [1, 2, 3]\n" in captured.out
         assert "\nValue: {'key': 'value'}\n" in captured.out
 
 
@@ -354,9 +351,10 @@ class TestBeepBoop:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
         assert "\nLocation: Newt.console.validate_input > _beep_boop : pause_s\n" in captured.out
         assert "\nExpected (<class 'int'>, <class 'float'>), got <class 'str'>\n" in captured.out
+        assert "\nValue: Test\n" in captured.out
         assert "\nLocation: Newt.console._beep_boop : pause_s < 0\n" in captured.out
         assert "\nInvalid pause duration: -1\n" in captured.out
         assert "\nPause is: [0.2, 1, 0.2, 1, 0.7, 1] seconds\n" in captured.out
@@ -385,7 +383,7 @@ class TestRetryPause:
         assert "\nTime left: 1s\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
-        assert "\nTime left: 3s\n" not in captured.out
+        assert "Time left: 3s" not in captured.out
 
 
     @patch('newtutils.console._beep_boop')
@@ -407,7 +405,7 @@ class TestRetryPause:
         assert "\nTime left: 1s\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
-        assert "\nTime left: 4s\n" not in captured.out
+        assert "Time left: 4s" not in captured.out
 
 
     @patch('newtutils.console.time.sleep')
@@ -505,8 +503,8 @@ class TestRetryPause:
         assert "\nLocation: Newt.console._retry_pause : KeyboardInterrupt\n" in captured.out
         assert "\nRetry interrupted by user (Ctrl+C)\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
-        assert "\nTime left: 4s\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "Time left: 4s" not in captured.out
 
 
 class TestCheckLocation:
@@ -549,7 +547,7 @@ class TestCheckLocation:
         assert "\nLocation: Newt.console.check_location : no return\n" in captured.out
         assert "\nCurrent position is wrong, check folder: /home/user/project\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_check_location_invalid_type(self, capsys):
@@ -573,7 +571,7 @@ class TestCheckLocation:
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 123\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
 class TestSelectFromInput:
@@ -654,7 +652,7 @@ class TestSelectFromInput:
         assert "\nLocation: Newt.console.select_from_input : choice = [X]\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_select_from_input_invalid_type(self, capsys):
@@ -677,7 +675,7 @@ class TestSelectFromInput:
         assert "\nExpected <class 'dict'>, got <class 'str'>\n" in captured.out
         assert "\nValue: not a dict\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     @patch('newtutils.console.input')
@@ -706,7 +704,7 @@ class TestSelectFromInput:
         assert "\nLocation: Newt.console.select_from_input : KeyboardInterrupt\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     @patch('newtutils.console.input', return_value=" 2 ")

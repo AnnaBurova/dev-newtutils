@@ -93,9 +93,9 @@ class TestCheckFileExists:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
-        assert "\nFile not found: C:\\Users\\" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
+        assert captured.out.count("\nLocation: Newt.files.check_file_exists : logging\n") == 2
+        assert captured.out.count("\nFile not found: ") == 2
         # Expected absence of result
         assert "This line will not be printed" not in captured.out
 
@@ -116,7 +116,7 @@ class TestCheckFileExists:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
         assert "\nLocation: Newt.console.validate_input > Newt.files.check_file_exists : file_path\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nValue: 123\n" in captured.out
@@ -124,7 +124,7 @@ class TestCheckFileExists:
         assert "\nFile not found: 123\n" in captured.out
         # Expected absence of result
         assert "This line will not be printed" not in captured.out
-        assert "\nFile not found: abc\n" not in captured.out
+        assert "File not found: abc" not in captured.out
 
 
 class TestNormalizeNewlines:
@@ -262,6 +262,7 @@ class TestTextFiles:
         try:
             content = "Hello\nWorld!"
             NewtFiles.save_text_to_file(tmp_path, content, append=False)
+            print()
 
             result = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result))
@@ -280,6 +281,7 @@ class TestTextFiles:
         assert "\n(mode=write, length=13)\n" in captured.out
         assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
         assert "\n(length=13)\n" in captured.out
+        assert "\n'Hello\\nWorld!\\n'\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -312,7 +314,10 @@ class TestTextFiles:
 
         try:
             NewtFiles.save_text_to_file(tmp_path, "Line 1\n", append=False)
+            print()
+
             NewtFiles.save_text_to_file(tmp_path, "Line 2\n")
+            print()
 
             result = NewtFiles.read_text_from_file(tmp_path)
             print(repr(result))
@@ -326,8 +331,9 @@ class TestTextFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
+        assert captured.out.count("\n[Newt.files.save_text_to_file] Saved text to file:\n") == 2
         assert "\n(mode=write, length=7)\n" in captured.out
+        assert "\n(mode=append, length=7)\n" in captured.out
         assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
         assert "\n(length=14)\n" in captured.out
         assert "\n'Line 1\\nLine 2\\n'\n" in captured.out
@@ -379,7 +385,7 @@ class TestTextFiles:
         assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" not in captured.out
+        assert "[Newt.files.read_text_from_file] Loaded text from file:" not in captured.out
 
 
     def test_save_text_invalid_input(self, capsys):
@@ -410,10 +416,10 @@ class TestTextFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
         assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.files.save_text_to_file : text\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
         assert "\nValue: 123\n" in captured.out
         assert "\nValue: 456\n" in captured.out
         # Expected absence of result
@@ -522,9 +528,9 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input : is_empty > Newt.files.convert_str_to_json : text\n" in captured.out
-        assert "\nValue must be non-empty\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
+        assert captured.out.count("\nLocation: Newt.console.validate_input : is_empty > Newt.files.convert_str_to_json : text\n") == 2
+        assert captured.out.count("\nValue must be non-empty\n") == 2
         assert "\nValue: \n" in captured.out
         assert "\nValue:    \n" in captured.out
 
@@ -550,8 +556,8 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : text\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 3
+        assert captured.out.count("\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : text\n") == 3
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'NoneType'>\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'list'>\n" in captured.out
@@ -575,7 +581,7 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 3
         assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
         assert "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)\n" in captured.out
         assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
@@ -597,12 +603,11 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 3
         assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
-        assert "\nFailed to parse string to JSON: Expecting value: line 1 column 1 (char 0)\n" in captured.out
         assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
         assert "\nLocation: Newt.files.convert_str_to_json : Exception replace single quotes with double quotes\n" in captured.out
-        assert "\nFailed to parse string to JSON: Expecting value: line 1 column 1 (char 0)\n" in captured.out
+        assert captured.out.count("\nFailed to parse string to JSON: Expecting value: line 1 column 1 (char 0)\n") == 2
         assert "\nLocation: Newt.files.convert_str_to_json : Unknown type\n" in captured.out
         assert "\nCannot convert STR to JSON.\n" in captured.out
 
@@ -634,18 +639,18 @@ class TestConvertStrToJson:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_strip)\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_replace)\n" in captured.out
-        assert "\nExpected (<class 'list'>, <class 'dict'>), got <class 'str'>\n" in captured.out
-        assert "\nValue: just a string\n" in captured.out
-        assert "\nExpected (<class 'list'>, <class 'dict'>), got <class 'int'>\n" in captured.out
-        assert "\nValue: 123\n" in captured.out
-        assert "\nExpected (<class 'list'>, <class 'dict'>), got <class 'bool'>\n" in captured.out
-        assert "\nValue: True\n" in captured.out
-        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
-        assert "\nLocation: Newt.files.convert_str_to_json : Unknown type\n" in captured.out
-        assert "\nCannot convert STR to JSON.\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 9
+        assert captured.out.count("\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_strip)\n") == 3
+        assert captured.out.count("\nTrying to replace single quotes with double quotes...\n") == 3
+        assert captured.out.count("\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_replace)\n") == 3
+        assert captured.out.count("\nExpected (<class 'list'>, <class 'dict'>), got <class 'str'>\n") == 2
+        assert captured.out.count("\nExpected (<class 'list'>, <class 'dict'>), got <class 'int'>\n") == 2
+        assert captured.out.count("\nExpected (<class 'list'>, <class 'dict'>), got <class 'bool'>\n") == 2
+        assert captured.out.count("\nValue: just a string\n") == 2
+        assert captured.out.count("\nValue: 123\n") == 2
+        assert captured.out.count("\nValue: True\n") == 2
+        assert captured.out.count("\nLocation: Newt.files.convert_str_to_json : Unknown type\n") == 3
+        assert captured.out.count("\nCannot convert STR to JSON.\n") == 3
 
 
     def test_handles_whitespace(self, capsys):
@@ -813,10 +818,10 @@ class TestJsonFiles:
         print_my_captured(captured)
 
         assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
-        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
-        assert "\\level1\\level2\\file.json\n" in captured.out
         assert "\n(type=<class 'dict'>, indent=2)\n" in captured.out
+        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
         assert "\n(type=<class 'dict'>)\n" in captured.out
+        assert captured.out.count("\\level1\\level2\\file.json\n") == 2
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
@@ -909,8 +914,7 @@ class TestJsonFiles:
             print()
 
             with pytest.raises(SystemExit) as exc_info_3:
-                result_json = NewtFiles.read_json_from_file(tmp_path)
-                print("This line will not be printed:", result_json)
+                NewtFiles.read_json_from_file(tmp_path)
                 print("This line will not be printed 03")
             assert exc_info_3.value.code == 1
 
@@ -925,14 +929,17 @@ class TestJsonFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 3
         assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
         assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.files.save_json_to_file : data\n" in captured.out
         assert "\nExpected (<class 'list'>, <class 'dict'>), got <class 'str'>\n" in captured.out
+        assert "\nValue: not a dict or list\n" in captured.out
         assert "\nLocation: Newt.files.read_json_from_file : Exception\n" in captured.out
         assert "\nException: Expecting value: line 1 column 1 (char 0)\n" in captured.out
         assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
+        assert "\n(length=0)\n" in captured.out
         # Expected absence of result
         assert "This line will not be printed" not in captured.out
 
@@ -1195,13 +1202,12 @@ class TestCsvFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 3
         assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
         assert "\nLocation: Newt.console.validate_input > Newt.files.save_csv_to_file : rows\n" in captured.out
         assert "\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.files.save_csv_to_file : delimiter\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
         assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
         assert "\n(length=0)\n" in captured.out
         # Expected absence of result

@@ -305,10 +305,10 @@ class TestSqlExecuteQuery:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
         assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_execute_query : database\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_execute_query : query\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
         assert "\nValue: 123\n" in captured.out
         assert "\nValue: 456\n" in captured.out
         # Expected absence of result
@@ -452,7 +452,7 @@ class TestSqlSelectRows:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
         assert "\nLocation: Newt.sql.sql_execute_query : OperationalError in Syntax\n" in captured.out
         assert "\nSyntax error: near \"INVALID\": syntax error\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_select_rows : result\n" in captured.out
@@ -600,14 +600,14 @@ class TestSqlInsertRow:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 3
         assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_execute_query : database\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
-        assert "\nValue: 123\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_insert_row : table\n" in captured.out
-        assert "\nValue: 456\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.sql.sql_insert_row : data\n" in captured.out
+        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
         assert "\nExpected (<class 'dict'>, <class 'list'>), got <class 'str'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        assert "\nValue: 456\n" in captured.out
         assert "\nValue: not a dict\n" in captured.out
         # Expected absence of result
         assert "This line will not be printed" not in captured.out
@@ -1052,10 +1052,10 @@ class TestExportSqlQueryToCsv:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
         assert "\nLocation: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv : database\n" in captured.out
         assert "\nLocation: Newt.console.validate_input > Newt.sql.export_sql_query_to_csv : query\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
         assert "\nValue: 123\n" in captured.out
         assert "\nValue: 456\n" in captured.out
         # Expected absence of result

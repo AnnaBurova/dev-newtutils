@@ -150,7 +150,7 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.5\n" in captured.out
@@ -173,7 +173,7 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.5\n" in captured.out
@@ -181,7 +181,7 @@ class TestSortingList:
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_sorting_list_not_a_list(self, capsys):
@@ -216,7 +216,7 @@ class TestSortingList:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
         assert "\nLocation: Newt.console.validate_input\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'NoneType'>\n" in captured.out
         assert "\nValue: None\n" in captured.out
@@ -493,6 +493,7 @@ class TestSortingDictByKeys:
 
         input_str = "not a list"
         print(input_str)
+
         with pytest.raises(SystemExit) as exc_info:
             NewtUtil.sorting_dict_by_keys(input_str, "key")  # type: ignore
             print("This line will not be printed")
@@ -504,12 +505,12 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data\n" in captured.out
-        assert "\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n" in captured.out
-        assert "\nValue: not a list\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 2
+        assert captured.out.count("\nLocation: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data\n") == 2
+        assert captured.out.count("\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n") == 2
+        assert captured.out.count("\nValue: not a list\n") == 2
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_sorting_dict_not_dicts(self, capsys):
@@ -529,15 +530,15 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
-        assert "\nExpected <class 'dict'>, got <class 'int'>\n" in captured.out
-        assert "\nValue: 1\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : data not all\n" in captured.out
-        assert "\nExpected a list of dictionaries\n" in captured.out
-        assert "\nData: [1, 2, 3]\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 4
+        assert captured.out.count("\nLocation: Newt.console.validate_input\n") == 2
+        assert captured.out.count("\nExpected <class 'dict'>, got <class 'int'>\n") == 2
+        assert captured.out.count("\nValue: 1\n") == 2
+        assert captured.out.count("\nLocation: Newt.utility.sorting_dict_by_keys : data not all\n") == 2
+        assert captured.out.count("\nExpected a list of dictionaries\n") == 2
+        assert captured.out.count("\nData: [1, 2, 3]\n") == 2
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_sorting_dict_invalid_key_type(self, capsys):
@@ -557,15 +558,15 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
-        assert "\nValue: 123\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : keys not all\n" in captured.out
-        assert "\nKeys must be strings\n" in captured.out
-        assert "\nKeys: (123,)\n" in captured.out
+        assert captured.out.count("\n::: ERROR :::\n") == 4
+        assert captured.out.count("\nLocation: Newt.console.validate_input\n") == 2
+        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
+        assert captured.out.count("\nValue: 123\n") == 2
+        assert captured.out.count("\nLocation: Newt.utility.sorting_dict_by_keys : keys not all\n") == 2
+        assert captured.out.count("\nKeys must be strings\n") == 2
+        assert captured.out.count("\nKeys: (123,)\n") == 2
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
 
 
     def test_sorting_dict_complex_keys(self, capsys):
@@ -674,4 +675,4 @@ class TestCheckDictKeys:
         assert "\nLocation: Newt.utility.check_dict_keys : missing_keys or extra_keys\n" in captured.out
         assert "\nData keys: x\nMissing keys: a, b\nUnexpected keys: x\n" in captured.out
         # Expected absence of result
-        assert "\nThis line will not be printed\n" not in captured.out
+        assert "This line will not be printed" not in captured.out
