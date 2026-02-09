@@ -153,7 +153,6 @@ def sql_execute_query(
         " drop ",
         " truncate ",
         " alter ",
-        " create ",
         " exec ",
         " execute ",
         " grant ",
