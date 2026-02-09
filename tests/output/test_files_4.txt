@@ -158,6 +158,7 @@ Function: test_save_and_read_text_file
 [Newt.files.save_text_to_file] Saved text to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
 (mode=write, length=13)
+
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
 (length=13)
@@ -188,9 +189,11 @@ Function: test_save_text_append_mode
 [Newt.files.save_text_to_file] Saved text to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
 (mode=write, length=7)
+
 [Newt.files.save_text_to_file] Saved text to file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
 (mode=append, length=7)
+
 [Newt.files.read_text_from_file] Loaded text from file:
 C:\Users\User\AppData\Local\Temp\xxxxxxxxxxx.txt
 (length=14)
