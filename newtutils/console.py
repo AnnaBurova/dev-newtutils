@@ -166,7 +166,7 @@ def validate_input(
             error_msg(
                 "check_non_empty is not supported for this type",
                 f"Type: {type(value)}",
-                location="Newt.console.validate_input : check_non_empty unsupported type",
+                location="Newt.console.validate_input : check_non_empty unsupported type" + location,
                 stop=stop
             )
             return False
@@ -175,7 +175,7 @@ def validate_input(
             error_msg(
                 "Value must be non-empty",
                 f"Value: {value}",
-                location="Newt.console.validate_input : is_empty",
+                location="Newt.console.validate_input : is_empty" + location,
                 stop=stop
             )
             return False
