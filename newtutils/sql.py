@@ -153,10 +153,21 @@ def sql_execute_query(
         " drop ",
         " truncate ",
         " alter ",
+        " create ",
+        " exec ",
+        " execute ",
+        " grant ",
+        " revoke ",
+        " union ",
         ";--",
+        "--",
         "/*",
         "*/",
         " xp_",
+        " sp_",
+        " char(",
+        " concat(",
+        " 0x",
     )
     for token in dangerous_tokens:
         if token in f" {lowered_query} ":
