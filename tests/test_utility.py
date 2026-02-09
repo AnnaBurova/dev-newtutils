@@ -90,7 +90,7 @@ class TestSortingList:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input : is_empty\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input : is_empty > Newt.utility.sorting_list : input_list\n" in captured.out
         assert "\nValue must be non-empty\n" in captured.out
         assert "\nValue: []\n" in captured.out
 
@@ -399,7 +399,7 @@ class TestSortingDictByKeys:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input : is_empty\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input : is_empty > Newt.utility.sorting_dict_by_keys : data\n" in captured.out
         assert "\nValue must be non-empty\n" in captured.out
         assert "\nValue: []\n" in captured.out
 

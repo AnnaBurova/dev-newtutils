@@ -44,7 +44,7 @@ START=======================================
 Function: test_sorting_list_empty
 ============================================
 [1m [31m
-Location: Newt.console.validate_input : is_empty
+Location: Newt.console.validate_input : is_empty > Newt.utility.sorting_list : input_list
 ::: ERROR :::
 Value must be non-empty
 Value: []
@@ -235,7 +235,7 @@ START=======================================
 Function: test_sorting_dict_empty_list
 ============================================
 [1m [31m
-Location: Newt.console.validate_input : is_empty
+Location: Newt.console.validate_input : is_empty > Newt.utility.sorting_dict_by_keys : data
 ::: ERROR :::
 Value must be non-empty
 Value: []

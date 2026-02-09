@@ -284,7 +284,7 @@ START=======================================
 Function: test_retry_pause_invalid_seconds
 ============================================
 [1m [31m
-Location: Newt.console.validate_input : is_empty
+Location: Newt.console.validate_input : is_empty > _retry_pause : seconds
 ::: ERROR :::
 Value must be non-empty
 Value: 0

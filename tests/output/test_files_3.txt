@@ -299,7 +299,7 @@ START=======================================
 Function: test_returns_none_for_empty_string
 ============================================
 [1m [31m
-Location: Newt.console.validate_input : is_empty
+Location: Newt.console.validate_input : is_empty > Newt.files.convert_str_to_json : text
 ::: ERROR :::
 Value must be non-empty
 Value: 
@@ -307,7 +307,7 @@ Value:
 None
 
 [1m [31m
-Location: Newt.console.validate_input : is_empty
+Location: Newt.console.validate_input : is_empty > Newt.files.convert_str_to_json : text
 ::: ERROR :::
 Value must be non-empty
 Value:    

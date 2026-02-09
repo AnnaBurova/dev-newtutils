@@ -523,7 +523,7 @@ class TestConvertStrToJson:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input : is_empty\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input : is_empty > Newt.files.convert_str_to_json : text\n" in captured.out
         assert "\nValue must be non-empty\n" in captured.out
         assert "\nValue: \n" in captured.out
         assert "\nValue:    \n" in captured.out
