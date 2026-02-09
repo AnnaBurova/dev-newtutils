@@ -219,6 +219,21 @@ def sql_execute_query(
 
         return result
 
+    except sqlite3.OperationalError as e:
+        if "syntax" in str(e).lower():
+            NewtCons.error_msg(
+                f"Syntax error: {e}",
+                location="Newt.sql.sql_execute_query : OperationalError in Syntax",
+                stop=False
+            )
+
+        else:
+            NewtCons.error_msg(
+                f"DB error: {e}",
+                location="Newt.sql.sql_execute_query : OperationalError in DB",
+                stop=False
+            )
+
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
@@ -473,9 +488,9 @@ def export_sql_query_to_csv(
 
         return True
 
-    except Exception as e:  # pragma: no cover
+    except Exception as e:
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
+            f"Exception: {e}",
             location="Newt.sql.export_sql_query_to_csv : Exception",
             stop=False
         )
