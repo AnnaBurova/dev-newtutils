@@ -5,7 +5,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
-## 🏷️ v1.1.0 — Release
+## 🏷️ v1.1.0 — February Update
 
 **Date:** 2026-02-10
 
