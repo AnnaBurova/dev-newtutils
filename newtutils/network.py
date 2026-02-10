@@ -99,14 +99,18 @@ def fetch_data_from_url(
             Response text if successful, otherwise None.
     """
 
-    if not NewtCons.validate_input(base_url, str,
-                                   location="Newt.network.fetch_data_from_url.base_url"):
+    if not NewtCons.validate_input(
+        base_url, str, check_non_empty=True, stop=False,
+        location="Newt.network.fetch_data_from_url : base_url"
+    ):
         return None
 
     params_to_send = None
     if params is not None:
-        if not NewtCons.validate_input(params, dict,
-                                       location="Newt.network.fetch_data_from_url.params"):
+        if not NewtCons.validate_input(
+            params, dict, check_non_empty=True, stop=False,
+            location="Newt.network.fetch_data_from_url : params"
+        ):
             return None
 
         # Ensure params are in a requests-compatible form (mapping of str->str)
@@ -241,12 +245,16 @@ def download_file_from_url(
             otherwise False.
     """
 
-    if not NewtCons.validate_input(file_url, str,
-                                   location="Newt.network.download_file_from_url.file_url"):
+    if not NewtCons.validate_input(
+        file_url, str, check_non_empty=True, stop=False,
+        location="Newt.network.download_file_from_url : file_url"
+    ):
         return False
 
-    if not NewtCons.validate_input(save_path, str,
-                                   location="Newt.network.download_file_from_url.save_path"):
+    if not NewtCons.validate_input(
+        save_path, str, check_non_empty=True, stop=False,
+        location="Newt.network.download_file_from_url : save_path"
+    ):
         return False
 
     # Assign safe default headers
