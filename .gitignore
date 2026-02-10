@@ -27,3 +27,4 @@ Thumbs.db
 node_modules/
 __pycache__/
 *.egg-info/
+.coverage
