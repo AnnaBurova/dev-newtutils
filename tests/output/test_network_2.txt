@@ -1,8 +1,9 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- python.exe
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
+plugins: cov-7.0.0
 collecting ... collected 21 items
 
 test_network.py::TestFetchDataFromUrl::test_fetch_data_from_url_success PASSED [  4%]
