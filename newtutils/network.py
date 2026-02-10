@@ -32,6 +32,7 @@ import sys
 import os
 import time
 import requests
+
 import newtutils.console as NewtCons
 import newtutils.files as NewtFiles
 
@@ -96,7 +97,8 @@ def fetch_data_from_url(
 
     Returns:
         out (str | None):
-            Response text if successful, otherwise None.
+            Response text if successful,
+            otherwise None.
     """
 
     if not NewtCons.validate_input(
@@ -139,13 +141,15 @@ def fetch_data_from_url(
             print(f"Status: {status}")
             print(f"Response time: {elapsed:.3f} seconds")
 
+            # Successful responses (200-299)
             if status in (
                     200,  # Normal success
                     206,  # Partial content or recoverable response
                     ):
                 return response.text
 
-            # Known error statuses
+            # Client error responses (400-499)
+            # Server error responses (500-599)
             elif status in (
                     400,  # unable to use 'all' keyword for this API
                     401,  # Invalid access token / Unauthorized
