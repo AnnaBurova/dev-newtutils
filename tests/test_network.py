@@ -376,7 +376,7 @@ class TestDownloadFileFromUrl:
 
 
     @patch('newtutils.network.os.path.getsize')
-    @patch('newtutils.network.NewtFiles._check_file_exists')
+    @patch('newtutils.network.NewtFiles.check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     @patch('newtutils.files.save_text_to_file')
@@ -423,7 +423,7 @@ class TestDownloadFileFromUrl:
 
 
     @patch('newtutils.network.os.path.getsize')
-    @patch('newtutils.network.NewtFiles._check_file_exists')
+    @patch('newtutils.network.NewtFiles.check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     @patch('builtins.open', create=True)
@@ -472,7 +472,7 @@ class TestDownloadFileFromUrl:
 
 
     @patch('newtutils.network.os.path.getsize')
-    @patch('newtutils.network.NewtFiles._check_file_exists')
+    @patch('newtutils.network.NewtFiles.check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     def test_download_file_from_url_status_404(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
@@ -514,7 +514,7 @@ class TestDownloadFileFromUrl:
 
 
     @patch('newtutils.network.os.path.getsize')
-    @patch('newtutils.network.NewtFiles._check_file_exists')
+    @patch('newtutils.network.NewtFiles.check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     def test_download_file_from_url_timeout(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
@@ -553,7 +553,7 @@ class TestDownloadFileFromUrl:
 
 
     @patch('newtutils.network.os.path.getsize')
-    @patch('newtutils.network.NewtFiles._check_file_exists')
+    @patch('newtutils.network.NewtFiles.check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     def test_download_file_from_url_request_exception(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
@@ -591,7 +591,7 @@ class TestDownloadFileFromUrl:
 
 
     @patch('newtutils.network.os.path.getsize')
-    @patch('newtutils.network.NewtFiles._check_file_exists')
+    @patch('newtutils.network.NewtFiles.check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     @patch('newtutils.console._retry_pause')
@@ -681,7 +681,7 @@ class TestDownloadFileFromUrl:
 
 
     @patch('newtutils.network.os.path.getsize')
-    @patch('newtutils.network.NewtFiles._check_file_exists')
+    @patch('newtutils.network.NewtFiles.check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     @patch('newtutils.files.save_text_to_file')
@@ -728,7 +728,7 @@ class TestDownloadFileFromUrl:
 
 
     @patch('newtutils.network.os.path.getsize')
-    @patch('newtutils.network.NewtFiles._check_file_exists')
+    @patch('newtutils.network.NewtFiles.check_file_exists')
     @patch('newtutils.network.requests.get')
     @patch('newtutils.network.requests.head')
     def test_download_file_from_url_custom_headers(self, mock_head, mock_get, mock_check_file, mock_getsize, capsys):
