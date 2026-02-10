@@ -153,7 +153,7 @@ def fetch_data_from_url(
                     ):
                 NewtCons.error_msg(
                     f"HTTP {status} for {base_url}",
-                    location="Newt.network.fetch_data_from_url",
+                    location="Newt.network.fetch_data_from_url : HTTP error responses",
                     stop=False
                 )
                 if beep_boop:
@@ -183,7 +183,7 @@ def fetch_data_from_url(
                 f"ReadTimeout: {e}",
                 f"Timeout ({timeout}s) for {base_url}",
                 f"Request failed after {elapsed:.2f}s",
-                location="Newt.network.fetch_data_from_url",
+                location="Newt.network.fetch_data_from_url : ReadTimeout",
                 stop=False
             )
             if beep_boop:
@@ -194,7 +194,7 @@ def fetch_data_from_url(
             NewtCons.error_msg(
                 f"Request failed after {elapsed:.2f}s",
                 f"RequestException: {e}",
-                location="Newt.network.fetch_data_from_url",
+                location="Newt.network.fetch_data_from_url : RequestException",
                 stop=False
             )
             if beep_boop:
@@ -300,7 +300,7 @@ def download_file_from_url(
 
             NewtCons.error_msg(
                 f"HTTP {status} while downloading {file_url}",
-                location="Newt.network.download_file_from_url",
+                location="Newt.network.download_file_from_url : Not Success",
                 stop=False
             )
             NewtCons._beep_boop()
@@ -309,7 +309,7 @@ def download_file_from_url(
             NewtCons.error_msg(
                 f"ReadTimeout: {e}",
                 f"Timeout ({timeout}s) while downloading {file_url}",
-                location="Newt.network.download_file_from_url",
+                location="Newt.network.download_file_from_url : ReadTimeout",
                 stop=False
             )
             NewtCons._beep_boop()
@@ -318,15 +318,15 @@ def download_file_from_url(
         except requests.exceptions.RequestException as e:
             NewtCons.error_msg(
                 f"RequestException: {e}",
-                location="Newt.network.download_file_from_url",
+                location="Newt.network.download_file_from_url : RequestException",
                 stop=False
             )
             NewtCons._beep_boop()
 
         except Exception as e:
             NewtCons.error_msg(
-                f"General error: {e}",
-                location="Newt.network.download_file_from_url",
+                f"Exception: {e}",
+                location="Newt.network.download_file_from_url : Exception",
                 stop=False
             )
             NewtCons._beep_boop()
