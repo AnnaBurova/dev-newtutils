@@ -270,7 +270,7 @@ def download_file_from_url(
             size_mb = size_b / (1024*1024)
             print(f"File size: {size_mb} Mb")
 
-            if NewtFiles.check_file_exists(save_path, print_error=False):
+            if NewtFiles.check_file_exists(save_path, logging=False):
                 # get file size and compare
                 existing_size_b = os.path.getsize(save_path)
 
