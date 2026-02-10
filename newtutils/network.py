@@ -1,5 +1,5 @@
 """
-Updated on 2025-11
+Updated on 2026-02
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -157,7 +157,7 @@ def fetch_data_from_url(
                     stop=False
                 )
                 if beep_boop:
-                    NewtCons.beep_boop()
+                    NewtCons._beep_boop()
 
                 # MANUAL DECISION MODE
                 if mode == "manual":
@@ -187,7 +187,7 @@ def fetch_data_from_url(
                 stop=False
             )
             if beep_boop:
-                NewtCons.beep_boop()
+                NewtCons._beep_boop()
 
         except requests.exceptions.RequestException as e:
             elapsed = time.perf_counter() - start_time
@@ -198,12 +198,12 @@ def fetch_data_from_url(
                 stop=False
             )
             if beep_boop:
-                NewtCons.beep_boop()
+                NewtCons._beep_boop()
 
         if not repeat_on_fail:
             return None
 
-        NewtCons.retry_pause(beep=beep_boop)
+        NewtCons._retry_pause(beep=beep_boop)
 
 
 def download_file_from_url(
@@ -303,7 +303,7 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtCons.beep_boop()
+            NewtCons._beep_boop()
 
         except requests.exceptions.ReadTimeout as e:
             NewtCons.error_msg(
@@ -312,7 +312,7 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtCons.beep_boop()
+            NewtCons._beep_boop()
             timeout += 30
 
         except requests.exceptions.RequestException as e:
@@ -321,7 +321,7 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtCons.beep_boop()
+            NewtCons._beep_boop()
 
         except Exception as e:
             NewtCons.error_msg(
@@ -329,9 +329,9 @@ def download_file_from_url(
                 location="Newt.network.download_file_from_url",
                 stop=False
             )
-            NewtCons.beep_boop()
+            NewtCons._beep_boop()
 
         if not repeat_on_fail:
             return False
 
-        NewtCons.retry_pause(beep=True)
+        NewtCons._retry_pause(beep=True)
