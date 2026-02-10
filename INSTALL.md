@@ -19,6 +19,7 @@ dev-newtutils/
 │   └── (other files)
 │
 ├── tests/             # Manual and automated test scripts
+│   ├── output/        # Test output files (logs)
 │   ├── README.md      # Testing overview and usage instructions
 │   ├── _list.sh       # Optional helper script to list or run tests
 │   ├── test_*.py      # Pytest test files for each module

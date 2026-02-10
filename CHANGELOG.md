@@ -5,6 +5,81 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## 🏷️ v1.1.0 — Release
+
+**Date:** 2026-02-10
+
+### ✨ Added
+
+- NewtCons `console.py`:
+  - New function `check_location()`
+  - New function `select_from_input()`
+
+- NewtUtil `utility.py`:
+  - New function `check_dict_keys()`
+
+- NewtFiles `files.py`:
+  - Maded `ensure_dir_exists()` public
+  - Maded `check_file_exists()` public
+  - New function `setup_logging()`
+  - New function `cleanup_logging()`
+
+### 🛠️ Improved
+
+- NewtCons `console.py`:
+  - Added `check_non_empty` parameter to `validate_input()` for validating non-empty values.
+  - Changed `beep` parameter default from `False` to `True` in `_retry_pause()`.
+  - Refactored exception handling with `# pragma: no cover` markers for Windows-only code.
+
+- NewtUtil `utility.py`:
+  - Enhanced type annotations with `Sequence` instead of concrete `list`, and `Any` for complex types.
+  - Function `sorting_dict_by_keys()`:
+    - Added `stop` parameter for consistent error handling behavior.
+    - Improved empty key handling with special case for single-key dictionaries.
+
+- NewtFiles `files.py`:
+  - Function `check_file_exists()`:
+    - Renamed `print_error` parameter to `logging` for consistency.
+    - Changed `stop` parameter default from `False` to `True`.
+  - Function `choose_file_from_folder()`:
+    - Enhanced with max attempt limit (5),
+    - improved menu format,
+    - and `None` return removed, it is script stop now.
+  - Functions `read_text_from_file()` `read_json_from_file()` `read_csv_from_file()`:
+    - Added `stop` parameter.
+    - Changed to return `None` instead of empty string on error.
+  - Function `save_text_to_file()`:
+    - Changed `append` parameter default from `False` to `True`
+
+- NewtSQL `sql.py`:
+  - Function `db_delayed_close()`:
+    - Added `logging` parameter for controlling output messages.
+  - Function `sql_execute_query()`:
+    - Extended dangerous SQL token detection with new patterns: `exec`, `execute`, `grant`, `revoke`, `union`, `--`, `sp_`, `char(`, `concat(`, `0x`.
+    - Added specialized error handling for `sqlite3.OperationalError` to distinguish between syntax errors and database errors.
+
+- NewtNet `network.py`:
+  - Function `fetch_data_from_url()`:
+    - Improved HTTP status code comments with sections for successful (200-299), client error (400-499), and server error (500-599) responses.
+  - Function `download_file_from_url()`:
+    - Enhanced file size formatting with increased precision.
+
+### 📚 Documentation
+
+- Updated all module docstrings to unified Google-style format with improved parameter descriptions and return type documentation.
+- Fixed error location reporting to use consistent, more readable format across all files (e.g., `"function : context"` instead of `"function.parameter"`).
+- Reformatted multi-line function calls for improved readability and consistency throughout all modules.
+- Strengthened input validation documentation with `check_non_empty` parameter usage guidance.
+
+### 🧪 Testing
+
+- Extracted test helper functions into dedicated `tests/helpers.py` module:
+  - `print_my_func_name()` — automatically displays the name of the calling test function using frame inspection.
+  - `print_my_captured()` — formats and displays pytest captured output (stdout/stderr) for easier debugging.
+- Added support for new functions.
+
+---
+
 ## 🏷️ v1.0.3 — Enhanced File I/O and Network Utilities
 
 **Date:** 2026-01-30

@@ -30,10 +30,14 @@ https://docs.python.org/3/license.html
 
 - sys - interpreter and runtime
 - os - file system and environment
+- shutil - directory operations like copying, moving, and deleting
+
 - time - timing and sleep utilities
+- datetime - date and time objects
+- collections - high-performance container datatypes
+- typing - type hints (Any, TextIO)
 
 - builtins - implicit base types
-- collections.abc  — abstract base classes for containers (e.g., Sequence)
 - gc - garbage collector interface
 - tempfile - temporary files and directories
 - unittest.mock - testing and mocking utilities
@@ -62,6 +66,6 @@ This project uses the following third-party libraries:
   https://pypi.org/project/colorama/
 
 - Requests (Apache License 2.0)
-  Copyright (c) 2011-2025 Kenneth Reitz & contributors
+  Copyright (c) 2011-2026 Kenneth Reitz & contributors
   https://github.com/psf/requests
   https://pypi.org/project/requests/

@@ -2,11 +2,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-1.0.3-blue.svg)](https://github.com/AnnaBurova/dev-newtutils)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/AnnaBurova/dev-newtutils)
 
 A collection of utility functions for common programming tasks.
 
-> **Version 1.0.3** — Latest stable release. Production-ready with a stable API.
+> **Version 1.1.0** — Latest stable release. Production-ready with a stable API.
 
 ---
 
@@ -32,7 +32,7 @@ The project follows clean, documented, and predictable function behavior for mai
 
 ## ⚙️ Requirements
 
-- **Python 3.10+** (tested with Python 3.10, 3.11, 3.12, 3.13)
+- **Python 3.10+** (tested with Python 3.10, 3.11, 3.12, 3.13, 3.14)
 - Full type hint support with `from __future__ import annotations`
 
 ## 📦 Dependencies
