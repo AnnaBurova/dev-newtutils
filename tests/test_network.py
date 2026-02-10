@@ -43,7 +43,13 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Status: 200" in captured.out
+
+        assert "\nFull URL: https://example.com\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\nResponse time: 0.000 seconds\n" in captured.out
+        assert "\nresult: Lorem ipsum dolor sit ame\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -74,7 +80,14 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Status: 200" in captured.out
+
+        assert "\nFull URL: https://example.com?key=value\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\nResponse time: 0.000 seconds\n" in captured.out
+        assert "\nresult: Lorem ipsum dolor sit ame\n" in captured.out
+        assert "\ncall_kwargs: {'params': {'key': 'value', 'num': '123'}, 'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36'}, 'timeout': 45}\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -103,8 +116,14 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Status: 200" in captured.out
-        assert "User-Agent" in captured.out
+
+        assert "\nFull URL: https://example.com\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\nResponse time: 0.000 seconds\n" in captured.out
+        assert "\nresult: Lorem ipsum dolor sit ame\n" in captured.out
+        assert "\ncall_kwargs: {'params': None, 'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'Authorization': 'Bearer token'}, 'timeout': 45}\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -124,7 +143,13 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Status: 206" in captured.out
+
+        assert "\nFull URL: https://example.com\n" in captured.out
+        assert "\nStatus: 206\n" in captured.out
+        assert "\nResponse time: 0.000 seconds\n" in captured.out
+        assert "\nresult: Partial Lorem ipsum dolor sit ame\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -144,9 +169,14 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Status: 404" in captured.out
-        assert "::: ERROR :::" in captured.out
-        assert "HTTP 404 for" in captured.out
+
+        assert "\nFull URL: https://example.com/notfound\n" in captured.out
+        assert "\nStatus: 404\n" in captured.out
+        assert "\nResponse time: 0.000 seconds\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.fetch_data_from_url : HTTP error responses\n" in captured.out
+        assert "\nHTTP 404 for https://example.com/notfound\n" in captured.out
+        assert "\nresult: None\n" in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -161,13 +191,19 @@ class TestFetchDataFromUrl:
         mock_get.return_value = mock_response
 
         result = NewtNet.fetch_data_from_url("https://example.com", repeat_on_fail=False)
+        print("result:", result)
         assert result is None
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Status: 500" in captured.out
-        assert "::: ERROR :::" in captured.out
-        assert "HTTP 500 for" in captured.out
+
+        assert "\nFull URL: https://example.com\n" in captured.out
+        assert "\nStatus: 500\n" in captured.out
+        assert "\nResponse time: 0.000 seconds\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.fetch_data_from_url : HTTP error responses\n" in captured.out
+        assert "\nHTTP 500 for https://example.com\n" in captured.out
+        assert "\nresult: None\n" in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -183,10 +219,13 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "::: ERROR :::" in captured.out
-        assert "ReadTimeout: Timeout" in captured.out
-        assert "Timeout (45s)" in captured.out
-        assert "Request failed after" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.fetch_data_from_url : ReadTimeout\n" in captured.out
+        assert "\nReadTimeout: Timeout\n" in captured.out
+        assert "\nTimeout (45s) for https://example.com\n" in captured.out
+        assert "\nRequest failed after 0.00s\n" in captured.out
+        assert "\nresult: None\n" in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -202,9 +241,12 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "::: ERROR :::" in captured.out
-        assert "Request failed after" in captured.out
-        assert "RequestException: Connection error" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.fetch_data_from_url : RequestException\n" in captured.out
+        assert "\nRequest failed after 0.00s\n" in captured.out
+        assert "\nRequestException: Connection error\n" in captured.out
+        assert "\nresult: None\n" in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -230,14 +272,19 @@ class TestFetchDataFromUrl:
         # Should retry and eventually succeed
         assert result == "Success"
         assert mock_get.call_count == 2
-
-        print("mock_retry:", mock_retry.call_count)
         assert mock_retry.call_count == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Status: 500" in captured.out
-        assert "Status: 200" in captured.out
+
+        assert captured.out.count("\nFull URL: https://example.com\n") == 2
+        assert captured.out.count("\nResponse time: 0.000 seconds\n") == 2
+        assert "\nStatus: 500\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.fetch_data_from_url : HTTP error responses\n" in captured.out
+        assert "\nHTTP 500 for https://example.com\n" in captured.out
+        assert "\nresult: Success\n" in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -261,22 +308,34 @@ class TestFetchDataFromUrl:
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Status: 200" in captured.out
+
+        assert "\nFull URL: https://example.com\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\nResponse time: 0.000 seconds\n" in captured.out
+        assert "\nresult: Lorem ipsum dolor sit ame\n" in captured.out
+        assert "\ncall_kwargs: {'params': None, 'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36'}, 'timeout': 60}\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_fetch_data_from_url_invalid_input(self, capsys):
         """ Test fetch with invalid input. """
         print_my_func_name()
 
-        with pytest.raises(SystemExit):
-            result = NewtNet.fetch_data_from_url(123, repeat_on_fail=False)  # type: ignore
-            print("This line will not be printed:", result)
+        result = NewtNet.fetch_data_from_url(123, repeat_on_fail=False)  # type: ignore
+        print("result:", result)
+        assert result is None
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "::: ERROR :::" in captured.out
-        assert "Expected <class 'str'>, got <class 'int'>" in captured.out
-        assert "Value: 123" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.network.fetch_data_from_url : base_url\n" in captured.out
+        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
+        assert "\nValue: 123\n" in captured.out
+        assert "\nresult: None\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
 
 
     @patch('newtutils.network.requests.get')
@@ -298,14 +357,18 @@ class TestFetchDataFromUrl:
             print("result:", result)
             assert result is None
             # Should call beep on error
-            print("mock_beep:", mock_beep.call_count)
             assert mock_beep.call_count == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Status: 500" in captured.out
-        assert "::: ERROR :::" in captured.out
-        assert "HTTP 500 for" in captured.out
+
+        assert "\nFull URL: https://example.com\n" in captured.out
+        assert "\nStatus: 500\n" in captured.out
+        assert "\nResponse time: 0.000 seconds\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.fetch_data_from_url : HTTP error responses\n" in captured.out
+        assert "\nHTTP 500 for https://example.com\n" in captured.out
+        assert "\nresult: None\n" in captured.out
 
 
 class TestDownloadFileFromUrl:
@@ -343,18 +406,20 @@ class TestDownloadFileFromUrl:
         assert result is True
 
         mock_save.assert_called_once()
-        print("mock_save:", mock_save.call_count)
         assert mock_save.call_count == 1
-
-        print("mock_get:", mock_get.call_count)
         assert mock_get.call_count == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Downloading from: " in captured.out
-        assert "Status: 200" in captured.out
-        assert "Content-Type: " in captured.out
-        assert "Saved to: " in captured.out
+
+        assert "\nDownloading from: https://example.com/file.txt\n" in captured.out
+        assert "\nFile size: 0.00001144 Mb\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\nContent-Type: text/plain\n" in captured.out
+        assert "\nSaved to: tmp_file.txt\n" in captured.out
+        assert "\nresult: True\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.network.os.path.getsize')
@@ -390,19 +455,20 @@ class TestDownloadFileFromUrl:
         assert result is True
 
         mock_file.write.assert_called_once_with(b"Binary content")
-
-        print("mock_open:", mock_open.call_count)
         assert mock_open.call_count == 1
-
-        print("mock_get:", mock_get.call_count)
         assert mock_get.call_count == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Downloading from: " in captured.out
-        assert "Status: 200" in captured.out
-        assert "Content-Type: application/octet-stream" in captured.out
-        assert "Saved to: " in captured.out
+
+        assert "\nDownloading from: https://example.com/file.bin\n" in captured.out
+        assert "\nFile size: 0.00001335 Mb\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\nContent-Type: application/octet-stream\n" in captured.out
+        assert "\nSaved to: tmp_file.bin\n" in captured.out
+        assert "\nresult: True\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.network.os.path.getsize')
@@ -433,18 +499,18 @@ class TestDownloadFileFromUrl:
             print("result:", result)
             assert result is False
 
-        print("mock_get:", mock_get.call_count)
         assert mock_get.call_count == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Downloading from: " in captured.out
-        assert "Status: 404" in captured.out
-        assert "::: ERROR :::" in captured.out
-        assert "HTTP 404 while downloading" in captured.out
-
-        assert "Saved to: " not in captured.out
+        assert "\nDownloading from: https://example.com/file.txt\n" in captured.out
+        assert "\nFile size: 0.00000000 Mb\n" in captured.out
+        assert "\nStatus: 404\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.download_file_from_url : Not Success\n" in captured.out
+        assert "\nHTTP 404 while downloading https://example.com/file.txt\n" in captured.out
+        assert "\nresult: False\n" in captured.out
 
 
     @patch('newtutils.network.os.path.getsize')
@@ -472,17 +538,18 @@ class TestDownloadFileFromUrl:
             print("result:", result)
             assert result is False
 
-        print("mock_get:", mock_get.call_count)
         assert mock_get.call_count == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "::: ERROR :::" in captured.out
-        assert "ReadTimeout: Timeout" in captured.out
-        assert "Timeout (60s) while downloading" in captured.out
-
-        assert "Saved to: " not in captured.out
+        assert "\nDownloading from: https://example.com/file.txt\n" in captured.out
+        assert "\nFile size: 0.00000000 Mb\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.download_file_from_url : ReadTimeout\n" in captured.out
+        assert "\nReadTimeout: Timeout\n" in captured.out
+        assert "\nTimeout (60s) while downloading https://example.com/file.txt\n" in captured.out
+        assert "\nresult: False\n" in captured.out
 
 
     @patch('newtutils.network.os.path.getsize')
@@ -499,7 +566,7 @@ class TestDownloadFileFromUrl:
         mock_head_response.headers = {}
         mock_head.return_value = mock_head_response
 
-        mock_get.side_effect = requests.exceptions.RequestException("Error")
+        mock_get.side_effect = requests.exceptions.RequestException("Error test text")
 
         with patch('newtutils.console._beep_boop'):
             result = NewtNet.download_file_from_url(
@@ -510,16 +577,17 @@ class TestDownloadFileFromUrl:
             print("result:", result)
             assert result is False
 
-        print("mock_get:", mock_get.call_count)
         assert mock_get.call_count == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "::: ERROR :::" in captured.out
-        assert "RequestException: Error" in captured.out
-
-        assert "Saved to: " not in captured.out
+        assert "\nDownloading from: https://example.com/file.txt\n" in captured.out
+        assert "\nFile size: 0.00000000 Mb\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.download_file_from_url : RequestException\n" in captured.out
+        assert "\nRequestException: Error test text\n" in captured.out
+        assert "\nresult: False\n" in captured.out
 
 
     @patch('newtutils.network.os.path.getsize')
@@ -559,50 +627,57 @@ class TestDownloadFileFromUrl:
             print("result:", result)
             assert result is True
 
-        print("mock_save:", mock_save.call_count)
         assert mock_save.call_count == 1
-        print("mock_retry:", mock_retry.call_count)
         assert mock_retry.call_count == 1
-        print("mock_get:", mock_get.call_count)
         assert mock_get.call_count == 2
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("Downloading from:") == 2
-        assert "Status: 500" in captured.out
-        assert "::: ERROR :::" in captured.out
-        assert "HTTP 500 while downloading" in captured.out
-        assert "Status: 200" in captured.out
-        assert "Content-Type: text/plain" in captured.out
-        assert "Saved to: " in captured.out
+        assert captured.out.count("\nDownloading from: https://example.com/file.txt\n") == 2
+        assert captured.out.count("\nFile size: 0.00000668 Mb\n") == 2
+        assert "\nStatus: 500\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.network.download_file_from_url : Not Success\n" in captured.out
+        assert "\nHTTP 500 while downloading https://example.com/file.txt\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\nContent-Type: text/plain\n" in captured.out
+        assert "\nSaved to: tmp_file.txt\n" in captured.out
+        assert "\nresult: True\n" in captured.out
 
 
     def test_download_file_from_url_invalid_input(self, capsys):
         """ Test download with invalid input. """
         print_my_func_name()
 
-        with pytest.raises(SystemExit):
-            result_file_url = NewtNet.download_file_from_url(
-                123,  # type: ignore
-                "tmp_file.txt",
-                repeat_on_fail=False
-                )
-            print("This line will not be printed:", result_file_url)
+        result_1 = NewtNet.download_file_from_url(
+            123,  # type: ignore
+            "tmp_file.txt",
+            repeat_on_fail=False
+        )
+        print("result_1:", result_1)
+        assert result_1 is False
+        print()
 
-        with pytest.raises(SystemExit):
-            result_save_path = NewtNet.download_file_from_url(
-                "https://example.com",
-                456,  # type: ignore
-                repeat_on_fail=False
-                )
-            print("This line will not be printed:", result_save_path)
+        result_2 = NewtNet.download_file_from_url(
+            "https://example.com",
+            456,  # type: ignore
+            repeat_on_fail=False
+        )
+        print("result_2:", result_2)
+        assert result_2 is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("::: ERROR :::") == 2
-        assert captured.out.count("Expected <class 'str'>, got <class 'int'>") == 2
+        assert captured.out.count("\n::: ERROR :::\n") == 2
+        assert "\nLocation: Newt.console.validate_input > Newt.network.download_file_from_url : file_url\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.network.download_file_from_url : save_path\n" in captured.out
+        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
+        assert "\nValue: 123\n" in captured.out
+        assert "\nValue: 456\n" in captured.out
+        assert "\nresult_1: False\n" in captured.out
+        assert "\nresult_2: False\n" in captured.out
 
 
     @patch('newtutils.network.os.path.getsize')
@@ -636,17 +711,20 @@ class TestDownloadFileFromUrl:
         assert result is True
 
         mock_save.assert_called_once()
-        print("mock_save:", mock_save.call_count)
         assert mock_save.call_count == 1
-        print("mock_get:", mock_get.call_count)
         assert mock_get.call_count == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
-        assert "Downloading from: " in captured.out
-        assert "Status: 200" in captured.out
-        assert "Content-Type: application/json" in captured.out
-        assert "Saved to: " in captured.out
+
+        assert "\nDownloading from: https://example.com/data.json\n" in captured.out
+        assert "\nFile size: 0.00001526 Mb\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\nContent-Type: application/json\n" in captured.out
+        assert "\nSaved to: tmp_data.json\n" in captured.out
+        assert "\nresult: True\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.network.os.path.getsize')
@@ -683,13 +761,17 @@ class TestDownloadFileFromUrl:
             print("call_kwargs:", call_kwargs)
             assert call_kwargs["headers"]["Authorization"] == "Bearer token"
 
-        print("mock_get:", mock_get.call_count)
         assert mock_get.call_count == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Downloading from: " in captured.out
-        assert "Status: 200" in captured.out
-        assert "Content-Type: application/octet-stream" in captured.out
-        assert "Saved to: " in captured.out
+        assert "\nDownloading from: https://example.com/file.bin\n" in captured.out
+        assert "\nFile size: 0.00000668 Mb\n" in captured.out
+        assert "\nStatus: 200\n" in captured.out
+        assert "\nContent-Type: application/octet-stream\n" in captured.out
+        assert "\nSaved to: tmp_file.bin\n" in captured.out
+        assert "\nresult: True\n" in captured.out
+        assert "\ncall_kwargs: {'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'Authorization': 'Bearer token'}, 'timeout': (5, 60)}\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
