@@ -268,7 +268,7 @@ def download_file_from_url(
             head_content = requests.head(file_url, headers=custom_headers, timeout=10)
             size_b = int(head_content.headers.get('Content-Length', 0))
             size_mb = size_b / (1024*1024)
-            print(f"File size: {size_mb} Mb")
+            print(f"File size: {size_mb:.8f} Mb")
 
             if NewtFiles.check_file_exists(save_path, logging=False):
                 # get file size and compare
