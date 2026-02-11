@@ -5,6 +5,25 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## 🏷️ v1.1.1 — Input Handling Enhancements
+
+**Date:** 2026-02-12
+
+### ✨ Added
+
+- NewtUtil `utility.py`:
+  - New function `count_similar_values()`
+
+### 🛠️ Improved
+
+- NewtUtil `utility.py`:
+  - Moved `select_from_input()` from `console.py`
+
+- NewtFiles `files.py`:
+  - Update `choose_file_from_folder()` to use `select_from_input()` for better input handling and validation.
+
+---
+
 ## 🏷️ v1.1.0 — February Update
 
 **Date:** 2026-02-10

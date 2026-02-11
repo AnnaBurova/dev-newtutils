@@ -92,7 +92,7 @@ __all__ = [
     "download_file_from_url",
 ]
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 __author__ = "NewtCode Anna Burova"
 __description__ = (
     "NewtUtils — A modular Python toolkit providing reusable utilities "
