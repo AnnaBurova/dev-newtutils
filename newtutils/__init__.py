@@ -21,7 +21,6 @@ from .console import (
     error_msg,
     validate_input,
     check_location,
-    select_from_input,
 )
 
 # Utility
@@ -29,6 +28,7 @@ from .utility import (
     check_dict_keys,
     sorting_list,
     sorting_dict_by_keys,
+    select_from_input,
 )
 
 # Files
@@ -65,11 +65,11 @@ __all__ = [
     "error_msg",
     "validate_input",
     "check_location",
-    "select_from_input",
     # Utility ----------
     "check_dict_keys",
     "sorting_list",
     "sorting_dict_by_keys",
+    "select_from_input",
     # Files ----------
     "ensure_dir_exists", "check_file_exists",
     "choose_file_from_folder",

@@ -30,9 +30,6 @@ Functions:
         dir_: str,
         must_location: str
         ) -> None
-    def select_from_input(
-        select_dict: dict[str, str]
-        ) -> str
 """
 
 from __future__ import annotations
@@ -323,77 +320,3 @@ def check_location(
         f"Current position is wrong, check folder: {dir_}",
         location="Newt.console.check_location : no return"
     )
-
-
-def select_from_input(
-        select_dict: dict[str, str]
-        ) -> str:
-    """ Display a numbered list of options and prompt user to select one.
-
-    Loops until a valid choice is made or user cancels with 'x'.
-
-    Args:
-        select_dict (dict[str, str]):
-            Dictionary mapping string keys (numbers) to option names.
-
-    Returns:
-        out (str):
-            The selected key if valid choice made.
-
-    Raises:
-        SystemExit:
-            Raised if selection cancelled (user enters 'x' or presses Ctrl+C).
-    """
-
-    validate_input(
-        select_dict, dict, check_non_empty=True,
-        location="select_from_input : select_dict"
-    )
-
-    # Display numbered list
-    print("Available list:", len(select_dict))
-    for nr, name in select_dict.items():
-        print(f"{nr:>6}: {name}")
-    print("     X: Exit / Cancel")
-
-    choice = "x"
-
-    # Loop until valid input
-    while choice not in select_dict:
-        try:
-            choice = input(
-                "\nEnter number from list ([X] to exit): "
-            ).strip().lower()
-            print(f"[INPUT]: {choice}")
-
-            if choice == "x":
-                error_msg(
-                    "Selection cancelled.",
-                    location="Newt.console.select_from_input : choice = [X]"
-                )
-
-            if not choice.isdigit():
-                print("Invalid input. Please enter a number.")
-                continue
-
-            if choice in select_dict:
-                print(f"Selected option: {select_dict[choice]}")
-                print()
-                return choice
-
-            print("Number out of range. Try again.")
-
-        except KeyboardInterrupt:
-            error_msg(
-                "Selection cancelled.",
-                location="Newt.console.select_from_input : KeyboardInterrupt"
-            )
-
-        except Exception as e:  # pragma: no cover
-            error_msg(
-                f"Exception: {e} (found? write test!)",  # TODO
-                location="Newt.console.select_from_input : Exception"
-            )
-
-    # Fallback return to satisfy type checker; should never be reached
-    return choice
