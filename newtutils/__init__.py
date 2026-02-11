@@ -26,6 +26,7 @@ from .console import (
 # Utility
 from .utility import (
     check_dict_keys,
+    count_similar_values,
     sorting_list,
     sorting_dict_by_keys,
     select_from_input,
@@ -67,6 +68,7 @@ __all__ = [
     "check_location",
     # Utility ----------
     "check_dict_keys",
+    "count_similar_values",
     "sorting_list",
     "sorting_dict_by_keys",
     "select_from_input",

@@ -10,6 +10,10 @@ Functions:
         expected: set[str],
         stop: bool = True
         ) -> bool
+    def count_similar_values(
+        sequence_list: Sequence[tuple[Any, ...]],
+        position: int = 0
+        ) -> dict[Any, int]
     def sorting_list(
         input_list: Sequence[str | int],
         stop: bool = True
@@ -74,6 +78,53 @@ def check_dict_keys(
         return False
 
     return True
+
+
+def count_similar_values(
+        sequence_list: Sequence[tuple[Any, ...]],
+        position: int = 0
+        ) -> dict[Any, int]:
+    """ Count occurrences of values at a specified position in a sequence of tuples.
+    Args:
+        sequence_list (Sequence[tuple[Any, ...]]):
+            A sequence of tuples to analyze.
+        position (int):
+            The index position within each tuple to check for similar values.
+            Defaults to 0 (the first element).
+    Returns:
+        out (dict[Any, int]):
+            A dictionary mapping each unique value found at the specified position
+            to the count of its occurrences.
+    """
+
+    if not NewtCons.validate_input(
+        sequence_list, list, check_non_empty=True, stop=False,
+        location="Newt.utility.count_similar_values : sequence_list"
+    ):
+        return {}
+
+    NewtCons.validate_input(
+        position, int,
+        location="Newt.utility.count_similar_values : position"
+    )
+
+    if not all(
+        NewtCons.validate_input(
+            item, tuple, stop=False
+        ) and len(item) > position for item in sequence_list
+    ):
+        NewtCons.error_msg(
+            f"All items must be sequences with at least {position + 1} elements",
+            f"sequence_list: {sequence_list}",
+            location="Newt.utility.count_similar_values : sequence_list not all",
+            stop=True
+        )
+        return {}
+
+    first_values = [item[position] for item in sequence_list]
+    count_values = {value: first_values.count(value) for value in set(first_values)}
+    # print("Count of similar values:", count_values)
+    return count_values
 
 
 def sorting_list(
