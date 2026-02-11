@@ -348,7 +348,8 @@ def read_text_from_file(
             f"Exception: {e} (found? write test!)",  # TODO
             location="Newt.files.read_text_from_file : Exception"
         )
-        return None
+
+    return None
 
 
 def save_text_to_file(
@@ -474,6 +475,7 @@ def convert_str_to_json(
         location="Newt.files.convert_str_to_json : Unknown type",
         stop=False
     )
+
     return None
 
 
@@ -535,7 +537,8 @@ def read_json_from_file(
             f"Exception: {e}",
             location="Newt.files.read_json_from_file : Exception"
         )
-        return None
+
+    return None
 
 
 def save_json_to_file(
@@ -663,7 +666,8 @@ def read_csv_from_file(
             location="Newt.files.read_csv_from_file : Exception",
             stop=False
         )
-        return None
+
+    return None
 
 
 def save_csv_to_file(
