@@ -31,4 +31,4 @@ test_console.py::TestCheckLocation::test_check_location_match PASSED     [ 91%]
 test_console.py::TestCheckLocation::test_check_location_mismatch PASSED  [ 95%]
 test_console.py::TestCheckLocation::test_check_location_invalid_type PASSED [100%]
 
-============================= 24 passed in 0.14s ==============================
+============================= 24 passed in 0.13s ==============================

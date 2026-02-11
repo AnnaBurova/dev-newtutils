@@ -193,7 +193,7 @@ class TestChooseFileFromFolder:
         assert "This line will not be printed" not in captured.out
 
 
-    @patch('newtutils.files.input', side_effect=["abc", "999", "X"])
+    @patch('newtutils.utility.input', side_effect=["abc", "999", "X"])
     def test_user_cancel_x_raises_exit(self, mock_input, capsys):
         """ Test NewtFiles.choose_file_from_folder() raises SystemExit on user 'x' cancel. """
         print_my_func_name()
@@ -213,16 +213,16 @@ class TestChooseFileFromFolder:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nAvailable files: 3\n" in captured.out
-        assert "\n     1: dummy_file_0.txt\n" in captured.out
-        assert "\n     2: dummy_file_1.txt\n" in captured.out
-        assert "\n     3: dummy_file_2.txt\n" in captured.out
-        assert "\n     X: Exit / Cancel\n" in captured.out
+        assert "\nAvailable list: 3\n" in captured.out
+        assert "\n  1: dummy_file_0.txt\n" in captured.out
+        assert "\n  2: dummy_file_1.txt\n" in captured.out
+        assert "\n  3: dummy_file_2.txt\n" in captured.out
+        assert "\n  X: Exit / Cancel\n" in captured.out
         assert "\n[INPUT]: abc\nInvalid input. Please enter a number.\n" in captured.out
         assert "\n[INPUT]: 999\nNumber out of range. Try again.\n" in captured.out
         assert "\n[INPUT]: x\n" in captured.out
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.choose_file_from_folder : choice = [X]\n" in captured.out
+        assert "\nLocation: Newt.utility.select_from_input : choice = [X]\n" in captured.out
         assert "\nSelection cancelled.\n" in captured.out
         # Expected absence of result
         assert "This line will not be printed" not in captured.out
