@@ -28,7 +28,8 @@ Functions:
                 d: Mapping[str, object]
                 ) -> tuple[object, ...]
     def select_from_input(
-        select_dict: dict[str, str]
+        select_dict: dict[str, str],
+        missing_values: dict[str, int] | None = None
         ) -> str
 """
 
@@ -304,7 +305,8 @@ def sorting_dict_by_keys(
 
 
 def select_from_input(
-        select_dict: dict[str, str]
+        select_dict: dict[str, str],
+        missing_values: dict[str, int] | None = None
         ) -> str:
     """ Display a numbered list of options and prompt user to select one.
 
@@ -332,6 +334,8 @@ def select_from_input(
     print("Available list:", len(select_dict))
     max_key_len = len(max(select_dict.keys(), key=len)) + 2
     for nr, name in select_dict.items():
+        if missing_values and name in missing_values:
+            name += f" ({missing_values[name]})"
         print(f"{nr:>{max_key_len}}: {name}")
     print(f"{'X':>{max_key_len}}: Exit / Cancel")
 

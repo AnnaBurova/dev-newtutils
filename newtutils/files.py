@@ -17,7 +17,8 @@ Functions:
         text: str
         ) -> str
     def choose_file_from_folder(
-        folder_path: str
+        folder_path: str,
+        missing_values: dict[str, int] | None = None
         ) -> str
     === TEXT ===
     def read_text_from_file(
@@ -245,10 +246,8 @@ def choose_file_from_folder(
     sorted_file_list = sorted(list(set(file_list)))
     sorted_file_dict = {}
     for idx, name in enumerate(sorted_file_list, start=1):
-        if missing_values and name in missing_values:
-            name += f" ({missing_values[name]})"
         sorted_file_dict[str(idx)] = name
-    choice = NewtUtil.select_from_input(sorted_file_dict)
+    choice = NewtUtil.select_from_input(sorted_file_dict, missing_values)
     selected_file = sorted_file_dict[choice]
     return selected_file
 
