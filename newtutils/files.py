@@ -188,7 +188,8 @@ def _normalize_newlines(
 
 
 def choose_file_from_folder(
-        folder_path: str
+        folder_path: str,
+        missing_values: dict[str, int] | None = None
         ) -> str:
     """
     Display files in a folder and let user interactively select one.
@@ -242,7 +243,11 @@ def choose_file_from_folder(
         )
 
     sorted_file_list = sorted(list(set(file_list)))
-    sorted_file_dict = {str(idx): name for idx, name in enumerate(sorted_file_list, start=1)}
+    sorted_file_dict = {}
+    for idx, name in enumerate(sorted_file_list, start=1):
+        if missing_values and name in missing_values:
+            name += f" ({missing_values[name]})"
+        sorted_file_dict[str(idx)] = name
     choice = NewtUtil.select_from_input(sorted_file_dict)
     selected_file = sorted_file_dict[choice]
     return selected_file
