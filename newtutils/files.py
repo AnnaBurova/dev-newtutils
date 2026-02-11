@@ -83,6 +83,7 @@ import shutil
 from datetime import datetime, timedelta, timezone
 
 import newtutils.console as NewtCons
+import newtutils.utility as NewtUtil
 
 
 def ensure_dir_exists(
@@ -224,10 +225,10 @@ def choose_file_from_folder(
 
     # Get file list
     try:
-        file_list = sorted([
+        file_list = [
             f for f in os.listdir(folder_path)
             if check_file_exists(os.path.join(folder_path, f), stop=False, logging=False)
-        ])
+        ]
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
             f"Failed to list directory: {e} (found? write test!)",  # TODO
@@ -240,60 +241,11 @@ def choose_file_from_folder(
             location="Newt.files.choose_file_from_folder : file_list empty"
         )
 
-    # Display numbered list
-    print("Available files:", len(file_list))
-    for idx, name in enumerate(file_list, start=1):
-        print(f"{idx:>6}: {name}")
-    print("     X: Exit / Cancel")
-
-    attempt = 1
-    # Loop until valid input
-    while attempt < 6:
-        try:
-            choice = input(
-                "\nEnter number from list ([X] to exit): "
-            ).strip().lower()
-            print(f"[INPUT]: {choice}")
-
-            if choice == "x":
-                NewtCons.error_msg(
-                    "Selection cancelled.",
-                    location="Newt.files.choose_file_from_folder : choice = [X]"
-                )
-
-            if not choice.isdigit():
-                print("Invalid input. Please enter a number.")
-                continue
-
-            index = int(choice)
-
-            if 1 <= index <= len(file_list):
-                selected_file = file_list[index - 1]
-                print(f"Selected file: {selected_file}")
-                print()
-                return selected_file
-
-            print("Number out of range. Try again.")
-
-        except KeyboardInterrupt:
-            NewtCons.error_msg(
-                "Selection cancelled.",
-                location="Newt.files.choose_file_from_folder : KeyboardInterrupt"
-            )
-
-        except Exception as e:  # pragma: no cover
-            NewtCons.error_msg(
-                f"Exception: {e} (found? write test!)",  # TODO
-                location="Newt.files.choose_file_from_folder : Exception while choice"
-            )
-
-        attempt += 1
-
-    NewtCons.error_msg(
-        f"No correct selection after {attempt} attempt.",
-        location="Newt.files.choose_file_from_folder : while attempt"
-    )
-    return ""
+    sorted_file_list = sorted(list(set(file_list)))
+    sorted_file_dict = {str(idx): name for idx, name in enumerate(sorted_file_list, start=1)}
+    choice = NewtUtil.select_from_input(sorted_file_dict)
+    selected_file = sorted_file_dict[choice]
+    return selected_file
 
 
 # === TEXT ===
