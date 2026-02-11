@@ -10,6 +10,7 @@ Tests cover:
 - TestSortingList
 - TestSortingDictByKeys
 - TestCheckDictKeys
+- TestSelectFromInput
 """
 
 import pytest
@@ -676,3 +677,161 @@ class TestCheckDictKeys:
         assert "\nData keys: x\nMissing keys: a, b\nUnexpected keys: x\n" in captured.out
         # Expected absence of result
         assert "This line will not be printed" not in captured.out
+
+
+class TestSelectFromInput:
+    """ Tests for select_from_input function. """
+
+
+    @patch('newtutils.utility.input', side_effect=["1"])
+    def test_select_from_input_valid_choice(self, mock_input, capsys):
+        """ Test select_from_input returns key for valid numbered user choice. """
+        print_my_func_name()
+
+        select_dict = {"1": "Option A", "2": "Option B", "3": "Option C"}
+        print(select_dict)
+
+        result = NewtUtil.select_from_input(select_dict)
+        assert result == "1"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nAvailable list: 3\n" in captured.out
+        assert "\n  1: Option A\n" in captured.out
+        assert "\n  2: Option B\n" in captured.out
+        assert "\n  3: Option C\n" in captured.out
+        assert "\n  X: Exit / Cancel\n" in captured.out
+        assert "\n[INPUT]: 1\n" in captured.out
+        assert "\nSelected option: Option A\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
+    @patch('newtutils.utility.input', side_effect=["abc", "999", "2"])
+    def test_select_from_input_invalid_then_valid(self, mock_input, capsys):
+        """ Test select_from_input handles invalid input followed by valid choice. """
+        print_my_func_name()
+
+        select_dict = {"1": "Option A", "2": "Option B"}
+        print(select_dict)
+
+        result = NewtUtil.select_from_input(select_dict)
+        assert result == "2"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nAvailable list: 2\n" in captured.out
+        assert "\n  1: Option A\n" in captured.out
+        assert "\n  2: Option B\n" in captured.out
+        assert "\n  X: Exit / Cancel\n" in captured.out
+        assert "\n[INPUT]: abc\nInvalid input. Please enter a number.\n" in captured.out
+        assert "\n[INPUT]: 999\nNumber out of range. Try again.\n" in captured.out
+        assert "\n[INPUT]: 2\nSelected option: Option B\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
+    @patch('newtutils.utility.input', side_effect=["X"])
+    def test_select_from_input_cancel_uppercase(self, mock_input, capsys):
+        """ Test select_from_input handles uppercase cancel input correctly. """
+        print_my_func_name()
+
+        select_dict = {"1": "Option A"}
+        print(select_dict)
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.select_from_input(select_dict)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nAvailable list: 1\n" in captured.out
+        assert "\n  1: Option A\n" in captured.out
+        assert "\n  X: Exit / Cancel\n" in captured.out
+        assert "\n[INPUT]: x\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.utility.select_from_input : choice = [X]\n" in captured.out
+        assert "\nSelection cancelled.\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
+
+
+    def test_select_from_input_invalid_type(self, capsys):
+        """ Test select_from_input non-dict arg triggers validate_input SystemExit. """
+        print_my_func_name()
+
+        invalid_input = "not a dict"
+        print(invalid_input)
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.select_from_input(invalid_input)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.console.validate_input > Newt.utility.select_from_input : select_dict\n" in captured.out
+        assert "\nExpected <class 'dict'>, got <class 'str'>\n" in captured.out
+        assert "\nValue: not a dict\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
+
+
+    @patch('newtutils.utility.input')
+    def test_select_from_input_keyboard_interrupt(self, mock_input, capsys):
+        """ Test select_from_input raises SystemExit on KeyboardInterrupt. """
+        print_my_func_name()
+
+        mock_input.side_effect = KeyboardInterrupt()
+
+        select_dict = {"1": "Option A", "2": "Option B"}
+        print(select_dict)
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.select_from_input(select_dict)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nAvailable list: 2\n" in captured.out
+        assert "\n  1: Option A\n" in captured.out
+        assert "\n  2: Option B\n" in captured.out
+        assert "\n  X: Exit / Cancel\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.out
+        assert "\nLocation: Newt.utility.select_from_input : KeyboardInterrupt\n" in captured.out
+        assert "\nSelection cancelled.\n" in captured.out
+        # Expected absence of result
+        assert "This line will not be printed" not in captured.out
+
+
+    @patch('newtutils.utility.input', return_value=" 2 ")
+    def test_select_from_input_spaces(self, mock_input, capsys):
+        """ Test select_from_input handles input with leading and trailing spaces correctly. """
+        print_my_func_name()
+
+        select_dict = {"1": "Option A", "2": "Option B"}
+        print(select_dict)
+
+        result = NewtUtil.select_from_input(select_dict)
+        assert result == "2"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\nAvailable list: 2\n" in captured.out
+        assert "\n  1: Option A\n" in captured.out
+        assert "\n  2: Option B\n" in captured.out
+        assert "\n  X: Exit / Cancel\n" in captured.out
+        assert "\n[INPUT]: 2\n" in captured.out
+        assert "\nSelected option: Option B\n" in captured.out
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
