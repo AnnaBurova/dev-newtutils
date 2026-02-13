@@ -402,6 +402,7 @@ def convert_str_to_json(
     except Exception as e:
         NewtCons.error_msg(
             f"Failed to parse string to JSON: {e}",
+            f"Text size: {len(text_strip)}",
             location="Newt.files.convert_str_to_json : Exception standard JSON",
             stop=False
         )
@@ -422,6 +423,7 @@ def convert_str_to_json(
     except Exception as e:
         NewtCons.error_msg(
             f"Failed to parse string to JSON: {e}",
+            f"Text size: {len(text_replace)}",
             location="Newt.files.convert_str_to_json : Exception replace single quotes with double quotes",
             stop=False
         )
