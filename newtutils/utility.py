@@ -106,6 +106,10 @@ def count_similar_values(
             to the count of its occurrences.
     """
 
+    # Important to not call error message for empty list, just return empty dict
+    if not sequence_list:
+        return {}
+
     if not NewtCons.validate_input(
         sequence_list, list, check_non_empty=True, stop=False,
         location="Newt.utility.count_similar_values : sequence_list"
