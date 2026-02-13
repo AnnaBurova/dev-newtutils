@@ -8,7 +8,8 @@ Functions:
     def check_dict_keys(
         data: Mapping[str, object],
         expected: set[str],
-        stop: bool = True
+        stop: bool = True,
+        location: str = ""
         ) -> bool
     def count_similar_values(
         sequence_list: Sequence[tuple[Any, ...]],
@@ -44,7 +45,8 @@ import newtutils.console as NewtCons
 def check_dict_keys(
         data: Mapping[str, object],
         expected: set[str],
-        stop: bool = True
+        stop: bool = True,
+        location: str = ""
         ) -> bool:
     """ Validate that a mapping contains the expected keys.
 
@@ -56,12 +58,18 @@ def check_dict_keys(
         stop (bool):
             If True, stops execution on validation failure.
             Defaults to True.
+        location (str):
+            Additional location context for error reporting.
+            Defaults to empty string.
 
     Returns:
         out (bool):
             True if all expected keys are present and no extra keys exist,
             False otherwise.
     """
+
+    if location:
+        location = " > " + location
 
     data_keys = set(data.keys())
     expected_keys = set(expected)
@@ -73,7 +81,7 @@ def check_dict_keys(
             f"Data keys: {', '.join(sorted(data_keys))}",
             f"Missing keys: {', '.join(sorted(missing_keys))}",
             f"Unexpected keys: {', '.join(sorted(extra_keys))}",
-            location="Newt.utility.check_dict_keys : missing_keys or extra_keys",
+            location="Newt.utility.check_dict_keys : missing_keys or extra_keys" + location,
             stop=stop
         )
         return False
