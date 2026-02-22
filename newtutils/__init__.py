@@ -56,7 +56,6 @@ from .sql import (
 # Network
 from .network import (
     fetch_data_from_url,
-    download_file_from_url,
 )
 
 # === Metadata ===
@@ -89,7 +88,6 @@ __all__ = [
     "export_sql_query_to_csv",
     # Network ----------
     "fetch_data_from_url",
-    "download_file_from_url",
 ]
 
 __version__ = "1.1.1"

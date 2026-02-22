@@ -691,6 +691,7 @@ def save_csv_to_file(
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
             f"Exception: {e} (found? write test!)",  # TODO
+            repr(file_name),
             location="Newt.files.save_csv_to_file : Exception",
             stop=False
         )
