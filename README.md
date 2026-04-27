@@ -1,6 +1,6 @@
 # About NewtUtils — Developer Utilities (NewtCode)
 
-+[![Version](https://img.shields.io/badge/version-v0.2.19-orange.svg)](https://github.com/AnnaBurova/dev-newtutils)
++[![Version](https://img.shields.io/badge/version-v0.3.0-orange.svg)](https://github.com/AnnaBurova/dev-newtutils)
  [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 [![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/)
@@ -24,20 +24,12 @@ The project follows clean, documented, and predictable function behavior for mai
 
 | Path | Purpose |
 |------|---------|
-| `.gitignore` | Specifies files and directories that should not be tracked by Git. |
-| `.gitattributes` | Ensures consistent text normalization (LF endings), defines diff rules, and marks binary files. |
-| `AUTHORS` | Credits contributors and external resources. |
-| `CHANGELOG.md` | List of changes and updates for the repository. |
-| `CONTRIBUTING.md` | Contribution guidelines and repository conventions. |
-| `COPYRIGHT` | Copyright information for original and included materials. |
-| `INSTALLATION.md` | Installation instructions and development setup guide. |
-| `LICENSE` | The MIT license governing repository use. |
-| `requirements.txt` | List of Python dependencies for the project. |
-| `TODO` | List of tasks and improvements for the project. |
-| `new-repo/` | Starter repository templates for bootstrapping new projects. |
-| `new-repo/tests/` | Test suite for the repository. Must pass before merging PRs. |
-| `new-repo/tests/TESTING.md` | Documentation for the testing process. |
-| `new-repo/tests/_list.sh` | Script to list all test files in the `tests/` directory. |
+| `Console tools` | Console input/output operations, including error messages, input validation, and location checking. |
+| `Utility functions` | General purpose utilities, including dictionary key validation, value counting, sorting operations, and input selection. |
+| `File operations` | File system operations, including directory and file creation, reading, writing, and deletion |
+| `SQL operations` | Database access, including connection management, query execution, and transaction handling. |
+| `Network operations` | Network request handling, including HTTP request sending, response handling, and error management. |
+| `Testing` | Automated and manual test scripts, including test output logs and automated testing with pytest. |
 
 ---
 

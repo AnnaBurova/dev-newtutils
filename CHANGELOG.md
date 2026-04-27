@@ -5,6 +5,21 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## [0.3.0] — Reworked CHANGELOG and Migrated build backend
+
+**Date:** 2026-04-27
+
+### Changed
+
+- `CHANGELOG.md` - Completly rewrote history from broad version-based entries to granular per feature releases following `[0.x.x]` semantic version. Removed emoji decorators from headings and section labels. Edit tages and releases numbers.
+- `README.md` - Updated badge to v0.3.0. Updated links and added Development Workflow section.
+- `CONTRIBUTING.md` - Updated contribution guidelines to include a contributor checklist and PR rules. Removed emoji formatting.
+- `newtutils/__init__.py` - Updated timestamp, set __version__ to 0.3.0, and shorten package description.
+- `pyproject.toml` - Changed package name to "NewtUtils", set version to 0.3.0, and adjust the project description.
+- `pyproject.toml` - Migrated build backend from `setuptools` to `hatchling`.
+
+---
+
 ## [0.2.19] — Merged download_file_from_url into fetch_data_from_url
 
 **Date:** 2026-02-22

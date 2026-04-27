@@ -1,5 +1,5 @@
 """
-Updated on 2026-02
+Updated on 2026-04
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -90,11 +90,10 @@ __all__ = [
     "fetch_data_from_url",
 ]
 
-__version__ = "1.1.1"
+__version__ = "0.3.0"
 __author__ = "NewtCode Anna Burova"
 __description__ = (
-    "NewtUtils — A modular Python toolkit providing reusable utilities "
-    "for console messaging, input validation, sorting, file I/O, SQL, and network operations."
+    "NewtUtils — A collection of utility functions for common programming tasks."
 )
 __license__ = "MIT"
 __url__ = "https://github.com/AnnaBurova/dev-newtutils"

@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "newtutils"
-version = "0.2.19"
-description = "A modular Python toolkit providing reusable utilities for console messaging, input validation, sorting, file I/O, SQL, and network operations"
+name = "NewtUtils"
+version = "0.3.0"
+description = "NewtUtils — A collection of utility functions for common programming tasks."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"

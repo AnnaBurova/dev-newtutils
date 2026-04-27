@@ -1,6 +1,6 @@
 # Tests for NewtUtils
 
-This directory contains comprehensive unit tests for the `newtutils` package.
+This directory contains comprehensive unit tests for the **NewtUtils** package.
 
 ## Test Files
 
@@ -14,11 +14,12 @@ This directory contains comprehensive unit tests for the `newtutils` package.
 
 `_list.sh` — Batch Test Runner
 
-The `_list.sh` script automatically runs all test modules with different pytest options and saves the output to text files. This is useful for generating reference output files or batch testing.
+The `_list.sh` script automatically runs all test modules with different pytest options and saves the output to text files.
+This is useful for generating reference output files or batch testing.
 
 **What it does:**
 
-- Runs pytest for all modules (console, utility, files, sql, network)
+- Runs pytest for all listed modules
 - Executes each module with 4 different pytest configurations:
     - 1). Default mode
     - 2). Verbose mode (`-v`)
@@ -27,12 +28,12 @@ The `_list.sh` script automatically runs all test modules with different pytest 
 - Saves output to `test_*_output_*.txt` files in the tests directory
 - Converts line endings to LF format (requires `dos2unix` if available)
 
-**Requirements:**
+## Requirements
 
 - `pytest` must be installed
 - Optional: `dos2unix` (for line ending conversion; script will continue without it)
 
-**Usage:**
+## Usage
 
 Navigate to the tests directory first:
 ```bash
