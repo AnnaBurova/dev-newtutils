@@ -1,13 +1,13 @@
-MIT License
+The MIT License (MIT)
 
 Copyright (c) 2025-2026 Anna Burova
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
@@ -25,28 +25,38 @@ SOFTWARE.
 This project uses components from the Python standard library,
 licensed under the Python Software Foundation License (PSF License):
 https://docs.python.org/3/license.html
+https://docs.python.org/3/library/index.html
 
-- __future__ - future feature imports
+- __future__ — Future statement definitions
 
-- sys - interpreter and runtime
-- os - file system and environment
-- shutil - directory operations like copying, moving, and deleting
+- gc — Garbage Collector interface for memory management
+- inspect — Inspect live objects
+- sys — System-specific parameters and functions
+- os — Miscellaneous operating system interfaces for file and directory management
+- tempfile — Generate temporary files and directories
+- shutil - High-level file operations
 
-- time - timing and sleep utilities
-- datetime - date and time objects
-- collections - high-performance container datatypes
-- typing - type hints (Any, TextIO)
+- typing — Support for type hints (Any, TextIO)
+- collections — Container datatypes
+- collections.abc — Abstract Base Classes for Containers
+- time — Time access and conversions
+- datetime — Basic date and time types
 
-- builtins - implicit base types
-- gc - garbage collector interface
-- tempfile - temporary files and directories
-- unittest.mock - testing and mocking utilities
+- urllib — URL handling modules
+- urllib.parse — Parse URLs into components
 
-- csv - CSV parsing and writing
-- json - JSON serialization
-- winsound - playing sounds and beeps (Windows-only module)
+- csv — CSV File Reading and Writing
+- json — JSON encoder and decoder
+- sqlite3 — DB-API 2.0 interface for SQLite databases
 
-- sqlite3 - included with Python under the PSF License;
+- winsound — Sound-playing interface for Windows only
+
+- unittest — Unit testing framework
+- unittest.mock — mock object library
+
+================================================================================
+
+- sqlite3 — included with Python under the PSF License;
   the underlying SQLite engine is in the Public Domain:
   https://sqlite.org/copyright.html
   (Released into the public domain by D. Richard Hipp)
@@ -55,15 +65,19 @@ https://docs.python.org/3/license.html
 
 This project uses the following third-party libraries:
 
-- pytest (MIT)
-  Copyright (c) 2004-2026 Holger Krekel
-  https://github.com/pytest-dev/pytest
-  https://pypi.org/project/pytest/
+- NewtUtils
+  Copyright (c) 2025-2026 Anna Burova
+  https://github.com/AnnaBurova/dev-newtutils
 
 - Colorama (BSD 3-Clause License)
   Copyright (c) 2010-2025 Jonathan Hartley & Arnon Yaari
   https://github.com/tartley/colorama
   https://pypi.org/project/colorama/
+
+- PyTest (MIT License)
+  Copyright (c) 2004-2026 Holger Krekel
+  https://github.com/pytest-dev/pytest
+  https://pypi.org/project/pytest/
 
 - Requests (Apache License 2.0)
   Copyright (c) 2011-2026 Kenneth Reitz & contributors
