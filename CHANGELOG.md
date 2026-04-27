@@ -1,429 +1,691 @@
-# 🧾 Changelog — *NewtUtils (NewtCode)*
+# Changelog — *NewtUtils (NewtCode)*
 
 All notable changes to this project are documented here.  
 This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PATCH`).
 
 ---
 
-## 🏷️ v1.1.1 — Input Handling Enhancements
+## [0.2.19] — Merged download_file_from_url into fetch_data_from_url
 
-**Date:** 2026-02-12
+**Date:** 2026-02-22
 
-### ✨ Added
+### Added
 
-- NewtUtil `utility.py`:
-  - New function `count_similar_values()`
+- `newtutils/files.py` - Function `choose_file_from_folder()` now accepts `missing_values` as argument and passes it to `utility.select_from_input`.
 
-### 🛠️ Improved
+### Changed
 
-- NewtUtil `utility.py`:
-  - Moved `select_from_input()` from `console.py`
+- `newtutils/files.py` - Function `convert_str_to_json()` error messages now include text size for both standard and single-quote-replace parse attempts.
+- `newtutils/network.py` - Function `fetch_data_from_url()` now accepts `save_path` parameter to optionally save the response to a local file.
+- `newtutils/network.py` - Function `fetch_data_from_url()` now accepts `max_mb_size` parameter to limit file download size (default: 2 MB).
+- `newtutils/network.py` - Function `fetch_data_from_url()` now accepts `logging` parameter to control response time output.
 
-- NewtFiles `files.py`:
-  - Update `choose_file_from_folder()` to use `select_from_input()` for better input handling and validation.
+### Fixed
+
+- `newtutils/network.py` - Streamed binary downloads using chunked `iter_content` (1 MB chunks) instead of loading full content into memory.
 
 ---
 
-## 🏷️ v1.1.0 — February Update
+## [0.2.18] — Function count_similar_values in Utility
+
+**Date:** 2026-02-11
+
+### Added
+
+- `newtutils/utility.py` - Added `count_similar_values()` function to count occurrences of values at a specified position in a sequence of tuples.
+- `newtutils/__init__.py` - Exported `count_similar_values` and included it in `__all__` for direct package-level imports.
+
+### Testing
+
+- Moved `select_from_input()` test coverage out of `tests/test_console.py` into `tests/test_utility.py`.
+
+---
+
+## [0.2.17] — Moved Function select_from_input from Console to Utility
+
+**Date:** 2026-02-11
+
+### Added
+
+- Added Python 3.14 support in project metadata.
+
+### Changed
+
+- Moved `select_from_input()` from `newtutils.console` to `newtutils.utility`.
+- `newtutils/files.py` - Updated file selection logic in `choose_file_from_folder()` to reuse `utility.select_from_input()`.
+
+### Testing
+
+- Refreshed stored test output logs for all modules.
+
+### Fixed
+
+- `newtutils/files.py` - Updated `read_text_from_file()`, `read_json_from_file()`, and `read_csv_from_file()` to return `None` on default.
+
+---
+
+## [0.2.16] — Testing helpers in Network
 
 **Date:** 2026-02-10
 
-### ✨ Added
+### Changed
 
-- NewtCons `console.py`:
-  - New function `check_location()`
-  - New function `select_from_input()`
+- `newtutils/network.py` - Improved input validation in functions by requiring non-empty string inputs, disabling hard stops, and updating validation location labels for clearer error output.
+- Refined network error reporting by using more specific location messages for HTTP errors, timeouts, request exceptions, and generic exceptions.
 
-- NewtUtil `utility.py`:
-  - New function `check_dict_keys()`
+### Testing
 
-- NewtFiles `files.py`:
-  - Maded `ensure_dir_exists()` public
-  - Maded `check_file_exists()` public
-  - New function `setup_logging()`
-  - New function `cleanup_logging()`
-
-### 🛠️ Improved
-
-- NewtCons `console.py`:
-  - Added `check_non_empty` parameter to `validate_input()` for validating non-empty values.
-  - Changed `beep` parameter default from `False` to `True` in `_retry_pause()`.
-  - Refactored exception handling with `# pragma: no cover` markers for Windows-only code.
-
-- NewtUtil `utility.py`:
-  - Enhanced type annotations with `Sequence` instead of concrete `list`, and `Any` for complex types.
-  - Function `sorting_dict_by_keys()`:
-    - Added `stop` parameter for consistent error handling behavior.
-    - Improved empty key handling with special case for single-key dictionaries.
-
-- NewtFiles `files.py`:
-  - Function `check_file_exists()`:
-    - Renamed `print_error` parameter to `logging` for consistency.
-    - Changed `stop` parameter default from `False` to `True`.
-  - Function `choose_file_from_folder()`:
-    - Enhanced with max attempt limit (5),
-    - improved menu format,
-    - and `None` return removed, it is script stop now.
-  - Functions `read_text_from_file()` `read_json_from_file()` `read_csv_from_file()`:
-    - Added `stop` parameter.
-    - Changed to return `None` instead of empty string on error.
-  - Function `save_text_to_file()`:
-    - Changed `append` parameter default from `False` to `True`
-
-- NewtSQL `sql.py`:
-  - Function `db_delayed_close()`:
-    - Added `logging` parameter for controlling output messages.
-  - Function `sql_execute_query()`:
-    - Extended dangerous SQL token detection with new patterns: `exec`, `execute`, `grant`, `revoke`, `union`, `--`, `sp_`, `char(`, `concat(`, `0x`.
-    - Added specialized error handling for `sqlite3.OperationalError` to distinguish between syntax errors and database errors.
-
-- NewtNet `network.py`:
-  - Function `fetch_data_from_url()`:
-    - Improved HTTP status code comments with sections for successful (200-299), client error (400-499), and server error (500-599) responses.
-  - Function `download_file_from_url()`:
-    - Enhanced file size formatting with increased precision.
-
-### 📚 Documentation
-
-- Updated all module docstrings to unified Google-style format with improved parameter descriptions and return type documentation.
-- Fixed error location reporting to use consistent, more readable format across all files (e.g., `"function : context"` instead of `"function.parameter"`).
-- Reformatted multi-line function calls for improved readability and consistency throughout all modules.
-- Strengthened input validation documentation with `check_non_empty` parameter usage guidance.
-
-### 🧪 Testing
-
-- Extracted test helper functions into dedicated `tests/helpers.py` module:
-  - `print_my_func_name()` — automatically displays the name of the calling test function using frame inspection.
-  - `print_my_captured()` — formats and displays pytest captured output (stdout/stderr) for easier debugging.
-- Added support for new functions.
+- `tests/test_network.py` - Refactored to use shared helper utilities instead of old local `print_my_func_name` and `print_my_captured` functions.
+- Expanded network tests to assert full printed output, including full URLs, response times, result values, request kwargs, precise file sizes, and detailed error locations.
+- Refreshed stored pytest output snapshots for files and network tests to match the new formatting, plugin list, error locations, separator lines, result lines, and rounded file-size values.
 
 ---
 
-## 🏷️ v1.0.3 — Enhanced File I/O and Network Utilities
+## [0.2.15] — Testing helpers in SQL
+
+**Date:** 2026-02-09
+
+### Changed
+
+- `newtutils/console.py` - Improved error location messages in `validate_input()` by appending the caller location to `check_non_empty` validation errors.
+- `newtutils/sql.py` - Updated functions for handling SQL queries and added more comprehensive error handling.
+
+### Testing
+
+- `tests/test_sql.py` - Refactored to use shared helper utilities instead of old local `print_my_func_name` and `print_my_captured` functions.
+
+---
+
+## [0.2.14] — Argument check_non_empty in Function validate_input
+
+**Date:** 2026-02-09
+
+### Added
+
+- `newtutils/console.py` - Added a new `check_non_empty` argument to the `validate_input()` function to also validate that the value is not empty.
+
+### Changed
+
+- Updated Modules to use `check_non_empty=True` in `validate_input()` function, ensuring that empty inputs are rejected.
+- `newtutils/files.py` - Changed `convert_str_to_json()` to return `None` for invalid or empty input instead of relying on earlier exit behavior.
+- `newtutils/files.py` - Changed `check_file_exists()` to return `False` immediately when validation fails.
+
+### Testing
+
+- Updated test fixtures and expected output files to match the new error messages and return values.
+
+### Fixed
+
+- `newtutils/files.py` - Fixed `save_json_to_file()` to report negative indentation as an error.
+
+---
+
+## [0.2.13] — Reorder Function check_dict_keys in Utility
+
+**Date:** 2026-02-08
+
+### Changed
+
+- `newtutils/utility.py` - Moved `check_dict_keys()` to the top, placing it before the sorting helpers and matching the module's function list in the docstring.
+- `newtutils/__init__.py` - Reordered `check_dict_keys` in `newtutils.__init__.py` so the utility imports and exported names now follow the same sequence as the function definitions.
+
+---
+
+## [0.2.12] — Reworked Functions in SQL
+
+**Date:** 2026-02-08
+
+### Changed
+
+- `newtutils/sql.py` - Updated several validation and error `location` strings to use a more specific `function : context` format for easier tracing.
+
+### Fixed
+
+- `newtutils/sql.py` - Clarified `db_delayed_close()` documentation to explain that it triggers garbage collection to help release SQLite file handles, rather than guaranteeing a safe immediate close.
+
+### Removed
+
+- `newtutils/sql.py` - Removed several early `return` branches that depended directly on `NewtCons.validate_input(..., stop=False)`
+
+---
+
+## [0.2.11] — Testing helpers in Files
+
+**Date:** 2026-02-07
+
+### Changed
+
+- `newtutils/utility.py` - Expanded `sorting_list()` to accept sequences of strings and integers, not just lists, and updated validation to allow both lists and tuples.
+- `newtutils/utility.py` - Expanded `sorting_dict_by_keys()` to accept sequence inputs and more general mapping types, with updated type hints and docstrings.
+- `newtutils/utility.py` - Updated `check_dict_keys()` documentation to refer to mappings instead of only dictionaries, and removed embedded usage examples from some docstrings.
+
+### Testing
+
+- `tests/test_files.py` - Refactored to use shared helper utilities instead of old local `print_my_func_name` and `print_my_captured` functions.
+- Updated existing tests to match new APIs and behaviors, especially `logging` parameter naming, `None`-on-failure returns, revised validation locations, and combined output formatting. Rewrote docstrings to be more descriptive and behavior-focused.
+- Marked generic exception branches in console and utility helpers as `pragma: no cover` and updated their error text to include a testing note.
+
+### Fixed
+
+- `newtutils/files.py` - Corrected CSV save logging so the reported row count matches the actual number of written rows.
+
+---
+
+## [0.2.10] — Reworked Functions in Files
+
+**Date:** 2026-02-03
+
+### Changed
+
+- Standardized many validation and error location strings across `newtutils/console.py`, `newtutils/files.py`, and `newtutils/utility.py` for clearer diagnostics.
+- `newtutils/files.py` - Renamed public function `normalize_newlines` to underscore‑prefixed private name `_normalize_newlines` to indicate that this is intended for internal use only and not part of the public API.
+- `newtutils/files.py` - Changed `check_file_exists()` default behavior to `stop=True` to indicate that it should stop on first error.
+- `newtutils/files.py` - Changed `save_text_to_file()` default behavior to `append=True` to indicate that it should append to file instead of overwriting existing content.
+- `newtutils/files.py` - Changed `save_text_to_file()` default behavior to `append=True` to indicate that it should append to file instead of overwriting existing content.
+- `newtutils/files.py` - Revised CLI flow of `choose_file_from_folder()` to use `X` for cancel.
+- `newtutils/utility.py` - Added a default argument `stop=True` to `sorting_dict_by_keys()` to stops execution when invalid data is detected.
+
+### Testing
+
+- Renamed stored test output snapshots for all modules from the old `tests/test_<module>_<n>.txt` to the new `tests/output/test_<module>_<n>.txt` location.
+
+### Removed
+
+- `newtutils/__init__.py` - Removed renamed function `_normalize_newlines` from `__all__` since this is now intended for internal use only and not part of the public API.
+
+---
+
+## [0.2.9] — Function check_dict_keys in Utility
+
+**Date:** 2026-02-03
+
+### Added
+
+- `newtutils/utility.py` - Added `check_dict_keys()` function to check if a dictionary has all required keys.
+- `newtutils/__init__.py` - Exported `check_dict_keys` and included it in `__all__` for direct package-level imports.
+
+### Testing
+
+- `tests/test_utility.py` - Added tests for `check_dict_keys()` function.
+
+---
+
+## [0.2.8] — Testing helpers in Utility
+
+**Date:** 2026-02-03
+
+### Testing
+
+- `tests/test_console.py` - Expanded with stricter assertions for expected output and explicit checks that unwanted output is absent.
+- `tests/test_utility.py` - Refactore to import shared helper functions instead of defining local print helpers.
+
+### Fixed
+
+- `newtutils/utility.py` - Refined `sorting_dict_by_keys()` so empty input returns an empty list immediately before further validation, preventing unnecessary processing and potential errors with empty data.
+- `newtutils/utility.py` - Adjusted `sorting_dict_by_keys()` to return a copy of the original list when no sorting keys are provided, with this behavior handled earlier in the function flow. 
+
+---
+
+## [0.2.7] — Function select_from_input in Console
+
+**Date:** 2026-02-02
+
+### Added
+
+- `newtutils/console.py` - Added `select_from_input()` function to allow users to select from a list of options via console input.
+  - The selection flow supports canceling with `x` or `X`, and it handles `KeyboardInterrupt` and other exceptions with error output.
+- `newtutils/__init__.py` - Exported `select_from_input` and included it in `__all__` for direct package-level imports.
+
+### Testing
+
+- `tests/test_console.py` - Added tests for `select_from_input()` including valid selection, invalid input recovery, cancel behavior, whitespace handling, type validation, `KeyboardInterrupt`, and generic exceptions.
+
+---
+
+## [0.2.6] — Testing helper functions
+
+**Date:** 2026-02-02
+
+### Changed
+
+- Renamed public functions from clean public names to underscore‑prefixed private names to indicate they are intended for internal use only and not part of the public API:
+  - in `newtutils/console.py`:
+    - `_divider` => `divider`
+    - `_beep_boop` => `beep_boop`
+    - `_retry_pause` => `retry_pause`
+
+### Testing
+
+- `tests/helpers.py` - Created file with `print_my_func_name` (using `inspect.currentframe`) and `print_my_captured` helpers to reuse across tests.
+- `newtutils\console.py` - Reworked tests to use the new `print_my_func_name` and `print_my_captured` helpers for cleaner output and easier debugging.
+
+### Removed
+
+- `newtutils/__init__.py` - Removed renamed functions from `__all__` since they are now intended for internal use only and not part of the public API.
+
+---
+
+## [0.2.5] — Functions setup_logging and cleanup_logging in Files
 
 **Date:** 2026-01-30
 
-### ✨ Added
+### Added
 
-- `files.py`:
-  - Added `logging` parameter to all file I/O functions (`read_text_from_file`, `save_text_to_file`, `read_json_from_file`, `save_json_to_file`, `read_csv_from_file`, `save_csv_to_file`) to control debug output.
-    - When `logging=True` (default), functions print confirmation messages with file paths and operation details.
-    - Set `logging=False` to suppress output for silent operations.
-  - Added `append` parameter to `save_csv_to_file()` for appending rows to existing CSV files.
-    - When `append=True`, new rows are added to the end of the file instead of overwriting.
-  - Enhanced `_check_file_exists()` with new parameters:
-    - `stop` parameter — controls whether execution stops on error (defaults to `False`).
-    - `print_error` parameter — controls error message output (defaults to `True`).
-
-- `network.py`:
-  - Enhanced `download_file_from_url()` with file size checking:
-    - Checks file size before download using HEAD request.
-    - Verifies if file already exists and compares sizes to avoid redundant downloads.
-    - Automatically skips download if file exists with matching size.
-  - Improved retry logic:
-    - Timeout increases by 30 seconds on each retry attempt.
-    - Better error handling with separate exception types for network and general errors.
-
-### 🛠️ Improved
-
-- `files.py`:
-  - Fixed row count calculation in `save_csv_to_file()` logging output.
-  - Improved debug output formatting for all file operations with consistent message structure.
-  - Enhanced error handling in `_check_file_exists()` with configurable behavior.
-
-- `network.py`:
-  - Separated status code and response time into distinct print statements for better readability.
-  - Improved timeout handling with separate connect and read timeouts.
-  - Added `response.raise_for_status()` for better HTTP error detection.
+- `newtutils/files.py` - Added `setup_logging()` and `cleanup_logging()` functions for managing log file creation and cleanup.
+- `newtutils/__init__.py` - Exported `setup_logging` and `cleanup_logging` and included them in `__all__` for direct package-level imports.
 
 ---
 
-## 🏷️ v1.0.2 — JSON String Parsing Utility
+## [0.2.4] — Function check_location in Console
+
+**Date:** 2026-01-30
+
+### Added
+
+- `newtutils/console.py` - Added `check_location()` function to validate the current directory.
+- `newtutils/__init__.py` - Exported `check_location` and included it in `__all__` for direct package-level imports.
+
+---
+
+## [0.2.3] — Renamed some internal functions to public names
+
+**Date:** 2026-01-30
+
+### Changed
+
+- Renamed internal functions from underscore‑prefixed private names to clean public names:
+  - in `newtutils/console.py`:
+    - `_divider` => `divider`
+    - `_beep_boop` => `beep_boop`
+    - `_retry_pause` => `retry_pause`
+  - in `newtutils/files.py`:
+    - `_ensure_dir_exists` => `ensure_dir_exists`
+    - `_check_file_exists` => `check_file_exists`
+    - `_normalize_newlines` => `normalize_newlines`
+- `newtutils/__init__.py` - Updated `__all__` to reflect the renamed functions.
+- Updated all internal calls across other modules to use the new function names.
+
+---
+
+## [0.2.2] — Enhanced logging features in Files and Network modules
+
+**Date:** 2026-01-30
+
+### Changed
+
+- `newtutils/files.py` - Added `logging` parameter to all file I/O functions for debug output control.
+  - When `logging=True` (default), functions print confirmation messages with file paths and operation details.
+  - Set `logging=False` to suppress output for silent operations.
+- `newtutils/files.py` - Added `append` parameter to `save_csv_to_file()` for appending rows to existing CSV files.
+  - When `append=False` (default), the file is overwritten or new.
+  - Set `append=True` to preserve existing data and add new rows without losing previous content.
+- `newtutils/files.py` - Enhanced `_check_file_exists()` with new parameters `stop` and `print_error` for error handling.
+- `newtutils/network.py` - Enhanced `download_file_from_url()` with file size checking using HEAD requests, improved retry logic with timeout backoff, and better error handling.
+  - `stop` (default `False`) controls whether execution stops on error.
+  - `print_error` (default `True`) controls whether error messages are printed.
+- `COPYRIGHT` - Updated copyright year range.
+- `LICENSE` - Updated copyright years.
+
+### Testing
+
+- `tests/test_files.py` - Extended tests for file I/O operations with various scenarios and edge cases.
+- `tests/test_network.py` - Extended tests for `download_file_from_url` with more mocks and scenarios, including file size checks, existence checks, and various response types.
+- `INSTALL.md` - Added `pytest` to dependencies and installation instructions, including editable mode in virtual environments.
+- `README.md` - Added `pytest` to dependencies.
+
+### Fixed
+
+- `newtutils/files.py` - Updated `_normalize_newlines()` to strip trailing newlines in addition to normalizing line endings.
+
+---
+
+## [0.2.1] — Function convert_str_to_json in Files
 
 **Date:** 2025-11-19
 
-### ✨ Added
+### Added
 
-- `files.py`:
-  - `convert_str_to_json()` — parse a string into a JSON-compatible Python object.
-    - Tries `json.loads` first, falls back to attempts single-quote to double-quote substitution before retrying `json.loads`.
-    - Returns `list | dict` on success, otherwise `None`.
+- `newtutils/files.py` - Added `convert_str_to_json()` function for parsing JSON-like strings.
+- `newtutils/__init__.py` - Added `convert_str_to_json()` to the public API.
 
-- `newtutils.__init__`:
-  - Exported `convert_str_to_json` from `files` module for public API access.
+### Changed
 
-### 🧪 Testing
+- `LICENSE` - Updated Python standard library module descriptions and regrouped them for better organization.
+- `AUTHORS` - Updated author email.
 
-- `tests/test_files.py`:
-  - Added comprehensive test suite for `convert_str_to_json()` function:
-    - `TestConvertStrToJson` class with 10 test cases covering:
-      - Valid JSON parsing (dict and list formats)
-      - Single-quote to double-quote conversion
-      - Empty string and whitespace handling
-      - Invalid input validation
-      - Invalid JSON error handling
-      - Non-list/dict JSON type filtering
-      - Nested structure parsing
+### Testing
+
+- `tests/test_files.py` - Added comprehensive test suite for `convert_str_to_json()` covering valid/invalid JSON, single quotes, empty strings, whitespace, nested structures, and non-list/dict results.
+
+### Fixed
+
+- `pyproject.toml` - Corrected the optional dependencies section.
 
 ---
 
-## 🏷️ v1.0.1 — Project Configuration Fix
+## [0.2.0] — Testing with PyTest
 
 **Date:** 2025-11-17
 
-### 🛠️ Fixed
+### Changed
 
-- `pyproject.toml`:
-  - Reorganized `[project.optional-dependencies]` section to appear after `classifiers` for improved logical structure.
-  - Ensures consistent formatting and readability of project metadata.
+- Updated all core modules to use `from __future__ import annotations`, expanded type hints, and refreshed module headers/docstrings.
+- `newtutils/console.py` - Added `location` parameter to `validate_input()` calls for better error context. Implemented `validate_input()` using in other modules for consistent input validation and error handling.
+- `newtutils/files.py` - Updated to use `collections.abc` types for better type hinting.
+- `newtutils/utility.py` - Updated to use `collections.abc` types and added input validation to sorting functions, improving robustness and error handling.
+- `newtutils/sql.py` - Strengthened with input validation, empty-query checks, basic multi-statement protection, dangerous token checks, better result validation, and clearer CSV export handling.
+- Revised documentation across `README.md`, `INSTALL.md`, `CONTRIBUTING.md`, and `LICENSE` to reflect stable release status, required type hints, testing workflow, and dependency/license details.
+- `pyproject.toml` - Updated project description and set project status to `Production/Stable`.
 
----
+### Testing
 
-## 🏷️ v1.0.0 — First Stable Release
+- Replaced older script-style test workflow with pytest-based test modules and documented how to run them.
+- Expanded test coverage for console, utility, files, SQL, and network behavior, including mocked HTTP requests and validation edge cases.
+- Added generated pytest output files for multiple test runs and verbosity modes.
+- `tests/_list.sh` - Reworked to run pytest-based test modules in multiple modes and save per-module output files.
+- `tests/README.md` - Added documentation with pytest usage, helper script instructions, and coverage guidance.
+- `pyproject.toml` - Added optional test dependencies with `pytest>=7.0.0`.
 
-**Date:** 2025-11-17
+### Removed
 
-### 🎉 Major Release
-
-This is the first stable release of NewtUtils, marking the library as production-ready with a stable API.
-
-### ✨ Completed
-
-- All core modules are complete and fully tested:
-  - `console.py` — console messaging, error reporting, type validation, and notification helpers.
-  - `utility.py` — list and dict sorting utilities with strict input validation.
-  - `files.py` — text, JSON, and CSV helpers with newline normalization and directory auto-creation.
-  - `sql.py` — SQLite helpers for queries, row operations, and CSV export.
-  - `network.py` — HTTP helpers with retries, configurable modes, and default headers.
-
-- Updated all core modules to:
-  - Include `from __future__ import annotations` for modern typing.
-  - Provide comprehensive type hints for arguments and return values.
-  - Normalize newline handling for cross-platform behavior.
-  - Use centralized input validation via `newtutils.console.validate_input()`.
-
-### ✨ Added
-
-- New public API exports in `newtutils.__init__`:
-  - Re-exported `validate_input` from `console` at the top-level.
-  - Exposed `choose_file_from_folder` from `files` for interactive file selection.
-
-- `console.py`:
-  - `validate_input()` — centralized type-checking with consistent error reporting.
-  - `_beep_boop()` — optional Windows-only notification sound for errors/retries.
-  - `_retry_pause()` — countdown helper for retryable operations with optional sound.
-
-- `files.py`:
-  - `choose_file_from_folder()` — interactive file selection in a directory with validation and error handling.
-
-- `network.py`:
-  - `DEFAULT_HTTP_HEADERS` — shared default headers for all outbound HTTP requests.
-  - Extended `fetch_data_from_url()`:
-    - New `mode` options: `"auto"`, `"alert"`, `"manual"` for retry behavior.
-    - Unified validation using `console.validate_input()`.
-  - Extended `download_file_from_url()`:
-    - Uses shared default headers.
-    - Improved retry logic and clearer error reporting.
-
-- `sql.py`:
-  - Improved `export_sql_query_to_csv()` to validate SQL results and report empty or invalid output more clearly before writing CSV.
-
-### 🛠️ Improved
-
-- `CONTRIBUTING.md`:
-  - Clarified requirement to use `from __future__ import annotations` in all modules.
-  - Made type hints mandatory for all public functions.
-
-- `INSTALL.md`:
-  - Fixed indentation in example snippet for temporary usage so it matches project style.
-
-- `README.md`:
-  - Added badges:
-    - License badge for MIT.
-    - Python version badge (3.10+).
-  - Expanded overview to state that all functions include full type hints and Google-style docstrings.
-  - Split **Requirements** and **Dependencies**:
-    - Requirements now state support and testing for Python 3.10-3.13 and the use of `from __future__ import annotations`.
-
-- `LICENSE`:
-  - Expanded the list of standard library modules used, grouped by purpose (core language, runtime, data processing, collections, testing, platform-specific, database).
-  - Converted PSF and SQLite license references to explicit URL links.
-  - Added explicit mention of `pytest` (MIT) in third-party dependencies.
-  - Normalized punctuation (for example, date ranges) in third-party copyright lines.
-
-- `files.py`:
-  - Stronger input validation for paths, data structures, and delimiters.
-  - Improved docstrings with explicit return semantics and normalized naming for `out`.
-  - CSV writing now normalizes newlines in all cell data before saving.
-  - JSON reading now guarantees a `list` or `dict` result and returns `[]` on invalid structures.
-
-- `network.py`:
-  - Refactored header handling to always start from `DEFAULT_HTTP_HEADERS` and then merge custom headers.
-  - Unified error messages with clearer timing information and retry context.
-  - Moved retry helpers (`_beep_boop`, `_retry_pause`) from `utility` into `console` for better responsibility separation.
-
-- `utility.py`:
-  - Removed low-level console and retry helpers (moved logic into `console`).
-  - Re-focused module on pure utility logic, with `sorting_list()` and `sorting_dict_by_keys()` using `console.validate_input()` for validation.
-  - Updated types to use `collections.abc` (`Sequence`, `Mapping`) where appropriate.
-
-- `sql.py`:
-  - Improved error messages when exporting to CSV (explicitly handling empty or invalid results).
-  - Normalized error handling and validation before CSV generation.
-
-- `TODO`:
-  - Removed outdated internal tasks and added new item to track future GW2-related helper functions.
-
-### 📚 Documentation
-
-- Updated all affected modules docstrings to:
-  - Use Google-style structure consistently.
-  - Clarify parameter and return types, including aliases like `out`.
-  - Document new helper functions and constants.
-
-- Documentation and metadata:
-  - Updated `README.md`, `INSTALL.md`, `LICENSE`, and `CONTRIBUTING.md` to reflect:
-    - New type hint policy.
-    - Supported Python versions.
-    - Updated dependency and licensing information.
-
-### 🧪 Testing
-
-- Ensured that new and refactored functions integrate with existing test structure.
-- Expanded coverage for:
-  - File handling (newline normalization, invalid paths, invalid JSON/CSV).
-  - Network utilities (retry behavior and header merging logic).
-  - Input validation via `console.validate_input()`.
-
-### 🛠️ Code Quality
-
-- Strengthened input validation across all modules with centralized helpers.
-- Improved separation of concerns:
-  - Console and retry helpers live in `console.py`.
-  - `utility.py` focuses on list/dict utilities only.
-- Normalized docstrings and header comments across modules, including unified `Updated on` metadata.
-
-### 📦 Stability
-
-- API is now stable and ready for production use.
-- All newly added public symbols are exported through `newtutils.__init__` for a consistent import surface.
-- No breaking changes planned for the `1.x` series; behavior is fully backward compatible with `0.1.6`.
+- Deleted legacy standalone test scripts and old generated output files such as `tests/console.py`, `tests/console_output.txt`, and earlier plain output snapshots.
 
 ---
 
-## 🏷️ v0.1.6 — Network Utilities
+## [0.1.13] — Function choose_file_from_folder in Files
+
+**Date:** 2025-10-29
+
+### Added
+
+- `newtutils/files.py` - Added `choose_file_from_folder()` function for interactive file selection in a directory.
+- `newtutils/__init__.py` - Added `choose_file_from_folder()` to the public API.
+
+### Changed
+
+- `newtutils/files.py` - Updated `read_json_from_file()` to include stricter input validation and JSON structure checking, improving error handling and robustness when reading JSON files.
+- `newtutils/utility.py` - Updated `validate_input()` and `sorting_list()` to support a `stop` flag that halts sorting and returns the original list if any invalid input is encountered.
+- `newtutils/console.py` - Moved `validate_input()`, `_retry_pause()` and `_beep_boop()` from `utility.py` since they are more related to console interactions. Updated docstrings and internal calls accordingly.
+- `newtutils/__init__.py` - Moved `validate_input` from `utility` to `console` and updated internal imports to use the new location.
+
+### Fixed
+
+- Refined docstrings and error messages across modules.
+
+---
+
+## [0.1.12] — Function _retry_pause in Utility
 
 **Date:** 2025-10-26
 
-### ✨ Added
+### Added
 
-- New module: `network.py` — external HTTP and file-download utilities:
-  - `fetch_data_from_url()`
-  - `download_file_from_url()`
-- Added sound notification support (`NewtUtil._beep_boop()`).
-- Introduced interactive and automatic retry modes for unstable APIs.
+- `newtutils/utility.py` - Extended with `_retry_pause()` helper function.
+- `newtutils/network.py` - Response time and failure timing details added to network request logging.
 
-### 🧩 Dependencies
+### Changed
 
-- Added `requests` (Apache 2.0 License) for HTTP communication.
+- `newtutils/network.py` - Refactored to use the new `_retry_pause()` helper for retry handling instead of duplicated countdown logic.
+- `newtutils/__init__.py` - Updated to export the new network functions and refreshed documentation.
+- `README.md` - Simplified project description to a concise general-purpose summary.
+- `pyproject.toml` - Updated project description and project status to Beta.
 
-### 🪪 License
+### Testing
 
-- Expanded license documentation to include:
-  - Python StdLib modules (`time`, `winsound`, `sqlite3`).
-  - Requests (Apache 2.0).
-  - Clarified SQLite Public Domain status.
+- `tests/utility.py` - Added test cases for the new `_retry_pause()` and `_beep_boop()` functions, including timing verification for retries.
+- `tests/network.py` - Added test cases to cover invalid and valid URL fetch scenarios.
+- `tests/_list.sh` - Updated to include the new network test scripts.
+- Added cleanup verification messages to all current tests.
+
+### Fixed
+
+- `newtutils/sql.py` - `db_delayed_close()` now returns early when the target database file does not exist, preventing unnecessary operations and potential errors.
+
+### Removed
+
+- `TODO` - Removed outdated TODO items about splitting the old module and basic documentation/working checks.
 
 ---
 
-## 🏷️ v0.1.5 — SQL Utilities
+## [0.1.11] — Module Network and Function _beep_boop in Utility
+
+**Date:** 2025-10-25
+
+### Added
+
+- `newtutils/utility.py` - Added **winsound**-backed function `_beep_boop()` for audible alerts on Windows.
+- `newtutils/network.py` - New module with HTTP helpers for fetching remote data and downloading files.
+- `newtutils/__init__.py` - Exported all network utilities (`fetch_data_from_url`, `download_file_from_url`) and included it in `__all__` for direct package-level imports.
+- `pyproject.toml` - Added **requests** as a dependency.
+- `LICENSE` - Added **requests** third-party license notice for the new network module.
+- `LICENSE` - Noted usage of Python standard library module **winsound** and **time** under the PSF license.
+- `README.md` - Updated features list to include the new network utilities.
+
+### Changed
+
+- `newtutils/console.py` - Simplified formatting by standardizing the `_divider()` signature layout.
+- `INSTALL.md` - Updated project structure diagram to include the new `network` module, as well as documentation files.
+
+### Fixed
+
+- `newtutils/files.py` - Improved `_check_file_exists()` to check if the path is a file and is accessible, preventing directory paths from being treated as files.
+
+---
+
+## [0.1.10] — Module SQL
 
 **Date:** 2025-10-24
 
-### ✨ Added
+### Added
 
-- New module: `sql.py` — helper functions for SQLite operations:
-  - `sql_execute_query()`
-  - `sql_select_rows()`
-  - `sql_insert_row()`
-  - `sql_update_rows()`
-  - `export_sql_query_to_csv()`
-- New tests for `sql.py` ensuring stable query execution and CSV export.
-- Added `tests/sql_output.txt` for consistent test output validation.
+- `newtutils/sql.py` - New module with robust SQL utilities for database connectivity, query execution, and result handling.
+- `newtutils/__init__.py` - Exported all SQL utilities (`db_delayed_close`, `sql_execute_query`, `sql_select_rows`, `sql_insert_row`, `sql_update_rows`, `export_sql_query_to_csv`) and included it in `__all__` for direct package-level imports.
+- `README.md` - Updated features list to include the new SQL utilities.
+- `pyproject.toml` - Added "sql" keyword for better packaging and discoverability.
 
-### 🛠️ Improved
+### Changed
 
-- Added `_check_file_exists()` in `files.py` for safe file validation.
-- Updated `__init__.py` to re-export SQL functions.
+- `LICENSE` - Noted usage of Python standard library modules (**gc**, **sqlite3**) under the PSF license.
+- `LICENSE` - Added **SQLite engine** third-party license notice for the new SQL module.
 
----
+### Testing
 
-## 🏷️ v0.1.4 — Files utilities
+- `tests/sql.py` - Comprehensive test suite for the new SQL utilities, covering database connection, query execution, result retrieval, and CSV export functionality. Tests include setup and teardown of a temporary SQLite database for isolation and cleanup.
+- `tests/_list.sh` - Updated to include execution of the new SQL test suite.
 
-**Date**: 2025-10-21
+### Fixed
 
-### ✨ Added
-
-- New module: `files.py` — read/write helpers for text, JSON, and CSV files.
-
-### 🛠️ Improved
-
-- Added complete Google-style docstrings for all file functions.
-- Unified metadata across project files (`__init__.py`, `pyproject.toml`).
-- Updated documentation (`INSTALL.md`, `README.md`, `LICENSE`).
+- `newtutils/files.py` - Improved `_ensure_dir_exists()` to safely skip empty directory paths and only create missing folders.
 
 ---
 
-## 🏷️ v0.1.3 — Sorting utilities
+## [0.1.9] — Private Function _check_file_exists in Files
+
+**Date:** 2025-10-23
+
+### Added
+
+- `newtutils/files.py` - Private Function `_check_file_exists()` to check if a file exists and is accessible, used internally by all file I/O functions for robust error handling.
+
+### Changed
+
+- `INSTALL.md` - Removed numeric prefixes from section headings to simplify the document structure.
+
+---
+
+## [0.1.8] — Renamed and refined documentation
+
+**Date:** 2025-10-23
+
+### Changed
+
+- Renamed `CHANGELOG` to `CHANGELOG.md`.
+- `CHANGELOG.md` - Enhanced with tag emojis, structured headlines, and detailed release notes for all versions.
+- Renamed `CONTRIBUTING` to `CONTRIBUTING.md`.
+- `CONTRIBUTING.md` - Removed "Versioning and Releases" section and rebranded to **NewtCode**.
+- `INSTALL.md` - Adjusted project structure and changed alias in code examples.
+- `LICENSE` - Added link to **Python Software Foundation License**.
+- `README.md` - Updated links to documentation files and removed example usage sections.
+- `newtutils/console.py` - Improved Google-style docstring about `location` parameter in `error_msg()`.
+- `newtutils/utility.py` - Removed `location` parameter from `validate_input()` signature and calls. Added `location` to all `error_msg()` calls.
+- `pyproject.toml` - Fixed changelog URL to `CHANGELOG.md`.
+
+### Testing
+
+- `tests/_list.sh` - Echo statements for output file paths; changed final message.
+- `tests/utility.py` - Edited test cases to reflect changes in `validate_input()` calls.
+
+---
+
+## [0.1.7] — Module Files
+
+**Date:** 2025-10-21
+
+### Added
+
+- `newtutils/files.py` - New module with robust file I/O utilities for text, JSON, and CSV formats, including error-tolerant handling and directory creation.
+- `newtutils/__init__.py` - Exported all file I/O functions (`read_text_from_file`, `save_text_to_file`, `read_json_from_file`, `save_json_to_file`, `read_csv_from_file`, `save_csv_to_file`) and included it in `__all__` for direct package-level imports.
+- `pyproject.toml` - Added "files" keyword, **OS Independent** classifier, changelog URL, and `zip-safe=false` for better packaging and discoverability.
+- `LICENSE` - Noted usage of Python standard library modules (**os**, **csv**, **json**) under the PSF license.
+
+### Changed
+
+- `INSTALL.md` - Updated project structure diagram to include the new `files` module and its associated tests, as well as documentation files.
+- `README.md` - Updated features list to include the new file utilities.
+
+### Testing
+
+- `tests/files.py` - Comprehensive test suite for the new file I/O utilities, covering text append, JSON serialization, CSV tabular data, and automatic cleanup.
+- `tests/_list.sh` - Updated to include execution of the new files test suite.
+
+---
+
+## [0.1.6] — Rename function sorting_ids to sorting_list in Utility
+
+**Date:** 2025-10-21
+
+### Changed
+
+- `newtutils/utility.py` - Renamed `sorting_ids()` to `sorting_list()` across the package API, internal implementation, documentation, and examples.
+- `CONTRIBUTING` - Expanded into a more complete contributor guide with branch naming, Conventional Commits, testing rules, code style expectations, versioning, and review workflow.
+
+---
+
+## [0.1.5] — Function validate_input in Utility
+
+**Date:** 2025-10-21
+
+### Added
+
+- `newtutils/utility.py` - Function `validate_input()` to validate input values against expected types. Error messages printed using `NewtCons.error_msg()`.
+- `newtutils/__init__.py` - Exported `validate_input` and included it in `__all__` for direct package-level imports.
+- `newtutils/__init__.py` - Added typed metadata fields: `__license__` and `__url__`.
+- `pyproject.toml` - Added project metadata fields: `keywords`, `classifiers`, `[project.urls]` and `[tool.setuptools.packages.find] > exclude` for better packaging and discoverability.
+- `README.md` - Added project description, feature overview and usage examples.
+
+### Changed
+
+- `newtutils/utility.py` - Enhanced `sorting_ids()` and `sorting_dict_by_keys()` with input validation using `validate_input()`. Functions now handle invalid inputs gracefully by printing error messages instead of raising exceptions.
+- `CHANGELOG.md` - Updated to follow [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format with semantic versioning links and categorized entries.
+
+### Testing
+
+- `tests/utility.py` - Added test cases for `validate_input()` with various valid and invalid inputs, verifying that error messages are printed correctly without exceptions.
+- `tests/_list.sh` - Updated to run both console and utility tests, generating separate output files (`console_output.txt` and `utility_output.txt`) for easier review and debugging.
+
+### Fixed
+
+- `newtutils/utility.py` - Refactored code in `sorting_ids()` and `sorting_dict_by_keys()` for better readability and maintainability.
+- `INSTALL.md` - Improved wording and formatting for better readability, including clearer import examples for both package-level and submodule imports.
+
+### Removed
+
+- `import typing` - Removed type hints to avoid circular dependencies and reduce overhead.
+
+---
+
+## [0.1.4] — Private Function _divider in Console
 
 **Date:** 2025-10-20
 
-### ✨ Added
+### Added
 
-- Added `sorting_dict_by_keys()` — sort lists of dictionaries by one or more keys.
-  - Handles missing keys safely.
-  - Supports ascending and descending order.
+- `newtutils/console.py` - Private Function `_divider()` to print a visual separator line in the console output.
+- `.gitattributes` - Added a rule to treat `.toml` files as text with a TOML diff driver for better version control handling.
 
-### 🛠️ Improved
+### Changed
 
-- Documentation updates and metadata cleanup.
-- Organized project files for clarity and consistency.
+- `newtutils/console.py` - Extended `error_msg()` with a new `location` parameter that prints the error source location, defaulting to `"Unknown"`.
 
----
+### Testing
 
-## 🏷️ v0.1.2 — Validation and list sorting
-
-**Date:** 2025-10-18
-
-### ✨ Added
-
-- Introduced `newtutils.utility` module.
-- Added `sorting_list()` — removes duplicates and sorts strings before integers.
-- Added `validate_input()` — validates input types with safe error feedback.
+- `tests/console.py` - Refactored into separate functions with clearer structure and docstrings. Added a `__main__` entry point to run tests sequentially with clear output and internal `_divider()`s for readability.
+- `tests/console.py` - Updated `error_msg()` tests to use the new `location=__file__` argument and verify location-aware output.
+- `tests/_list.sh` - Script to run tests and write output to a text file for easier review and debugging.
 
 ---
 
-## 🏷️ v0.1.1 — Console utilities
+## [0.1.3] — Function sorting_dict_by_keys in Utility
 
 **Date:** 2025-10-17
 
-### ✨ Added
+### Added
 
-- Start of the *NewtUtils* module.
-- Added `newtutils.console` with `error_msg()` for unified error output.
-  - Uses **Colorama** for cross-platform colored messages.
-- Added base configuration (`pyproject.toml`, module layout).
+- `newtutils/utility.py` - Function `sorting_dict_by_keys()` to sort a list of dictionaries by one or more keys. Dictionaries with missing keys placed at the end. Reverse sorting supported.
+- `newtutils/__init__.py` - Exported `sorting_dict_by_keys` and included it in `__all__` for direct package-level imports.
+
+### Changed
+
+- `INSTALL.md` - Improved wording and formatting for better readability, including clearer import examples for both package-level and submodule imports.
+
+### Testing
+
+- `tests/utility.py` - Test suite for `sorting_dict_by_keys()` with various key combinations and sorting orders.
 
 ---
 
-## 🏷️ v0.1.0 — Initial setup
+## [0.1.2] — Function sorting_ids in Utility
+
+**Date:** 2025-10-17
+
+### Added
+
+- `newtutils/utility.py` - Function `sorting_ids()` to remove duplicates and return a sorted list of unique values.
+- `newtutils/__init__.py` - Exported `sorting_ids` and included it in `__all__` for direct package-level imports.
+
+### Testing
+
+- `tests/utility.py` - Test suite for `sorting_ids()` with deduplication and sorting behavior for integers, strings, and mixed lists.
+
+---
+
+## [0.1.1] — Function error_msg in Console
+
+**Date:** 2025-10-17
+
+### Added
+
+- `newtutils/console.py` - Function `error_msg()` using **colorama** for colored error output.
+- `newtutils/__init__.py` - Package initializer with metadata, author info, and public export of `error_msg`.
+- `pyproject.toml` - Project configuration for packaging, dependencies (**colorama**), and metadata.
+- `INSTALL.md` - Comprehensive installation guide, project structure, VS Code setup, and usage examples.
+- `README.md` - Added **colorama** dependency info.
+- `LICENSE` - Added **colorama** third-party license notice.
+
+### Testing
+
+- `tests/console.py` - Test suite for `error_msg()` with stop/no-stop scenarios and exception handling.
+
+---
+
+## [0.1.0] — Initial setup
 
 **Date:** 2025-10-16
 
-### 🧩 Initial Setup
+### Added
 
-- Created project structure (`.gitignore`, `.gitattributes`).
-- Initialized the *NewtUtils* repository.
-- Prepared the foundation for future modules and documentation.
+- Created the *NewtUtils* repository.
+- Defined the initial project structure.
+- Added initial documentation and configuration files.
 
 > 🪄 *The very first commit of the NewtUtils project.*
