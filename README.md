@@ -1,16 +1,18 @@
-# 🦎 NewtUtils — Developer Utilities by `NewtCode`
+# About NewtUtils — Developer Utilities (NewtCode)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/AnnaBurova/dev-newtutils)
++[![Version](https://img.shields.io/badge/version-v0.2.19-orange.svg)](https://github.com/AnnaBurova/dev-newtutils)
+ [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.14-blue.svg)](https://www.python.org/)
 
 A collection of utility functions for common programming tasks.
 
-> **Version 1.1.1** — Latest stable release. Production-ready with a stable API.
-
 ---
 
-## 📖 Overview
+## Overview
 
 **NewtUtils** is designed as a small but extendable utility library to simplify common scripting and development tasks — such as structured console output, safe type validation, file management, SQL access, and API communication.
 
@@ -18,54 +20,84 @@ The project follows clean, documented, and predictable function behavior for mai
 
 ---
 
-## 🧩 Features
+## Features
 
-- 🖥️ **Console tools** — styled error messages, clean visual dividers
-- 🧮 **Validation helpers** — safe type checking with non-blocking feedback
-- 📑 **Sorting utilities** — deterministic and stable multi-key sorting
-- 🗂️ **File utilities** — simple read/write support for text, JSON, and CSV
-- 🧠 **Error-tolerant design** — no data loss even during exceptions
-- 🗄️ **SQL utilities** — safe and simple SQLite operations (execute, select, insert, update, export)
-- 🌐 **Network utilities** — safe API requests and file downloading with retry logic
+| Path | Purpose |
+|------|---------|
+| `.gitignore` | Specifies files and directories that should not be tracked by Git. |
+| `.gitattributes` | Ensures consistent text normalization (LF endings), defines diff rules, and marks binary files. |
+| `AUTHORS` | Credits contributors and external resources. |
+| `CHANGELOG.md` | List of changes and updates for the repository. |
+| `CONTRIBUTING.md` | Contribution guidelines and repository conventions. |
+| `COPYRIGHT` | Copyright information for original and included materials. |
+| `INSTALLATION.md` | Installation instructions and development setup guide. |
+| `LICENSE` | The MIT license governing repository use. |
+| `requirements.txt` | List of Python dependencies for the project. |
+| `TODO` | List of tasks and improvements for the project. |
+| `new-repo/` | Starter repository templates for bootstrapping new projects. |
+| `new-repo/tests/` | Test suite for the repository. Must pass before merging PRs. |
+| `new-repo/tests/TESTING.md` | Documentation for the testing process. |
+| `new-repo/tests/_list.sh` | Script to list all test files in the `tests/` directory. |
 
 ---
 
-## ⚙️ Requirements
+## Requirements
 
-- **Python 3.10+** (tested with Python 3.10, 3.11, 3.12, 3.13, 3.14)
+- Python 3.10
+- Python 3.11
+- Python 3.12
+- Python 3.13
+- Python 3.14
 - Full type hint support with `from __future__ import annotations`
 
-## 📦 Dependencies
+---
 
-- [**Colorama**](https://pypi.org/project/colorama/) — cross-platform colored terminal output.  
-  Licensed under the [BSD 3-Clause License](https://github.com/tartley/colorama/blob/master/LICENSE.txt).
+## Dependencies
 
-- [**Requests**](https://pypi.org/project/requests/) — HTTP library for API communication.  
-  Licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).
+This project uses the following third-party libraries:
 
-- [**pytest**](https://pypi.org/project/pytest/) — framework to write small tests.  
-  Licensed under the [MIT](https://github.com/pytest-dev/pytest/blob/main/LICENSE).
+- [NewtUtils](https://github.com/AnnaBurova/dev-newtutils)
+- [Colorama](https://github.com/tartley/colorama) (BSD 3-Clause License)
+- [PyTest](https://github.com/pytest-dev/pytest) (MIT License)
+- [Requests](https://github.com/psf/requests) (Apache License 2.0)
 
 All other modules rely only on the Python Standard Library.
 
----
-
-## 🚀 Getting Started
-
-- [Installation Guide](INSTALL.md) — setup instructions and configuration details.
+For more details on dependencies, see the [LICENSE](LICENSE) file.
 
 ---
 
-## 📋 Development Notes
+## Getting Started
 
-- [TODO list](TODO) — Planned improvements
-- [CHANGELOG](CHANGELOG.md) — Version history
-- [CONTRIBUTING](CONTRIBUTING.md) — Style and contribution rules
+- [Installation Guide](INSTALLATION.md) — Instructions for installing and setting up the project for development.
 
 ---
 
-## 🪪 License
+## Development Notes
 
+- [TODO list](TODO) — Planned improvements and features for this repository.
+- [CHANGELOG](CHANGELOG.md) — Version history and release notes.
+- [CONTRIBUTING](CONTRIBUTING.md) — Guidelines for contributing to the project.
+- [Testing Guide](tests/README.md) — Instructions for running tests and contributing test cases.
+
+---
+
+## License
+
+- [AUTHORS](AUTHORS) — Credits to contributors and external resources.
 - [COPYRIGHT](COPYRIGHT) — Copyright information for original and included materials.
-- [LICENSE](LICENSE) — The license governing the use of this repository (MIT).
-- [AUTHORS](AUTHORS) — List of contributors and credits for external resources.
+- [LICENSE](LICENSE) — The license governing repository use.
+
+---
+
+## Development Workflow
+
+1. Fork and clone the repository.
+2. Read [CHANGELOG.md](CHANGELOG.md) for recent changes.
+3. Review [CONTRIBUTING.md](CONTRIBUTING.md) before opening PRs.
+4. Explore `tests/` for usage examples.
+5. Create feature branch: `git checkout -b feature/short-description`.
+6. Make changes in `newtutils/` or `tests/`.
+7. Run tests: `pytest tests/`.
+8. Commit: Follow [Conventional Commits](https://www.conventionalcommits.org).
+9. Push and open PR.
