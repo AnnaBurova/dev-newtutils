@@ -1,13 +1,13 @@
-# ⚙️ Installing and Developing the NewtUtils Module
+# Installing and Developing NewtUtils Module (NewtCode)
 
-This guide explains how to install, use, update, and remove **NewtUtils** — a collection of developer utilities by *NewtCode*.
+This document covers installation and development setup of **NewtUtils** — a collection of developer utilities by *NewtCode*.
 
 ---
 
-## 🧱 Project Structure (for reference)
+## Project Structure
 
 ```
-dev-newtutils/
+dev-newtutils/         # Root repository
 │
 ├── newtutils/         # Main Python package (module source)
 │   ├── __init__.py
@@ -19,101 +19,152 @@ dev-newtutils/
 │   └── (other files)
 │
 ├── tests/             # Manual and automated test scripts
-│   ├── output/        # Test output files (logs)
-│   ├── README.md      # Testing overview and usage instructions
-│   ├── _list.sh       # Optional helper script to list or run tests
-│   ├── test_*.py      # Pytest test files for each module
-│   └── (test files)
+│   ├── output/        # Test output logs
+│   │   ├── test_*_1.txt
+│   │   ├── test_*_2.txt
+│   │   ├── test_*_3.txt
+│   │   ├── test_*_4.txt
+│   │   └── (other test logs)
+│   │
+│   ├── README.md      # Test documentation and instructions
+│   ├── _list.sh       # (Optional) Test runner batch script
+│   ├── test_*.py      # Pytest test scripts for modules
+│   ├── test_*_*.py    # Pytest test scripts for functions
+│   └── (other test scripts)
 │
-├── pyproject.toml     # Build system configuration and project metadata
 ├── CHANGELOG.md       # Version history and release notes
 ├── CONTRIBUTING.md    # Guidelines for contributors
-├── INSTALL.md         # Installation and development setup guide
-├── LICENSE            # License file (MIT)
+├── INSTALLATION.md    # Installation and development setup guide (This file)
+├── LICENSE            # License file
+├── pyproject.toml     # Build system configuration and project metadata
+├── requirements.txt   # Project dependencies
 └── README.md          # Project overview and usage instructions
 ```
 
 ---
 
-## 📦 Requirements
+## Requirements
 
-- **Python 3.10 - 3.13**
-- **pip** or **conda** (Anaconda users supported)
-- Dependencies (installed automatically):
-  - `colorama` — for colored console output
-  - `requests` — for HTTP/network utilities
-  - `pytest` — for code tests
+- Python 3.10
+- Python 3.11
+- Python 3.12
+- Python 3.13
+- Python 3.14
+
+Other dependencies are listed in `requirements.txt`.
 
 ---
 
-## 🧰 Local Installation Options (No PyPI)
+## Installation Modes
 
-Since **NewtUtils** is a local development library and not published on PyPI, installation should be done directly from your project folder.
+### Local Installation (No PyPI)
 
-### Option 🟢 — Regular local installation (static copy)
+Project **NewtUtils** is a local development library and not published on PyPI.
+Installation should be done directly from project folder.
+
+
+### Option — Regular local installation (static copy)
 
 Installs a copy of the package.
+Recommended when only want to use project, not actively edit its source code.
+Safe for non-admin users.
 
-```powershell
-# Navigate to your project directory
+```bash
+# Navigate to project directory
 cd D:\VS_Code\dev-newtutils
 
+# Install dependencies first (if requirements.txt exists)
+python -m pip install --user -r requirements.txt
+
+# Install the package for the current user
 python -m pip install --user .
-# OR for Anaconda
-C:/ProgramData/anaconda3/python.exe -m pip install --user .
+# OR in virtual environment (venv)
+# python -m pip install .
 ```
 
-> 🧩 Recommended when you only want to use **NewtUtils**, not actively edit its source code.
+- `--user` — installs into personal environment.
 
-> Safe for non-admin users.
-> `--user` — installs into your personal environment instead of `C:\ProgramData`.
 
-### Option 🔵 — Editable installation (recommended for development)
+### Option — Editable local installation (recommended for development)
 
-Links the library directly to your working folder.
-Any code changes in `newtutils/` will take effect immediately.
+Links the library directly to working folder.
+Any code changes in `dev-newtutils/newtutils/` will take effect immediately.
 No reinstall needed.
 
-```powershell
-# Navigate to your project directory
+```bash
+# Navigate to project directory
 cd D:\VS_Code\dev-newtutils
 
-# Install in editable mode (user environment)
+# Install dependencies first (if requirements.txt exists)
+python -m pip install --user -r requirements.txt
+
+# Install the package in editable mode for the current user
 python -m pip install --user -e .
-# OR in venv
-python -m pip install -e .
-# OR for Anaconda
-C:/ProgramData/anaconda3/python.exe -m pip install --user -e .
+# OR in virtual environment (venv)
+# python -m pip install -e .
 ```
 
-> `--editable` or `-e` — link the project folder directly for live development
+- `--editable` or `-e` — link the project folder directly for live development
 
-### Option 🟣 — Temporary usage (without installation)
 
-If you just want to run or test functions directly from source:
+### Option — Temporary local usage (without installation)
+
+To run or test functions directly from downloaded source.
+This approach doesn't install anything globally, it only extends Python path for the current session.
 
 ```python
+# Import needful modules
 import sys
 import os
 
-# Adjust this path to your actual project location
-newt_root = os.path.join("D:", "VS_Code", "dev-newtutils")
-# Or use absolute path:
-# newt_root = r"D:\VS_Code\dev-newtutils"
+# Adjust this path to actual project location
+proj_root = os.path.join("D:", "VS_Code", "dev-newtutils")
+# Or use one of these formats:
+# proj_root = "D:/VS_Code/dev-newtutils"
+# proj_root = r"D:\VS_Code\dev-newtutils"
 
-if newt_root not in sys.path:
-    sys.path.append(newt_root)
+if proj_root not in sys.path:
+    sys.path.append(proj_root)
 
 import newtutils as Newt
 ```
 
-This approach doesn't install anything globally, it only extends your Python path for the current session.
+
+### VS Code Settings
+
+To make VS Code recognize local package:
+
+1. Create or open `.vscode/settings.json`
+2. Add or extend following:
+    ```json
+    {
+      "python.analysis.extraPaths": [
+        "D:/VS_Code/dev-newtutils"
+      ]
+    }
+    ```
+    - Adjust the paths above to match actual project location and Python interpreter path.
+3. Reload VS Code (`Ctrl + Shift + P` > "Developer: Reload Window").
 
 ---
 
-## 📚 Usage Examples
+## Uninstalling
 
-After installation (regular or editable), you can import **NewtUtils** anywhere:
+To remove the package completely:
+
+```bash
+# To check if package is installed and its location
+python -m pip list | findstr newtutils
+
+# Uninstall the package (requires admin rights)
+python -m pip uninstall newtutils
+```
+
+---
+
+## Usage Examples
+
+After installation, **NewtUtils** can be imported anywhere:
 
 ```python
 # Import the main package (recommended - exports common functions)
@@ -130,44 +181,4 @@ import newtutils.network as NewtNet
 Newt.error_msg("Something went wrong", stop=False)
 Newt.console.error_msg("Something went wrong", stop=False)
 NewtCons.error_msg("Something went wrong", stop=False)
-```
-
----
-
-## 🧿 VS Code + Anaconda Setup
-
-To make VS Code recognize your local package:
-
-1. Create or open `.vscode/settings.json`
-
-2. Add the following:
-
-```json
-{
-  "python.analysis.extraPaths": [
-    "D:/VS_Code/dev-newtutils"
-  ]
-}
-```
-
-> **Note:** Adjust the paths above to match your actual project location and Python interpreter path.
-
-3. Reload VS Code (`Ctrl + Shift + P` > "Developer: Reload Window").
-
----
-
-## 🗑️ Uninstalling
-
-To remove the package completely:
-
-```powershell
-pip uninstall newtutils
-# OR for Anaconda global install (requires admin rights)
-C:/ProgramData/anaconda3/python.exe -m pip uninstall newtutils
-```
-
-If installed with `--user`, you can also manually delete:
-
-```
-%APPDATA%\Python\Python313\site-packages\newtutils*
 ```
