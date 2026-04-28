@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.4, pytest-9.0.3, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collected 2 items
+collected 5 items
 
 test_console.py 
 START=======================================
@@ -32,5 +32,49 @@ Test error
 
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_error_msg_without_stop
+============================================
 
-============================== 2 passed in 0.03s ==============================
+=====captured.err=====
+[1m[31m
+Location: Unknown
+::: ERROR :::
+Test error
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_error_msg_multiple_args
+============================================
+
+=====captured.err=====
+[1m[31m
+Location: Unknown
+::: ERROR :::
+Error 1
+Error 2
+Error 3
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_error_msg_with_location
+============================================
+
+=====captured.err=====
+[1m[31m
+Location: test.module
+::: ERROR :::
+Test error
+[0m
+
+END=========================================
+.
+
+============================== 5 passed in 0.03s ==============================

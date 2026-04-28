@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 2 items
+collecting ... collected 5 items
 
 test_console.py::TestDivider::test_divider_output 
 START=======================================
@@ -33,5 +33,52 @@ Test error
 
 END=========================================
 PASSED
+test_console.py::TestErrorMsg::test_error_msg_without_stop 
+START=======================================
+=====captured.out=====
+Function: test_error_msg_without_stop
+============================================
 
-============================== 2 passed in 0.01s ==============================
+=====captured.err=====
+[1m[31m
+Location: Unknown
+::: ERROR :::
+Test error
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestErrorMsg::test_error_msg_multiple_args 
+START=======================================
+=====captured.out=====
+Function: test_error_msg_multiple_args
+============================================
+
+=====captured.err=====
+[1m[31m
+Location: Unknown
+::: ERROR :::
+Error 1
+Error 2
+Error 3
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestErrorMsg::test_error_msg_with_location 
+START=======================================
+=====captured.out=====
+Function: test_error_msg_with_location
+============================================
+
+=====captured.err=====
+[1m[31m
+Location: test.module
+::: ERROR :::
+Test error
+[0m
+
+END=========================================
+PASSED
+
+============================== 5 passed in 0.01s ==============================
