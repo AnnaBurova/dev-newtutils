@@ -5,6 +5,31 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## [vNext] — Upcoming
+
+### Added
+
+- *(add new features here)*
+
+### Changed
+
+- *(describe modifications or improvements)*
+
+### Testing
+
+- *(list new tests or testing improvements)*
+
+### Fixed
+
+- `README.md` - *Fix badge formatting by removing stray leading plus sign.*
+- `tests/README.md` - *Update test usage documentation.*
+
+### Removed
+
+- *(note any removed or deprecated features)*
+
+---
+
 ## [0.3.0] — Reworked CHANGELOG and Migrated build backend
 
 **Date:** 2026-04-27

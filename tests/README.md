@@ -14,104 +14,94 @@ This directory contains comprehensive unit tests for the **NewtUtils** package.
 
 `_list.sh` — Batch Test Runner
 
-The `_list.sh` script automatically runs all test modules with different pytest options and saves the output to text files.
+The `_list.sh` script automatically runs all test modules with different pytest and virtual environments options and saves the output to text files.
 This is useful for generating reference output files or batch testing.
 
-**What it does:**
+### What it does
 
-- Runs pytest for all listed modules
+- Runs pytest for all listed modules and virtual environments
 - Executes each module with 4 different pytest configurations:
     - 1). Default mode
     - 2). Verbose mode (`-v`)
     - 3). Show print statements (`-s`)
     - 4). Verbose + show print statements (`-s -v`)
-- Saves output to `test_*_output_*.txt` files in the tests directory
+- Saves output to `*_test_*_output_*.txt` files in the tests directory
 - Converts line endings to LF format (requires `dos2unix` if available)
 
-## Requirements
+### Requirements
 
 - `pytest` must be installed
 - Optional: `dos2unix` (for line ending conversion; script will continue without it)
 
-## Usage
-
-Navigate to the tests directory first:
-```bash
-cd tests
-```
-
-Then run the script:
-
-**Linux/macOS:**
+### Usage
 
 ```bash
-sh _list.sh
+# Navigate to the tests directory first:
+$ cd dev-newtutils/tests/
+
+# (Linux) Make it executable:
+$ chmod +x _list.sh
+
+# Run the script:
+# (Windows) Run the script using Git Bash or WSL (Windows Subsystem for Linux)
+$ ./_list.sh
 # or
-bash _list.sh
-# or make it executable and run directly:
-chmod +x _list.sh
-./_list.sh
+$ sh _list.sh
+# or
+$ bash _list.sh
 ```
 
-**Windows:**
-
-For Windows users, run the script using Git Bash or WSL (Windows Subsystem for Linux):
+## Running Tests Using PyTest
 
 ```bash
-bash _list.sh
-```
+# Install pytest:
+$ pip install pytest
 
-**Note:** The script contains a hardcoded path (`D:/VS_Code/dev-newtutils/tests/`).
-If your project is located elsewhere, you may need to edit the script or adjust the path.
+# Navigate to the tests directory:
+$ cd dev-newtutils/
 
-## Running Tests
+# Run all tests:
+$ pytest tests/
+# Run a specific test file:
+$ pytest tests/test_console.py
 
-### Using pytest (recommended)
-
-Install pytest:
-
-```bash
-pip install pytest
-```
-
-Run all tests:
-
-```bash
-pytest tests/
-```
-
-Run a specific test file:
-
-```bash
-pytest tests/test_files.py
+# or
+# Navigate to the tests directory first:
+$ cd dev-newtutils/tests/
+# Run all tests:
+$ pytest .
+# Run a specific test file:
+$ pytest ./test_console.py
 ```
 
 Run with verbose output:
 
 ```bash
-pytest tests/ -v
-pytest tests/ -v > test_results.txt 2>&1
+$ pytest tests/
+$ pytest tests/ -v
+$ pytest tests/ -s
+$ pytest tests/ -s -v
+$ pytest tests/ -s -v > test_results.txt 2>&1
 ```
 
 ## Test Coverage
 
 **Code Coverage** is a metric that shows what percentage of your code is tested.
-The new pytest-based tests provide comprehensive coverage of:
-
-- **Console module**: Error messaging, input validation, beep notifications, retry pauses
-- **Utility module**: List sorting, dictionary sorting by keys
-- **Files module**: Directory operations, file existence checks, text/JSON/CSV read/write operations
-- **SQL module**: Database operations, queries, inserts, updates, CSV exports
-- **Network module**: URL fetching, file downloading (with mocked HTTP requests)
-
-Run with code coverage analysis:
 
 ```bash
-pip install pytest-cov
-pytest tests/ --cov=newtutils --cov-report=html
+# Install pytest-cov:
+$ pip install pytest-cov
+
+# Navigate to the tests directory:
+$ cd dev-newtutils/
+
+# Run all tests with code coverage analysis:
+$ pytest tests/ --cov=newtutils --cov-report=html
+# Run a specific test file with code coverage analysis:
+$ pytest tests/test_console.py --cov=newtutils --cov-report=html
 ```
 
-**What is coverage?**
+### What is coverage?
 
 Code coverage measures how much of your source code is executed by tests. It shows:
 
@@ -120,11 +110,11 @@ Code coverage measures how much of your source code is executed by tests. It sho
 - Which branches (if/else) were tested
 - Overall percentage of code covered
 
-After running the command above, open `htmlcov/index.html` in your browser to see a detailed coverage report with highlighted lines (green = covered, red = not covered).
+After running the command above folder `htmlcov/` will be generated. Open `htmlcov/index.html` in your browser to see a detailed coverage report with highlighted lines (green = covered, red = not covered).
 
 ## Notes
 
-- All tests are designed to be isolated and can run in any order
-- File tests use temporary files and directories
-- SQL tests create temporary databases that are cleaned up after tests
-- Network tests use mocked HTTP requests to avoid actual network calls
+- All tests are designed to be isolated and can run in any order.
+- File tests use temporary files and directories.
+- SQL tests create temporary databases that are cleaned up after tests.
+- Network tests use mocked HTTP requests to avoid actual network calls.
