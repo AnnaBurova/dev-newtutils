@@ -18,7 +18,7 @@ Tests cover:
 import pytest
 from unittest.mock import patch
 
-from helpers import print_my_func_name, print_my_captured
+from .helpers import print_my_func_name, print_my_captured
 import newtutils.console as NewtCons
 
 
@@ -56,11 +56,12 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Unknown\n" in captured.out
-        assert "\nTest error\n" in captured.out
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Unknown\n" in captured.err
+        assert "\nTest error\n" in captured.err
         # Expected absence of result
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
     def test_error_msg_without_stop(self, capsys):

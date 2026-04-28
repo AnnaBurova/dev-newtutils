@@ -34,6 +34,7 @@ Functions:
 
 from __future__ import annotations
 
+import sys
 import os
 import time
 
@@ -85,11 +86,11 @@ def error_msg(
 
     message = "\n".join(str(arg) for arg in args)
 
-    print(Style.BRIGHT, Fore.RED)
-    print("Location:", location)
-    print("::: ERROR :::")
-    print(message)
-    print(Style.RESET_ALL)
+    print(Style.BRIGHT + Fore.RED, file=sys.stderr)
+    print(f"Location: {location}", file=sys.stderr)
+    print("::: ERROR :::", file=sys.stderr)
+    print(message, file=sys.stderr)
+    print(Style.RESET_ALL, file=sys.stderr)
 
     if stop:
         raise SystemExit(1)

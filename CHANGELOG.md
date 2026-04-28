@@ -14,6 +14,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 ### Changed
 
 - `newtutils/console.py` - *Narrowed `error_msg()` args type to str*
+- `newtutils/console.py` - *Redirected `error_msg()` output to stderr*
 
 ### Testing
 
