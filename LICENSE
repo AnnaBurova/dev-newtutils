@@ -79,6 +79,11 @@ This project uses the following third-party libraries:
   https://github.com/pytest-dev/pytest
   https://pypi.org/project/pytest/
 
+- PyTest-Cov (MIT License)
+  Copyright (c) 2010-2026 Marc Schlaich and Ionel Cristian Maries
+  https://github.com/pytest-dev/pytest-cov
+  https://pypi.org/project/pytest-cov/
+
 - Requests (Apache License 2.0)
   Copyright (c) 2011-2026 Kenneth Reitz & contributors
   https://github.com/psf/requests

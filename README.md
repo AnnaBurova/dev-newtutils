@@ -51,6 +51,7 @@ This project uses the following third-party libraries:
 - [NewtUtils](https://github.com/AnnaBurova/dev-newtutils)
 - [Colorama](https://github.com/tartley/colorama) (BSD 3-Clause License)
 - [PyTest](https://github.com/pytest-dev/pytest) (MIT License)
+- [PyTest-Cov](https://github.com/pytest-dev/pytest-cov) (MIT License)
 - [Requests](https://github.com/psf/requests) (Apache License 2.0)
 
 All other modules rely only on the Python Standard Library.
