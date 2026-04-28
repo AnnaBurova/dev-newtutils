@@ -13,7 +13,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Changed
 
-- *(describe modifications or improvements)*
+- `newtutils/console.py` - *Narrowed `error_msg()` args type to str*
 
 ### Testing
 
@@ -24,6 +24,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - `README.md` - *Fixed badge formatting by removing stray leading plus sign.*
 - `tests/README.md` - *Updated test usage documentation.*
 - `tests/helpers.py` - *Updated docstrings and signatures*
+- `newtutils/console.py` - *Updated docstrings*
 
 ### Removed
 

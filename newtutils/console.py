@@ -1,5 +1,5 @@
 """
-Updated on 2026-02
+Updated on 2026-04
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -8,7 +8,7 @@ Functions:
     def _divider(
         ) -> None
     def error_msg(
-        *args: object,
+        *args: str,
         location: str = "Unknown",
         stop: bool = True
         ) -> None
@@ -48,7 +48,7 @@ except ImportError:  # pragma: no cover (Unix-only)
 
 def _divider(
         ) -> None:
-    """ Print a visual divider between console sections.
+    """ ## Print a visual divider between console sections.
 
     Displays a horizontal line to visually separate blocks of console output.
     Primarily used for readability in testing and debugging logs.
@@ -58,25 +58,24 @@ def _divider(
 
 
 def error_msg(
-        *args: object,
+        *args: str,
         location: str = "Unknown",
         stop: bool = True
         ) -> None:
-    """ Print error messages in red and optionally terminate the program.
+    """ ## Print error messages in red and optionally terminate the program.
 
-    Displays one or more messages in bright red color using Colorama.
+    Displays one or more messages in bright red color using **Colorama**.
     It is intended for CLI tools and debugging utilities
     that require structured visual feedback in the console.
-    The `location` parameter identifies where the error originated.
 
     Args:
-        *args (object):
-            One or more messages or objects to print.
+        *args (str):
+            One or more messages to print.
         location (str):
-            Name of the function or module where the error occurred.
+            Name of the function or module where the error occurred.<br>
             Defaults to "Unknown".
         stop (bool):
-            If True, the program terminates with exit code 1 after printing.
+            If True, the program terminates with exit code 1 after printing.<br>
             Defaults to True.
 
     Raises:
