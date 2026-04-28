@@ -17,7 +17,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Testing
 
-- *(list new tests or testing improvements)*
+- `tests/_list.sh` - *Added multi-venv pytest runner loop.*
 
 ### Fixed
 
