@@ -9,23 +9,24 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Added
 
-- *Added **pytest-cov** to dependencies and license.*
+- Added **pytest-cov** to dependencies and license.
 
 ### Changed
 
-- `newtutils/console.py` - *Narrowed `error_msg()` args type to str*
-- `newtutils/console.py` - *Redirected `error_msg()` output to stderr*
+- `newtutils/console.py` - Narrowed `error_msg()` args type to str.
+- `newtutils/console.py` - Redirected `error_msg()` output to stderr.
 
 ### Testing
 
-- `tests/_list.sh` - *Added multi-venv pytest runner loop.*
+- `tests/_list.sh` - Added multi-venv pytest runner loop.
+- `tests/output/` - Added pytest results for console module across venv310-venv314.
 
 ### Fixed
 
-- `README.md` - *Fixed badge formatting by removing stray leading plus sign.*
-- `tests/README.md` - *Updated test usage documentation.*
-- `tests/helpers.py` - *Updated docstrings and signatures*
-- `newtutils/console.py` - *Updated docstrings*
+- `README.md` - Fixed badge formatting by removing stray leading plus sign.
+- `tests/README.md` - Updated test usage documentation.
+- `tests/helpers.py` - Updated docstrings and signatures.
+- `newtutils/console.py` - Updated docstrings.
 
 ### Removed
 
