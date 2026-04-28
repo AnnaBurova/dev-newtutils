@@ -1,36 +1,41 @@
 """
+Updated on 2026-04
 Created on 2026-02
 
 @author: NewtCode Anna Burova
+
+Functions:
+    def print_my_func_name(
+        ) -> None
+    def print_my_captured(
+        captured
+        ) -> None
 """
 
 import inspect
 
-# def print_my_func_name(func_name):
-def print_my_func_name():
-    """
-    Print the provided function name in a structured format.
 
-    Args:
-        func_name (str):
-            Name of the function to display.
-    """
+def print_my_func_name(
+        ) -> None:
+    """ Print name of the current function. """
 
-    # print("Function:", func_name)
     frame = inspect.currentframe()
+
     if frame and frame.f_back:
         print("Function:", frame.f_back.f_code.co_name)
     else:
         print("Function: <unknown>")
+
     print("============================================")
 
 
-def print_my_captured(captured):
-    """
-    Pretty-print captured standard output and error streams from pytest.
+def print_my_captured(
+        captured
+        ) -> None:
+    """ ## Pretty-print captured standard output and error streams from pytest.
 
     Args:
-        captured:
+        captured (CaptureResult):
             A pytest `CaptureResult` object returned by `capsys.readouterr()`.
             Must provide `.out` and `.err` attributes representing captured
             standard output and standard error text.

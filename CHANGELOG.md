@@ -9,7 +9,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Added
 
-- *(add new features here)*
+- *Added **pytest-cov** to dependencies and license.*
 
 ### Changed
 
@@ -21,8 +21,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Fixed
 
-- `README.md` - *Fix badge formatting by removing stray leading plus sign.*
-- `tests/README.md` - *Update test usage documentation.*
+- `README.md` - *Fixed badge formatting by removing stray leading plus sign.*
+- `tests/README.md` - *Updated test usage documentation.*
+- `tests/helpers.py` - *Updated docstrings and signatures*
 
 ### Removed
 
