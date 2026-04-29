@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 5 items
+collecting ... collected 12 items
 
 test_console.py::TestDivider::test_divider_output 
 START=======================================
@@ -80,5 +80,375 @@ Test error
 
 END=========================================
 PASSED
+test_console.py::TestValidateType::test_validate_type_correct_type_not_empty 
+START=======================================
+=====captured.out=====
+Function: test_validate_type_correct_type_not_empty
+============================================
+input_None: None / <class 'NoneType'>
+input_bool: False / <class 'bool'>
+input_int: 123 / <class 'int'>
+input_float: 3.14 / <class 'float'>
+input_str: Hello / <class 'str'>
+input_bytes: b'Hello' / <class 'bytes'>
+input_list: [False, 123, 3.14, 'Hello'] / <class 'list'>
+input_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>
+input_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>
+input_set: {False, 3.14, 123, 'Hello'} / <class 'set'>
 
-============================== 5 passed in 0.01s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_console.py::TestValidateType::test_validate_type_incorrect_type_no_stop 
+START=======================================
+=====captured.out=====
+Function: test_validate_type_incorrect_type_no_stop
+============================================
+input_None: None / <class 'NoneType'>
+input_bool: False / <class 'bool'>
+input_int: 123 / <class 'int'>
+input_float: 3.14 / <class 'float'>
+input_str: Hello / <class 'str'>
+input_bytes: b'Hello' / <class 'bytes'>
+input_list: [False, 123, 3.14, 'Hello'] / <class 'list'>
+input_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>
+input_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>
+input_set: {False, 3.14, 123, 'Hello'} / <class 'set'>
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: None
+Received type: <class 'NoneType'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: False
+Received type: <class 'bool'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: 3.14
+Received type: <class 'float'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: Hello
+Received type: <class 'str'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: b'Hello'
+Received type: <class 'bytes'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: [False, 123, 3.14, 'Hello']
+Received type: <class 'list'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: (False, 123, 3.14, 'Hello')
+Received type: <class 'tuple'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}
+Received type: <class 'dict'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: {False, 3.14, 123, 'Hello'}
+Received type: <class 'set'>
+Expected type: <class 'frozenset'>
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestValidateType::test_validate_type_incorrect_type_with_stop 
+START=======================================
+=====captured.out=====
+Function: test_validate_type_incorrect_type_with_stop
+============================================
+input_None: None / <class 'NoneType'>
+input_bool: False / <class 'bool'>
+input_int: 123 / <class 'int'>
+input_float: 3.14 / <class 'float'>
+input_str: Hello / <class 'str'>
+input_bytes: b'Hello' / <class 'bytes'>
+input_list: [False, 123, 3.14, 'Hello'] / <class 'list'>
+input_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>
+input_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>
+input_set: {False, 3.14, 123, 'Hello'} / <class 'set'>
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: None
+Received type: <class 'NoneType'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: False
+Received type: <class 'bool'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: 3.14
+Received type: <class 'float'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: Hello
+Received type: <class 'str'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: b'Hello'
+Received type: <class 'bytes'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: [False, 123, 3.14, 'Hello']
+Received type: <class 'list'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: (False, 123, 3.14, 'Hello')
+Received type: <class 'tuple'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}
+Received type: <class 'dict'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: {False, 3.14, 123, 'Hello'}
+Received type: <class 'set'>
+Expected type: <class 'frozenset'>
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestValidateType::test_validate_type_multiple_types 
+START=======================================
+=====captured.out=====
+Function: test_validate_type_multiple_types
+============================================
+input_int: 123 / <class 'int'>
+input_float: 3.14 / <class 'float'>
+input_str: Hello / <class 'str'>
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: 3.14
+Received type: <class 'float'>
+Expected type: (<class 'int'>, <class 'str'>)
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestValidateType::test_validate_type_with_location 
+START=======================================
+=====captured.out=====
+Function: test_validate_type_with_location
+============================================
+input_int: 123 / <class 'int'>
+input_float: 3.14 / <class 'float'>
+input_str: Hello / <class 'str'>
+
+=====captured.err=====
+[1m[31m
+Location: test.input_int > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: test.input_float > Newt.console.validate_type
+::: ERROR :::
+Value: 3.14
+Received type: <class 'float'>
+Expected type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: test.input_str > Newt.console.validate_type
+::: ERROR :::
+Value: Hello
+Received type: <class 'str'>
+Expected type: <class 'frozenset'>
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestValidateType::test_validate_type_correct_type_but_empty 
+START=======================================
+=====captured.out=====
+Function: test_validate_type_correct_type_but_empty
+============================================
+input_None: None / <class 'NoneType'>
+input_bool: False / <class 'bool'>
+input_int: 0 / <class 'int'>
+input_float: 0.0 / <class 'float'>
+input_str:  / <class 'str'>
+input_bytes: b'' / <class 'bytes'>
+input_list: [] / <class 'list'>
+input_tuple: () / <class 'tuple'>
+input_dict: {} / <class 'dict'>
+input_set: set() / <class 'set'>
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: None
+Type: <class 'NoneType'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: False
+Type: <class 'bool'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 0
+Type: <class 'int'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 0.0
+Type: <class 'float'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 
+Type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: b''
+Type: <class 'bytes'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: []
+Type: <class 'list'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: ()
+Type: <class 'tuple'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: {}
+Type: <class 'dict'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: set()
+Type: <class 'set'>
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestValidateType::test_validate_type_unknown_type_and_empty 
+START=======================================
+=====captured.out=====
+Function: test_validate_type_unknown_type_and_empty
+============================================
+input_frozenset: frozenset() / <class 'frozenset'>
+input_frozenset_stop: frozenset() / <class 'frozenset'>
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.validate_type : check_non_empty
+::: ERROR :::
+check_non_empty is not supported for this type
+Value: frozenset()
+Type: <class 'frozenset'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type : check_non_empty
+::: ERROR :::
+check_non_empty is not supported for this type
+Value: frozenset()
+Type: <class 'frozenset'>
+[0m
+
+END=========================================
+PASSED
+
+============================= 12 passed in 0.02s ==============================
