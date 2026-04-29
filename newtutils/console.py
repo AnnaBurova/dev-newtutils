@@ -12,7 +12,7 @@ Functions:
         location: str = "Unknown",
         stop: bool = True
         ) -> None
-    def validate_input(
+    def validate_type(
         value: object,
         expected_type: type | tuple[type, ...],
         check_non_empty: bool = False,
@@ -96,7 +96,7 @@ def error_msg(
         raise SystemExit(1)
 
 
-def validate_input(
+def validate_type(
         value: object,
         expected_type: type | tuple[type, ...],
         check_non_empty: bool = False,
@@ -163,7 +163,7 @@ def validate_input(
             error_msg(
                 "check_non_empty is not supported for this type",
                 f"Type: {type(value)}",
-                location="Newt.console.validate_input : check_non_empty unsupported type" + location,
+                location="Newt.console.validate_type : check_non_empty unsupported type" + location,
                 stop=stop
             )
             return False
@@ -172,7 +172,7 @@ def validate_input(
             error_msg(
                 "Value must be non-empty",
                 f"Value: {value}",
-                location="Newt.console.validate_input : is_empty" + location,
+                location="Newt.console.validate_type : is_empty" + location,
                 stop=stop
             )
             return False
@@ -199,7 +199,7 @@ def _beep_boop(
     if os.name != "nt" or winsound is None:
         return
 
-    if not validate_input(
+    if not validate_type(
         pause_s, (int, float), stop=False,
         location="_beep_boop : pause_s"
     ):
@@ -251,7 +251,7 @@ def _retry_pause(
             Raised if interrupted by user (Ctrl+C).
     """
 
-    if not validate_input(
+    if not validate_type(
         seconds, int, check_non_empty=True, stop=False,
         location="_retry_pause : seconds"
     ):
@@ -302,12 +302,12 @@ def check_location(
             Raised if directories do not match.
     """
 
-    validate_input(
+    validate_type(
         dir_, str, check_non_empty=True,
         location="check_location : dir_"
     )
 
-    validate_input(
+    validate_type(
         must_location, str, check_non_empty=True,
         location="check_location : must_location"
     )

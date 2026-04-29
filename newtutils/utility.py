@@ -110,19 +110,19 @@ def count_similar_values(
     if not sequence_list:
         return {}
 
-    if not NewtCons.validate_input(
+    if not NewtCons.validate_type(
         sequence_list, list, check_non_empty=True, stop=False,
         location="Newt.utility.count_similar_values : sequence_list"
     ):
         return {}
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         position, int,
         location="Newt.utility.count_similar_values : position"
     )
 
     if not all(
-        NewtCons.validate_input(
+        NewtCons.validate_type(
             item, tuple, stop=False
         ) and len(item) > position for item in sequence_list
     ):
@@ -174,7 +174,7 @@ def sorting_list(
             Raised when `stop=True` and the input contains invalid data types.
     """
 
-    if not NewtCons.validate_input(
+    if not NewtCons.validate_type(
         input_list, (list, tuple), check_non_empty=True, stop=stop,
         location="Newt.utility.sorting_list : input_list"
     ):
@@ -183,7 +183,7 @@ def sorting_list(
     try:
         # Validate all elements
         if not all(
-            NewtCons.validate_input(
+            NewtCons.validate_type(
                 x, (str, int), stop=False
             ) for x in input_list
         ):
@@ -252,7 +252,7 @@ def sorting_dict_by_keys(
     """
 
     # Validate that data is a sequence
-    if not NewtCons.validate_input(
+    if not NewtCons.validate_type(
         data, (list, tuple), check_non_empty=True, stop=stop,
         location="Newt.utility.sorting_dict_by_keys : data"
     ):
@@ -260,7 +260,7 @@ def sorting_dict_by_keys(
 
     # Validate that each element is a dictionary
     if not all(
-        NewtCons.validate_input(
+        NewtCons.validate_type(
             d, dict, stop=False
         ) for d in data
     ):
@@ -283,7 +283,7 @@ def sorting_dict_by_keys(
 
     # Validate that all keys are strings
     if not all(
-        NewtCons.validate_input(
+        NewtCons.validate_type(
             k, str, stop=False
         ) for k in keys
     ):
@@ -337,7 +337,7 @@ def select_from_input(
             Raised if selection cancelled (user enters 'x' or presses Ctrl+C).
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         select_dict, dict, check_non_empty=True,
         location="Newt.utility.select_from_input : select_dict"
     )

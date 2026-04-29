@@ -107,7 +107,7 @@ def fetch_data_from_url(
             False otherwise.
     """
 
-    if not NewtCons.validate_input(
+    if not NewtCons.validate_type(
         base_url, str, check_non_empty=True, stop=False,
         location="Newt.network.fetch_data_from_url : base_url"
     ):
@@ -115,7 +115,7 @@ def fetch_data_from_url(
 
     params_to_send = None
     if params is not None:
-        if not NewtCons.validate_input(
+        if not NewtCons.validate_type(
             params, dict, check_non_empty=True, stop=False,
             location="Newt.network.fetch_data_from_url : params"
         ):
@@ -130,13 +130,13 @@ def fetch_data_from_url(
         custom_headers.update(headers)
 
     if save_path is not None:
-        if not NewtCons.validate_input(
+        if not NewtCons.validate_type(
             save_path, str, check_non_empty=True, stop=False,
             location="Newt.network.fetch_data_from_url : save_path"
         ):
             return False
 
-    if not NewtCons.validate_input(
+    if not NewtCons.validate_type(
         max_mb_size, int, check_non_empty=True, stop=False,
         location="Newt.network.fetch_data_from_url : max_mb_size"
     ):

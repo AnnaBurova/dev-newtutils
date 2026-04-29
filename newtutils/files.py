@@ -101,7 +101,7 @@ def ensure_dir_exists(
             Full path to the target file (including the file name).
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         file_path, str, check_non_empty=True,
         location="Newt.files.ensure_dir_exists : file_path"
     )
@@ -144,7 +144,7 @@ def check_file_exists(
             False otherwise.
     """
 
-    if not NewtCons.validate_input(
+    if not NewtCons.validate_type(
         file_path, str, check_non_empty=True, stop=stop,
         location="Newt.files.check_file_exists : file_path"
     ):
@@ -180,7 +180,7 @@ def _normalize_newlines(
             Normalized text with consistent Unix-style newlines (`\n`).
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         text, str,
         location="Newt.files._normalize_newlines : text"
     )
@@ -214,7 +214,7 @@ def choose_file_from_folder(
             or max attempts exceeded.
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         folder_path, str, check_non_empty=True,
         location="Newt.files.choose_file_from_folder : folder_path"
     )
@@ -333,7 +333,7 @@ def save_text_to_file(
             Defaults to True.
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         text, str,
         location="Newt.files.save_text_to_file : text"
     )
@@ -381,7 +381,7 @@ def convert_str_to_json(
             otherwise None.
     """
 
-    if not NewtCons.validate_input(
+    if not NewtCons.validate_type(
         text, str, check_non_empty=True, stop=False,
         location="Newt.files.convert_str_to_json : text"
     ):
@@ -393,7 +393,7 @@ def convert_str_to_json(
     try:
         data = json.loads(text_strip)
 
-        if NewtCons.validate_input(
+        if NewtCons.validate_type(
             data, (list, dict), stop=False,
             location="Newt.files.convert_str_to_json : json.loads(text_strip)"
         ):
@@ -414,7 +414,7 @@ def convert_str_to_json(
         text_replace = text_strip.replace("'", '"')
         data = json.loads(text_replace)
 
-        if NewtCons.validate_input(
+        if NewtCons.validate_type(
             data, (list, dict), stop=False,
             location="Newt.files.convert_str_to_json : json.loads(text_replace)"
         ):
@@ -477,7 +477,7 @@ def read_json_from_file(
             data = json.load(f)
 
         # Normalize output to always be a list or dict
-        if NewtCons.validate_input(
+        if NewtCons.validate_type(
             data, (list, dict), stop=False,
             location="Newt.files.read_json_from_file : data"
         ):
@@ -525,12 +525,12 @@ def save_json_to_file(
             Defaults to True.
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         data, (list, dict),
         location="Newt.files.save_json_to_file : data"
     )
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         indent, int, check_non_empty=True,
         location="Newt.files.save_json_to_file : indent"
     )
@@ -599,7 +599,7 @@ def read_csv_from_file(
             Raised when `stop=True` and file not found.
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         delimiter, str, check_non_empty=True,
         location="Newt.files.read_csv_from_file : delimiter"
     )
@@ -657,12 +657,12 @@ def save_csv_to_file(
             Defaults to True.
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         rows, (list, tuple),
         location="Newt.files.save_csv_to_file : rows"
     )
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         delimiter, str, check_non_empty=True,
         location="Newt.files.save_csv_to_file : delimiter"
     )
@@ -724,7 +724,7 @@ def setup_logging(
         >>> cleanup_logging(setup_data, "path/to/target/logfile.txt")
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         _dir, str, check_non_empty=True,
         location="Newt.files.setup_logging : _dir"
     )
@@ -773,7 +773,7 @@ def cleanup_logging(
             Target path where the log file should be moved.
     """
 
-    NewtCons.validate_input(
+    NewtCons.validate_type(
         setup_data, tuple, check_non_empty=True,
         location="Newt.files.cleanup_logging : setup_data"
     )

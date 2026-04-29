@@ -19,7 +19,7 @@ Modules:
 # Console
 from .console import (
     error_msg,
-    validate_input,
+    validate_type,
     check_location,
 )
 
@@ -63,7 +63,7 @@ from .network import (
 __all__ = [
     # Console ----------
     "error_msg",
-    "validate_input",
+    "validate_type",
     "check_location",
     # Utility ----------
     "check_dict_keys",

@@ -15,11 +15,14 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 - `newtutils/console.py` - Narrowed `error_msg()` args type to str.
 - `newtutils/console.py` - Redirected `error_msg()` output to stderr.
+- `newtutils/console.py` - Rename `validate_input()` to `validate_type()` for more accurate naming that reflects its purpose (type checking, not input validation).
+- `newtutils/__init__.py` - Updated public export `validate_input` to `validate_type`.
+- Updated all usages of `validate_input()` to `validate_type()` across other modules.
 
 ### Testing
 
-- `tests/_list.sh` - Added multi-venv pytest runner loop.
-- `tests/output/` - Added pytest results for console module across venv310-venv314.
+- `tests/_list.sh` - Added multi-venv **pytest** runner loop.
+- `tests/output/` - Added **pytest** results for console module across venv310-venv314.
 
 ### Fixed
 
