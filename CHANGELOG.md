@@ -18,11 +18,16 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - `newtutils/console.py` - Rename `validate_input()` to `validate_type()` for more accurate naming that reflects its purpose (type checking, not input validation).
 - `newtutils/__init__.py` - Updated public export `validate_input` to `validate_type`.
 - Updated all usages of `validate_input()` to `validate_type()` across other modules.
+- `newtutils/console.py` - `validate_type()` - Reversed the order of `location` prefix: changed from `" > " + location` to `location + " > "` so the caller's location appears before the function location.
+- `newtutils/console.py` - `validate_type()` - Rewrote `check_non_empty` logic: replaced loosely typed `isinstance()` checks with strict `type(value) is T and expected_type is T` comparisons for each type. Extended support to `bool`, `float`, and `bytes` types.
 
 ### Testing
 
 - `tests/_list.sh` - Added multi-venv **pytest** runner loop.
 - `tests/output/` - Added **pytest** results for console module across venv310-venv314.
+- `tests/test_console.py` - Renamed test class `TestValidateInput` to `TestValidateType`.
+- `tests/test_console.py` - `TestValidateType`: expanded coverage to all core types (`NoneType`, `bool`, `int`, `float`, `str`, `bytes`, `list`, `tuple`, `dict`, `set`).
+- `tests/test_console.py` - Added `assert "::: ERROR :::" not in captured.out` checks to multiple tests for stricter stdout/stderr separation.
 
 ### Fixed
 
@@ -192,7 +197,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Removed
 
-- `newtutils/sql.py` - Removed several early `return` branches that depended directly on `NewtCons.validate_input(..., stop=False)`
+- `newtutils/sql.py` - Removed several early `return` branches that depended directly on `NewtCons.validate_input(..., stop=False)`.
 
 ---
 
@@ -269,7 +274,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 ### Fixed
 
 - `newtutils/utility.py` - Refined `sorting_dict_by_keys()` so empty input returns an empty list immediately before further validation, preventing unnecessary processing and potential errors with empty data.
-- `newtutils/utility.py` - Adjusted `sorting_dict_by_keys()` to return a copy of the original list when no sorting keys are provided, with this behavior handled earlier in the function flow. 
+- `newtutils/utility.py` - Adjusted `sorting_dict_by_keys()` to return a copy of the original list when no sorting keys are provided, with this behavior handled earlier in the function flow.
 
 ---
 

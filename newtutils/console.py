@@ -103,11 +103,10 @@ def validate_type(
         stop: bool = True,
         location: str = ""
         ) -> bool:
-    """ Validate that a given value matches the expected type.
+    """ ## Validate that a given value matches the expected type.
 
     If the value does not match the expected type,
     logs an error message using `error_msg()`.
-    The function can optionally stop execution depending on the `stop` flag.
 
     Args:
         value (object):
@@ -115,20 +114,20 @@ def validate_type(
         expected_type (type | tuple[type, ...]):
             The expected type or tuple of allowed types.
         check_non_empty (bool):
-            If True, also validate that the value is not empty.
-            Works for str, list, tuple, dict, set and None.
+            If True, also validate that the value is not empty.<br>
+            Works for str, list, tuple, dict, set and None.<br>
             Defaults to False.
         stop (bool):
-            If True, stops execution after logging the error.
-            If False, logs the error but continues execution.
+            If True, stops execution after logging the error.<br>
+            If False, logs the error but continues execution.<br>
             Defaults to True.
         location (str):
-            Additional location context for error reporting.
+            Additional location context for error reporting.<br>
             Defaults to empty string.
 
     Returns:
         out (bool):
-            True if the value matches the expected type,
+            True if the value matches the expected type,<br>
             otherwise False.
 
     Raises:
@@ -137,13 +136,14 @@ def validate_type(
     """
 
     if location:
-        location = " > " + location
+        location = location + " > "
 
     if not isinstance(value, expected_type):
         error_msg(
-            f"Expected {expected_type}, got {type(value)}",
             f"Value: {value}",
-            location="Newt.console.validate_input" + location,
+            f"Received type: {type(value)}",
+            f"Expected type: {expected_type}",
+            location=location + "Newt.console.validate_type",
             stop=stop
         )
         return False
@@ -151,28 +151,42 @@ def validate_type(
     if check_non_empty:
         is_empty = False
 
-        if value is None:
+        if value is None and expected_type is type(None):
             is_empty = True
-        elif isinstance(value, int):
-            is_empty = True if value == 0 else False
-        elif isinstance(value, str):
-            is_empty = not value.strip()
-        elif isinstance(value, (list, tuple, dict, set)):
+        elif type(value) is bool and expected_type is bool:
+            is_empty = value is False
+        elif type(value) is int and expected_type is int:
+            is_empty = value == 0
+        elif type(value) is float and expected_type is float:
+            is_empty = value == 0.0
+        elif type(value) is str and expected_type is str:
+            is_empty = value.strip() == ""
+        elif type(value) is bytes and expected_type is bytes:
+            is_empty = len(value) == 0
+        elif type(value) is list and expected_type is list:
+            is_empty = len(value) == 0
+        elif type(value) is tuple and expected_type is tuple:
+            is_empty = len(value) == 0
+        elif type(value) is dict and expected_type is dict:
+            is_empty = len(value) == 0
+        elif type(value) is set and expected_type is set:
             is_empty = len(value) == 0
         else:
             error_msg(
                 "check_non_empty is not supported for this type",
+                f"Value: {value}",
                 f"Type: {type(value)}",
-                location="Newt.console.validate_type : check_non_empty unsupported type" + location,
+                location=location + "Newt.console.validate_type : check_non_empty",
                 stop=stop
             )
             return False
 
         if is_empty:
             error_msg(
-                "Value must be non-empty",
+                "Value must not be empty",
                 f"Value: {value}",
-                location="Newt.console.validate_type : is_empty" + location,
+                f"Type: {type(value)}",
+                location=location + "Newt.console.validate_type : is_empty",
                 stop=stop
             )
             return False

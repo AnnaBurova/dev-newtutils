@@ -9,7 +9,7 @@ Comprehensive unit tests for newtutils.console module.
 Tests cover:
 - TestDivider
 - TestErrorMsg
-- TestValidateInput
+- TestValidateType
 - TestBeepBoop
 - TestRetryPause
 - TestCheckLocation
@@ -38,6 +38,7 @@ class TestDivider:
         assert "-----" * 10 in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
 class TestErrorMsg:
@@ -59,7 +60,9 @@ class TestErrorMsg:
         assert "\n::: ERROR :::\n" in captured.err
         assert "\nLocation: Unknown\n" in captured.err
         assert "\nTest error\n" in captured.err
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
         assert "This line will not be printed" not in captured.err
 
@@ -76,6 +79,9 @@ class TestErrorMsg:
         assert "\n::: ERROR :::\n" in captured.err
         assert "\nLocation: Unknown\n" in captured.err
         assert "\nTest error\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_error_msg_multiple_args(self, capsys):
@@ -96,6 +102,9 @@ class TestErrorMsg:
         assert "\nLocation: Unknown\n" in captured.err
         assert "\nError 1\nError 2\nError 3\n" in captured.err
 
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
 
     def test_error_msg_with_location(self, capsys):
         """ Verify that NewtCons.error_msg() prints the provided custom location in the error message output. """
@@ -114,175 +123,441 @@ class TestErrorMsg:
         assert "\nLocation: test.module\n" in captured.err
         assert "\nTest error\n" in captured.err
 
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
-class TestValidateInput:
-    """ Tests for validate_input function. """
+
+class TestValidateType:
+    """ Tests for validate_type function. """
 
 
-    def test_validate_input_correct_type(self, capsys):
-        """ Test that NewtCons.validate_input() returns True for inputs matching the expected type (int, str, float, bool). """
+    def test_validate_type_correct_type_not_empty(self, capsys):
+        """ Test that NewtCons.validate_type() returns True for inputs matching the expected types. """
         print_my_func_name()
 
-        input_1 = 123
-        print(input_1)
-        assert NewtCons.validate_input(input_1, int, stop=False) is True
+        input_None = None
+        print("input_None:", input_None, "/", type(input_None))
+        assert NewtCons.validate_type(input_None, type(None)) is True
 
-        input_2 = "hello"
-        print(input_2)
-        assert NewtCons.validate_input(input_2, str, stop=False) is True
+        input_bool = False
+        print("input_bool:", input_bool, "/", type(input_bool))
+        assert NewtCons.validate_type(input_bool, bool) is True
 
-        input_3 = 3.14
-        print(input_3)
-        assert NewtCons.validate_input(input_3, float, stop=False) is True
+        input_int = 123
+        print("input_int:", input_int, "/", type(input_int))
+        assert NewtCons.validate_type(input_int, int) is True
 
-        input_4 = False
-        print(input_4)
-        assert NewtCons.validate_input(input_4, bool, stop=False) is True
+        input_float = 3.14
+        print("input_float:", input_float, "/", type(input_float))
+        assert NewtCons.validate_type(input_float, float) is True
+
+        input_str = "Hello"
+        print("input_str:", input_str, "/", type(input_str))
+        assert NewtCons.validate_type(input_str, str) is True
+
+        input_bytes = b"Hello"
+        print("input_bytes:", input_bytes, "/", type(input_bytes))
+        assert NewtCons.validate_type(input_bytes, bytes) is True
+
+        input_list = [input_bool, input_int, input_float, input_str]
+        print("input_list:", input_list, "/", type(input_list))
+        assert NewtCons.validate_type(input_list, list) is True
+
+        input_tuple = (input_bool, input_int, input_float, input_str)
+        print("input_tuple:", input_tuple, "/", type(input_tuple))
+        assert NewtCons.validate_type(input_tuple, tuple) is True
+
+        input_dict = {1: input_bool, 2: input_int, 3: input_float, 4: input_str}
+        print("input_dict:", input_dict, "/", type(input_dict))
+        assert NewtCons.validate_type(input_dict, dict) is True
+
+        input_set = {input_bool, input_int, input_float, input_str}
+        print("input_set:", input_set, "/", type(input_set))
+        assert NewtCons.validate_type(input_set, set) is True
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "\ninput_None: None / <class 'NoneType'>\n" in captured.out
+        assert "\ninput_bool: False / <class 'bool'>\n" in captured.out
+        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
+        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
+        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
+        assert "\ninput_bytes: b'Hello' / <class 'bytes'>\n" in captured.out
+        assert "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>\n" in captured.out
+        assert "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>\n" in captured.out
+        assert "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>\n" in captured.out
+        assert "\ninput_set: {" in captured.out  # set() - An unordered collection.
+        assert "} / <class 'set'>\n" in captured.out  # set() - An unordered collection.
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
+
+
+    def test_validate_type_incorrect_type_no_stop(self, capsys):
+        """ Verify that NewtCons.validate_type() returns False and prints error for incorrect type when stop=False. """
+        print_my_func_name()
+
+        input_None = None
+        print("input_None:", input_None, "/", type(input_None))
+        assert NewtCons.validate_type(input_None, frozenset, stop=False) is False
+
+        input_bool = False
+        print("input_bool:", input_bool, "/", type(input_bool))
+        assert NewtCons.validate_type(input_bool, frozenset, stop=False) is False
+
+        input_int = 123
+        print("input_int:", input_int, "/", type(input_int))
+        assert NewtCons.validate_type(input_int, frozenset, stop=False) is False
+
+        input_float = 3.14
+        print("input_float:", input_float, "/", type(input_float))
+        assert NewtCons.validate_type(input_float, frozenset, stop=False) is False
+
+        input_str = "Hello"
+        print("input_str:", input_str, "/", type(input_str))
+        assert NewtCons.validate_type(input_str, frozenset, stop=False) is False
+
+        input_bytes = b"Hello"
+        print("input_bytes:", input_bytes, "/", type(input_bytes))
+        assert NewtCons.validate_type(input_bytes, frozenset, stop=False) is False
+
+        input_list = [input_bool, input_int, input_float, input_str]
+        print("input_list:", input_list, "/", type(input_list))
+        assert NewtCons.validate_type(input_list, frozenset, stop=False) is False
+
+        input_tuple = (input_bool, input_int, input_float, input_str)
+        print("input_tuple:", input_tuple, "/", type(input_tuple))
+        assert NewtCons.validate_type(input_tuple, frozenset, stop=False) is False
+
+        input_dict = {1: input_bool, 2: input_int, 3: input_float, 4: input_str}
+        print("input_dict:", input_dict, "/", type(input_dict))
+        assert NewtCons.validate_type(input_dict, frozenset, stop=False) is False
+
+        input_set = {input_bool, input_int, input_float, input_str}
+        print("input_set:", input_set, "/", type(input_set))
+        assert NewtCons.validate_type(input_set, frozenset, stop=False) is False
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_None: None / <class 'NoneType'>\n" in captured.out
+        assert "\ninput_bool: False / <class 'bool'>\n" in captured.out
+        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
+        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
+        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
+        assert "\ninput_bytes: b'Hello' / <class 'bytes'>\n" in captured.out
+        assert "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>\n" in captured.out
+        assert "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>\n" in captured.out
+        assert "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>\n" in captured.out
+        assert "\ninput_set: {" in captured.out  # set() - An unordered collection.
+        assert "} / <class 'set'>\n" in captured.out  # set() - An unordered collection.
+
+        assert captured.err.count("\n::: ERROR :::\n") == 10
+        assert captured.err.count("\nLocation: Newt.console.validate_type\n") == 10
+        assert "\nValue: None\nReceived type: <class 'NoneType'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: False\nReceived type: <class 'bool'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: 3.14\nReceived type: <class 'float'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: Hello\nReceived type: <class 'str'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: b'Hello'\nReceived type: <class 'bytes'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "}\nReceived type: <class 'set'>\nExpected type: <class 'frozenset'>\n" in captured.err  # set() - An unordered collection.
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_validate_input_incorrect_type_no_stop(self, capsys):
-        """ Verify that NewtCons.validate_input() returns False and prints error for incorrect type when stop=False. """
+    def test_validate_type_incorrect_type_with_stop(self, capsys):
+        """ Test that NewtCons.validate_type() raises SystemExit with correct error output for invalid type when stop=True. """
         print_my_func_name()
 
-        result = NewtCons.validate_input("hello", int, stop=False)
-        assert result is False
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
-        assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
-        assert "\nValue: hello\n" in captured.out
-
-
-    def test_validate_input_incorrect_type_with_stop(self, capsys):
-        """ Test that NewtCons.validate_input() raises SystemExit with correct error output for invalid type when stop=True. """
-        print_my_func_name()
-
-        with pytest.raises(SystemExit) as exc_info:
-            NewtCons.validate_input("hello", int)
+        input_None = None
+        print("input_None:", input_None, "/", type(input_None))
+        with pytest.raises(SystemExit) as exc_info_None:
+            NewtCons.validate_type(input_None, frozenset)
             print("This line will not be printed")
-        assert exc_info.value.code == 1
+        assert exc_info_None.value.code == 1
+
+        input_bool = False
+        print("input_bool:", input_bool, "/", type(input_bool))
+        with pytest.raises(SystemExit) as exc_info_bool:
+            NewtCons.validate_type(input_bool, frozenset)
+            print("This line will not be printed")
+        assert exc_info_bool.value.code == 1
+
+        input_int = 123
+        print("input_int:", input_int, "/", type(input_int))
+        with pytest.raises(SystemExit) as exc_info_int:
+            NewtCons.validate_type(input_int, frozenset)
+            print("This line will not be printed")
+        assert exc_info_int.value.code == 1
+
+        input_float = 3.14
+        print("input_float:", input_float, "/", type(input_float))
+        with pytest.raises(SystemExit) as exc_info_float:
+            NewtCons.validate_type(input_float, frozenset)
+            print("This line will not be printed")
+        assert exc_info_float.value.code == 1
+
+        input_str = "Hello"
+        print("input_str:", input_str, "/", type(input_str))
+        with pytest.raises(SystemExit) as exc_info_str:
+            NewtCons.validate_type(input_str, frozenset)
+            print("This line will not be printed")
+        assert exc_info_str.value.code == 1
+
+        input_bytes = b"Hello"
+        print("input_bytes:", input_bytes, "/", type(input_bytes))
+        with pytest.raises(SystemExit) as exc_info_bytes:
+            NewtCons.validate_type(input_bytes, frozenset)
+            print("This line will not be printed")
+        assert exc_info_bytes.value.code == 1
+
+        input_list = [input_bool, input_int, input_float, input_str]
+        print("input_list:", input_list, "/", type(input_list))
+        with pytest.raises(SystemExit) as exc_info_list:
+            NewtCons.validate_type(input_list, frozenset)
+            print("This line will not be printed")
+        assert exc_info_list.value.code == 1
+
+        input_tuple = (input_bool, input_int, input_float, input_str)
+        print("input_tuple:", input_tuple, "/", type(input_tuple))
+        with pytest.raises(SystemExit) as exc_info_tuple:
+            NewtCons.validate_type(input_tuple, frozenset)
+            print("This line will not be printed")
+        assert exc_info_tuple.value.code == 1
+
+        input_dict = {1: input_bool, 2: input_int, 3: input_float, 4: input_str}
+        print("input_dict:", input_dict, "/", type(input_dict))
+        with pytest.raises(SystemExit) as exc_info_dict:
+            NewtCons.validate_type(input_dict, frozenset)
+            print("This line will not be printed")
+        assert exc_info_dict.value.code == 1
+
+        input_set = {input_bool, input_int, input_float, input_str}
+        print("input_set:", input_set, "/", type(input_set))
+        with pytest.raises(SystemExit) as exc_info_set:
+            NewtCons.validate_type(input_set, frozenset)
+            print("This line will not be printed")
+        assert exc_info_set.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
-        assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
-        assert "\nValue: hello\n" in captured.out
+        assert "\ninput_None: None / <class 'NoneType'>\n" in captured.out
+        assert "\ninput_bool: False / <class 'bool'>\n" in captured.out
+        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
+        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
+        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
+        assert "\ninput_bytes: b'Hello' / <class 'bytes'>\n" in captured.out
+        assert "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>\n" in captured.out
+        assert "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>\n" in captured.out
+        assert "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>\n" in captured.out
+        assert "\ninput_set: {" in captured.out  # set() - An unordered collection.
+        assert "} / <class 'set'>\n" in captured.out  # set() - An unordered collection.
+
+        assert captured.err.count("\n::: ERROR :::\n") == 10
+        assert captured.err.count("\nLocation: Newt.console.validate_type\n") == 10
+        assert "\nValue: None\nReceived type: <class 'NoneType'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: False\nReceived type: <class 'bool'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: 3.14\nReceived type: <class 'float'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: Hello\nReceived type: <class 'str'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: b'Hello'\nReceived type: <class 'bytes'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "}\nReceived type: <class 'set'>\nExpected type: <class 'frozenset'>\n" in captured.err  # set() - An unordered collection.
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
-    def test_validate_input_multiple_types(self, capsys):
-        """ Verify NewtCons.validate_input() handles tuple of allowed types correctly, accepting valid ones and rejecting invalid. """
+    def test_validate_type_multiple_types(self, capsys):
+        """ Verify NewtCons.validate_type() handles tuple of allowed types correctly, accepting valid ones and rejecting invalid. """
         print_my_func_name()
 
-        input_1 = 123
-        print(input_1)
-        assert NewtCons.validate_input(input_1, (int, str), stop=False) is True
+        input_int = 123
+        print("input_int:", input_int, "/", type(input_int))
+        assert NewtCons.validate_type(input_int, (int, str), stop=False) is True
 
-        input_2 = "hello"
-        print(input_2)
-        assert NewtCons.validate_input(input_2, (int, str), stop=False) is True
+        input_float = 3.14
+        print("input_float:", input_float, "/", type(input_float))
+        assert NewtCons.validate_type(input_float, (int, str), stop=False) is False
 
-        input_3 = 3.14
-        print(input_3)
-        assert NewtCons.validate_input(input_3, (int, str), stop=False) is False
+        input_str = "Hello"
+        print("input_str:", input_str, "/", type(input_str))
+        assert NewtCons.validate_type(input_str, (int, str), stop=False) is True
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
-        assert "\nExpected (<class 'int'>, <class 'str'>), got <class 'float'>\n" in captured.out
-        assert "\nValue: 3.14\n" in captured.out
+        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
+        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
+        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.console.validate_type\n" in captured.err
+        assert "\nValue: 3.14\nReceived type: <class 'float'>\nExpected type: (<class 'int'>, <class 'str'>)\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
-    def test_validate_input_collection_types(self, capsys):
-        """ Test NewtCons.validate_input() correctly handles collection types (list, dict), accepting valid ones and rejecting others. """
+    def test_validate_type_with_location(self, capsys):
+        """ Test NewtCons.validate_type() returns False and prints error with custom location for incorrect type when stop=False. """
         print_my_func_name()
 
-        input_1 = [1, 2, 3]
+        input_int = 123
+        print("input_int:", input_int, "/", type(input_int))
+        assert NewtCons.validate_type(
+            input_int, frozenset, stop=False,
+            location="test.input_int"
+        ) is False
 
-        print(input_1, list, type(input_1) == list)
-        assert NewtCons.validate_input(input_1, list, stop=False) is True
+        input_float = 3.14
+        print("input_float:", input_float, "/", type(input_float))
+        assert NewtCons.validate_type(
+            input_float, frozenset, stop=False,
+            location="test.input_float"
+        ) is False
 
-        print(input_1, dict, type(input_1) == dict)
-        assert NewtCons.validate_input(input_1, dict, stop=False) is False
-
-        input_2 = {"key": "value"}
-
-        print(input_2, dict, type(input_2) == dict)
-        assert NewtCons.validate_input(input_2, dict, stop=False) is True
-
-        print(input_2, list, type(input_2) == list)
-        assert NewtCons.validate_input(input_2, list, stop=False) is False
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[1, 2, 3] <class 'list'> True\n" in captured.out
-        assert "\n[1, 2, 3] <class 'dict'> False\n" in captured.out
-        assert "\n{'key': 'value'} <class 'dict'> True\n" in captured.out
-        assert "\n{'key': 'value'} <class 'list'> False\n" in captured.out
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert captured.out.count("\nLocation: Newt.console.validate_input\n") == 2
-        assert "\nExpected <class 'dict'>, got <class 'list'>\n" in captured.out
-        assert "\nExpected <class 'list'>, got <class 'dict'>\n" in captured.out
-        assert "\nValue: [1, 2, 3]\n" in captured.out
-        assert "\nValue: {'key': 'value'}\n" in captured.out
-
-
-    def test_validate_input_none_value(self, capsys):
-        """ Verify NewtCons.validate_input() correctly handles None values, accepting type(None) and rejecting other types. """
-        print_my_func_name()
-
-        input_1 = None
-
-        print(input_1, type(None), type(input_1) == type(None))
-        assert NewtCons.validate_input(input_1, type(None), stop=False) is True
-
-        print(input_1, int, type(input_1) == int)
-        assert NewtCons.validate_input(input_1, int, stop=False) is False
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\nNone <class 'NoneType'> True\n" in captured.out
-        assert "\nNone <class 'int'> False\n" in captured.out
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
-        assert "\nExpected <class 'int'>, got <class 'NoneType'>\n" in captured.out
-        assert "\nValue: None\n" in captured.out
-
-
-    def test_validate_input_with_location(self, capsys):
-        """ Test NewtCons.validate_input() returns False for string input expecting int with custom location. """
-        print_my_func_name()
-
-        input_1 = "hello"
-
-        assert NewtCons.validate_input(
-            input_1, int, stop=False,
-            location="custom.validator"
+        input_str = "Hello"
+        print("input_str:", input_str, "/", type(input_str))
+        assert NewtCons.validate_type(
+            input_str, frozenset, stop=False,
+            location="test.input_str"
         ) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > custom.validator\n" in captured.out
-        assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
-        assert "\nValue: hello\n" in captured.out
+        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
+        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
+        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
+
+        assert captured.err.count("\n::: ERROR :::\n") == 3
+        assert "\nLocation: test.input_int > Newt.console.validate_type\n" in captured.err
+        assert "\nLocation: test.input_float > Newt.console.validate_type\n" in captured.err
+        assert "\nLocation: test.input_str > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: 3.14\nReceived type: <class 'float'>\nExpected type: <class 'frozenset'>\n" in captured.err
+        assert "\nValue: Hello\nReceived type: <class 'str'>\nExpected type: <class 'frozenset'>\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
+    def test_validate_type_correct_type_but_empty(self, capsys):
+        """ Test that NewtCons.validate_type() returns True for inputs matching the expected types, but false if inputs are empty. """
+        print_my_func_name()
+
+        input_None = None
+        print("input_None:", input_None, "/", type(input_None))
+        assert NewtCons.validate_type(input_None, type(None), check_non_empty=True, stop=False) is False
+
+        input_bool = False
+        print("input_bool:", input_bool, "/", type(input_bool))
+        assert NewtCons.validate_type(input_bool, bool, check_non_empty=True, stop=False) is False
+
+        input_int = 0
+        print("input_int:", input_int, "/", type(input_int))
+        assert NewtCons.validate_type(input_int, int, check_non_empty=True, stop=False) is False
+
+        input_float = 0.0
+        print("input_float:", input_float, "/", type(input_float))
+        assert NewtCons.validate_type(input_float, float, check_non_empty=True, stop=False) is False
+
+        input_str = ""
+        print("input_str:", input_str, "/", type(input_str))
+        assert NewtCons.validate_type(input_str, str, check_non_empty=True, stop=False) is False
+
+        input_bytes = b""
+        print("input_bytes:", input_bytes, "/", type(input_bytes))
+        assert NewtCons.validate_type(input_bytes, bytes, check_non_empty=True, stop=False) is False
+
+        input_list = []
+        print("input_list:", input_list, "/", type(input_list))
+        assert NewtCons.validate_type(input_list, list, check_non_empty=True, stop=False) is False
+
+        input_tuple = ()
+        print("input_tuple:", input_tuple, "/", type(input_tuple))
+        assert NewtCons.validate_type(input_tuple, tuple, check_non_empty=True, stop=False) is False
+
+        input_dict = {}
+        print("input_dict:", input_dict, "/", type(input_dict))
+        assert NewtCons.validate_type(input_dict, dict, check_non_empty=True, stop=False) is False
+
+        input_set = set()
+        print("input_set:", input_set, "/", type(input_set))
+        assert NewtCons.validate_type(input_set, set, check_non_empty=True, stop=False) is False
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_None: None / <class 'NoneType'>\n" in captured.out
+        assert "\ninput_bool: False / <class 'bool'>\n" in captured.out
+        assert "\ninput_int: 0 / <class 'int'>\n" in captured.out
+        assert "\ninput_float: 0.0 / <class 'float'>\n" in captured.out
+        assert "\ninput_str:  / <class 'str'>\n" in captured.out
+        assert "\ninput_bytes: b'' / <class 'bytes'>\n" in captured.out
+        assert "\ninput_list: [] / <class 'list'>\n" in captured.out
+        assert "\ninput_tuple: () / <class 'tuple'>\n" in captured.out
+        assert "\ninput_dict: {} / <class 'dict'>\n" in captured.out
+        assert "\ninput_set: set() / <class 'set'>\n" in captured.out
+
+        assert captured.err.count("\n::: ERROR :::\n") == 10
+        assert captured.err.count("\nLocation: Newt.console.validate_type : is_empty\n") == 10
+        assert "\nValue must not be empty\nValue: None\nType: <class 'NoneType'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: False\nType: <class 'bool'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: 0\nType: <class 'int'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: 0.0\nType: <class 'float'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: \nType: <class 'str'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: b''\nType: <class 'bytes'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: []\nType: <class 'list'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: ()\nType: <class 'tuple'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: {}\nType: <class 'dict'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: set()\nType: <class 'set'>\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
+    def test_validate_type_unknown_type_and_empty(self, capsys):
+        """ Test that NewtCons.validate_type() returns True for inputs matching the expected types, but false if inputs are empty. """
+        print_my_func_name()
+
+        input_frozenset = frozenset()
+        print("input_frozenset:", input_frozenset, "/", type(input_frozenset))
+        assert NewtCons.validate_type(input_frozenset, frozenset, check_non_empty=True, stop=False) is False
+
+        input_frozenset_stop = frozenset()
+        print("input_frozenset_stop:", input_frozenset_stop, "/", type(input_frozenset_stop))
+        with pytest.raises(SystemExit) as exc_info_frozenset:
+            NewtCons.validate_type(input_frozenset_stop, frozenset, check_non_empty=True)
+            print("This line will not be printed")
+        assert exc_info_frozenset.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_frozenset: frozenset() / <class 'frozenset'>\n" in captured.out
+        assert "\ninput_frozenset_stop: frozenset() / <class 'frozenset'>\n" in captured.out
+
+        assert captured.err.count("\n::: ERROR :::\n") == 2
+        assert captured.err.count("\nLocation: Newt.console.validate_type : check_non_empty\n") == 2
+        assert captured.err.count("\ncheck_non_empty is not supported for this type\nValue: frozenset()\nType: <class 'frozenset'>\n") == 2
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
 class TestBeepBoop:
