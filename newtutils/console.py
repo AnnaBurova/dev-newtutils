@@ -41,7 +41,7 @@ from colorama import Fore, Style
 
 try:
     import winsound
-except ImportError:
+except ImportError:  # pragma: no cover (not Windows)
     print()
     print("Hint: import winsound only works on Windows.")
     print("Function _beep_boop will make no sound.")
@@ -213,7 +213,7 @@ def _beep_boop(
     """
 
     # Cross-platform safe beep
-    if winsound is None:
+    if winsound is None:  # pragma: no cover (not Windows)
         print(Style.BRIGHT + Fore.GREEN)
         print("Beep Boop !!!")
         print(Style.RESET_ALL)
