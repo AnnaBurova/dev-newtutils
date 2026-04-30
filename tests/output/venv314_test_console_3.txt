@@ -89,7 +89,7 @@ input_bytes: b'Hello' / <class 'bytes'>
 input_list: [False, 123, 3.14, 'Hello'] / <class 'list'>
 input_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>
 input_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>
-input_set: {False, 3.14, 'Hello', 123} / <class 'set'>
+input_set: {123, 3.14, False, Hello} / <class 'set'>
 
 =====captured.err=====
 (no stderr captured)
@@ -108,7 +108,7 @@ input_bytes: b'Hello' / <class 'bytes'>
 input_list: [False, 123, 3.14, 'Hello'] / <class 'list'>
 input_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>
 input_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>
-input_set: {False, 3.14, 'Hello', 123} / <class 'set'>
+input_set: {123, 3.14, False, Hello} / <class 'set'>
 
 =====captured.err=====
 [1m[31m
@@ -177,7 +177,7 @@ Expected type: <class 'frozenset'>
 [1m[31m
 Location: Newt.console.validate_type
 ::: ERROR :::
-Value: {False, 3.14, 'Hello', 123}
+Value: {123, 3.14, False, Hello}
 Received type: <class 'set'>
 Expected type: <class 'frozenset'>
 [0m
@@ -197,7 +197,7 @@ input_bytes: b'Hello' / <class 'bytes'>
 input_list: [False, 123, 3.14, 'Hello'] / <class 'list'>
 input_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>
 input_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>
-input_set: {False, 3.14, 'Hello', 123} / <class 'set'>
+input_set: {123, 3.14, False, Hello} / <class 'set'>
 
 =====captured.err=====
 [1m[31m
@@ -266,7 +266,7 @@ Expected type: <class 'frozenset'>
 [1m[31m
 Location: Newt.console.validate_type
 ::: ERROR :::
-Value: {False, 3.14, 'Hello', 123}
+Value: {123, 3.14, False, Hello}
 Received type: <class 'set'>
 Expected type: <class 'frozenset'>
 [0m
@@ -408,7 +408,7 @@ Type: <class 'dict'>
 Location: Newt.console.validate_type : is_empty
 ::: ERROR :::
 Value must not be empty
-Value: set()
+Value: {}
 Type: <class 'set'>
 [0m
 

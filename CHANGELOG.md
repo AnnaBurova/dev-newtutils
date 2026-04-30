@@ -20,6 +20,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - Updated all usages of `validate_input()` to `validate_type()` across other modules.
 - `newtutils/console.py` - `validate_type()` - Reversed the order of `location` prefix: changed from `" > " + location` to `location + " > "` so the caller's location appears before the function location.
 - `newtutils/console.py` - `validate_type()` - Rewrote `check_non_empty` logic: replaced loosely typed `isinstance()` checks with strict `type(value) is T and expected_type is T` comparisons for each type. Extended support to `bool`, `float`, and `bytes` types.
+- `newtutils/console.py` - `validate_type()` - Now renders `set` values using a custom sorted string format ({val1, val2, ...}), ensures consistent, deterministic output across all Python versions.
 
 ### Testing
 

@@ -138,9 +138,14 @@ def validate_type(
     if location:
         location = location + " > "
 
+    value_content = value
+
+    if type(value) is set:
+        value_content = "{" + ", ".join(str(x) for x in sorted(value, key=str)) + "}"
+
     if not isinstance(value, expected_type):
         error_msg(
-            f"Value: {value}",
+            f"Value: {value_content}",
             f"Received type: {type(value)}",
             f"Expected type: {expected_type}",
             location=location + "Newt.console.validate_type",
@@ -174,7 +179,7 @@ def validate_type(
         else:
             error_msg(
                 "check_non_empty is not supported for this type",
-                f"Value: {value}",
+                f"Value: {value_content}",
                 f"Type: {type(value)}",
                 location=location + "Newt.console.validate_type : check_non_empty",
                 stop=stop
@@ -184,7 +189,7 @@ def validate_type(
         if is_empty:
             error_msg(
                 "Value must not be empty",
-                f"Value: {value}",
+                f"Value: {value_content}",
                 f"Type: {type(value)}",
                 location=location + "Newt.console.validate_type : is_empty",
                 stop=stop

@@ -172,7 +172,7 @@ class TestValidateType:
         assert NewtCons.validate_type(input_dict, dict) is True
 
         input_set = {input_bool, input_int, input_float, input_str}
-        print("input_set:", input_set, "/", type(input_set))
+        print("input_set: {" + ", ".join(str(x) for x in sorted(input_set, key=str)) + "} /", type(input_set))
         assert NewtCons.validate_type(input_set, set) is True
 
         captured = capsys.readouterr()
@@ -187,8 +187,7 @@ class TestValidateType:
         assert "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>\n" in captured.out
         assert "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>\n" in captured.out
         assert "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>\n" in captured.out
-        assert "\ninput_set: {" in captured.out  # set() - An unordered collection.
-        assert "} / <class 'set'>\n" in captured.out  # set() - An unordered collection.
+        assert "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>\n" in captured.out
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -236,7 +235,7 @@ class TestValidateType:
         assert NewtCons.validate_type(input_dict, frozenset, stop=False) is False
 
         input_set = {input_bool, input_int, input_float, input_str}
-        print("input_set:", input_set, "/", type(input_set))
+        print("input_set: {" + ", ".join(str(x) for x in sorted(input_set, key=str)) + "} /", type(input_set))
         assert NewtCons.validate_type(input_set, frozenset, stop=False) is False
 
         captured = capsys.readouterr()
@@ -251,8 +250,7 @@ class TestValidateType:
         assert "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>\n" in captured.out
         assert "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>\n" in captured.out
         assert "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>\n" in captured.out
-        assert "\ninput_set: {" in captured.out  # set() - An unordered collection.
-        assert "} / <class 'set'>\n" in captured.out  # set() - An unordered collection.
+        assert "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>\n" in captured.out
 
         assert captured.err.count("\n::: ERROR :::\n") == 10
         assert captured.err.count("\nLocation: Newt.console.validate_type\n") == 10
@@ -265,7 +263,7 @@ class TestValidateType:
         assert "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>\nExpected type: <class 'frozenset'>\n" in captured.err
         assert "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>\nExpected type: <class 'frozenset'>\n" in captured.err
         assert "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "}\nReceived type: <class 'set'>\nExpected type: <class 'frozenset'>\n" in captured.err  # set() - An unordered collection.
+        assert "\nValue: {123, 3.14, False, Hello}\nReceived type: <class 'set'>\nExpected type: <class 'frozenset'>\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -339,7 +337,7 @@ class TestValidateType:
         assert exc_info_dict.value.code == 1
 
         input_set = {input_bool, input_int, input_float, input_str}
-        print("input_set:", input_set, "/", type(input_set))
+        print("input_set: {" + ", ".join(str(x) for x in sorted(input_set, key=str)) + "} /", type(input_set))
         with pytest.raises(SystemExit) as exc_info_set:
             NewtCons.validate_type(input_set, frozenset)
             print("This line will not be printed")
@@ -357,8 +355,7 @@ class TestValidateType:
         assert "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>\n" in captured.out
         assert "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>\n" in captured.out
         assert "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>\n" in captured.out
-        assert "\ninput_set: {" in captured.out  # set() - An unordered collection.
-        assert "} / <class 'set'>\n" in captured.out  # set() - An unordered collection.
+        assert "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>\n" in captured.out
 
         assert captured.err.count("\n::: ERROR :::\n") == 10
         assert captured.err.count("\nLocation: Newt.console.validate_type\n") == 10
@@ -371,7 +368,7 @@ class TestValidateType:
         assert "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>\nExpected type: <class 'frozenset'>\n" in captured.err
         assert "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>\nExpected type: <class 'frozenset'>\n" in captured.err
         assert "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "}\nReceived type: <class 'set'>\nExpected type: <class 'frozenset'>\n" in captured.err  # set() - An unordered collection.
+        assert "\nValue: {123, 3.14, False, Hello}\nReceived type: <class 'set'>\nExpected type: <class 'frozenset'>\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -523,7 +520,7 @@ class TestValidateType:
         assert "\nValue must not be empty\nValue: []\nType: <class 'list'>\n" in captured.err
         assert "\nValue must not be empty\nValue: ()\nType: <class 'tuple'>\n" in captured.err
         assert "\nValue must not be empty\nValue: {}\nType: <class 'dict'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: set()\nType: <class 'set'>\n" in captured.err
+        assert "\nValue must not be empty\nValue: {}\nType: <class 'set'>\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
