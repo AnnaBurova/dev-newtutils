@@ -42,8 +42,13 @@ from colorama import Fore, Style
 
 try:
     import winsound
-except ImportError:  # pragma: no cover (Unix-only)
-    print("Exception: (found? write test!)")  # TODO
+except ImportError:
+    print()
+    print("Hint: import winsound only works on Windows.")
+    print("Function _beep_boop will make no sound.")
+    print("Expected platform: win32 / Got:", sys.platform)
+    print("Expected OS name:  nt    / Got:", os.name)
+    print()
     winsound = None
 
 
@@ -136,7 +141,7 @@ def validate_type(
     """
 
     if location:
-        location = location + " > "
+        location = str(location) + " > "
 
     value_content = value
 

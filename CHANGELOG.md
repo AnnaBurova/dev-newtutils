@@ -25,7 +25,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 ### Testing
 
 - `tests/_list.sh` - Added multi-venv **pytest** runner loop.
-- `tests/output/` - Added **pytest** results for console module across venv310-venv314.
+- `tests/output/` - Added **pytest** results for console module across venv310-venv314 and venvLinux312.
 - `tests/test_console.py` - Renamed test class `TestValidateInput` to `TestValidateType`.
 - `tests/test_console.py` - `TestValidateType`: expanded coverage to all core types (`NoneType`, `bool`, `int`, `float`, `str`, `bytes`, `list`, `tuple`, `dict`, `set`).
 - `tests/test_console.py` - Added `assert "::: ERROR :::" not in captured.out` checks to multiple tests for stricter stdout/stderr separation.

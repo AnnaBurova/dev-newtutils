@@ -19,10 +19,15 @@ modules=("console" "utility" "files" "sql" "network")
 
 # === List of virtual environments ===
 env_venv=("venv314" "venv313" "venv312" "venv311" "venv310")
+# env_venv=("venvLinux312")
 
 # === Loop each env_venv ===
 for venv in "${env_venv[@]}"; do
-  PYTEST="D:/VS_Code/.${venv}/Scripts/pytest"
+  if [[ "$venv" == *"Linux"* ]]; then
+    PYTEST="/mnt/d/VS_Code/.${venv}/bin/pytest"
+  else
+    PYTEST="D:/VS_Code/.${venv}/Scripts/pytest"
+  fi
 
   if [ ! -f "$PYTEST" ]; then
     echo "⚠️  Skipping $venv = pytest not found"
@@ -52,8 +57,11 @@ for venv in "${env_venv[@]}"; do
               "$PYTEST" "$base_path" -s -v > "output/${venv}_test_${mod}_${n}.txt" 2>&1
               ;;
           esac
+
           # Convert to LF
-          dos2unix --force "output/${venv}_test_${mod}_${n}.txt"
+          if [[ "$venv" != *"Linux"* ]]; then
+            dos2unix --force "output/${venv}_test_${mod}_${n}.txt"
+          fi
       done
       echo "-----------------------------------------"
   done
