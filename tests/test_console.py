@@ -608,11 +608,10 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nRetrying in 2 seconds...\n" in captured.out
-        assert "\nTime left: 2s\n" in captured.out
-        assert "\nTime left: 1s\n" in captured.out
+        assert "\nRetrying in 2 seconds...\nTime left: 2s\nTime left: 1s\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
         assert "Time left: 3s" not in captured.out
 
 
@@ -629,12 +628,10 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nRetrying in 3 seconds...\n" in captured.out
-        assert "\nTime left: 3s\n" in captured.out
-        assert "\nTime left: 2s\n" in captured.out
-        assert "\nTime left: 1s\n" in captured.out
+        assert "\nRetrying in 3 seconds...\nTime left: 3s\nTime left: 2s\nTime left: 1s\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
         assert "Time left: 4s" not in captured.out
 
 
@@ -650,16 +647,14 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > _retry_pause : seconds\n" in captured.out
-        assert "\nExpected <class 'int'>, got <class 'str'>\n" in captured.out
-        assert "\nValue: invalid\n" in captured.out
-        assert "\nRetrying in 5 seconds...\n" in captured.out
-        assert "\nTime left: 5s\n" in captured.out
-        assert "\nTime left: 4s\n" in captured.out
-        assert "\nTime left: 3s\n" in captured.out
-        assert "\nTime left: 2s\n" in captured.out
-        assert "\nTime left: 1s\n" in captured.out
+        assert "\nRetrying in 5 seconds...\nTime left: 5s\nTime left: 4s\nTime left: 3s\nTime left: 2s\nTime left: 1s\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.console.retry_pause : seconds int > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: invalid\nReceived type: <class 'str'>\nExpected type: <class 'int'>\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.console.time.sleep')
@@ -674,16 +669,14 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input : is_empty > _retry_pause : seconds\n" in captured.out
-        assert "\nValue must be non-empty\n" in captured.out
-        assert "\nValue: 0\n" in captured.out
-        assert "\nRetrying in 5 seconds...\n" in captured.out
-        assert "\nTime left: 5s\n" in captured.out
-        assert "\nTime left: 4s\n" in captured.out
-        assert "\nTime left: 3s\n" in captured.out
-        assert "\nTime left: 2s\n" in captured.out
-        assert "\nTime left: 1s\n" in captured.out
+        assert "\nRetrying in 5 seconds...\nTime left: 5s\nTime left: 4s\nTime left: 3s\nTime left: 2s\nTime left: 1s\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.console.retry_pause : seconds int > Newt.console.validate_type : is_empty\n" in captured.err
+        assert "\nValue must not be empty\nValue: 0\nType: <class 'int'>\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.console.time.sleep')
@@ -698,15 +691,14 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console._retry_pause : seconds < 1\n" in captured.out
-        assert "\nInvalid pause duration: -1\n" in captured.out
-        assert "\nRetrying in 5 seconds...\n" in captured.out
-        assert "\nTime left: 5s\n" in captured.out
-        assert "\nTime left: 4s\n" in captured.out
-        assert "\nTime left: 3s\n" in captured.out
-        assert "\nTime left: 2s\n" in captured.out
-        assert "\nTime left: 1s\n" in captured.out
+        assert "\nRetrying in 5 seconds...\nTime left: 5s\nTime left: 4s\nTime left: 3s\nTime left: 2s\nTime left: 1s\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.console.retry_pause : seconds < 1\n" in captured.err
+        assert "\nInvalid pause duration: -1\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     @patch('newtutils.console._beep_boop')
@@ -727,14 +719,20 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nRetrying in 5 seconds...\n" in captured.out
-        assert "\nTime left: 5s\n" in captured.out
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console._retry_pause : KeyboardInterrupt\n" in captured.out
-        assert "\nRetry interrupted by user (Ctrl+C)\n" in captured.out
+        assert "\nRetrying in 5 seconds...\nTime left: 5s\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.console.retry_pause : KeyboardInterrupt\n" in captured.err
+        assert "\nRetry interrupted by user (Ctrl+C)\n" in captured.err
+
         # Expected absence of result
-        assert "This line will not be printed" not in captured.out
+        assert "::: ERROR :::" not in captured.out
         assert "Time left: 4s" not in captured.out
+        assert "Time left: 3s" not in captured.out
+        assert "Time left: 2s" not in captured.out
+        assert "Time left: 1s" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
 class TestCheckLocation:

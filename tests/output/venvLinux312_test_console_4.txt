@@ -9,7 +9,7 @@ Function _beep_boop will make no sound.
 Expected platform: win32 / Got: linux
 Expected OS name:  nt    / Got: posix
 
-collected 13 items
+collected 19 items
 
 test_console.py::TestDivider::test_divider_output 
 START=======================================
@@ -469,5 +469,116 @@ Beep Boop !!!
 (no stderr captured)
 END=========================================
 PASSED
+test_console.py::TestRetryPause::test_retry_pause_with_beep 
+START=======================================
+=====captured.out=====
+Function: test_retry_pause_with_beep
+============================================
+Retrying in 2 seconds...
+Time left: 2s
+Time left: 1s
 
-============================== 13 passed in 0.23s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_console.py::TestRetryPause::test_retry_pause_countdown 
+START=======================================
+=====captured.out=====
+Function: test_retry_pause_countdown
+============================================
+Retrying in 3 seconds...
+Time left: 3s
+Time left: 2s
+Time left: 1s
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_console.py::TestRetryPause::test_retry_pause_invalid_type 
+START=======================================
+=====captured.out=====
+Function: test_retry_pause_invalid_type
+============================================
+Retrying in 5 seconds...
+Time left: 5s
+Time left: 4s
+Time left: 3s
+Time left: 2s
+Time left: 1s
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.retry_pause : seconds int > Newt.console.validate_type
+::: ERROR :::
+Value: invalid
+Received type: <class 'str'>
+Expected type: <class 'int'>
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestRetryPause::test_retry_pause_invalid_seconds 
+START=======================================
+=====captured.out=====
+Function: test_retry_pause_invalid_seconds
+============================================
+Retrying in 5 seconds...
+Time left: 5s
+Time left: 4s
+Time left: 3s
+Time left: 2s
+Time left: 1s
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.retry_pause : seconds int > Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 0
+Type: <class 'int'>
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestRetryPause::test_retry_pause_negative_seconds 
+START=======================================
+=====captured.out=====
+Function: test_retry_pause_negative_seconds
+============================================
+Retrying in 5 seconds...
+Time left: 5s
+Time left: 4s
+Time left: 3s
+Time left: 2s
+Time left: 1s
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.retry_pause : seconds < 1
+::: ERROR :::
+Invalid pause duration: -1
+[0m
+
+END=========================================
+PASSED
+test_console.py::TestRetryPause::test_retry_pause_keyboard_interrupt 
+START=======================================
+=====captured.out=====
+Function: test_retry_pause_keyboard_interrupt
+============================================
+Retrying in 5 seconds...
+Time left: 5s
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.retry_pause : KeyboardInterrupt
+::: ERROR :::
+Retry interrupted by user (Ctrl+C)
+[0m
+
+END=========================================
+PASSED
+
+============================== 19 passed in 0.23s ==============================

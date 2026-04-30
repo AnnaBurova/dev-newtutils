@@ -229,7 +229,7 @@ def _retry_pause(
         seconds: int = 5,
         beep: bool = True
         ) -> None:
-    """ Display a countdown and pause before retrying an operation.
+    """ ## Display a countdown and pause before retrying an operation.
 
     Used primarily by network-related functions
     to wait between retry attempts after a failed request.
@@ -237,11 +237,11 @@ def _retry_pause(
 
     Args:
         seconds (int):
-            Total wait time in seconds.
-            Must be at least 1.
+            Total wait time in seconds.<br>
+            Must be at least 1.<br>
             Defaults to 5.
         beep (bool):
-            If True, plays a "beep-boop" notification before the countdown.
+            If True, plays a "beep-boop" notification before the countdown.<br>
             Defaults to True.
 
     Raises:
@@ -251,22 +251,22 @@ def _retry_pause(
 
     if not validate_type(
         seconds, int, check_non_empty=True, stop=False,
-        location="_retry_pause : seconds"
+        location="Newt.console.retry_pause : seconds int"
     ):
         seconds = 5
 
     if seconds < 1:
         error_msg(
             f"Invalid pause duration: {seconds}",
-            location="Newt.console._retry_pause : seconds < 1",
+            location="Newt.console.retry_pause : seconds < 1",
             stop=False
         )
         seconds = 5
 
+    print(f"Retrying in {seconds} seconds...")
+
     if beep:
         _beep_boop()
-
-    print(f"Retrying in {seconds} seconds...")
 
     try:
         for i in range(seconds, 0, -1):
@@ -276,7 +276,7 @@ def _retry_pause(
     except KeyboardInterrupt:
         error_msg(
             "Retry interrupted by user (Ctrl+C)",
-            location="Newt.console._retry_pause : KeyboardInterrupt"
+            location="Newt.console.retry_pause : KeyboardInterrupt"
         )
 
 
