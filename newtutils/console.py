@@ -26,7 +26,7 @@ Functions:
         beep: bool = True
         ) -> None
     def check_location(
-        dir_: str,
+        dir_global: str,
         must_location: str
         ) -> None
 """
@@ -281,16 +281,16 @@ def _retry_pause(
 
 
 def check_location(
-        dir_: str,
+        dir_global: str,
         must_location: str
         ) -> None:
-    """ Check if the current directory matches the required location.
+    """ ## Check if the current directory matches the required location.
 
     Prints a start message if directories match,
     otherwise logs an error and stops execution.
 
     Args:
-        dir_ (str):
+        dir_global (str):
             The current directory path to check.
         must_location (str):
             The required directory path.
@@ -301,20 +301,20 @@ def check_location(
     """
 
     validate_type(
-        dir_, str, check_non_empty=True,
-        location="check_location : dir_"
+        dir_global, str, check_non_empty=True,
+        location="Newt.console.check_location : dir_global"
     )
 
     validate_type(
         must_location, str, check_non_empty=True,
-        location="check_location : must_location"
+        location="Newt.console.check_location : must_location"
     )
 
-    if dir_ == must_location:
+    if dir_global == must_location:
         print("=== START ===")
-        return
+        return None
 
     error_msg(
-        f"Current position is wrong, check folder: {dir_}",
-        location="Newt.console.check_location : no return"
+        f"Current position is wrong, check folder: {dir_global}",
+        location="Newt.console.check_location : error_msg"
     )

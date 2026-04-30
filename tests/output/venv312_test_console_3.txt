@@ -2,7 +2,7 @@
 platform win32 -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collected 19 items
+collected 22 items
 
 test_console.py 
 START=======================================
@@ -552,5 +552,48 @@ Retry interrupted by user (Ctrl+C)
 
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_check_location_match
+============================================
+/home/user/project == /home/user/project
+=== START ===
 
-============================= 19 passed in 0.06s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_check_location_mismatch
+============================================
+/home/user/project == /home/other/project
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.check_location : error_msg
+::: ERROR :::
+Current position is wrong, check folder: /home/user/project
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_check_location_invalid_type
+============================================
+123 == /home/user/project
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.check_location : dir_global > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+
+END=========================================
+.
+
+============================= 22 passed in 0.08s ==============================

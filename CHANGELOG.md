@@ -23,6 +23,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - `newtutils/console.py` - `validate_type()` - Now renders `set` values using a custom sorted string format ({val1, val2, ...}), ensures consistent, deterministic output across all Python versions.
 - `tests/test_console.py` - `_beep_boop()` no longer accepts a `pause_s` parameter, delay between tones is now hardcoded (0.2s after first beep, 2s after second to have time to react). Cross-platform fallback changed: instead of silently returning on non-Windows, now prints a colored "Beep Boop !!!" message to stdout using colorama, to see a message at least.
 _retry_pause Refactor and Test Updates
+- Renamed parameter dir_ to dir_global in check_location function signature and all internal usages
 
 ### Testing
 

@@ -750,9 +750,11 @@ class TestCheckLocation:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n=== START ===\n" in captured.out
+        assert "\n/home/user/project == /home/user/project\n=== START ===\n" in captured.out
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
     def test_check_location_mismatch(self, capsys):
@@ -760,7 +762,7 @@ class TestCheckLocation:
         print_my_func_name()
 
         location_1 = "/home/user/project"
-        location_2 = "/other/place"
+        location_2 = "/home/other/project"
         print(location_1, "==", location_2)
 
         with pytest.raises(SystemExit) as exc_info:
@@ -771,15 +773,20 @@ class TestCheckLocation:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.check_location : no return\n" in captured.out
-        assert "\nCurrent position is wrong, check folder: /home/user/project\n" in captured.out
+        assert "\n/home/user/project == /home/other/project\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.console.check_location : error_msg\n" in captured.err
+        assert "\nCurrent position is wrong, check folder: /home/user/project\n" in captured.err
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
     def test_check_location_invalid_type(self, capsys):
-        """ Test check_location non-str arg triggers validate_input SystemExit. """
+        """ Test check_location non-str arg triggers validate_type SystemExit. """
         print_my_func_name()
 
         location_1 = 123
@@ -794,9 +801,13 @@ class TestCheckLocation:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > check_location : dir_\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
-        assert "\nValue: 123\n" in captured.out
+        assert "\n123 == /home/user/project\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.console.check_location : dir_global > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n" in captured.err
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
