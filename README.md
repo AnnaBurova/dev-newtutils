@@ -1,6 +1,6 @@
 # About NewtUtils — Developer Utilities (NewtCode)
 
-[![Version](https://img.shields.io/badge/version-v0.3.0-orange.svg)](https://github.com/AnnaBurova/dev-newtutils)
+[![Version](https://img.shields.io/badge/version-v0.3.1-orange.svg)](https://github.com/AnnaBurova/dev-newtutils)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 [![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/)

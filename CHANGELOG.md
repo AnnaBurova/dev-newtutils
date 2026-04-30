@@ -5,7 +5,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
-## [vNext] — Upcoming
+## [0.3.1] — Reworked Module Console
+
+**Date:** 2026-04-30
 
 ### Added
 
@@ -13,38 +15,36 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Changed
 
-- `newtutils/console.py` - Narrowed `error_msg()` args type to str.
-- `newtutils/console.py` - Redirected `error_msg()` output to stderr.
-- `newtutils/console.py` - Rename `validate_input()` to `validate_type()` for more accurate naming that reflects its purpose (type checking, not input validation).
 - `newtutils/__init__.py` - Updated public export `validate_input` to `validate_type`.
-- Updated all usages of `validate_input()` to `validate_type()` across other modules.
-- `newtutils/console.py` - `validate_type()` - Reversed the order of `location` prefix: changed from `" > " + location` to `location + " > "` so the caller's location appears before the function location.
-- `newtutils/console.py` - `validate_type()` - Rewrote `check_non_empty` logic: replaced loosely typed `isinstance()` checks with strict `type(value) is T and expected_type is T` comparisons for each type. Extended support to `bool`, `float`, and `bytes` types.
-- `newtutils/console.py` - `validate_type()` - Now renders `set` values using a custom sorted string format ({val1, val2, ...}), ensures consistent, deterministic output across all Python versions.
-- `tests/test_console.py` - `_beep_boop()` no longer accepts a `pause_s` parameter, delay between tones is now hardcoded (0.2s after first beep, 2s after second to have time to react). Cross-platform fallback changed: instead of silently returning on non-Windows, now prints a colored "Beep Boop !!!" message to stdout using colorama, to see a message at least.
-_retry_pause Refactor and Test Updates
-- Renamed parameter dir_ to dir_global in check_location function signature and all internal usages
+- `newtutils/console.py`:
+  - `error_msg()` - Redirected output to stderr.
+  - `error_msg()` - Argument `*args` has been changed to string.
+  - Renamed `validate_input()` to `validate_type()` for more accurate naming that reflects its purpose (type checking, not input validation).
+  - `validate_type()` - Reversed the order of `location` prefix: changed from `" > " + location` to `location + " > "` so the caller's location appears before the function location.
+  - `validate_type()` - Rewrote `check_non_empty` logic: replaced loosely typed `isinstance()` checks with strict `type(value) is T and expected_type is T` comparisons for each type. Extended support to `bool`, `float`, and `bytes` types.
+  - `_beep_boop()` - No longer accepts a `pause_s` parameter, delay between tones is now hardcoded (0.2s after first beep, 1s after second to have time to react).
+  - `_beep_boop()` - Cross-platform fallback changed: instead of silently returning on non-Windows, now prints a colored `"Beep Boop !!!"` message to stdout using **colorama**, to see a message at least.
+  - `_retry_pause()` - Rewrite error hints. Beep happens after message of Retrying, to have extra 1s to react.
+  - `check_location()` - Renamed parameter `dir_` to `dir_global` and all internal usages.
 
 ### Testing
 
 - `tests/_list.sh` - Added multi-venv **pytest** runner loop.
 - `tests/output/` - Added **pytest** results for console module across venv310-venv314 and venvLinux312.
+- `tests/test_console.py` - Added `assert "::: ERROR :::" not in captured.out` checks to multiple tests for stricter stdout/stderr separation.
 - `tests/test_console.py` - Renamed test class `TestValidateInput` to `TestValidateType`.
 - `tests/test_console.py` - `TestValidateType`: expanded coverage to all core types (`NoneType`, `bool`, `int`, `float`, `str`, `bytes`, `list`, `tuple`, `dict`, `set`).
-- `tests/test_console.py` - Added `assert "::: ERROR :::" not in captured.out` checks to multiple tests for stricter stdout/stderr separation.
-- `tests/test_console.py` - `test_beep_boop` rewritten to be platform-aware: on Windows it patches winsound.Beep directly and asserts call counts; on non-Windows it verifies "Beep Boop !!!" message appears in stdout
-Updated all error location string assertions to use the new retry_pause naming convention
+- `tests/test_console.py` - Rewritten `test_beep_boop` to be platform-aware: on Windows it patches winsound.Beep directly and asserts call counts; on non-Windows it verifies "Beep Boop !!!" message appears in stdout.
+- `tests/test_console.py` - Updated all error location string assertions to use the new naming conventions.
 
 ### Fixed
 
 - `README.md` - Fixed badge formatting by removing stray leading plus sign.
+- `newtutils/console.py` - Updated docstrings.
+- Updated all usages of `validate_input()` to `validate_type()` across other modules.
+- `newtutils/console.py` - `validate_type()` - Now renders `set` values using a custom sorted string format ({val1, val2, ...}), ensures consistent, deterministic output across all Python versions.
 - `tests/README.md` - Updated test usage documentation.
 - `tests/helpers.py` - Updated docstrings and signatures.
-- `newtutils/console.py` - Updated docstrings.
-
-### Removed
-
-- *(note any removed or deprecated features)*
 
 ---
 

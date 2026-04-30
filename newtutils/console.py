@@ -217,6 +217,7 @@ def _beep_boop(
         print(Style.BRIGHT + Fore.GREEN)
         print("Beep Boop !!!")
         print(Style.RESET_ALL)
+        time.sleep(2)
         return None
 
     winsound.Beep(1200, 500)
