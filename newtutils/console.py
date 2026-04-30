@@ -222,7 +222,7 @@ def _beep_boop(
     winsound.Beep(1200, 500)
     time.sleep(0.2)
     winsound.Beep(800, 500)
-    time.sleep(2)
+    time.sleep(1)
 
 
 def _retry_pause(
