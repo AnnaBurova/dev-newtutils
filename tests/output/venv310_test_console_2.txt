@@ -3,19 +3,20 @@ platform win32 -- Python 3.10.11, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 12 items
+collecting ... collected 13 items
 
-test_console.py::TestDivider::test_divider_output PASSED                 [  8%]
-test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 16%]
-test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 25%]
-test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 33%]
-test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 41%]
-test_console.py::TestValidateType::test_validate_type_correct_type_not_empty PASSED [ 50%]
-test_console.py::TestValidateType::test_validate_type_incorrect_type_no_stop PASSED [ 58%]
-test_console.py::TestValidateType::test_validate_type_incorrect_type_with_stop PASSED [ 66%]
-test_console.py::TestValidateType::test_validate_type_multiple_types PASSED [ 75%]
-test_console.py::TestValidateType::test_validate_type_with_location PASSED [ 83%]
-test_console.py::TestValidateType::test_validate_type_correct_type_but_empty PASSED [ 91%]
-test_console.py::TestValidateType::test_validate_type_unknown_type_and_empty PASSED [100%]
+test_console.py::TestDivider::test_divider_output PASSED                 [  7%]
+test_console.py::TestErrorMsg::test_error_msg_with_stop PASSED           [ 15%]
+test_console.py::TestErrorMsg::test_error_msg_without_stop PASSED        [ 23%]
+test_console.py::TestErrorMsg::test_error_msg_multiple_args PASSED       [ 30%]
+test_console.py::TestErrorMsg::test_error_msg_with_location PASSED       [ 38%]
+test_console.py::TestValidateType::test_validate_type_correct_type_not_empty PASSED [ 46%]
+test_console.py::TestValidateType::test_validate_type_incorrect_type_no_stop PASSED [ 53%]
+test_console.py::TestValidateType::test_validate_type_incorrect_type_with_stop PASSED [ 61%]
+test_console.py::TestValidateType::test_validate_type_multiple_types PASSED [ 69%]
+test_console.py::TestValidateType::test_validate_type_with_location PASSED [ 76%]
+test_console.py::TestValidateType::test_validate_type_correct_type_but_empty PASSED [ 84%]
+test_console.py::TestValidateType::test_validate_type_unknown_type_and_empty PASSED [ 92%]
+test_console.py::TestBeepBoop::test_beep_boop PASSED                     [100%]
 
-============================= 12 passed in 0.03s ==============================
+============================= 13 passed in 0.06s ==============================

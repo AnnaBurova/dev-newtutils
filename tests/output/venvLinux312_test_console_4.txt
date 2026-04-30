@@ -9,7 +9,7 @@ Function _beep_boop will make no sound.
 Expected platform: win32 / Got: linux
 Expected OS name:  nt    / Got: posix
 
-collected 12 items
+collected 13 items
 
 test_console.py::TestDivider::test_divider_output 
 START=======================================
@@ -456,5 +456,18 @@ Type: <class 'frozenset'>
 
 END=========================================
 PASSED
+test_console.py::TestBeepBoop::test_beep_boop 
+START=======================================
+=====captured.out=====
+Function: test_beep_boop
+============================================
+[1m[32m
+Beep Boop !!!
+[0m
 
-============================== 12 passed in 0.17s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 13 passed in 0.23s ==============================

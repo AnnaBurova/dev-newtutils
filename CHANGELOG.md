@@ -21,6 +21,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - `newtutils/console.py` - `validate_type()` - Reversed the order of `location` prefix: changed from `" > " + location` to `location + " > "` so the caller's location appears before the function location.
 - `newtutils/console.py` - `validate_type()` - Rewrote `check_non_empty` logic: replaced loosely typed `isinstance()` checks with strict `type(value) is T and expected_type is T` comparisons for each type. Extended support to `bool`, `float`, and `bytes` types.
 - `newtutils/console.py` - `validate_type()` - Now renders `set` values using a custom sorted string format ({val1, val2, ...}), ensures consistent, deterministic output across all Python versions.
+- `tests/test_console.py` - `_beep_boop()` no longer accepts a `pause_s` parameter, delay between tones is now hardcoded (0.2s after first beep, 2s after second to have time to react). Cross-platform fallback changed: instead of silently returning on non-Windows, now prints a colored "Beep Boop !!!" message to stdout using colorama, to see a message at least.
 
 ### Testing
 
@@ -29,6 +30,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - `tests/test_console.py` - Renamed test class `TestValidateInput` to `TestValidateType`.
 - `tests/test_console.py` - `TestValidateType`: expanded coverage to all core types (`NoneType`, `bool`, `int`, `float`, `str`, `bytes`, `list`, `tuple`, `dict`, `set`).
 - `tests/test_console.py` - Added `assert "::: ERROR :::" not in captured.out` checks to multiple tests for stricter stdout/stderr separation.
+- `tests/test_console.py` - `test_beep_boop` rewritten to be platform-aware: on Windows it patches winsound.Beep directly and asserts call counts; on non-Windows it verifies "Beep Boop !!!" message appears in stdout
 
 ### Fixed
 

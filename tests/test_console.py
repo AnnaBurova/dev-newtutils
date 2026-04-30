@@ -15,6 +15,8 @@ Tests cover:
 - TestCheckLocation
 """
 
+import sys
+import os
 import pytest
 from unittest.mock import patch
 
@@ -561,75 +563,31 @@ class TestBeepBoop:
     """ Tests for _beep_boop function. """
 
 
-    @patch('newtutils.console.os.name', 'nt')
-    @patch('newtutils.console.winsound')
     @patch('newtutils.console.time.sleep')
-    def test_beep_boop_on_windows(self, mock_sleep, mock_winsound, capsys):
-        """ Test that _beep_boop on Windows triggers two beeps and two sleeps without error output. """
+    def test_beep_boop(self, mock_sleep, capsys):
+        """ Test that _beep_boop on Windows triggers two beeps and two sleeps without error output or message at other OS. """
         print_my_func_name()
 
-        NewtCons._beep_boop()
-        assert mock_sleep.call_count == 2
-        assert mock_winsound.Beep.call_count == 2
+        if sys.platform == "win32" and os.name == "nt":
+            # On Windows: mock only Beep (module exists)
+            with patch('newtutils.console.winsound.Beep') as mock_beep:
+                NewtCons._beep_boop()
+                assert mock_beep.call_count == 2
+                assert mock_sleep.call_count == 2
+        else:
+            NewtCons._beep_boop()
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        if sys.platform == "win32" and os.name == "nt":
+            pass
+        else:
+            assert "\nBeep Boop !!!\n" in captured.out
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
-
-
-    @patch('newtutils.console.os.name', 'posix')
-    @patch('newtutils.console.winsound')
-    def test_beep_boop_on_non_windows(self, mock_winsound, capsys):
-        """ Test _beep_boop on non-Windows skips winsound.Beep and produces no error output. """
-        print_my_func_name()
-
-        NewtCons._beep_boop()
-        mock_winsound.Beep.assert_not_called()
-        assert mock_winsound.Beep.call_count == 0
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    @patch('newtutils.console.os.name', 'nt')
-    @patch('newtutils.console.winsound')
-    @patch('newtutils.console.time.sleep')
-    def test_beep_boop_invalid_pause_values(self, mock_sleep, mock_winsound, capsys):
-        """ Test _beep_boop handles invalid pause_s (str, negative) with errors and correct calls. """
-        print_my_func_name()
-
-        NewtCons._beep_boop(pause_s="Test")  # type: ignore
-        assert mock_sleep.call_count == 2
-        assert mock_winsound.Beep.call_count == 2
-
-        NewtCons._beep_boop(pause_s=-1)
-        assert mock_sleep.call_count == 4
-        assert mock_winsound.Beep.call_count == 4
-
-        NewtCons._beep_boop(pause_s=0.7)
-
-        assert mock_sleep.call_count == 6
-        assert mock_winsound.Beep.call_count == 6
-
-        pause_duration = [call[0][0] for call in mock_sleep.call_args_list]
-        print(f"Pause is: {pause_duration} seconds")
-        assert pause_duration == [0.2, 1, 0.2, 1, 0.7, 1]
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert "\nLocation: Newt.console.validate_input > _beep_boop : pause_s\n" in captured.out
-        assert "\nExpected (<class 'int'>, <class 'float'>), got <class 'str'>\n" in captured.out
-        assert "\nValue: Test\n" in captured.out
-        assert "\nLocation: Newt.console._beep_boop : pause_s < 0\n" in captured.out
-        assert "\nInvalid pause duration: -1\n" in captured.out
-        assert "\nPause is: [0.2, 1, 0.2, 1, 0.7, 1] seconds\n" in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
 class TestRetryPause:

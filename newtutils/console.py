@@ -20,7 +20,6 @@ Functions:
         location: str = ""
         ) -> bool
     def _beep_boop(
-        pause_s: float = 0.2
         ) -> None
     def _retry_pause(
         seconds: int = 5,
@@ -205,50 +204,25 @@ def validate_type(
 
 
 def _beep_boop(
-        pause_s: float = 0.2
         ) -> None:
-    """ Play a short "beep-boop" notification sound on Windows systems.
+    """ ## Play a short "beep-boop" notification sound on Windows systems.
 
     Produces two tones using the built-in `winsound` module:
     a higher-pitched "beep" followed by a lower "boop".
     Used for alerts or indicating that user attention is required.
-
-    Args:
-        pause_s (float):
-            Delay between tones in seconds.
-            Defaults to 0.2.
     """
 
     # Cross-platform safe beep
-    if os.name != "nt" or winsound is None:
-        return
+    if winsound is None:
+        print(Style.BRIGHT + Fore.GREEN)
+        print("Beep Boop !!!")
+        print(Style.RESET_ALL)
+        return None
 
-    if not validate_type(
-        pause_s, (int, float), stop=False,
-        location="_beep_boop : pause_s"
-    ):
-        pause_s = 0.2
-
-    if pause_s < 0:
-        error_msg(
-            f"Invalid pause duration: {pause_s}",
-            location="Newt.console._beep_boop : pause_s < 0",
-            stop=False
-        )
-        pause_s = 0.2
-
-    try:
-        winsound.Beep(1200, 500)
-        time.sleep(pause_s)
-        winsound.Beep(800, 500)
-        time.sleep(1)
-
-    except Exception as e:  # pragma: no cover
-        error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
-            location="Newt.console._beep_boop : Exception",
-            stop=False
-        )
+    winsound.Beep(1200, 500)
+    time.sleep(0.2)
+    winsound.Beep(800, 500)
+    time.sleep(2)
 
 
 def _retry_pause(
