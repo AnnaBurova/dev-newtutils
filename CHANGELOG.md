@@ -5,6 +5,30 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## [vNext] — Upcoming
+
+### Added
+
+- *(add new features here)*
+
+### Changed
+
+- *(describe modifications or improvements)*
+
+### Testing
+
+- New helper function format_set_to_str(input_set: set) -> str in tests/helpers.py — sorts elements by string representation and returns them wrapped in curly braces (e.g. {1, 2, abc})
+
+### Fixed
+
+- *(list bug fixes or error corrections)*
+
+### Removed
+
+- chore(tests): remove outdated pytest output snapshots from tests/output
+
+---
+
 ## [0.3.1] — Reworked Module Console
 
 **Date:** 2026-04-30

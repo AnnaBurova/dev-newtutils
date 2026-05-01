@@ -10,6 +10,9 @@ Functions:
     def print_my_captured(
         captured
         ) -> None
+    def format_set_to_str(
+        input_set: set
+        ) -> str
 """
 
 import inspect
@@ -57,3 +60,25 @@ def print_my_captured(
         print("(no stderr captured)")
 
     print("END=========================================")
+
+
+def format_set_to_str(
+        input_set: set
+        ) -> str:
+    """ ## Format a set into a sorted, human-readable string.
+
+    Sorts elements by their string representation
+    and wraps them in curly braces, similar to set literal syntax.
+
+    Args:
+        input_set (set):
+            The set to format.<br>
+            Elements can be of any type that supports str() conversion.
+
+    Returns:
+        out (str):
+            A string of sorted elements wrapped in curly braces.<br>
+            Example: `{1, 2, abc}` or `{}` for an empty set.
+    """
+
+    return "{" + ", ".join(str(x) for x in sorted(input_set, key=str)) + "}"

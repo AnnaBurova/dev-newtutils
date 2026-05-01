@@ -20,7 +20,7 @@ import os
 import pytest
 from unittest.mock import patch
 
-from .helpers import print_my_func_name, print_my_captured
+from .helpers import print_my_func_name, print_my_captured, format_set_to_str
 import newtutils.console as NewtCons
 
 
@@ -174,7 +174,7 @@ class TestValidateType:
         assert NewtCons.validate_type(input_dict, dict) is True
 
         input_set = {input_bool, input_int, input_float, input_str}
-        print("input_set: {" + ", ".join(str(x) for x in sorted(input_set, key=str)) + "} /", type(input_set))
+        print(f"input_set: {format_set_to_str(input_set)} / {type(input_set)}")
         assert NewtCons.validate_type(input_set, set) is True
 
         captured = capsys.readouterr()
@@ -237,7 +237,7 @@ class TestValidateType:
         assert NewtCons.validate_type(input_dict, frozenset, stop=False) is False
 
         input_set = {input_bool, input_int, input_float, input_str}
-        print("input_set: {" + ", ".join(str(x) for x in sorted(input_set, key=str)) + "} /", type(input_set))
+        print(f"input_set: {format_set_to_str(input_set)} / {type(input_set)}")
         assert NewtCons.validate_type(input_set, frozenset, stop=False) is False
 
         captured = capsys.readouterr()
@@ -339,7 +339,7 @@ class TestValidateType:
         assert exc_info_dict.value.code == 1
 
         input_set = {input_bool, input_int, input_float, input_str}
-        print("input_set: {" + ", ".join(str(x) for x in sorted(input_set, key=str)) + "} /", type(input_set))
+        print(f"input_set: {format_set_to_str(input_set)} / {type(input_set)}")
         with pytest.raises(SystemExit) as exc_info_set:
             NewtCons.validate_type(input_set, frozenset)
             print("This line will not be printed")
