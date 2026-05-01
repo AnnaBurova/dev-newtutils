@@ -28,6 +28,8 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - New helper function `format_set_to_str(input_set: set) -> str` sorts elements by string representation and returns them wrapped in curly braces (e.g. `{1, 2, abc}`).
 - `tests/output/`:
   - Added results for utility module across venv310-venv314 and venvLinux312.
+- `tests/test_utility.py`:
+  - Moved TestCheckDictKeys before TestSortingDictByKeys
 
 ### Fixed
 

@@ -87,7 +87,7 @@ def sorting_sequence(
     ):
         return []
 
-
+    # --------------------------------------------------------------------------
     def _is_valid_seq_value(
             seq_value
             ) -> bool:
@@ -105,7 +105,7 @@ def sorting_sequence(
             return True
 
         return False
-
+    # --------------------------------------------------------------------------
 
     if not all(_is_valid_seq_value(isv) for isv in input_sequence):
         NewtCons.error_msg(
