@@ -144,6 +144,9 @@ def validate_type(
 
     value_content = value
 
+    # Normalize to tuple for uniform check
+    expected = expected_type if isinstance(expected_type, tuple) else (expected_type,)
+
     if type(value) is set:
         value_content = "{" + ", ".join(str(x) for x in sorted(value, key=str)) + "}"
 
@@ -162,23 +165,23 @@ def validate_type(
 
         if value is None and expected_type is type(None):
             is_empty = True
-        elif type(value) is bool and expected_type is bool:
+        elif type(value) is bool and bool in expected:
             is_empty = value is False
-        elif type(value) is int and expected_type is int:
+        elif type(value) is int and int in expected:
             is_empty = value == 0
-        elif type(value) is float and expected_type is float:
+        elif type(value) is float and float in expected:
             is_empty = value == 0.0
-        elif type(value) is str and expected_type is str:
+        elif type(value) is str and str in expected:
             is_empty = value.strip() == ""
-        elif type(value) is bytes and expected_type is bytes:
+        elif type(value) is bytes and bytes in expected:
             is_empty = len(value) == 0
-        elif type(value) is list and expected_type is list:
+        elif type(value) is list and list in expected:
             is_empty = len(value) == 0
-        elif type(value) is tuple and expected_type is tuple:
+        elif type(value) is tuple and tuple in expected:
             is_empty = len(value) == 0
-        elif type(value) is dict and expected_type is dict:
+        elif type(value) is dict and dict in expected:
             is_empty = len(value) == 0
-        elif type(value) is set and expected_type is set:
+        elif type(value) is set and set in expected:
             is_empty = len(value) == 0
         else:
             error_msg(

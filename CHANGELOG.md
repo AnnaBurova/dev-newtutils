@@ -21,7 +21,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Fixed
 
-- *(list bug fixes or error corrections)*
+- fix(console): support tuple of types in validate_type emptiness checks
 
 ### Removed
 
