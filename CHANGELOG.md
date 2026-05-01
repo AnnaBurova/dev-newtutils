@@ -13,7 +13,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Changed
 
-- *(describe modifications or improvements)*
+- refactor(utility): rename sorting_list to sorting_sequence
 
 ### Testing
 

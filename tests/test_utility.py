@@ -7,7 +7,7 @@ Created on 2025-11
 Comprehensive unit tests for newtutils.utility module.
 
 Tests cover:
-- TestSortingList
+- TestSortingSequence
 - TestSortingDictByKeys
 - TestCheckDictKeys
 - TestSelectFromInput
@@ -20,7 +20,7 @@ from helpers import print_my_func_name, print_my_captured
 import newtutils.utility as NewtUtil
 
 
-class TestSortingList:
+class TestSortingSequence:
     """ Tests for sorting_sequence function. """
 
 

@@ -5,6 +5,10 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
+    def sorting_sequence(
+        input_list: Sequence[str | int],
+        stop: bool = True
+        ) -> list[str | int]
     def check_dict_keys(
         data: Mapping[str, object],
         expected: set[str],
@@ -15,10 +19,6 @@ Functions:
         sequence_list: Sequence[tuple[Any, ...]],
         position: int = 0
         ) -> dict[Any, int]
-    def sorting_sequence(
-        input_list: Sequence[str | int],
-        stop: bool = True
-        ) -> list[str | int]
     def sorting_dict_by_keys(
         data: Sequence[Mapping[str, Any]],
         *keys: str,
@@ -40,6 +40,80 @@ from collections.abc import Sequence, Mapping
 from typing import Any
 
 import newtutils.console as NewtCons
+
+
+def sorting_sequence(
+        input_list: Sequence[str | int],
+        stop: bool = True
+        ) -> list[str | int]:
+    """ Remove duplicates from a list and return a sorted result.
+
+    The function accepts a sequence containing only strings and integers,
+    removes duplicate entries, and returns all unique items in ascending order:
+    1. Strings (sorted alphabetically)
+    2. Integers (sorted numerically)
+
+    If the sequence contains elements of other types,
+    an error message is logged using `NewtCons.error_msg()`.
+    The function stops execution if `stop=True`.
+
+    Args:
+        input_list (Sequence[str | int]):
+            The input sequence to process.
+            Must contain only `str` or `int` values.
+        stop (bool):
+            If True, stops execution when invalid data is detected.
+            If False, logs the error and returns an empty list.
+            Defaults to True.
+
+    Returns:
+        out (list[str | int]):
+            Unique elements from the input sequence,
+            sorted alphabetically (strings) and numerically (integers).
+
+    Raises:
+        SystemExit:
+            Raised when `stop=True` and the input contains invalid data types.
+    """
+
+    if not NewtCons.validate_type(
+        input_list, (list, tuple), check_non_empty=True, stop=stop,
+        location="Newt.utility.sorting_sequence : input_list"
+    ):
+        return []
+
+    try:
+        # Validate all elements
+        if not all(
+            NewtCons.validate_type(
+                x, (str, int), stop=False
+            ) for x in input_list
+        ):
+            NewtCons.error_msg(
+                "input_list must have only str and int types",
+                f"input_list: {input_list}",
+                location="Newt.utility.sorting_sequence : input_list not all",
+                stop=stop
+            )
+            return []
+
+        # Remove duplicates
+        unique_values = set(input_list)
+
+        # Separate by type and sort
+        str_values = sorted([x for x in unique_values if isinstance(x, str)])
+        int_values = sorted([x for x in unique_values if isinstance(x, int)])
+
+        # Strings first, then integers
+        return str_values + int_values
+
+    except Exception as e:  # pragma: no cover
+        NewtCons.error_msg(
+            f"Exception: {e} (found? write test!)",  # TODO
+            location="Newt.utility.sorting_sequence : Exception",
+            stop=stop
+        )
+        return []
 
 
 def check_dict_keys(
@@ -138,80 +212,6 @@ def count_similar_values(
     count_values = {value: first_values.count(value) for value in set(first_values)}
     # print("Count of similar values:", count_values)
     return count_values
-
-
-def sorting_sequence(
-        input_list: Sequence[str | int],
-        stop: bool = True
-        ) -> list[str | int]:
-    """ Remove duplicates from a list and return a sorted result.
-
-    The function accepts a sequence containing only strings and integers,
-    removes duplicate entries, and returns all unique items in ascending order:
-    1. Strings (sorted alphabetically)
-    2. Integers (sorted numerically)
-
-    If the sequence contains elements of other types,
-    an error message is logged using `NewtCons.error_msg()`.
-    The function stops execution if `stop=True`.
-
-    Args:
-        input_list (Sequence[str | int]):
-            The input sequence to process.
-            Must contain only `str` or `int` values.
-        stop (bool):
-            If True, stops execution when invalid data is detected.
-            If False, logs the error and returns an empty list.
-            Defaults to True.
-
-    Returns:
-        out (list[str | int]):
-            Unique elements from the input sequence,
-            sorted alphabetically (strings) and numerically (integers).
-
-    Raises:
-        SystemExit:
-            Raised when `stop=True` and the input contains invalid data types.
-    """
-
-    if not NewtCons.validate_type(
-        input_list, (list, tuple), check_non_empty=True, stop=stop,
-        location="Newt.utility.sorting_sequence : input_list"
-    ):
-        return []
-
-    try:
-        # Validate all elements
-        if not all(
-            NewtCons.validate_type(
-                x, (str, int), stop=False
-            ) for x in input_list
-        ):
-            NewtCons.error_msg(
-                "input_list must have only str and int types",
-                f"input_list: {input_list}",
-                location="Newt.utility.sorting_sequence : input_list not all",
-                stop=stop
-            )
-            return []
-
-        # Remove duplicates
-        unique_values = set(input_list)
-
-        # Separate by type and sort
-        str_values = sorted([x for x in unique_values if isinstance(x, str)])
-        int_values = sorted([x for x in unique_values if isinstance(x, int)])
-
-        # Strings first, then integers
-        return str_values + int_values
-
-    except Exception as e:  # pragma: no cover
-        NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
-            location="Newt.utility.sorting_sequence : Exception",
-            stop=stop
-        )
-        return []
 
 
 def sorting_dict_by_keys(

@@ -25,9 +25,9 @@ from .console import (
 
 # Utility
 from .utility import (
+    sorting_sequence,
     check_dict_keys,
     count_similar_values,
-    sorting_sequence,
     sorting_dict_by_keys,
     select_from_input,
 )
@@ -66,9 +66,9 @@ __all__ = [
     "validate_type",
     "check_location",
     # Utility ----------
+    "sorting_sequence",
     "check_dict_keys",
     "count_similar_values",
-    "sorting_sequence",
     "sorting_dict_by_keys",
     "select_from_input",
     # Files ----------
