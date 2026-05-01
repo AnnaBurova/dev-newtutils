@@ -1,0 +1,123 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.0.3, pluggy-1.6.0
+rootdir: D:\VS_Code\dev-newtutils
+configfile: pyproject.toml
+collected 5 items
+
+test_utility.py 
+START=======================================
+=====captured.out=====
+Function: test_sorting_sequence_integers
+============================================
+input_list_1: [3, 1, 2, 3, 5, 1]
+output_1: [1, 2, 3, 5]
+input_list_2: [1]
+output_2: [1]
+input_list_3: [1, 1, 1, 1]
+output_3: [1]
+input_list_4: [1, 3, 2.5]
+output_4: [1, 2.5, 3]
+input_list_5: [100, 1, 50.0, 50, 1000, 5]
+output_5: [1, 5, 50, 100, 1000]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_sequence_strings
+============================================
+input_list_1: ['c', 'a', 'b', 'c', 'z']
+output_1: ['a', 'b', 'c', 'z']
+input_list_2: ['a']
+output_2: ['a']
+input_list_3: ['a', 'a', 'a', 'a']
+output_3: ['a']
+input_list_4: ['ab', 'a', 'b', 'aa']
+output_4: ['a', 'aa', 'ab', 'b']
+input_list_5: ['ab', 'a', 'aaaa', 'aaa', 'aa']
+output_5: ['a', 'aa', 'aaa', 'aaaa', 'ab']
+input_list_6: ['!', '.', ',', '?', 'ä', 'a', 'ö', 'o', 'ü', 'u', '$', '#', '@', '%', '^', '(', ')', '{', '}', '[', ']', '_', '-', '+', '*', '/', '0', '5', '1', '10', '11', '9']
+output_6: ['!', '#', '$', '%', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '10', '11', '5', '9', '?', '@', '[', ']', '^', '_', 'a', 'o', 'u', '{', '}', 'ä', 'ö', 'ü']
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_sequence_mixed
+============================================
+input_list_1: ['f', 4, 'a', 2, 'b', 1, 'a']
+output_1: ['a', 'b', 'f', 1, 2, 4]
+input_list_2: [1, 4.0, True, None, 'a', (5.0, 2, False, None, 'b', (6, 3.0, True, None, 'c'))]
+output_2: ['a', 1, 4, None, True, ('b', 2, 5, False, None, ('c', 3, 6, None, True))]
+input_list_3: [(3.0, 6.1, True, None, 'c'), (5.0, 2, False, None, 'b'), (6, 3, True, None, 'c')]
+output_3: [('b', 2, 5, False, None), ('c', 3, 6, None, True), ('c', 3, 6.1, None, True)]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_sequence_empty
+============================================
+input_list_1: []
+input_list_2: []
+output_2: []
+
+=====captured.err=====
+[1m[31m
+Location: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: []
+Type: <class 'list'>
+[0m
+[1m[31m
+Location: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: []
+Type: <class 'list'>
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_sequence_not_a_list
+============================================
+input_str_1: not a list
+output_1: []
+input_list_2: [1, [1]]
+output_2: []
+
+=====captured.err=====
+[1m[31m
+Location: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type
+::: ERROR :::
+Value: not a list
+Received type: <class 'str'>
+Expected type: (<class 'list'>, <class 'tuple'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_sequence.is_valid_seq_value > Newt.console.validate_type
+::: ERROR :::
+Value: [1]
+Received type: <class 'list'>
+Expected type: (<class 'NoneType'>, <class 'bool'>, <class 'int'>, <class 'float'>, <class 'str'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_sequence : input_sequence not all
+::: ERROR :::
+input_sequence must have only special types
+input_sequence: [1, [1]]
+[0m
+
+END=========================================
+.
+
+============================== 5 passed in 0.02s ==============================

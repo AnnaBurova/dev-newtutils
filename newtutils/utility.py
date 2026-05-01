@@ -1,14 +1,17 @@
 """
-Updated on 2026-02
+Updated on 2026-05
 Created on 2025-10
 
 @author: NewtCode Anna Burova
 
 Functions:
     def sorting_sequence(
-        input_list: Sequence[str | int],
+        input_sequence: Sequence,
         stop: bool = True
-        ) -> list[str | int]
+        ) -> list
+            def _is_valid_seq_value(
+                seq_value
+                ) -> bool
     def check_dict_keys(
         data: Mapping[str, object],
         expected: set[str],
@@ -43,33 +46,35 @@ import newtutils.console as NewtCons
 
 
 def sorting_sequence(
-        input_list: Sequence[str | int],
+        input_sequence: Sequence,
         stop: bool = True
-        ) -> list[str | int]:
-    """ Remove duplicates from a list and return a sorted result.
+        ) -> list:
+    """ ## Remove duplicates from a Sequence and return a sorted result as list.
 
-    The function accepts a sequence containing only strings and integers,
-    removes duplicate entries, and returns all unique items in ascending order:
-    1. Strings (sorted alphabetically)
-    2. Integers (sorted numerically)
+    Accepts a sequence, removes duplicate entries, and returns all unique
+    items sorted in the following order:
+    1. Strings — sorted alphabetically.
+    2. Integers and floats — sorted numerically.
+    3. Everything else (None, bool, etc.) — sorted by str().
+    4. Tuples — recursively processed and returned as tuples, sorted by str().
 
-    If the sequence contains elements of other types,
-    an error message is logged using `NewtCons.error_msg()`.
-    The function stops execution if `stop=True`.
+    Supported element types (at any tuple nesting depth):<br>
+    `None bool int float str tuple`<br>
+    Any other type triggers an error.
 
     Args:
-        input_list (Sequence[str | int]):
-            The input sequence to process.
-            Must contain only `str` or `int` values.
+        input_sequence (Sequence):
+            The input sequence to process.<br>
+            Must be a non-empty list or tuple.
         stop (bool):
-            If True, stops execution when invalid data is detected.
-            If False, logs the error and returns an empty list.
+            If True, raises SystemExit when invalid data is detected.<br>
+            If False, logs the error and returns an empty list.<br>
             Defaults to True.
 
     Returns:
-        out (list[str | int]):
-            Unique elements from the input sequence,
-            sorted alphabetically (strings) and numerically (integers).
+        out (list):
+            Unique elements from the input sequence, grouped and sorted:<br>
+            strings > numbers > other types > tuples.
 
     Raises:
         SystemExit:
@@ -77,43 +82,67 @@ def sorting_sequence(
     """
 
     if not NewtCons.validate_type(
-        input_list, (list, tuple), check_non_empty=True, stop=stop,
-        location="Newt.utility.sorting_sequence : input_list"
+        input_sequence, (list, tuple), check_non_empty=True, stop=stop,
+        location="Newt.utility.sorting_sequence : input_sequence"
     ):
         return []
 
-    try:
-        # Validate all elements
-        if not all(
-            NewtCons.validate_type(
-                x, (str, int), stop=False
-            ) for x in input_list
+
+    def _is_valid_seq_value(
+            seq_value
+            ) -> bool:
+        """ Recursively check if value is safe to add to a set. """
+
+        if isinstance(seq_value, tuple):
+            return all(_is_valid_seq_value(sv) for sv in seq_value)
+
+        # Validate all sub elements, else set() will not work correctly
+        seq_types = (type(None), bool, int, float, str)
+        if NewtCons.validate_type(
+            seq_value, seq_types, stop=False,
+            location="Newt.utility.sorting_sequence.is_valid_seq_value"
         ):
-            NewtCons.error_msg(
-                "input_list must have only str and int types",
-                f"input_list: {input_list}",
-                location="Newt.utility.sorting_sequence : input_list not all",
-                stop=stop
-            )
-            return []
+            return True
 
-        # Remove duplicates
-        unique_values = set(input_list)
+        return False
 
-        # Separate by type and sort
-        str_values = sorted([x for x in unique_values if isinstance(x, str)])
-        int_values = sorted([x for x in unique_values if isinstance(x, int)])
 
-        # Strings first, then integers
-        return str_values + int_values
-
-    except Exception as e:  # pragma: no cover
+    if not all(_is_valid_seq_value(isv) for isv in input_sequence):
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
-            location="Newt.utility.sorting_sequence : Exception",
+            "input_sequence must have only special types",
+            f"input_sequence: {input_sequence}",
+            location="Newt.utility.sorting_sequence : input_sequence not all",
             stop=stop
         )
         return []
+
+    # set() thinks 1 and True are same, and saves first value it founds
+    etc_val_list = [x for x in input_sequence if type(x) is bool]
+    non_bool = [x for x in input_sequence if type(x) is not bool]
+    # Remove duplicates
+    unique_values_set = set(non_bool)
+
+    str_val_list, int_val_list, tup_val_list = [], [], []
+
+    # Separate by type and sort
+    for uvs in unique_values_set:
+        if type(uvs) is str:
+            str_val_list.append(uvs)
+        elif type(uvs) in (int, float):
+            int_val_list.append(int(uvs) if uvs == int(uvs) else uvs)
+        elif isinstance(uvs, (tuple)):
+            tup_val_list.append(tuple(sorting_sequence(uvs, stop=stop)))
+        else:
+            etc_val_list.append(uvs)
+
+    str_val_list.sort()
+    int_val_list.sort()
+    etc_val_list = list(set(etc_val_list))
+    etc_val_list.sort(key=str)
+    tup_val_list.sort(key=str)
+
+    # Strings first, then integers
+    return str_val_list + int_val_list + etc_val_list + tup_val_list
 
 
 def check_dict_keys(

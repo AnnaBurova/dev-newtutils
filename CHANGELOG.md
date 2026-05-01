@@ -13,19 +13,36 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Changed
 
-- refactor(utility): rename sorting_list to sorting_sequence
+- `newtutils/utility.py`:
+  - `sorting_sequence()`:
+    - Renamed `sorting_list()` to `sorting_sequence()`.
+    - Parameter renamed from `input_list` to `input_sequence`.
+    - Docstring updated to reflect new supported types, sort order, and behavior.
+    - Expanded to support float, bool, none, and nested tuples.
+    - New sort order for output: strings > numbers (int/float) > other types (None, bool, etc.) > tuples.
+    - Tuples are now recursively processed via `sorting_sequence()` and returned as sorted tuples.
 
 ### Testing
 
-- New helper function format_set_to_str(input_set: set) -> str in tests/helpers.py — sorts elements by string representation and returns them wrapped in curly braces (e.g. {1, 2, abc})
+- `tests/helpers.py`:
+  - New helper function `format_set_to_str(input_set: set) -> str` sorts elements by string representation and returns them wrapped in curly braces (e.g. `{1, 2, abc}`).
+- `tests/output/`:
+  - Added results for utility module across venv310-venv314 and venvLinux312.
 
 ### Fixed
 
-- fix(console): support tuple of types in validate_type emptiness checks
+- `newtutils/console.py`:
+  - `validate_type()`:
+    - Support tuple of types in emptiness checks.
+- `newtutils/utility.py`:
+  - `sorting_sequence()`:
+    - Special handling for bool values to avoid set-based deduplication collision with integers `(True == 1)`.
+    - Float-to-int normalization: floats equal to their integer counterpart (e.g. `50.0 = 50`) are stored as int.
 
 ### Removed
 
-- chore(tests): remove outdated pytest output snapshots from tests/output
+- `tests/output/`:
+  - Removed outdated pytest output snapshots for `test_console_*.txt`
 
 ---
 

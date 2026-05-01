@@ -1,5 +1,5 @@
 """
-Updated on 2026-02
+Updated on 2026-05
 Created on 2025-11
 
 @author: NewtCode Anna Burova
@@ -16,7 +16,7 @@ Tests cover:
 import pytest
 from unittest.mock import patch
 
-from helpers import print_my_func_name, print_my_captured
+from .helpers import print_my_func_name, print_my_captured
 import newtutils.utility as NewtUtil
 
 
@@ -28,218 +28,225 @@ class TestSortingSequence:
         """ Test sorting_sequence removes duplicates from integers, returns unique sorted. """
         print_my_func_name()
 
-        input_list = [3, 1, 2, 3, 5, 1]
-        print(input_list)
-        result = NewtUtil.sorting_sequence(input_list)
-        print(result)
-        assert result == [1, 2, 3, 5]
+        input_list_1 = [3, 1, 2, 3, 5, 1]
+        print("input_list_1:", input_list_1)
+        output_1 = NewtUtil.sorting_sequence(input_list_1)
+        print("output_1:", output_1)
+        assert output_1 == [1, 2, 3, 5]
+
+        input_list_2 = [1]
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.sorting_sequence(input_list_2)
+        print("output_2:", output_2)
+        assert output_2 == [1]
+
+        input_list_3 = [1, 1, 1, 1]
+        print("input_list_3:", input_list_3)
+        output_3 = NewtUtil.sorting_sequence(input_list_3)
+        print("output_3:", output_3)
+        assert output_3 == [1]
+
+        input_list_4 = [1, 3, 2.5]
+        print("input_list_4:", input_list_4)
+        output_4 = NewtUtil.sorting_sequence(input_list_4)
+        print("output_4:", output_4)
+        assert output_4 == [1, 2.5, 3]
+
+        input_list_5 = [100, 1, 50.0, 50, 1000, 5]
+        print("input_list_5:", input_list_5)
+        output_5 = NewtUtil.sorting_sequence(input_list_5)
+        print("output_5:", output_5)
+        assert output_5 == [1, 5, 50, 100, 1000]
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[3, 1, 2, 3, 5, 1]\n[1, 2, 3, 5]\n" in captured.out
+        assert "\ninput_list_1: [3, 1, 2, 3, 5, 1]\noutput_1: [1, 2, 3, 5]\n" in captured.out
+        assert "\ninput_list_2: [1]\noutput_2: [1]\n" in captured.out
+        assert "\ninput_list_3: [1, 1, 1, 1]\noutput_3: [1]\n" in captured.out
+        assert "\ninput_list_4: [1, 3, 2.5]\noutput_4: [1, 2.5, 3]\n" in captured.out
+        assert "\ninput_list_5: [100, 1, 50.0, 50, 1000, 5]\noutput_5: [1, 5, 50, 100, 1000]\n" in captured.out
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
     def test_sorting_sequence_strings(self, capsys):
         """ Test sorting_sequence removes duplicates from strings, returns unique sorted. """
         print_my_func_name()
 
-        input_list = ["c", "a", "b", "c", "z"]
-        print(input_list)
-        result = NewtUtil.sorting_sequence(input_list)
-        print(result)
-        assert result == ["a", "b", "c", "z"]
+        input_list_1 = ["c", "a", "b", "c", "z"]
+        print("input_list_1:", input_list_1)
+        output_1 = NewtUtil.sorting_sequence(input_list_1)
+        print("output_1:", output_1)
+        assert output_1 == ["a", "b", "c", "z"]
+
+        input_list_2 = ["a"]
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.sorting_sequence(input_list_2)
+        print("output_2:", output_2)
+        assert output_2 == ["a"]
+
+        input_list_3 = ["a", "a", "a", "a"]
+        print("input_list_3:", input_list_3)
+        output_3 = NewtUtil.sorting_sequence(input_list_3)
+        print("output_3:", output_3)
+        assert output_3 == ["a"]
+
+        input_list_4 = ["ab", "a", "b", "aa"]
+        print("input_list_4:", input_list_4)
+        output_4 = NewtUtil.sorting_sequence(input_list_4)
+        print("output_4:", output_4)
+        assert output_4 == ["a", "aa", "ab", "b"]
+
+        input_list_5 = ["ab", "a", "aaaa", "aaa", "aa"]
+        print("input_list_5:", input_list_5)
+        output_5 = NewtUtil.sorting_sequence(input_list_5)
+        print("output_5:", output_5)
+        assert output_5 == ["a", "aa", "aaa", "aaaa", "ab"]
+
+        input_list_6 = [
+            "!", ".", ",", "?", "ä", "a", "ö", "o", "ü", "u", "$", "#", "@",
+            "%", "^", "(", ")", "{", "}", "[", "]", "_", "-", "+", "*", "/",
+            "0", "5", "1", "10", "11", "9"
+            ]
+        print("input_list_6:", input_list_6)
+        output_6 = NewtUtil.sorting_sequence(input_list_6)
+        print("output_6:", output_6)
+        assert output_6 == [
+            "!", "#", "$", "%", "(", ")", "*", "+", ",", "-", ".", "/",
+            "0", "1", "10", "11", "5", "9", "?", "@", "[", "]", "^", "_",
+            "a", "o", "u", "{", "}", "ä", "ö", "ü"
+            ]
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n['c', 'a', 'b', 'c', 'z']\n['a', 'b', 'c', 'z']\n" in captured.out
+        assert "\ninput_list_1: ['c', 'a', 'b', 'c', 'z']\noutput_1: ['a', 'b', 'c', 'z']\n" in captured.out
+        assert "\ninput_list_2: ['a']\noutput_2: ['a']\n" in captured.out
+        assert "\ninput_list_3: ['a', 'a', 'a', 'a']\noutput_3: ['a']\n" in captured.out
+        assert "\ninput_list_4: ['ab', 'a', 'b', 'aa']\noutput_4: ['a', 'aa', 'ab', 'b']\n" in captured.out
+        assert "\ninput_list_5: ['ab', 'a', 'aaaa', 'aaa', 'aa']\noutput_5: ['a', 'aa', 'aaa', 'aaaa', 'ab']\n" in captured.out
+        assert "\ninput_list_6: ['!', '.', ',', '?', 'ä', 'a', 'ö', 'o', 'ü', 'u', '$', '#', '@', '%', '^', '(', ')', '{', '}', '[', ']', '_', '-', '+', '*', '/', '0', '5', '1', '10', '11', '9']\noutput_6: ['!', '#', '$', '%', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '10', '11', '5', '9', '?', '@', '[', ']', '^', '_', 'a', 'o', 'u', '{', '}', 'ä', 'ö', 'ü']\n" in captured.out
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
     def test_sorting_sequence_mixed(self, capsys):
         """ Test sorting_sequence handles mixed str/int, removes duplicates, sorts uniquely. """
         print_my_func_name()
 
-        input_list = ["f", 4, "a", 2, "b", 1, "a"]
-        print(input_list)
-        result = NewtUtil.sorting_sequence(input_list)
-        print(result)
-        # Strings first, then integers
-        assert result == ["a", "b", "f", 1, 2, 4]
+        input_list_1 = ["f", 4, "a", 2, "b", 1, "a"]
+        print("input_list_1:", input_list_1)
+        output_1 = NewtUtil.sorting_sequence(input_list_1)
+        print("output_1:", output_1)
+        assert output_1 == ["a", "b", "f", 1, 2, 4]
+
+        input_list_2 = [
+            1, 4.0, True, None, "a",
+            (5.0, 2, False, None, "b",
+            (6, 3.0, True, None, "c"))
+            ]
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.sorting_sequence(input_list_2)
+        print("output_2:", output_2)
+        assert output_2 == [
+            "a", 1, 4, None, True,
+            ("b", 2, 5, False, None,
+            ("c", 3, 6, None, True))
+            ]
+
+        input_list_3 = [
+            (3.0, 6.1, True, None, "c"),
+            (5.0, 2, False, None, "b"),
+            (6, 3, True, None, "c")
+            ]
+        print("input_list_3:", input_list_3)
+        output_3 = NewtUtil.sorting_sequence(input_list_3)
+        print("output_3:", output_3)
+        assert output_3 == [
+            ("b", 2, 5, False, None),
+            ("c", 3, 6, None, True),
+            ("c", 3, 6.1, None, True)
+            ]
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n['f', 4, 'a', 2, 'b', 1, 'a']\n['a', 'b', 'f', 1, 2, 4]\n" in captured.out
+        assert "\ninput_list_1: ['f', 4, 'a', 2, 'b', 1, 'a']\noutput_1: ['a', 'b', 'f', 1, 2, 4]\n" in captured.out
+        assert "\ninput_list_2: [1, 4.0, True, None, 'a', (5.0, 2, False, None, 'b', (6, 3.0, True, None, 'c'))]\noutput_2: ['a', 1, 4, None, True, ('b', 2, 5, False, None, ('c', 3, 6, None, True))]\n" in captured.out
+        assert "\ninput_list_3: [(3.0, 6.1, True, None, 'c'), (5.0, 2, False, None, 'b'), (6, 3, True, None, 'c')]\noutput_3: [('b', 2, 5, False, None), ('c', 3, 6, None, True), ('c', 3, 6.1, None, True)]\n" in captured.out
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
     def test_sorting_sequence_empty(self, capsys):
         """ Test sorting_sequence returns empty list for empty input. """
         print_my_func_name()
 
-        result = NewtUtil.sorting_sequence([], stop=False)
-        print(result)
-        assert result == []
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_type : is_empty > Newt.utility.sorting_sequence : input_list\n" in captured.out
-        assert "\nValue must be non-empty\n" in captured.out
-        assert "\nValue: []\n" in captured.out
-
-
-    def test_sorting_sequence_single_element(self, capsys):
-        """ Test sorting_sequence returns unchanged single int or str element. """
-        print_my_func_name()
-
-        input_list_1 = [1]
-        print(input_list_1)
-        result_1 = NewtUtil.sorting_sequence(input_list_1)
-        print(result_1)
-        assert result_1 == [1]
-
-        list_2 = ["a"]
-        print(list_2)
-        result_2 = NewtUtil.sorting_sequence(list_2)
-        print(result_2)
-        assert result_2 == ["a"]
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[1]\n[1]\n['a']\n['a']\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_sorting_sequence_all_duplicates(self, capsys):
-        """ Test sorting_sequence all duplicates returns single sorted element. """
-        print_my_func_name()
-
-        input_list = [1, 1, 1, 1]
-        print(input_list)
-        result = NewtUtil.sorting_sequence(input_list)
-        print(result)
-        assert result == [1]
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[1, 1, 1, 1]\n[1]\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_sorting_sequence_invalid_type_no_stop(self, capsys):
-        """ Test sorting_sequence float input with stop=False returns empty, logs errors. """
-        print_my_func_name()
-
-        input_list = [1, 2, 3.5]
-        print(input_list)
-        result = NewtUtil.sorting_sequence(input_list, stop=False)
-        print(result)
-        assert result == []
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert "\nLocation: Newt.console.validate_type\n" in captured.out
-        assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
-        assert "\nValue: 3.5\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_sequence : input_list not all\n" in captured.out
-        assert "\ninput_list must have only str and int types\n" in captured.out
-        assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
-
-
-    def test_sorting_sequence_invalid_type_with_stop(self, capsys):
-        """ Test sorting_sequence float input with stop=True raises SystemExit. """
-        print_my_func_name()
-
-        input_list = [1, 2, 3.5]
-        print(input_list)
+        input_list_1 = []
+        print("input_list_1:", input_list_1)
         with pytest.raises(SystemExit) as exc_info:
-            NewtUtil.sorting_sequence(input_list)
+            NewtUtil.sorting_sequence(input_list_1)
             print("This line will not be printed")
         assert exc_info.value.code == 1
 
+        input_list_2 = []
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.sorting_sequence(input_list_2, stop=False)
+        print("output_2:", output_2)
+        assert output_2 == []
+
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert "\nLocation: Newt.console.validate_type\n" in captured.out
-        assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
-        assert "\nValue: 3.5\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_sequence : input_list not all\n" in captured.out
-        assert "\ninput_list must have only str and int types\n" in captured.out
-        assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
+        assert "\ninput_list_1: []\ninput_list_2: []\noutput_2: []\n" in captured.out
+
+        assert captured.err.count("\n::: ERROR :::\n") == 2
+        assert captured.err.count("\nLocation: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type : is_empty\n") == 2
+        assert captured.err.count("\nValue must not be empty\nValue: []\nType: <class 'list'>\n") == 2
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
     def test_sorting_sequence_not_a_list(self, capsys):
         """ Test sorting_sequence non-list input returns empty list with error logged. """
         print_my_func_name()
 
-        input_str = "not a list"
-        print(input_str)
-        result_str = NewtUtil.sorting_sequence(input_str, stop=False)  # type: ignore
-        print(result_str)
-        assert result_str == []
+        input_str_1 = "not a list"
+        print("input_str_1:", input_str_1)
+        output_1 = NewtUtil.sorting_sequence(input_str_1, stop=False)
+        print("output_1:", output_1)
+        assert output_1 == []
+
+        input_list_2 = [1, [1]]
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.sorting_sequence(input_list_2, stop=False)
+        print("output_2:", output_2)
+        assert output_2 == []
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_type > Newt.utility.sorting_sequence : input_list\n" in captured.out
-        assert "\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n" in captured.out
-        assert "\nValue: not a list\n" in captured.out
+        assert "\ninput_str_1: not a list\noutput_1: []\n" in captured.out
+        assert "\ninput_list_2: [1, [1]]\noutput_2: []\n" in captured.out
 
+        assert captured.err.count("\n::: ERROR :::\n") == 3
+        assert "\nLocation: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: not a list\nReceived type: <class 'str'>\nExpected type: (<class 'list'>, <class 'tuple'>)\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_sequence.is_valid_seq_value > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: [1]\nReceived type: <class 'list'>\nExpected type: (<class 'NoneType'>, <class 'bool'>, <class 'int'>, <class 'float'>, <class 'str'>)\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_sequence : input_sequence not all\n" in captured.err
+        assert "\ninput_sequence must have only special types\ninput_sequence: [1, [1]]\n" in captured.err
 
-    def test_sorting_sequence_with_none(self, capsys):
-        """ Test sorting_sequence with None returns empty list, logs validation errors. """
-        print_my_func_name()
-
-        input_list = [1, None, "a"]
-        print(input_list)
-        result = NewtUtil.sorting_sequence(input_list, stop=False)
-        print(result)
-        assert result == []
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert "\nLocation: Newt.console.validate_type\n" in captured.out
-        assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'NoneType'>\n" in captured.out
-        assert "\nValue: None\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_sequence : input_list not all\n" in captured.out
-        assert "\ninput_list must have only str and int types\n" in captured.out
-        assert "\ninput_list: [1, None, 'a']\n" in captured.out
-
-
-    def test_sorting_sequence_large_numbers(self, capsys):
-        """ Test sorting_sequence handles large integers, removes duplicates correctly. """
-        print_my_func_name()
-
-        input_list = [100, 1, 50, 1000, 5]
-        print(input_list)
-        result = NewtUtil.sorting_sequence(input_list)
-        print(result)
-        assert result == [1, 5, 50, 100, 1000]
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[100, 1, 50, 1000, 5]\n[1, 5, 50, 100, 1000]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
