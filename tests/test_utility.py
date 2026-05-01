@@ -21,16 +21,16 @@ import newtutils.utility as NewtUtil
 
 
 class TestSortingList:
-    """ Tests for sorting_list function. """
+    """ Tests for sorting_sequence function. """
 
 
-    def test_sorting_list_integers(self, capsys):
-        """ Test sorting_list removes duplicates from integers, returns unique sorted. """
+    def test_sorting_sequence_integers(self, capsys):
+        """ Test sorting_sequence removes duplicates from integers, returns unique sorted. """
         print_my_func_name()
 
         input_list = [3, 1, 2, 3, 5, 1]
         print(input_list)
-        result = NewtUtil.sorting_list(input_list)
+        result = NewtUtil.sorting_sequence(input_list)
         print(result)
         assert result == [1, 2, 3, 5]
 
@@ -42,13 +42,13 @@ class TestSortingList:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_list_strings(self, capsys):
-        """ Test sorting_list removes duplicates from strings, returns unique sorted. """
+    def test_sorting_sequence_strings(self, capsys):
+        """ Test sorting_sequence removes duplicates from strings, returns unique sorted. """
         print_my_func_name()
 
         input_list = ["c", "a", "b", "c", "z"]
         print(input_list)
-        result = NewtUtil.sorting_list(input_list)
+        result = NewtUtil.sorting_sequence(input_list)
         print(result)
         assert result == ["a", "b", "c", "z"]
 
@@ -60,13 +60,13 @@ class TestSortingList:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_list_mixed(self, capsys):
-        """ Test sorting_list handles mixed str/int, removes duplicates, sorts uniquely. """
+    def test_sorting_sequence_mixed(self, capsys):
+        """ Test sorting_sequence handles mixed str/int, removes duplicates, sorts uniquely. """
         print_my_func_name()
 
         input_list = ["f", 4, "a", 2, "b", 1, "a"]
         print(input_list)
-        result = NewtUtil.sorting_list(input_list)
+        result = NewtUtil.sorting_sequence(input_list)
         print(result)
         # Strings first, then integers
         assert result == ["a", "b", "f", 1, 2, 4]
@@ -79,11 +79,11 @@ class TestSortingList:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_list_empty(self, capsys):
-        """ Test sorting_list returns empty list for empty input. """
+    def test_sorting_sequence_empty(self, capsys):
+        """ Test sorting_sequence returns empty list for empty input. """
         print_my_func_name()
 
-        result = NewtUtil.sorting_list([], stop=False)
+        result = NewtUtil.sorting_sequence([], stop=False)
         print(result)
         assert result == []
 
@@ -91,24 +91,24 @@ class TestSortingList:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input : is_empty > Newt.utility.sorting_list : input_list\n" in captured.out
+        assert "\nLocation: Newt.console.validate_type : is_empty > Newt.utility.sorting_sequence : input_list\n" in captured.out
         assert "\nValue must be non-empty\n" in captured.out
         assert "\nValue: []\n" in captured.out
 
 
-    def test_sorting_list_single_element(self, capsys):
-        """ Test sorting_list returns unchanged single int or str element. """
+    def test_sorting_sequence_single_element(self, capsys):
+        """ Test sorting_sequence returns unchanged single int or str element. """
         print_my_func_name()
 
         input_list_1 = [1]
         print(input_list_1)
-        result_1 = NewtUtil.sorting_list(input_list_1)
+        result_1 = NewtUtil.sorting_sequence(input_list_1)
         print(result_1)
         assert result_1 == [1]
 
         list_2 = ["a"]
         print(list_2)
-        result_2 = NewtUtil.sorting_list(list_2)
+        result_2 = NewtUtil.sorting_sequence(list_2)
         print(result_2)
         assert result_2 == ["a"]
 
@@ -120,13 +120,13 @@ class TestSortingList:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_list_all_duplicates(self, capsys):
-        """ Test sorting_list all duplicates returns single sorted element. """
+    def test_sorting_sequence_all_duplicates(self, capsys):
+        """ Test sorting_sequence all duplicates returns single sorted element. """
         print_my_func_name()
 
         input_list = [1, 1, 1, 1]
         print(input_list)
-        result = NewtUtil.sorting_list(input_list)
+        result = NewtUtil.sorting_sequence(input_list)
         print(result)
         assert result == [1]
 
@@ -138,13 +138,13 @@ class TestSortingList:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sorting_list_invalid_type_no_stop(self, capsys):
-        """ Test sorting_list float input with stop=False returns empty, logs errors. """
+    def test_sorting_sequence_invalid_type_no_stop(self, capsys):
+        """ Test sorting_sequence float input with stop=False returns empty, logs errors. """
         print_my_func_name()
 
         input_list = [1, 2, 3.5]
         print(input_list)
-        result = NewtUtil.sorting_list(input_list, stop=False)
+        result = NewtUtil.sorting_sequence(input_list, stop=False)
         print(result)
         assert result == []
 
@@ -152,22 +152,22 @@ class TestSortingList:
         print_my_captured(captured)
 
         assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\nLocation: Newt.console.validate_type\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.5\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_list : input_list not all\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_sequence : input_list not all\n" in captured.out
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
 
 
-    def test_sorting_list_invalid_type_with_stop(self, capsys):
-        """ Test sorting_list float input with stop=True raises SystemExit. """
+    def test_sorting_sequence_invalid_type_with_stop(self, capsys):
+        """ Test sorting_sequence float input with stop=True raises SystemExit. """
         print_my_func_name()
 
         input_list = [1, 2, 3.5]
         print(input_list)
         with pytest.raises(SystemExit) as exc_info:
-            NewtUtil.sorting_list(input_list)
+            NewtUtil.sorting_sequence(input_list)
             print("This line will not be printed")
         assert exc_info.value.code == 1
 
@@ -175,23 +175,23 @@ class TestSortingList:
         print_my_captured(captured)
 
         assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\nLocation: Newt.console.validate_type\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'float'>\n" in captured.out
         assert "\nValue: 3.5\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_list : input_list not all\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_sequence : input_list not all\n" in captured.out
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, 2, 3.5]\n" in captured.out
         # Expected absence of result
         assert "This line will not be printed" not in captured.out
 
 
-    def test_sorting_list_not_a_list(self, capsys):
-        """ Test sorting_list non-list input returns empty list with error logged. """
+    def test_sorting_sequence_not_a_list(self, capsys):
+        """ Test sorting_sequence non-list input returns empty list with error logged. """
         print_my_func_name()
 
         input_str = "not a list"
         print(input_str)
-        result_str = NewtUtil.sorting_list(input_str, stop=False)  # type: ignore
+        result_str = NewtUtil.sorting_sequence(input_str, stop=False)  # type: ignore
         print(result_str)
         assert result_str == []
 
@@ -199,18 +199,18 @@ class TestSortingList:
         print_my_captured(captured)
 
         assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.utility.sorting_list : input_list\n" in captured.out
+        assert "\nLocation: Newt.console.validate_type > Newt.utility.sorting_sequence : input_list\n" in captured.out
         assert "\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n" in captured.out
         assert "\nValue: not a list\n" in captured.out
 
 
-    def test_sorting_list_with_none(self, capsys):
-        """ Test sorting_list with None returns empty list, logs validation errors. """
+    def test_sorting_sequence_with_none(self, capsys):
+        """ Test sorting_sequence with None returns empty list, logs validation errors. """
         print_my_func_name()
 
         input_list = [1, None, "a"]
         print(input_list)
-        result = NewtUtil.sorting_list(input_list, stop=False)
+        result = NewtUtil.sorting_sequence(input_list, stop=False)
         print(result)
         assert result == []
 
@@ -218,21 +218,21 @@ class TestSortingList:
         print_my_captured(captured)
 
         assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert "\nLocation: Newt.console.validate_input\n" in captured.out
+        assert "\nLocation: Newt.console.validate_type\n" in captured.out
         assert "\nExpected (<class 'str'>, <class 'int'>), got <class 'NoneType'>\n" in captured.out
         assert "\nValue: None\n" in captured.out
-        assert "\nLocation: Newt.utility.sorting_list : input_list not all\n" in captured.out
+        assert "\nLocation: Newt.utility.sorting_sequence : input_list not all\n" in captured.out
         assert "\ninput_list must have only str and int types\n" in captured.out
         assert "\ninput_list: [1, None, 'a']\n" in captured.out
 
 
-    def test_sorting_list_large_numbers(self, capsys):
-        """ Test sorting_list handles large integers, removes duplicates correctly. """
+    def test_sorting_sequence_large_numbers(self, capsys):
+        """ Test sorting_sequence handles large integers, removes duplicates correctly. """
         print_my_func_name()
 
         input_list = [100, 1, 50, 1000, 5]
         print(input_list)
-        result = NewtUtil.sorting_list(input_list)
+        result = NewtUtil.sorting_sequence(input_list)
         print(result)
         assert result == [1, 5, 50, 100, 1000]
 

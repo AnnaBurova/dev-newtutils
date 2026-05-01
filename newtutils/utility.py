@@ -15,7 +15,7 @@ Functions:
         sequence_list: Sequence[tuple[Any, ...]],
         position: int = 0
         ) -> dict[Any, int]
-    def sorting_list(
+    def sorting_sequence(
         input_list: Sequence[str | int],
         stop: bool = True
         ) -> list[str | int]
@@ -140,7 +140,7 @@ def count_similar_values(
     return count_values
 
 
-def sorting_list(
+def sorting_sequence(
         input_list: Sequence[str | int],
         stop: bool = True
         ) -> list[str | int]:
@@ -176,7 +176,7 @@ def sorting_list(
 
     if not NewtCons.validate_type(
         input_list, (list, tuple), check_non_empty=True, stop=stop,
-        location="Newt.utility.sorting_list : input_list"
+        location="Newt.utility.sorting_sequence : input_list"
     ):
         return []
 
@@ -190,7 +190,7 @@ def sorting_list(
             NewtCons.error_msg(
                 "input_list must have only str and int types",
                 f"input_list: {input_list}",
-                location="Newt.utility.sorting_list : input_list not all",
+                location="Newt.utility.sorting_sequence : input_list not all",
                 stop=stop
             )
             return []
@@ -208,7 +208,7 @@ def sorting_list(
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
             f"Exception: {e} (found? write test!)",  # TODO
-            location="Newt.utility.sorting_list : Exception",
+            location="Newt.utility.sorting_sequence : Exception",
             stop=stop
         )
         return []

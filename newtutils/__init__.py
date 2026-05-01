@@ -27,7 +27,7 @@ from .console import (
 from .utility import (
     check_dict_keys,
     count_similar_values,
-    sorting_list,
+    sorting_sequence,
     sorting_dict_by_keys,
     select_from_input,
 )
@@ -68,7 +68,7 @@ __all__ = [
     # Utility ----------
     "check_dict_keys",
     "count_similar_values",
-    "sorting_list",
+    "sorting_sequence",
     "sorting_dict_by_keys",
     "select_from_input",
     # Files ----------
