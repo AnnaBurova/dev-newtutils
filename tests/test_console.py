@@ -563,14 +563,14 @@ class TestBeepBoop:
     """ Tests for _beep_boop function. """
 
 
-    @patch('newtutils.console.time.sleep')
+    @patch("newtutils.console.time.sleep")
     def test_beep_boop(self, mock_sleep, capsys):
         """ Test that _beep_boop on Windows triggers two beeps and two sleeps without error output or message at other OS. """
         print_my_func_name()
 
         if sys.platform == "win32" and os.name == "nt":
             # On Windows: mock only Beep (module exists)
-            with patch('newtutils.console.winsound.Beep') as mock_beep:
+            with patch("newtutils.console.winsound.Beep") as mock_beep:
                 NewtCons._beep_boop()
                 assert mock_beep.call_count == 2
                 assert mock_sleep.call_count == 2
@@ -594,8 +594,8 @@ class TestRetryPause:
     """ Tests for _retry_pause function. """
 
 
-    @patch('newtutils.console._beep_boop')
-    @patch('newtutils.console.time.sleep')
+    @patch("newtutils.console._beep_boop")
+    @patch("newtutils.console.time.sleep")
     def test_retry_pause_with_beep(self, mock_sleep, mock_beep, capsys):
         """ Test _retry_pause(2) calls _beep_boop once, two sleeps, prints countdown. """
         print_my_func_name()
@@ -615,8 +615,8 @@ class TestRetryPause:
         assert "Time left: 3s" not in captured.out
 
 
-    @patch('newtutils.console._beep_boop')
-    @patch('newtutils.console.time.sleep')
+    @patch("newtutils.console._beep_boop")
+    @patch("newtutils.console.time.sleep")
     def test_retry_pause_countdown(self, mock_sleep, mock_beep, capsys):
         """ Test _retry_pause(3, beep=False) skips beep, does three sleeps, prints countdown. """
         print_my_func_name()
@@ -635,7 +635,7 @@ class TestRetryPause:
         assert "Time left: 4s" not in captured.out
 
 
-    @patch('newtutils.console.time.sleep')
+    @patch("newtutils.console.time.sleep")
     def test_retry_pause_invalid_type(self, mock_sleep, capsys):
         """ Test _retry_pause invalid seconds str uses default 5s countdown with error. """
         print_my_func_name()
@@ -657,7 +657,7 @@ class TestRetryPause:
         assert "::: ERROR :::" not in captured.out
 
 
-    @patch('newtutils.console.time.sleep')
+    @patch("newtutils.console.time.sleep")
     def test_retry_pause_invalid_seconds(self, mock_sleep, capsys):
         """ Test _retry_pause(0) falls back to 5s countdown, logs invalid duration error. """
         print_my_func_name()
@@ -679,7 +679,7 @@ class TestRetryPause:
         assert "::: ERROR :::" not in captured.out
 
 
-    @patch('newtutils.console.time.sleep')
+    @patch("newtutils.console.time.sleep")
     def test_retry_pause_negative_seconds(self, mock_sleep, capsys):
         """ Test _retry_pause(-1) defaults to 5s countdown, logs invalid duration error. """
         print_my_func_name()
@@ -701,8 +701,8 @@ class TestRetryPause:
         assert "::: ERROR :::" not in captured.out
 
 
-    @patch('newtutils.console._beep_boop')
-    @patch('newtutils.console.time.sleep')
+    @patch("newtutils.console._beep_boop")
+    @patch("newtutils.console.time.sleep")
     def test_retry_pause_keyboard_interrupt(self, mock_sleep, mock_beep, capsys):
         """ Test _retry_pause raises SystemExit on KeyboardInterrupt during sleep. """
         print_my_func_name()

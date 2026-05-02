@@ -2,7 +2,7 @@
 platform win32 -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collected 9 items
+collected 13 items
 
 test_utility.py 
 START=======================================
@@ -175,7 +175,7 @@ input_set: {a, b} / <class 'set'>
 
 =====captured.err=====
 [1m[31m
-Location: Newt.utility.check_dict_keys
+Location: TestCheckDictKeys > Newt.utility.check_dict_keys
 ::: ERROR :::
 Data keys: x
 Missing keys: a, b
@@ -184,5 +184,125 @@ Unexpected keys: x
 
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_count_values_by_position_no_errors
+============================================
+input_list_1: [('admin', 1, 'Stockholm'), ('user', 2, 'Oslo'), ('admin', 3, 'Stockholm'), ('user', 4, 'Berlin'), ('admin', 5, 'Oslo')]
+output_1: {'admin': 3, 'user': 2}
+output_2: {'admin': 3, 'user': 2}
+output_3: {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
+output_4: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}
 
-============================== 9 passed in 0.02s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_count_values_by_position_edge_cases
+============================================
+input_list_1: []
+output_1: {}
+input_list_2: [('only', 1)]
+output_2: {'only': 1}
+input_list_2: [('only', 1)]
+output_3: {1: 1}
+input_list_4: ()
+output_4: {}
+input_list_5: (['only', 1],)
+output_5: {'only': 1}
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_count_values_by_position_invalid_input_no_stop
+============================================
+input_list_1: [('a', 'b'), ('c', 'd')]
+output_1: {}
+input_list_2: [('a', 'b'), ('c',)]
+output_2: {}
+input_list_3: [('a', 1), [('b', 2)]]
+output_3: {}
+input_list_4: not a sequence of sequences
+output_4: {}
+input_list_5: [('a', 'b'), ('c', 'd')]
+output_5: {'a': 1, 'c': 1}
+
+=====captured.err=====
+[1m[31m
+Location: Newt.utility.count_values_by_position : seq_len <= position
+::: ERROR :::
+Position 5 out of range
+[0m
+[1m[31m
+Location: Newt.utility.count_values_by_position : seq_len
+::: ERROR :::
+All items must have the same length 2
+[0m
+[1m[31m
+Location: Newt.utility.count_values_by_position : seq_type > Newt.console.validate_type
+::: ERROR :::
+Value: [('b', 2)]
+Received type: <class 'list'>
+Expected type: <class 'tuple'>
+[0m
+[1m[31m
+Location: Newt.utility.count_values_by_position : input_sequence > Newt.console.validate_type
+::: ERROR :::
+Value: not a sequence of sequences
+Received type: <class 'str'>
+Expected type: (<class 'list'>, <class 'tuple'>)
+[0m
+[1m[31m
+Location: Newt.utility.count_values_by_position : position > Newt.console.validate_type
+::: ERROR :::
+Value: 5
+Received type: <class 'str'>
+Expected type: <class 'int'>
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_count_values_by_position_invalid_input_with_stop
+============================================
+input_list_1: [('a', 'b'), ('c', 'd')]
+input_list_2: [('a', 'b'), ('c',)]
+input_list_3: [('a', 1), [('b', 2)]]
+input_list_4: not a sequence of sequences
+
+=====captured.err=====
+[1m[31m
+Location: Newt.utility.count_values_by_position : seq_len <= position
+::: ERROR :::
+Position 5 out of range
+[0m
+[1m[31m
+Location: Newt.utility.count_values_by_position : seq_len
+::: ERROR :::
+All items must have the same length 2
+[0m
+[1m[31m
+Location: Newt.utility.count_values_by_position : seq_type > Newt.console.validate_type
+::: ERROR :::
+Value: [('b', 2)]
+Received type: <class 'list'>
+Expected type: <class 'tuple'>
+[0m
+[1m[31m
+Location: Newt.utility.count_values_by_position : input_sequence > Newt.console.validate_type
+::: ERROR :::
+Value: not a sequence of sequences
+Received type: <class 'str'>
+Expected type: (<class 'list'>, <class 'tuple'>)
+[0m
+
+END=========================================
+.
+
+============================= 13 passed in 0.02s ==============================

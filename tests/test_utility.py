@@ -9,6 +9,7 @@ Comprehensive unit tests for newtutils.utility module.
 Tests cover:
 - TestSortingSequence
 - TestCheckDictKeys
+- TestCountValuesByPosition
 - TestSortingDictByKeys
 - TestSelectFromInput
 """
@@ -343,6 +344,216 @@ class TestCheckDictKeys:
         assert "\n::: ERROR :::\n" in captured.err
         assert "\nLocation: TestCheckDictKeys > Newt.utility.check_dict_keys\n" in captured.err
         assert "\nData keys: x\nMissing keys: a, b\nUnexpected keys: x\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
+
+
+class TestCountValuesByPosition:
+    """ Tests for count_values_by_position function. """
+
+
+    def test_count_values_by_position_no_errors(self, capsys):
+        """ Test count_values_by_position returns correct counts for valid input. """
+        print_my_func_name()
+
+        input_list_1 = [
+            ("admin", 1, "Stockholm"),
+            ("user", 2,  "Oslo"),
+            ("admin", 3, "Stockholm"),
+            ("user", 4,  "Berlin"),
+            ("admin", 5, "Oslo"),
+        ]
+        print("input_list_1:", input_list_1)
+
+        output_1 = NewtUtil.count_values_by_position(input_list_1)
+        print("output_1:", output_1)
+        assert output_1 == {"admin": 3, "user": 2}
+
+        output_2 = NewtUtil.count_values_by_position(input_list_1, 0)
+        print("output_2:", output_2)
+        assert output_2 == {"admin": 3, "user": 2}
+        assert output_1 == output_2
+
+        output_3 = NewtUtil.count_values_by_position(input_list_1, 1)
+        print("output_3:", output_3)
+        assert output_3 == {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
+
+        output_4 = NewtUtil.count_values_by_position(input_list_1, 2)
+        print("output_4:", output_4)
+        assert output_4 == {"Stockholm": 2, "Oslo": 2, "Berlin": 1}
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_list_1: [('admin', 1, 'Stockholm'), ('user', 2, 'Oslo'), ('admin', 3, 'Stockholm'), ('user', 4, 'Berlin'), ('admin', 5, 'Oslo')]\n" in captured.out
+        assert "\noutput_1: {'admin': 3, 'user': 2}\n" in captured.out
+        assert "\noutput_2: {'admin': 3, 'user': 2}\n" in captured.out
+        assert "\noutput_3: {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}\n" in captured.out
+        assert "\noutput_4: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}\n" in captured.out
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
+
+
+    def test_count_values_by_position_edge_cases(self, capsys):
+        """ Test count_values_by_position handles edge cases: empty input, single element, tuple outer sequence. """
+        print_my_func_name()
+
+        input_list_1 = []
+        print("input_list_1:", input_list_1)
+        output_1 = NewtUtil.count_values_by_position(input_list_1)
+        print("output_1:", output_1)
+        assert output_1 == {}
+
+        input_list_2 = [("only", 1)]
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.count_values_by_position(input_list_2)
+        print("output_2:", output_2)
+        assert output_2 == {"only": 1}
+
+        print("input_list_2:", input_list_2)
+        output_3 = NewtUtil.count_values_by_position(input_list_2, 1)
+        print("output_3:", output_3)
+        assert output_3 == {1: 1}
+
+        input_list_4 = ()
+        print("input_list_4:", input_list_4)
+        output_4 = NewtUtil.count_values_by_position(input_list_4)
+        print("output_4:", output_4)
+        assert output_4 == {}
+
+        input_list_5 = (["only", 1],)
+        print("input_list_5:", input_list_5)
+        output_5 = NewtUtil.count_values_by_position(input_list_5)
+        print("output_5:", output_5)
+        assert output_5 == {"only": 1}
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_list_1: []\noutput_1: {}\n" in captured.out
+        assert "\ninput_list_2: [('only', 1)]\noutput_2: {'only': 1}\n" in captured.out
+        assert "\ninput_list_2: [('only', 1)]\noutput_3: {1: 1}\n" in captured.out
+        assert "\ninput_list_4: ()\noutput_4: {}\n" in captured.out
+        assert "\ninput_list_5: (['only', 1],)\noutput_5: {'only': 1}\n" in captured.out
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
+
+
+    def test_count_values_by_position_invalid_input_no_stop(self, capsys):
+        """ Test count_values_by_position returns empty dict on invalid input without stopping execution. """
+        print_my_func_name()
+
+        input_list_1 = [("a", "b"), ("c", "d")]
+        print("input_list_1:", input_list_1)
+        output_1 = NewtUtil.count_values_by_position(input_list_1, 5)
+        print("output_1:", output_1)
+        assert output_1 == {}
+
+        input_list_2 = [("a", "b"), ("c",)]
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.count_values_by_position(input_list_2)
+        print("output_2:", output_2)
+        assert output_2 == {}
+
+        input_list_3 = [("a", 1), [("b", 2)]]
+        print("input_list_3:", input_list_3)
+        output_3 = NewtUtil.count_values_by_position(input_list_3)
+        print("output_3:", output_3)
+        assert output_3 == {}
+
+        input_list_4 = "not a sequence of sequences"
+        print("input_list_4:", input_list_4)
+        output_4 = NewtUtil.count_values_by_position(input_list_4)
+        print("output_4:", output_4)
+        assert output_4 == {}
+
+        input_list_5 = [("a", "b"), ("c", "d")]
+        print("input_list_5:", input_list_5)
+        output_5 = NewtUtil.count_values_by_position(input_list_5, "5")  # type: ignore
+        print("output_5:", output_5)
+        assert output_5 == {"a": 1, "c": 1}
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_list_1: [('a', 'b'), ('c', 'd')]\noutput_1: {}\n" in captured.out
+        assert "\ninput_list_2: [('a', 'b'), ('c',)]\noutput_2: {}\n" in captured.out
+        assert "\ninput_list_3: [('a', 1), [('b', 2)]]\noutput_3: {}\n" in captured.out
+        assert "\ninput_list_4: not a sequence of sequences\noutput_4: {}\n" in captured.out
+        assert "\ninput_list_5: [('a', 'b'), ('c', 'd')]\noutput_5: {'a': 1, 'c': 1}\n" in captured.out
+
+        assert captured.err.count("\n::: ERROR :::\n") == 5
+        assert "\nLocation: Newt.utility.count_values_by_position : seq_len <= position\n" in captured.err
+        assert "\nPosition 5 out of range\n" in captured.err
+        assert "\nLocation: Newt.utility.count_values_by_position : seq_len\n" in captured.err
+        assert "\nAll items must have the same length 2\n" in captured.err
+        assert "\nLocation: Newt.utility.count_values_by_position : seq_type > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: [('b', 2)]\nReceived type: <class 'list'>\nExpected type: <class 'tuple'>\n" in captured.err
+        assert "\nLocation: Newt.utility.count_values_by_position : input_sequence > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: not a sequence of sequences\nReceived type: <class 'str'>\nExpected type: (<class 'list'>, <class 'tuple'>)\n" in captured.err
+        assert "\nLocation: Newt.utility.count_values_by_position : position > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: 5\nReceived type: <class 'str'>\nExpected type: <class 'int'>\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
+    def test_count_values_by_position_invalid_input_with_stop(self, capsys):
+        """ Test count_values_by_position raises SystemExit on invalid input when stop=True. """
+        print_my_func_name()
+
+        input_list_1 = [("a", "b"), ("c", "d")]
+        print("input_list_1:", input_list_1)
+        with pytest.raises(SystemExit) as exc_info_1:
+            NewtUtil.count_values_by_position(input_list_1, 5, True)
+            print("This line will not be printed")
+        assert exc_info_1.value.code == 1
+
+        input_list_2 = [("a", "b"), ("c",)]
+        print("input_list_2:", input_list_2)
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtUtil.count_values_by_position(input_list_2, stop=True)
+            print("This line will not be printed")
+        assert exc_info_2.value.code == 1
+
+        input_list_3 = [("a", 1), [("b", 2)]]
+        print("input_list_3:", input_list_3)
+        with pytest.raises(SystemExit) as exc_info_3:
+            NewtUtil.count_values_by_position(input_list_3, stop=True)
+            print("This line will not be printed")
+        assert exc_info_3.value.code == 1
+
+        input_list_4 = "not a sequence of sequences"
+        print("input_list_4:", input_list_4)
+        with pytest.raises(SystemExit) as exc_info_4:
+            NewtUtil.count_values_by_position(input_list_4, stop=True)
+            print("This line will not be printed")
+        assert exc_info_4.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_list_1: [('a', 'b'), ('c', 'd')]\n" in captured.out
+        assert "\ninput_list_2: [('a', 'b'), ('c',)]\n" in captured.out
+        assert "\ninput_list_3: [('a', 1), [('b', 2)]]\n" in captured.out
+        assert "\ninput_list_4: not a sequence of sequences\n" in captured.out
+
+        assert captured.err.count("\n::: ERROR :::\n") == 4
+        assert "\nLocation: Newt.utility.count_values_by_position : seq_len <= position\n" in captured.err
+        assert "\nPosition 5 out of range\n" in captured.err
+        assert "\nLocation: Newt.utility.count_values_by_position : seq_len\n" in captured.err
+        assert "\nAll items must have the same length 2\n" in captured.err
+        assert "\nLocation: Newt.utility.count_values_by_position : seq_type > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: [('b', 2)]\nReceived type: <class 'list'>\nExpected type: <class 'tuple'>\n" in captured.err
+        assert "\nLocation: Newt.utility.count_values_by_position : input_sequence > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: not a sequence of sequences\nReceived type: <class 'str'>\nExpected type: (<class 'list'>, <class 'tuple'>)\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out

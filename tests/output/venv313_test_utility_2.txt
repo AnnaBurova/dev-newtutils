@@ -3,16 +3,20 @@ platform win32 -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 9 items
+collecting ... collected 13 items
 
-test_utility.py::TestSortingSequence::test_sorting_sequence_integers PASSED [ 11%]
-test_utility.py::TestSortingSequence::test_sorting_sequence_strings PASSED [ 22%]
-test_utility.py::TestSortingSequence::test_sorting_sequence_mixed PASSED [ 33%]
-test_utility.py::TestSortingSequence::test_sorting_sequence_empty PASSED [ 44%]
-test_utility.py::TestSortingSequence::test_sorting_sequence_not_a_list PASSED [ 55%]
-test_utility.py::TestCheckDictKeys::test_check_dict_keys_all_present PASSED [ 66%]
-test_utility.py::TestCheckDictKeys::test_check_dict_keys_missing_keys_no_stop PASSED [ 77%]
-test_utility.py::TestCheckDictKeys::test_check_dict_keys_extra_keys_no_stop PASSED [ 88%]
-test_utility.py::TestCheckDictKeys::test_check_dict_keys_missing_and_extra_stop PASSED [100%]
+test_utility.py::TestSortingSequence::test_sorting_sequence_integers PASSED [  7%]
+test_utility.py::TestSortingSequence::test_sorting_sequence_strings PASSED [ 15%]
+test_utility.py::TestSortingSequence::test_sorting_sequence_mixed PASSED [ 23%]
+test_utility.py::TestSortingSequence::test_sorting_sequence_empty PASSED [ 30%]
+test_utility.py::TestSortingSequence::test_sorting_sequence_not_a_list PASSED [ 38%]
+test_utility.py::TestCheckDictKeys::test_check_dict_keys_all_present PASSED [ 46%]
+test_utility.py::TestCheckDictKeys::test_check_dict_keys_missing_keys_no_stop PASSED [ 53%]
+test_utility.py::TestCheckDictKeys::test_check_dict_keys_extra_keys_no_stop PASSED [ 61%]
+test_utility.py::TestCheckDictKeys::test_check_dict_keys_missing_and_extra_stop PASSED [ 69%]
+test_utility.py::TestCountValuesByPosition::test_count_values_by_position_no_errors PASSED [ 76%]
+test_utility.py::TestCountValuesByPosition::test_count_values_by_position_edge_cases PASSED [ 84%]
+test_utility.py::TestCountValuesByPosition::test_count_values_by_position_invalid_input_no_stop PASSED [ 92%]
+test_utility.py::TestCountValuesByPosition::test_count_values_by_position_invalid_input_with_stop PASSED [100%]
 
-============================== 9 passed in 0.02s ==============================
+============================= 13 passed in 0.03s ==============================

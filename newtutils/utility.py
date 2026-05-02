@@ -18,9 +18,10 @@ Functions:
         location: str = "",
         stop: bool = True
         ) -> bool
-    def count_similar_values(
-        sequence_list: Sequence[tuple[Any, ...]],
-        position: int = 0
+    def count_values_by_position(
+        input_sequence: Sequence[Sequence],
+        position: int = 0,
+        stop: bool = False
         ) -> dict[Any, int]
     def sorting_dict_by_keys(
         data: Sequence[Mapping[str, Any]],
@@ -39,8 +40,9 @@ Functions:
 
 from __future__ import annotations
 
-from collections.abc import Sequence, Mapping
 from typing import Any
+from collections import Counter
+from collections.abc import Mapping, Sequence
 
 import newtutils.console as NewtCons
 
@@ -202,55 +204,72 @@ def check_dict_keys(
     return True
 
 
-def count_similar_values(
-        sequence_list: Sequence[tuple[Any, ...]],
-        position: int = 0
+def count_values_by_position(
+        input_sequence: Sequence[Sequence],
+        position: int = 0,
+        stop: bool = False
         ) -> dict[Any, int]:
-    """ Count occurrences of values at a specified position in a sequence of tuples.
+    """ ## Count occurrences of values at a specified position in a sequence of sequences.
+
     Args:
-        sequence_list (Sequence[tuple[Any, ...]]):
-            A sequence of tuples to analyze.
+        input_sequence (Sequence[Sequence]):
+            A sequence of sequences to analyze.
         position (int):
-            The index position within each tuple to check for similar values.
+            The index position within each inner sequence to count values at.<br>
             Defaults to 0 (the first element).
+        stop (bool):
+            If True, stops execution on any error or validation failure.<br>
+            Default is False.
+
     Returns:
         out (dict[Any, int]):
-            A dictionary mapping each unique value found at the specified position
-            to the count of its occurrences.
+            A dictionary mapping each unique value found<br>
+            at the specified position to the count of its occurrences.
     """
 
-    # Important to not call error message for empty list, just return empty dict
-    if not sequence_list:
+    # Empty sequence is valid input — return empty dict without error
+    if not input_sequence:
         return {}
 
     if not NewtCons.validate_type(
-        sequence_list, list, check_non_empty=True, stop=False,
-        location="Newt.utility.count_similar_values : sequence_list"
+        input_sequence, (list, tuple), check_non_empty=True, stop=stop,
+        location="Newt.utility.count_values_by_position : input_sequence"
     ):
         return {}
 
-    NewtCons.validate_type(
-        position, int,
-        location="Newt.utility.count_similar_values : position"
-    )
-
-    if not all(
-        NewtCons.validate_type(
-            item, tuple, stop=False
-        ) and len(item) > position for item in sequence_list
+    if not NewtCons.validate_type(
+        position, int, stop=stop,
+        location="Newt.utility.count_values_by_position : position"
     ):
+        position = 0
+
+    seq_len = len(input_sequence[0])
+    seq_type = type(input_sequence[0])
+
+    if seq_len <= position:
         NewtCons.error_msg(
-            f"All items must be sequences with at least {position + 1} elements",
-            f"sequence_list: {sequence_list}",
-            location="Newt.utility.count_similar_values : sequence_list not all",
-            stop=True
+            f"Position {position} out of range",
+            location="Newt.utility.count_values_by_position : seq_len <= position",
+            stop=stop
         )
         return {}
 
-    first_values = [item[position] for item in sequence_list]
-    count_values = {value: first_values.count(value) for value in set(first_values)}
-    # print("Count of similar values:", count_values)
-    return count_values
+    for item in input_sequence:
+        if not NewtCons.validate_type(
+            item, seq_type, stop=stop,
+            location="Newt.utility.count_values_by_position : seq_type"
+        ):
+            return {}
+
+        if seq_len != len(item):
+            NewtCons.error_msg(
+                f"All items must have the same length {seq_len}",
+                location="Newt.utility.count_values_by_position : seq_len",
+                stop=stop
+            )
+            return {}
+
+    return dict(Counter(item[position] for item in input_sequence))
 
 
 def sorting_dict_by_keys(

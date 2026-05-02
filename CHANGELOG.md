@@ -9,7 +9,13 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Added
 
-- *(add new features here)*
+- `newtutils/utility.py`:
+  - `count_values_by_position()`:
+    - Added `stop: bool = False` parameter to control whether errors halt execution.
+  - `TestCountValuesByPosition`:
+    - Added new test class.
+- `tests/output/`:
+  - Added results for utility module across venv310-venv314 and venvLinux312.
 
 ### Changed
 
@@ -25,13 +31,15 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Parameters renamed: from `data` to `data_dict`, from `expected` to `expected_set`.
     - Parameter order changed: `location` moved before `stop` in the function signature.
     - Docstring updated to clarify the function validates exact key match (both missing and unexpected keys), with improved argument descriptions and an added Raises section.
+  - `count_values_by_position()`:
+    - Renamed `count_similar_values()` to `count_values_by_position()`.
+    - Parameter renamed from `sequence_list` to `input_sequence`.
+    - Validation of `position` parameter now uses `stop` flag; falls back to 0 on invalid type instead of always stopping.
 
 ### Testing
 
 - `tests/helpers.py`:
   - New helper function `format_set_to_str(input_set: set) -> str` sorts elements by string representation and returns them wrapped in curly braces (e.g. `{1, 2, abc}`).
-- `tests/output/`:
-  - Added results for utility module across venv310-venv314 and venvLinux312.
 - `tests/test_utility.py`:
   - Moved `TestCheckDictKeys` before `TestSortingDictByKeys`
   - All error assertions moved from `captured.out` to `captured.err`
@@ -45,6 +53,8 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - `sorting_sequence()`:
     - Special handling for bool values to avoid set-based deduplication collision with integers `(True == 1)`.
     - Float-to-int normalization: floats equal to their integer counterpart (e.g. `50.0 = 50`) are stored as int.
+  - `count_values_by_position()`:
+    - Replaced manual value counting (`dict + set + list.count`) with `collections.Counter` for efficiency
 
 ### Removed
 
