@@ -9,6 +9,11 @@ set +e  # continue on error
 
 cd "$(dirname "$0")" || exit 1
 
+IS_LINUX=false
+[[ "$OSTYPE" == "linux"* ]] && IS_LINUX=true
+IS_WSL=false
+[[ -d "/mnt/c" ]] && IS_WSL=true
+
 # === List of test modules ===
 # modules=("console")
 # modules=("utility")
@@ -18,8 +23,11 @@ cd "$(dirname "$0")" || exit 1
 modules=("console" "utility" "files" "sql" "network")
 
 # === List of virtual environments ===
-env_venv=("venv314" "venv313" "venv312" "venv311" "venv310")
-# env_venv=("venvLinux312")
+if $IS_LINUX || $IS_WSL; then
+  env_venv=("venvLinux312")
+else
+  env_venv=("venv314" "venv313" "venv312" "venv311" "venv310")
+fi
 
 # === Loop each env_venv ===
 for venv in "${env_venv[@]}"; do
