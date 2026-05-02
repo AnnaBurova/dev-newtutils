@@ -21,6 +21,10 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Expanded to support float, bool, none, and nested tuples.
     - New sort order for output: strings > numbers (int/float) > other types (None, bool, etc.) > tuples.
     - Tuples are now recursively processed via `sorting_sequence()` and returned as sorted tuples.
+  - `check_dict_keys()`:
+    - Parameters renamed: from `data` to `data_dict`, from `expected` to `expected_set`.
+    - Parameter order changed: `location` moved before `stop` in the function signature.
+    - Docstring updated to clarify the function validates exact key match (both missing and unexpected keys), with improved argument descriptions and an added Raises section.
 
 ### Testing
 
@@ -29,7 +33,8 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - `tests/output/`:
   - Added results for utility module across venv310-venv314 and venvLinux312.
 - `tests/test_utility.py`:
-  - Moved TestCheckDictKeys before TestSortingDictByKeys
+  - Moved `TestCheckDictKeys` before `TestSortingDictByKeys`
+  - All error assertions moved from `captured.out` to `captured.err`
 
 ### Fixed
 

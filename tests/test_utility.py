@@ -16,7 +16,7 @@ Tests cover:
 import pytest
 from unittest.mock import patch
 
-from .helpers import print_my_func_name, print_my_captured
+from .helpers import print_my_func_name, print_my_captured, format_set_to_str
 import newtutils.utility as NewtUtil
 
 
@@ -259,71 +259,95 @@ class TestCheckDictKeys:
         """ Test check_dict_keys returns True for exact key match. """
         print_my_func_name()
 
-        sample_dict = {"a": 1, "b": 2}
-        print(sample_dict)
-        assert NewtUtil.check_dict_keys(sample_dict, {"a", "b"}) is True
+        input_dict = {"a": 1, "b": 2}
+        print("input_dict:", input_dict, "/", type(input_dict))
+        input_set = {"a", "b"}
+        print(f"input_set: {format_set_to_str(input_set)} /", type(input_set))
+        assert NewtUtil.check_dict_keys(input_dict, input_set) is True
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
+        assert "\ninput_dict: {'a': 1, 'b': 2} / <class 'dict'>\ninput_set: {a, b} / <class 'set'>\n" in captured.out
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
     def test_check_dict_keys_missing_keys_no_stop(self, capsys):
         """ Test check_dict_keys missing key returns False, logs details with stop=False. """
         print_my_func_name()
 
-        sample = {"a": 1}
-        print(sample)
-        result = NewtUtil.check_dict_keys(sample, {"a", "b"}, stop=False)
-        assert result is False
+        input_dict = {"a": 1, "b": 2}
+        print("input_dict:", input_dict, "/", type(input_dict))
+        input_set = {"a", "b", "c"}
+        print(f"input_set: {format_set_to_str(input_set)} /", type(input_set))
+        assert NewtUtil.check_dict_keys(input_dict, input_set, stop=False) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.utility.check_dict_keys : missing_keys or extra_keys\n" in captured.out
-        assert "\nData keys: a\nMissing keys: b\nUnexpected keys: \n" in captured.out
+        assert "\ninput_dict: {'a': 1, 'b': 2} / <class 'dict'>\ninput_set: {a, b, c} / <class 'set'>\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.utility.check_dict_keys\n" in captured.err
+        assert "\nData keys: a, b\nMissing keys: c\nUnexpected keys: \n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_check_dict_keys_extra_keys_no_stop(self, capsys):
         """ Test check_dict_keys extra key returns False, logs details with stop=False. """
         print_my_func_name()
 
-        sample = {"a": 1, "b": 2, "c": 3}
-        print(sample)
-        result = NewtUtil.check_dict_keys(sample, {"a", "b"}, stop=False)
-        assert result is False
+        input_dict = {"a": 1, "b": 2, "c": 3}
+        print("input_dict:", input_dict, "/", type(input_dict))
+        input_set = {"a", "b"}
+        print(f"input_set: {format_set_to_str(input_set)} /", type(input_set))
+        assert NewtUtil.check_dict_keys(input_dict, input_set, stop=False) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.utility.check_dict_keys : missing_keys or extra_keys\n" in captured.out
-        assert "\nData keys: a, b, c\nMissing keys: \nUnexpected keys: c\n" in captured.out
+        assert "\ninput_dict: {'a': 1, 'b': 2, 'c': 3} / <class 'dict'>\ninput_set: {a, b} / <class 'set'>\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.utility.check_dict_keys\n" in captured.err
+        assert "\nData keys: a, b, c\nMissing keys: \nUnexpected keys: c\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_check_dict_keys_missing_and_extra_stop(self, capsys):
         """ Test check_dict_keys mismatch with stop=True raises SystemExit. """
         print_my_func_name()
 
-        sample = {"x": 9}
-        print(sample)
+        input_dict = {"x": 9}
+        print("input_dict:", input_dict, "/", type(input_dict))
+        input_set = {"a", "b"}
+        print(f"input_set: {format_set_to_str(input_set)} /", type(input_set))
 
         with pytest.raises(SystemExit) as exc_info:
-            NewtUtil.check_dict_keys(sample, {"a", "b"})
+            NewtUtil.check_dict_keys(input_dict, input_set, location="TestCheckDictKeys")
             print("This line will not be printed")
         assert exc_info.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.utility.check_dict_keys : missing_keys or extra_keys\n" in captured.out
-        assert "\nData keys: x\nMissing keys: a, b\nUnexpected keys: x\n" in captured.out
+        assert "\ninput_dict: {'x': 9} / <class 'dict'>\ninput_set: {a, b} / <class 'set'>\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: TestCheckDictKeys > Newt.utility.check_dict_keys\n" in captured.err
+        assert "\nData keys: x\nMissing keys: a, b\nUnexpected keys: x\n" in captured.err
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
 class TestSortingDictByKeys:

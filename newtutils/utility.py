@@ -13,10 +13,10 @@ Functions:
                 seq_value
                 ) -> bool
     def check_dict_keys(
-        data: Mapping[str, object],
-        expected: set[str],
-        stop: bool = True,
-        location: str = ""
+        data_dict: Mapping[str, object],
+        expected_set: set[str],
+        location: str = "",
+        stop: bool = True
         ) -> bool
     def count_similar_values(
         sequence_list: Sequence[tuple[Any, ...]],
@@ -146,36 +146,46 @@ def sorting_sequence(
 
 
 def check_dict_keys(
-        data: Mapping[str, object],
-        expected: set[str],
-        stop: bool = True,
-        location: str = ""
+        data_dict: Mapping[str, object],
+        expected_set: set[str],
+        location: str = "",
+        stop: bool = True
         ) -> bool:
-    """ Validate that a mapping contains the expected keys.
+    """ ## Validate that a mapping contains exactly the expected keys.
+
+    Checks for missing and unexpected keys in the provided mapping.
+    Useful for validating JSON responses where key structure may change unexpectedly.
 
     Args:
-        data (Mapping[str, object]):
-            Mapping to validate.
-        expected (set[str]):
-            Set of keys that must be present in the mapping.
-        stop (bool):
-            If True, stops execution on validation failure.
-            Defaults to True.
+        data_dict (Mapping[str, object]):
+            Read-only mapping to validate (e.g. dict, defaultdict).<br>
+            Keys must be strings, values can be of any type.
+        expected_set (set[str]):
+            Set of keys that must be present in the mapping.<br>
+            Example:
+            {"id", "name", "value"}
         location (str):
-            Additional location context for error reporting.
-            Defaults to empty string.
+            Additional context appended to the error message location.<br>
+            Default is empty string.
+        stop (bool):
+            If True, stops execution on validation failure.<br>
+            Default is True.
 
     Returns:
         out (bool):
-            True if all expected keys are present and no extra keys exist,
-            False otherwise.
+            True if the mapping contains exactly the expected keys,<br>
+            False if any keys are missing or unexpected keys are present.
+
+    Raises:
+        SystemExit:
+            Raised if `stop=True`, terminating the program with exit code 1.
     """
 
     if location:
-        location = " > " + location
+        location = str(location) + " > "
 
-    data_keys = set(data.keys())
-    expected_keys = set(expected)
+    data_keys = set(data_dict.keys())
+    expected_keys = set(expected_set)
     missing_keys = expected_keys - data_keys
     extra_keys = data_keys - expected_keys
 
@@ -184,7 +194,7 @@ def check_dict_keys(
             f"Data keys: {', '.join(sorted(data_keys))}",
             f"Missing keys: {', '.join(sorted(missing_keys))}",
             f"Unexpected keys: {', '.join(sorted(extra_keys))}",
-            location="Newt.utility.check_dict_keys : missing_keys or extra_keys" + location,
+            location=location + "Newt.utility.check_dict_keys",
             stop=stop
         )
         return False
