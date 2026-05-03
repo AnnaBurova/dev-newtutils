@@ -6,7 +6,7 @@ Created on 2025-10
 
 Functions:
     def sorting_sequence(
-        input_sequence: Sequence,
+        data_sequence: Sequence,
         stop: bool = True
         ) -> list
             def _is_valid_seq_value(
@@ -48,7 +48,7 @@ import newtutils.console as NewtCons
 
 
 def sorting_sequence(
-        input_sequence: Sequence,
+        data_sequence: Sequence,
         stop: bool = True
         ) -> list:
     """ ## Remove duplicates from a Sequence and return a sorted result as list.
@@ -65,8 +65,8 @@ def sorting_sequence(
     Any other type triggers an error.
 
     Args:
-        input_sequence (Sequence):
-            The input sequence to process.<br>
+        data_sequence (Sequence):
+            The data sequence to process.<br>
             Must be a non-empty list or tuple.
         stop (bool):
             If True, raises SystemExit when invalid data is detected.<br>
@@ -75,17 +75,17 @@ def sorting_sequence(
 
     Returns:
         out (list):
-            Unique elements from the input sequence, grouped and sorted:<br>
+            Unique elements from the data sequence, grouped and sorted:<br>
             strings > numbers > other types > tuples.
 
     Raises:
         SystemExit:
-            Raised when `stop=True` and the input contains invalid data types.
+            Raised when `stop=True` and the data contains invalid data types.
     """
 
     if not NewtCons.validate_type(
-        input_sequence, (list, tuple), check_non_empty=True, stop=stop,
-        location="Newt.utility.sorting_sequence : input_sequence"
+        data_sequence, (list, tuple), check_non_empty=True, stop=stop,
+        location="Newt.utility.sorting_sequence : data_sequence"
     ):
         return []
 
@@ -109,18 +109,18 @@ def sorting_sequence(
         return False
     # --------------------------------------------------------------------------
 
-    if not all(_is_valid_seq_value(isv) for isv in input_sequence):
+    if not all(_is_valid_seq_value(isv) for isv in data_sequence):
         NewtCons.error_msg(
-            "input_sequence must have only special types",
-            f"input_sequence: {input_sequence}",
-            location="Newt.utility.sorting_sequence : input_sequence not all",
+            "data_sequence must have only special types",
+            f"data_sequence: {data_sequence}",
+            location="Newt.utility.sorting_sequence : data_sequence not all",
             stop=stop
         )
         return []
 
     # set() thinks 1 and True are same, and saves first value it founds
-    etc_val_list = [x for x in input_sequence if type(x) is bool]
-    non_bool = [x for x in input_sequence if type(x) is not bool]
+    etc_val_list = [x for x in data_sequence if type(x) is bool]
+    non_bool = [x for x in data_sequence if type(x) is not bool]
     # Remove duplicates
     unique_values_set = set(non_bool)
 

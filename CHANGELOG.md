@@ -22,7 +22,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - `newtutils/utility.py`:
   - `sorting_sequence()`:
     - Renamed `sorting_list()` to `sorting_sequence()`.
-    - Parameter renamed from `input_list` to `input_sequence`.
+    - Parameter renamed from `input_list` to `data_sequence`.
     - Docstring updated to reflect new supported types, sort order, and behavior.
     - Expanded to support float, bool, none, and nested tuples.
     - New sort order for output: strings > numbers (int/float) > other types (None, bool, etc.) > tuples.

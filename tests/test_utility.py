@@ -209,7 +209,7 @@ class TestSortingSequence:
         assert "\ninput_list_1: []\ninput_list_2: []\noutput_2: []\n" in captured.out
 
         assert captured.err.count("\n::: ERROR :::\n") == 2
-        assert captured.err.count("\nLocation: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type : is_empty\n") == 2
+        assert captured.err.count("\nLocation: Newt.utility.sorting_sequence : data_sequence > Newt.console.validate_type : is_empty\n") == 2
         assert captured.err.count("\nValue must not be empty\nValue: []\nType: <class 'list'>\n") == 2
 
         # Expected absence of result
@@ -241,12 +241,12 @@ class TestSortingSequence:
         assert "\ninput_list_2: [1, [1]]\noutput_2: []\n" in captured.out
 
         assert captured.err.count("\n::: ERROR :::\n") == 3
-        assert "\nLocation: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_sequence : data_sequence > Newt.console.validate_type\n" in captured.err
         assert "\nValue: not a list\nReceived type: <class 'str'>\nExpected type: (<class 'list'>, <class 'tuple'>)\n" in captured.err
         assert "\nLocation: Newt.utility.sorting_sequence.is_valid_seq_value > Newt.console.validate_type\n" in captured.err
         assert "\nValue: [1]\nReceived type: <class 'list'>\nExpected type: (<class 'NoneType'>, <class 'bool'>, <class 'int'>, <class 'float'>, <class 'str'>)\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_sequence : input_sequence not all\n" in captured.err
-        assert "\ninput_sequence must have only special types\ninput_sequence: [1, [1]]\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_sequence : data_sequence not all\n" in captured.err
+        assert "\ndata_sequence must have only special types\ndata_sequence: [1, [1]]\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out

@@ -71,14 +71,14 @@ output_2: []
 
 =====captured.err=====
 [1m[31m
-Location: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type : is_empty
+Location: Newt.utility.sorting_sequence : data_sequence > Newt.console.validate_type : is_empty
 ::: ERROR :::
 Value must not be empty
 Value: []
 Type: <class 'list'>
 [0m
 [1m[31m
-Location: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type : is_empty
+Location: Newt.utility.sorting_sequence : data_sequence > Newt.console.validate_type : is_empty
 ::: ERROR :::
 Value must not be empty
 Value: []
@@ -98,7 +98,7 @@ output_2: []
 
 =====captured.err=====
 [1m[31m
-Location: Newt.utility.sorting_sequence : input_sequence > Newt.console.validate_type
+Location: Newt.utility.sorting_sequence : data_sequence > Newt.console.validate_type
 ::: ERROR :::
 Value: not a list
 Received type: <class 'str'>
@@ -112,10 +112,10 @@ Received type: <class 'list'>
 Expected type: (<class 'NoneType'>, <class 'bool'>, <class 'int'>, <class 'float'>, <class 'str'>)
 [0m
 [1m[31m
-Location: Newt.utility.sorting_sequence : input_sequence not all
+Location: Newt.utility.sorting_sequence : data_sequence not all
 ::: ERROR :::
-input_sequence must have only special types
-input_sequence: [1, [1]]
+data_sequence must have only special types
+data_sequence: [1, [1]]
 [0m
 
 END=========================================
