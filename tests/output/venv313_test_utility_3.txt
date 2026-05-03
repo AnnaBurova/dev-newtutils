@@ -251,7 +251,7 @@ Received type: <class 'list'>
 Expected type: <class 'tuple'>
 [0m
 [1m[31m
-Location: Newt.utility.count_values_by_position : input_sequence > Newt.console.validate_type
+Location: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type
 ::: ERROR :::
 Value: not a sequence of sequences
 Received type: <class 'str'>
@@ -295,7 +295,7 @@ Received type: <class 'list'>
 Expected type: <class 'tuple'>
 [0m
 [1m[31m
-Location: Newt.utility.count_values_by_position : input_sequence > Newt.console.validate_type
+Location: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type
 ::: ERROR :::
 Value: not a sequence of sequences
 Received type: <class 'str'>

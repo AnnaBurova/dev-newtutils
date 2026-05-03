@@ -496,7 +496,7 @@ class TestCountValuesByPosition:
         assert "\nAll items must have the same length 2\n" in captured.err
         assert "\nLocation: Newt.utility.count_values_by_position : seq_type > Newt.console.validate_type\n" in captured.err
         assert "\nValue: [('b', 2)]\nReceived type: <class 'list'>\nExpected type: <class 'tuple'>\n" in captured.err
-        assert "\nLocation: Newt.utility.count_values_by_position : input_sequence > Newt.console.validate_type\n" in captured.err
+        assert "\nLocation: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type\n" in captured.err
         assert "\nValue: not a sequence of sequences\nReceived type: <class 'str'>\nExpected type: (<class 'list'>, <class 'tuple'>)\n" in captured.err
         assert "\nLocation: Newt.utility.count_values_by_position : position > Newt.console.validate_type\n" in captured.err
         assert "\nValue: 5\nReceived type: <class 'str'>\nExpected type: <class 'int'>\n" in captured.err
@@ -552,7 +552,7 @@ class TestCountValuesByPosition:
         assert "\nAll items must have the same length 2\n" in captured.err
         assert "\nLocation: Newt.utility.count_values_by_position : seq_type > Newt.console.validate_type\n" in captured.err
         assert "\nValue: [('b', 2)]\nReceived type: <class 'list'>\nExpected type: <class 'tuple'>\n" in captured.err
-        assert "\nLocation: Newt.utility.count_values_by_position : input_sequence > Newt.console.validate_type\n" in captured.err
+        assert "\nLocation: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type\n" in captured.err
         assert "\nValue: not a sequence of sequences\nReceived type: <class 'str'>\nExpected type: (<class 'list'>, <class 'tuple'>)\n" in captured.err
 
         # Expected absence of result

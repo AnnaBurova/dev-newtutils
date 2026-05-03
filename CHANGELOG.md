@@ -33,7 +33,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Docstring updated to clarify the function validates exact key match (both missing and unexpected keys), with improved argument descriptions and an added Raises section.
   - `count_values_by_position()`:
     - Renamed `count_similar_values()` to `count_values_by_position()`.
-    - Parameter renamed from `sequence_list` to `input_sequence`.
+    - Parameter renamed from `sequence_list` to `data_sequence`.
     - Validation of `position` parameter now uses `stop` flag; falls back to 0 on invalid type instead of always stopping.
 
 ### Testing

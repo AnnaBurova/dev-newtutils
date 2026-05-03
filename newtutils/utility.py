@@ -19,7 +19,7 @@ Functions:
         stop: bool = True
         ) -> bool
     def count_values_by_position(
-        input_sequence: Sequence[Sequence],
+        data_sequence: Sequence[Sequence],
         position: int = 0,
         stop: bool = False
         ) -> dict[Any, int]
@@ -205,14 +205,14 @@ def check_dict_keys(
 
 
 def count_values_by_position(
-        input_sequence: Sequence[Sequence],
+        data_sequence: Sequence[Sequence],
         position: int = 0,
         stop: bool = False
         ) -> dict[Any, int]:
     """ ## Count occurrences of values at a specified position in a sequence of sequences.
 
     Args:
-        input_sequence (Sequence[Sequence]):
+        data_sequence (Sequence[Sequence]):
             A sequence of sequences to analyze.
         position (int):
             The index position within each inner sequence to count values at.<br>
@@ -227,13 +227,13 @@ def count_values_by_position(
             at the specified position to the count of its occurrences.
     """
 
-    # Empty sequence is valid input — return empty dict without error
-    if not input_sequence:
+    # Empty sequence is valid data — return empty dict without error
+    if not data_sequence:
         return {}
 
     if not NewtCons.validate_type(
-        input_sequence, (list, tuple), check_non_empty=True, stop=stop,
-        location="Newt.utility.count_values_by_position : input_sequence"
+        data_sequence, (list, tuple), check_non_empty=True, stop=stop,
+        location="Newt.utility.count_values_by_position : data_sequence"
     ):
         return {}
 
@@ -243,8 +243,8 @@ def count_values_by_position(
     ):
         position = 0
 
-    seq_len = len(input_sequence[0])
-    seq_type = type(input_sequence[0])
+    seq_len = len(data_sequence[0])
+    seq_type = type(data_sequence[0])
 
     if seq_len <= position:
         NewtCons.error_msg(
@@ -254,7 +254,7 @@ def count_values_by_position(
         )
         return {}
 
-    for item in input_sequence:
+    for item in data_sequence:
         if not NewtCons.validate_type(
             item, seq_type, stop=stop,
             location="Newt.utility.count_values_by_position : seq_type"
@@ -269,7 +269,7 @@ def count_values_by_position(
             )
             return {}
 
-    return dict(Counter(item[position] for item in input_sequence))
+    return dict(Counter(item[position] for item in data_sequence))
 
 
 def sorting_dict_by_keys(
