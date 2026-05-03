@@ -28,7 +28,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - New sort order for output: strings > numbers (int/float) > other types (None, bool, etc.) > tuples.
     - Tuples are now recursively processed via `sorting_sequence()` and returned as sorted tuples.
   - `check_dict_keys()`:
-    - Parameters renamed: from `data` to `data_dict`, from `expected` to `expected_set`.
+    - Parameters renamed: from `data` to `data_mapping`, from `expected` to `expected_set`.
     - Parameter order changed: `location` moved before `stop` in the function signature.
     - Docstring updated to clarify the function validates exact key match (both missing and unexpected keys), with improved argument descriptions and an added Raises section.
   - `count_values_by_position()`:

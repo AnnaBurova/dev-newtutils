@@ -13,7 +13,7 @@ Functions:
                 seq_value
                 ) -> bool
     def check_dict_keys(
-        data_dict: Mapping[str, object],
+        data_mapping: Mapping[str, object],
         expected_set: set[str],
         location: str = "",
         stop: bool = True
@@ -148,7 +148,7 @@ def sorting_sequence(
 
 
 def check_dict_keys(
-        data_dict: Mapping[str, object],
+        data_mapping: Mapping[str, object],
         expected_set: set[str],
         location: str = "",
         stop: bool = True
@@ -159,7 +159,7 @@ def check_dict_keys(
     Useful for validating JSON responses where key structure may change unexpectedly.
 
     Args:
-        data_dict (Mapping[str, object]):
+        data_mapping (Mapping[str, object]):
             Read-only mapping to validate (e.g. dict, defaultdict).<br>
             Keys must be strings, values can be of any type.
         expected_set (set[str]):
@@ -186,7 +186,7 @@ def check_dict_keys(
     if location:
         location = str(location) + " > "
 
-    data_keys = set(data_dict.keys())
+    data_keys = set(data_mapping.keys())
     expected_keys = set(expected_set)
     missing_keys = expected_keys - data_keys
     extra_keys = data_keys - expected_keys
