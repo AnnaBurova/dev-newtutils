@@ -1,5 +1,5 @@
 """
-Updated on 2026-04
+Updated on 2026-05
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -90,7 +90,7 @@ __all__ = [
     "fetch_data_from_url",
 ]
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 __author__ = "NewtCode Anna Burova"
 __description__ = (
     "NewtUtils — A collection of utility functions for common programming tasks."
