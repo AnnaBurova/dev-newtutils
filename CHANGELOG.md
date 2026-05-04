@@ -44,6 +44,11 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Inner function `sort_key()`:
       - Parameter renamed from `d: Mapping` to `element: dict | None`.
       - return type changed from `tuple[object, ...]` to `list[tuple[int, Any]]`.
+  - `select_from_input()`:
+    - Prompt texts was changed from `list` to `option`.
+    - `missing_values` parameter now validated via `NewtCons.validate_type()` when provided.
+    - Options with `missing_values` now display counts as right-aligned prefix `(N) Option Name`; options without a count show empty aligned prefix for visual consistency.
+    - `exit_option` ("x") is now validated against dict keys at runtime and raises error if "x" is already a key in the provided dict.
 
 ### Testing
 

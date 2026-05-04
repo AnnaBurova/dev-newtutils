@@ -17,6 +17,7 @@ IS_WSL=false
 # === List of test modules ===
 # modules=("console")
 # modules=("utility")
+# modules=("console" "utility")
 # modules=("files")
 # modules=("sql")
 # modules=("network")

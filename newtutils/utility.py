@@ -35,7 +35,7 @@ Functions:
     def select_from_input(
         select_dict: dict[str, str],
         missing_values: dict[str, int] | None = None
-        ) -> str
+        ) -> str | None
 """
 
 from __future__ import annotations
@@ -439,22 +439,26 @@ def sorting_dict_by_keys(
 def select_from_input(
         select_dict: dict[str, str],
         missing_values: dict[str, int] | None = None
-        ) -> str:
-    """ Display a numbered list of options and prompt user to select one.
+        ) -> str | None:
+    """ ## Display a numbered list of options and prompt user to select one.
 
     Loops until a valid choice is made or user cancels with 'x'.
 
     Args:
         select_dict (dict[str, str]):
             Dictionary mapping string keys (numbers) to option names.
+        missing_values (dict[str, int] | None):
+            Maps option names to a count displayed as prefix.<br>
+            See `NewtUtil.count_values_by_position()`.<br>
+            Defaults to None.
 
     Returns:
-        out (str):
+        out (str | None):
             The selected key if valid choice made.
 
     Raises:
         SystemExit:
-            Raised if selection cancelled (user enters 'x' or presses Ctrl+C).
+            If `KeyboardInterrupt` by user (Ctrl+C) occurs, user enters `x`, or no valid selection after 5 attempts.
     """
 
     NewtCons.validate_type(
@@ -462,61 +466,70 @@ def select_from_input(
         location="Newt.utility.select_from_input : select_dict"
     )
 
-    # Display numbered list
-    print("Available list:", len(select_dict))
-    max_key_len = len(max(select_dict.keys(), key=len)) + 2
-    for nr, name in select_dict.items():
-        if missing_values and name in missing_values:
-            name += f" ({missing_values[name]})"
-        print(f"{nr:>{max_key_len}}: {name}")
-    print(f"{'X':>{max_key_len}}: Exit / Cancel")
+    if missing_values:
+        NewtCons.validate_type(
+            missing_values, dict,
+            location="Newt.utility.select_from_input : missing_values"
+        )
 
-    choice = "x"
+    user_choice = "x"
+    exit_option = user_choice
+    if exit_option in [key.lower() for key in select_dict.keys()]:
+        NewtCons.error_msg(
+            f"Please be sure there is no `{exit_option}` as key in dict.",
+            f"Dict keys: {select_dict.keys()}",
+            location="Newt.utility.select_from_input : exit_option"
+        )
+
+    print()
+    print(f"{len(select_dict)} Available options to choose from:")
+
+    # Right-align column width: longest key length + 2 spaces of padding
+    max_key_len = len(max(select_dict.keys(), key=len)) + 2
+    max_count_len = len(str(max(missing_values.values()))) if missing_values else 0
+
+    for nr, name in select_dict.items():
+        if missing_values:
+            if name in missing_values:
+                name = f"({missing_values[name]:>{max_count_len}}) " + name
+            else:
+                name = f"({'':>{max_count_len}}) " + name
+        print(f"{nr:>{max_key_len}}: {name}")
+    print(f"{exit_option.upper():>{max_key_len}}: Exit / Cancel")
 
     attempt = 0
+
     # Loop until valid input
-    while choice not in select_dict:
-        if attempt > 5:
-            break
+    while user_choice not in select_dict and attempt < 5:
         attempt += 1
 
         try:
-            choice = input(
-                "\nEnter number from list ([X] to exit): "
+            user_choice = input(
+                "\nEnter option ID from list: "
             ).strip().lower()
-            print(f"[INPUT]: {choice}")
-
-            if choice == "x":
-                NewtCons.error_msg(
-                    "Selection cancelled.",
-                    location="Newt.utility.select_from_input : choice = [X]"
-                )
-
-            if not choice.isdigit():
-                print("Invalid input. Please enter a number.")
-                continue
-
-            if choice in select_dict:
-                print(f"Selected option: {select_dict[choice]}")
-                print()
-                return choice
-
-            print("Number out of range. Try again.")
+            print(f"[INPUT]: {user_choice}")
 
         except KeyboardInterrupt:
+            print()
             NewtCons.error_msg(
                 "Selection cancelled.",
                 location="Newt.utility.select_from_input : KeyboardInterrupt"
             )
 
-        except Exception as e:  # pragma: no cover
+        if user_choice == exit_option:
             NewtCons.error_msg(
-                f"Exception: {e} (found? write test!)",  # TODO
-                location="Newt.utility.select_from_input : Exception"
+                "Selection cancelled.",
+                location=f"Newt.utility.select_from_input : choice = [{exit_option.upper()}]"
             )
 
+        if user_choice in select_dict:
+            print(f"Selected option: {select_dict[user_choice]}")
+            print()
+            return user_choice
+
+        print("Option not in list. Try again.")
+
     NewtCons.error_msg(
-        f"No correct selection after {attempt} attempt.",
+        f"No correct selection after attempt {attempt}.",
         location="Newt.utility.select_from_input : while attempt"
     )
-    return choice
