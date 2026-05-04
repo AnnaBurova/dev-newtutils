@@ -24,14 +24,14 @@ Functions:
         stop: bool = False
         ) -> dict[Any, int]
     def sorting_dict_by_keys(
-        data: Sequence[Mapping[str, Any]],
-        *keys: str,
+        data_list: list[dict[str, Any]],
+        *sorting_keys: str,
         reverse: bool = False,
         stop: bool = True
-        ) -> list[Mapping[str, Any]]
+        ) -> list[dict[str, Any]]
             def sort_key(
-                d: Mapping[str, object]
-                ) -> tuple[object, ...]
+                element: dict[str, Any] | None
+                ) -> list[tuple[int, Any]]
     def select_from_input(
         select_dict: dict[str, str],
         missing_values: dict[str, int] | None = None
@@ -80,7 +80,7 @@ def sorting_sequence(
 
     Raises:
         SystemExit:
-            Raised when `stop=True` and the data contains invalid data types.
+            If an error occurs and `stop=True`, terminates with exit code 1.
     """
 
     if not NewtCons.validate_type(
@@ -180,7 +180,7 @@ def check_dict_keys(
 
     Raises:
         SystemExit:
-            Raised if `stop=True`, terminating the program with exit code 1.
+            If an error occurs and `stop=True`, terminates with exit code 1.
     """
 
     if location:
@@ -225,6 +225,10 @@ def count_values_by_position(
         out (dict[Any, int]):
             A dictionary mapping each unique value found<br>
             at the specified position to the count of its occurrences.
+
+    Raises:
+        SystemExit:
+            If an error occurs and `stop=True`, terminates with exit code 1.
     """
 
     # Empty sequence is valid data — return empty dict without error
@@ -273,105 +277,163 @@ def count_values_by_position(
 
 
 def sorting_dict_by_keys(
-        data: Sequence[Mapping[str, Any]],
-        *keys: str,
+        data_list: list[dict[str, Any]],
+        *sorting_keys: str,
         reverse: bool = False,
         stop: bool = True
-        ) -> list[Mapping[str, Any]]:
-    """ Sort a sequence of mappings (dictionaries) by one or more keys.
+        ) -> list[dict[str, Any]]:
+    """ ## Sort a list of dictionaries by one or more keys.
 
-    This function validates the input sequence and its elements,
-    ensuring each entry is a mapping with string keys.
-    It supports sorting by multiple keys in priority order.
-    Missing or None-valued keys are placed at the end of the sorted list.
+    Validates the input list and its elements,
+    ensuring each entry is a dictionary or None.
+    Supports sorting by multiple keys in priority order.
+
+    Values are sorted in the following type order (ascending):
+    1. Strings — sorted alphabetically, case-insensitive.
+    2. Integers and floats — sorted numerically.
+    3. Booleans — sorted after numbers (False < True).
+    4. None value — key exists but value is None, placed before missing keys.
+    5. Missing key — key does not exist in the dict.
+    6. Empty dict — placed at the very end.
+    7. None — placed at the very end.
 
     Args:
-        data (Sequence[Mapping[str, Any]]):
-            Sequence of mapping-like objects to sort.
-        *keys (str):
-            One or more keys to sort by, in priority order.
+        data_list (list[dict[str, Any]]):
+            List of dictionaries to sort.
+            May contain None values or empty dicts.
+        *sorting_keys (str):
+            One or more dictionary keys to sort by, in priority order.<br>
+            If omitted and every element is a single-key dict sharing the same key,
+            that key is used automatically.<br>
+            Otherwise, the original order is preserved.
         reverse (bool):
-            If True, sorts in descending order.
+            If True, sorts in descending order.<br>
             Defaults to False.
         stop (bool):
-            If True, stops execution when invalid data is detected.
-            If False, logs the error and returns an empty list.
+            If True, raises SystemExit on invalid input.<br>
+            If False, logs the error and returns an empty list.<br>
             Defaults to True.
 
     Returns:
-        out (list[Mapping[str, Any]]):
-            A new list of mappings sorted by the specified keys.
-            Items with missing or None-valued keys are placed at the end.
+        out (list[dict[str, Any]]):
+            A new sorted list.<br>
+            The original list is not modified.
 
     Raises:
         SystemExit:
-            Raised when validation fails and `NewtCons.error_msg()` is called
-            with `stop=True` (if configured that way).
+            If an error occurs and `stop=True`, terminates with exit code 1.
     """
 
-    # Validate that data is a sequence
+    # Empty list is valid data — return empty list without error
+    if not data_list:
+        return []
+
+    # Validate that data_list is a list
     if not NewtCons.validate_type(
-        data, (list, tuple), check_non_empty=True, stop=stop,
-        location="Newt.utility.sorting_dict_by_keys : data"
+        data_list, list, check_non_empty=True, stop=stop,
+        location="Newt.utility.sorting_dict_by_keys : data_list"
     ):
         return []
 
-    # Validate that each element is a dictionary
-    if not all(
-        NewtCons.validate_type(
-            d, dict, stop=False
-        ) for d in data
-    ):
+    invalid_element_type = False
+    invalid_key_type = False
+
+    # Validate that each element is a dictionary and has key type str or int
+    for dl in data_list:
+        if not NewtCons.validate_type(
+            dl, (dict, type(None)), stop=False,
+            location="Newt.utility.sorting_dict_by_keys : dl in data_list"
+        ):
+            invalid_element_type = True
+
+        if dl and isinstance(dl, dict):
+            for k in dl.keys():
+                if not NewtCons.validate_type(
+                    k, str, stop=False,
+                    location="Newt.utility.sorting_dict_by_keys : k in dl.keys()"
+                ):
+                    invalid_key_type = True
+                    break
+
+    if invalid_element_type:
         NewtCons.error_msg(
             "Expected a list of dictionaries",
-            f"Data: {data}",
-            location="Newt.utility.sorting_dict_by_keys : data not all",
+            f"data_list: {data_list}",
+            location="Newt.utility.sorting_dict_by_keys : invalid_element_type",
             stop=stop
         )
         return []
 
-    # If no keys provided — return the data as a list (no sorting)
-    if not keys:
-        all_have_single_key = all(len(d) == 1 for d in data) and len(set(next(iter(d)) for d in data if d)) == 1
-        if all_have_single_key:
-            single_key = next(iter(data[0]))
-            return sorted(data, key=lambda x: x[single_key], reverse=reverse)
-
-        return [dict(d) for d in data]
-
-    # Validate that all keys are strings
-    if not all(
-        NewtCons.validate_type(
-            k, str, stop=False
-        ) for k in keys
-    ):
+    if invalid_key_type:
         NewtCons.error_msg(
-            "Keys must be strings",
-            f"Keys: {keys}",
-            location="Newt.utility.sorting_dict_by_keys : keys not all",
+            "Expected a keys of dictionaries to be str",
+            f"data_list: {data_list}",
+            location="Newt.utility.sorting_dict_by_keys : invalid_key_type",
             stop=stop
         )
         return []
 
-    try:
-        def sort_key(
-                d: Mapping[str, object]
-                ) -> tuple[object, ...]:
-            """
-            Generate a sorting key that moves missing or None values to the end.
-            """
-            return tuple((d.get(k) is None, d.get(k)) for k in keys)
-
-        # sorted() always returns a new list
-        return [dict(d) for d in sorted(data, key=sort_key, reverse=reverse)]
-
-    except Exception as e:  # pragma: no cover
+    # Validate that each sorting key is a string or int
+    if not all(NewtCons.validate_type(
+        k, str, stop=False,
+        location="Newt.utility.sorting_dict_by_keys : k in sorting_keys"
+    ) for k in sorting_keys):
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
-            location="Newt.utility.sorting_dict_by_keys : Exception",
+            "Expected sorting keys to be str",
+            f"sorting_keys: {sorting_keys}",
+            location="Newt.utility.sorting_dict_by_keys : sorting_keys",
             stop=stop
         )
-        return [dict(d) for d in data]
+        return []
+
+    # If no sorting keys are provided, attempt to auto-detect a single shared key.
+    # Condition: every element in the list must be a non-empty dict with exactly one key,
+    # and that key must be the same across all elements.
+    # If the condition is not met, sorting_keys remains empty and no sorting is applied.
+    if not sorting_keys:
+        valid_keys = [dl for dl in data_list if dl and len(dl) == 1]
+        if len(valid_keys) == len(data_list):  # all elements must pass
+            common_keys = set.intersection(*[set(vk.keys()) for vk in valid_keys])
+            if len(common_keys) == 1:
+                sorting_keys = tuple(common_keys)
+
+    if not sorting_keys:
+        return data_list[::-1] if reverse else data_list[:]
+
+    # --------------------------------------------------------------------------
+    def sort_key(
+            element: dict[str, Any] | None
+            ) -> list[tuple[int, Any]]:
+        """ Build a comparable sort key list from a dict item. """
+
+        if element is None:  # None
+            return [(7, None)]
+
+        if not element:  # {}
+            return [(6, element)]
+
+        key_result = []
+        for k in sorting_keys:
+            val = element.get(k)
+
+            if val is None and k in element:
+                key_result.append((4, val))  # value None
+            elif val is None:
+                key_result.append((5, val))  # missing key
+            elif type(val) is bool:
+                key_result.append((2, val))
+            elif type(val) in (int, float):
+                key_result.append((1, val))
+            elif type(val) is str:
+                key_result.append((0, val.strip().lower()))  # normalize type to lowercase
+            else:
+                key_result.append((3, type(val).__name__+str(val)))  # group by type name, avoid TypeError
+
+        return key_result
+    # --------------------------------------------------------------------------
+
+    sorted_list = sorted(data_list, key=sort_key, reverse=reverse)
+    return sorted_list
 
 
 def select_from_input(

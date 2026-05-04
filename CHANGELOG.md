@@ -25,7 +25,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Parameter renamed from `input_list` to `data_sequence`.
     - Docstring updated to reflect new supported types, sort order, and behavior.
     - Expanded to support float, bool, none, and nested tuples.
-    - New sort order for output: strings > numbers (int/float) > other types (None, bool, etc.) > tuples.
+    - New sort order for output: strings -> numbers (int/float) -> other types (None, bool, etc.) -> tuples.
     - Tuples are now recursively processed via `sorting_sequence()` and returned as sorted tuples.
   - `check_dict_keys()`:
     - Parameters renamed: from `data` to `data_mapping`, from `expected` to `expected_set`.
@@ -35,6 +35,15 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Renamed `count_similar_values()` to `count_values_by_position()`.
     - Parameter renamed from `sequence_list` to `data_sequence`.
     - Validation of `position` parameter now uses `stop` flag; falls back to 0 on invalid type instead of always stopping.
+  - `sorting_dict_by_keys()`:
+    - Parameter renamed from `data` to `data_list`. Type narrowed from `Sequence[Mapping]` to `list[dict]`.
+    - Parameter renamed from `keys` to `sorting_keys`.
+    - Empty list input now returns `[]` immediately without triggering an error.
+    - Elements may now be `None` or empty `{}`. These are valid inputs and are placed at the end of the sorted result.
+    - Sorting order now follows a strict priority system by value type: strings (case-insensitive) -> numbers -> booleans -> None value -> missing key -> empty dict -> None element.
+    - Inner function `sort_key()`:
+      - Parameter renamed from `d: Mapping` to `element: dict | None`.
+      - return type changed from `tuple[object, ...]` to `list[tuple[int, Any]]`.
 
 ### Testing
 

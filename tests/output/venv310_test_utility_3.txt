@@ -2,7 +2,7 @@
 platform win32 -- Python 3.10.11, pytest-9.0.3, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collected 13 items
+collected 18 items
 
 test_utility.py 
 START=======================================
@@ -304,5 +304,217 @@ Expected type: (<class 'list'>, <class 'tuple'>)
 
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_by_keys_no_error
+============================================
+input_list_dict: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 25}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Bob', 'age': 20}]
+output_dict_1: [{'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Bob', 'age': 25}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}]
+output_dict_2: [{'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}, {'name': 'Bob', 'age': 25}, {'name': 'Charlie', 'age': 25}, {'name': 'Aska', 'age': 30}]
+output_dict_3: [{'name': 'Aska', 'age': 30}, {'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 25}, {'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 20}]
+output_dict_4: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 25}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Bob', 'age': 20}]
+output_dict_5: [{'name': 'Bob', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 25}, {'name': 'Charlie', 'age': 25}]
 
-============================= 13 passed in 0.03s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_missing_keys
+============================================
+input_list_dict: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob'}, {}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': None}, None, {'name': 'Bob', 'age': 20}]
+output_dict_1: [{'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Aska', 'age': None}, {'name': 'Bob'}, {}, None]
+output_dict_2: [None, {}, {'name': 'Bob'}, {'name': 'Aska', 'age': None}, {'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}]
+output_dict_3: [{'name': 'Bob', 'age': 20}, None, {'name': 'Aska', 'age': None}, {'name': 'Alice', 'age': 20}, {}, {'name': 'Bob'}, {'name': 'Charlie', 'age': 25}]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_single_key
+============================================
+input_list_dict: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]
+output_dict_1: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]
+output_dict_2: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]
+output_dict_3: [{'name': 'Alice'}, {'name': 'Aska'}, {'name': 'Bob'}, {'name': 'Charlie'}]
+output_dict_4: [{'name': 'Charlie'}, {'name': 'Bob'}, {'name': 'Aska'}, {'name': 'Alice'}]
+output_dict_5: [{'name': 'Alice'}, {'name': 'Aska'}, {'name': 'Bob'}, {'name': 'Charlie'}]
+output_dict_6: [{'name': 'Charlie'}, {'name': 'Bob'}, {'name': 'Aska'}, {'name': 'Alice'}]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_by_keys_with_errors_no_stop
+============================================
+input_dict: {'name': 'Alice'}
+output_1: []
+input_list: [1, 2, 3]
+output_2: []
+input_list_mix: [{'name': 'Alice'}, 42, 'string']
+output_3: []
+input_list_dict: [{123: 'Alice'}]
+output_4: []
+input_list_empty: []
+output_5: []
+input_None: None
+output_6: []
+
+=====captured.err=====
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type
+::: ERROR :::
+Value: {'name': 'Alice'}
+Received type: <class 'dict'>
+Expected type: <class 'list'>
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: 1
+Received type: <class 'int'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: 2
+Received type: <class 'int'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: 3
+Received type: <class 'int'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : invalid_element_type
+::: ERROR :::
+Expected a list of dictionaries
+data_list: [1, 2, 3]
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: 42
+Received type: <class 'int'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: string
+Received type: <class 'str'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : invalid_element_type
+::: ERROR :::
+Expected a list of dictionaries
+data_list: [{'name': 'Alice'}, 42, 'string']
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : k in dl.keys() > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : invalid_key_type
+::: ERROR :::
+Expected a keys of dictionaries to be str
+data_list: [{123: 'Alice'}]
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_by_keys_with_errors_and_stop
+============================================
+input_dict: {'name': 'Alice'}
+input_list: [1, 2, 3]
+input_list_mix: [{'name': 'Alice'}, 42, 'string']
+input_list_dict: [{123: 'Alice'}]
+
+=====captured.err=====
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type
+::: ERROR :::
+Value: {'name': 'Alice'}
+Received type: <class 'dict'>
+Expected type: <class 'list'>
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: 1
+Received type: <class 'int'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: 2
+Received type: <class 'int'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: 3
+Received type: <class 'int'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : invalid_element_type
+::: ERROR :::
+Expected a list of dictionaries
+data_list: [1, 2, 3]
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: 42
+Received type: <class 'int'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type
+::: ERROR :::
+Value: string
+Received type: <class 'str'>
+Expected type: (<class 'dict'>, <class 'NoneType'>)
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : invalid_element_type
+::: ERROR :::
+Expected a list of dictionaries
+data_list: [{'name': 'Alice'}, 42, 'string']
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : k in dl.keys() > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : invalid_key_type
+::: ERROR :::
+Expected a keys of dictionaries to be str
+data_list: [{123: 'Alice'}]
+[0m
+
+END=========================================
+.
+
+============================= 18 passed in 0.03s ==============================

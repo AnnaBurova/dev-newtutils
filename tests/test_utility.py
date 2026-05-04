@@ -565,360 +565,394 @@ class TestSortingDictByKeys:
     """ Tests for sorting_dict_by_keys function. """
 
 
-    def test_sorting_dict_single_key(self, capsys):
-        """ Test sorting_dict_by_keys sorts list of dicts ascending by single key. """
+    def test_sorting_dict_by_keys_no_error(self, capsys):
+        """ Test sorting_dict_by_keys with single key, multiple keys, reverse, and no keys. """
         print_my_func_name()
 
-        input_dict = [
+        input_list_dict = [
             {"name": "Charlie", "age": 25},
-            {"name": "Alice", "age": 30},
-            {"name": "Bob", "age": 20}
-        ]
-        print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict, "age")
-        print(result)
-        assert result[0]["age"] == 20
-        assert result[1]["age"] == 25
-        assert result[2]["age"] == 30
-        assert result[0]["name"] == "Bob"
-        assert result[1]["name"] == "Charlie"
-        assert result[2]["name"] == "Alice"
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]\n[{'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}]\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_sorting_dict_multiple_keys(self, capsys):
-        """ Test sorting_dict_by_keys sorts list of dicts by age then name. """
-        print_my_func_name()
-
-        input_dict = [
-            {"name": "Charlie", "age": 25},
-            {"name": "Alice", "age": 25},
-            {"name": "Bob", "age": 20}
-        ]
-        print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict, "age", "name")
-        print(result)
-        assert result[0]["age"] == 20
-        assert result[1]["age"] == 25
-        assert result[2]["age"] == 25
-        assert result[0]["name"] == "Bob"
-        assert result[1]["name"] == "Alice"
-        assert result[2]["name"] == "Charlie"
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 20}]\n[{'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 25}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_sorting_dict_reverse_order(self, capsys):
-        """ Test sorting_dict_by_keys with reverse=True sorts descending by age. """
-        print_my_func_name()
-
-        input_dict = [
-            {"name": "Alice", "age": 30},
+            {"name": "Bob", "age": 25},
+            {"name": "Alice", "age": 20},
+            {"name": "Aska", "age": 30},
             {"name": "Bob", "age": 20},
-            {"name": "Charlie", "age": 25}
         ]
-        print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict, "age", reverse=True)
-        print(result)
-        assert result[0]["age"] == 30
-        assert result[1]["age"] == 25
-        assert result[2]["age"] == 20
-        assert result[0]["name"] == "Alice"
-        assert result[1]["name"] == "Charlie"
-        assert result[2]["name"] == "Bob"
-        assert result[-1]["age"] == 20
+        print("input_list_dict:", input_list_dict)
+
+        # One key
+        output_dict_1 = NewtUtil.sorting_dict_by_keys(input_list_dict, "name")
+        print("output_dict_1:", output_dict_1)
+        assert output_dict_1[0]["age"] == 20
+        assert output_dict_1[1]["age"] == 30
+        assert output_dict_1[2]["age"] == 25
+        assert output_dict_1[3]["age"] == 20
+        assert output_dict_1[4]["age"] == 25
+        assert output_dict_1[0]["name"] == "Alice"
+        assert output_dict_1[1]["name"] == "Aska"
+        assert output_dict_1[2]["name"] == "Bob"
+        assert output_dict_1[3]["name"] == "Bob"
+        assert output_dict_1[4]["name"] == "Charlie"
+
+        # More keys
+        output_dict_2 = NewtUtil.sorting_dict_by_keys(input_list_dict, "age", "name")
+        print("output_dict_2:", output_dict_2)
+        assert output_dict_2[0]["age"] == 20
+        assert output_dict_2[1]["age"] == 20
+        assert output_dict_2[2]["age"] == 25
+        assert output_dict_2[3]["age"] == 25
+        assert output_dict_2[4]["age"] == 30
+        assert output_dict_2[0]["name"] == "Alice"
+        assert output_dict_2[1]["name"] == "Bob"
+        assert output_dict_2[2]["name"] == "Bob"
+        assert output_dict_2[3]["name"] == "Charlie"
+        assert output_dict_2[4]["name"] == "Aska"
+
+        # More keys + reverse
+        output_dict_3 = NewtUtil.sorting_dict_by_keys(input_list_dict, "age", "name", reverse=True)
+        print("output_dict_3:", output_dict_3)
+        assert output_dict_3[4]["age"] == 20
+        assert output_dict_3[3]["age"] == 20
+        assert output_dict_3[2]["age"] == 25
+        assert output_dict_3[1]["age"] == 25
+        assert output_dict_3[0]["age"] == 30
+        assert output_dict_3[4]["name"] == "Alice"
+        assert output_dict_3[3]["name"] == "Bob"
+        assert output_dict_3[2]["name"] == "Bob"
+        assert output_dict_3[1]["name"] == "Charlie"
+        assert output_dict_3[0]["name"] == "Aska"
+        assert output_dict_2 == output_dict_3[::-1]
+
+        # No keys
+        output_dict_4 = NewtUtil.sorting_dict_by_keys(input_list_dict)
+        print("output_dict_4:", output_dict_4)
+        assert output_dict_4[0]["age"] == 25
+        assert output_dict_4[1]["age"] == 25
+        assert output_dict_4[2]["age"] == 20
+        assert output_dict_4[3]["age"] == 30
+        assert output_dict_4[4]["age"] == 20
+        assert output_dict_4[0]["name"] == "Charlie"
+        assert output_dict_4[1]["name"] == "Bob"
+        assert output_dict_4[2]["name"] == "Alice"
+        assert output_dict_4[3]["name"] == "Aska"
+        assert output_dict_4[4]["name"] == "Bob"
+
+        # No keys + reverse
+        output_dict_5 = NewtUtil.sorting_dict_by_keys(input_list_dict, reverse=True)
+        print("output_dict_5:", output_dict_5)
+        assert output_dict_5[0]["name"] == "Bob"
+        assert output_dict_5[1]["name"] == "Aska"
+        assert output_dict_5[2]["name"] == "Alice"
+        assert output_dict_5[3]["name"] == "Bob"
+        assert output_dict_5[4]["name"] == "Charlie"
+        assert output_dict_5[0]["age"] == 20
+        assert output_dict_5[1]["age"] == 30
+        assert output_dict_5[2]["age"] == 20
+        assert output_dict_5[3]["age"] == 25
+        assert output_dict_5[4]["age"] == 25
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}]\n[{'name': 'Alice', 'age': 30}, {'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 20}]\n" in captured.out
+        assert "\ninput_list_dict: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 25}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Bob', 'age': 20}]\n" in captured.out
+        assert "\noutput_dict_1: [{'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Bob', 'age': 25}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
+        assert "\noutput_dict_2: [{'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}, {'name': 'Bob', 'age': 25}, {'name': 'Charlie', 'age': 25}, {'name': 'Aska', 'age': 30}]\n" in captured.out
+        assert "\noutput_dict_3: [{'name': 'Aska', 'age': 30}, {'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 25}, {'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 20}]\n" in captured.out
+        assert "\noutput_dict_4: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 25}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Bob', 'age': 20}]\n" in captured.out
+        assert "\noutput_dict_5: [{'name': 'Bob', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 25}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
-    def test_sorting_dict_missing_key(self, capsys):
+    def test_sorting_dict_missing_keys(self, capsys):
         """ Test sorting_dict_by_keys places missing key dicts at end. """
         print_my_func_name()
 
-        input_dict = [
-            {"name": "Alice", "age": 30},
+        input_list_dict = [
+            {"name": "Charlie", "age": 25},
             {"name": "Bob"},  # Missing age
-            {"name": "Charlie", "age": 25}
+            {},
+            {"name": "Alice", "age": 20},
+            {"name": "Aska", "age": None},
+            None,
+            {"name": "Bob", "age": 20},
         ]
-        print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict, "age")
-        print(result)
-        assert result[0]["age"] == 25
-        assert result[1]["age"] == 30
-        assert "age" not in result[2]  # Expected absence of result
-        assert result[0]["name"] == "Charlie"
-        assert result[1]["name"] == "Alice"
-        assert result[2]["name"] == "Bob"
-        # Items with missing keys should be at the end
-        assert result[-1]["name"] == "Bob"
+        print("input_list_dict:", input_list_dict)
+
+        output_dict_1 = NewtUtil.sorting_dict_by_keys(input_list_dict, "age")
+        print("output_dict_1:", output_dict_1)
+        assert output_dict_1[0]["age"] == 20
+        assert output_dict_1[1]["age"] == 20
+        assert output_dict_1[2]["age"] == 25
+        assert output_dict_1[3]["age"] is None
+        assert "age" not in output_dict_1[4]  # Expected absence of result
+        assert output_dict_1[0]["name"] == "Alice"
+        assert output_dict_1[1]["name"] == "Bob"
+        assert output_dict_1[2]["name"] == "Charlie"
+        assert output_dict_1[3]["name"] == "Aska"
+        assert output_dict_1[4]["name"] == "Bob"
+        assert output_dict_1[5] == {}
+        assert output_dict_1[6] is None
+
+        output_dict_2 = NewtUtil.sorting_dict_by_keys(input_list_dict, "age", reverse=True)
+        print("output_dict_2:", output_dict_2)
+        assert output_dict_2[0] is None
+        assert output_dict_2[1] == {}
+        assert "age" not in output_dict_2[2]  # Expected absence of result
+        assert output_dict_2[3]["age"] is None
+        assert output_dict_2[4]["age"] == 25
+        assert output_dict_2[5]["age"] == 20
+        assert output_dict_2[6]["age"] == 20
+        assert output_dict_2[2]["name"] == "Bob"
+        assert output_dict_2[3]["name"] == "Aska"
+        assert output_dict_2[4]["name"] == "Charlie"
+        assert output_dict_2[5]["name"] == "Alice"
+        assert output_dict_2[6]["name"] == "Bob"
+
+        output_dict_3 = NewtUtil.sorting_dict_by_keys(input_list_dict, reverse=True)
+        print("output_dict_3:", output_dict_3)
+        assert output_dict_3[0]["age"] == 20
+        assert output_dict_3[1] is None
+        assert output_dict_3[2]["age"] is None
+        assert output_dict_3[3]["age"] == 20
+        assert output_dict_3[4] == {}
+        assert "age" not in output_dict_3[5]  # Expected absence of result
+        assert output_dict_3[6]["age"] == 25
+        assert output_dict_3[0]["name"] == "Bob"
+        assert output_dict_3[2]["name"] == "Aska"
+        assert output_dict_3[3]["name"] == "Alice"
+        assert output_dict_3[5]["name"] == "Bob"
+        assert output_dict_3[6]["name"] == "Charlie"
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob'}, {'name': 'Charlie', 'age': 25}]\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]\n" in captured.out
+        assert "\ninput_list_dict: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob'}, {}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': None}, None, {'name': 'Bob', 'age': 20}]\n" in captured.out
+        assert "\noutput_dict_1: [{'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Aska', 'age': None}, {'name': 'Bob'}, {}, None]\n" in captured.out
+        assert "\noutput_dict_2: [None, {}, {'name': 'Bob'}, {'name': 'Aska', 'age': None}, {'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}]\n" in captured.out
+        assert "\noutput_dict_3: [{'name': 'Bob', 'age': 20}, None, {'name': 'Aska', 'age': None}, {'name': 'Alice', 'age': 20}, {}, {'name': 'Bob'}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
-    def test_sorting_dict_none_values(self, capsys):
-        """ Test sorting_dict_by_keys places None values at end. """
+    def test_sorting_dict_single_key(self, capsys):
+        """ Test sorting_dict_by_keys with single-key dicts: wrong key, correct key, no key. """
         print_my_func_name()
 
-        input_dict = [
-            {"name": "Alice", "age": 30},
-            {"name": "Bob", "age": None},
-            {"name": "Charlie", "age": 25}
-        ]
-        print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict, "age")
-        print(result)
-        assert result[0]["age"] == 25
-        assert result[1]["age"] == 30
-        assert result[2]["age"] == None
-        assert result[0]["name"] == "Charlie"
-        assert result[1]["name"] == "Alice"
-        assert result[2]["name"] == "Bob"
-        # Items with None should be at the end
-        assert result[-1]["name"] == "Bob"
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[{'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}, {'name': 'Charlie', 'age': 25}]\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': None}]\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_sorting_dict_empty_list(self, capsys):
-        """ Test sorting_dict_by_keys returns empty list for empty input. """
-        print_my_func_name()
-
-        result = NewtUtil.sorting_dict_by_keys([], stop=False)
-        print(result)
-        assert result == []
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input : is_empty > Newt.utility.sorting_dict_by_keys : data\n" in captured.out
-        assert "\nValue must be non-empty\n" in captured.out
-        assert "\nValue: []\n" in captured.out
-
-
-    def test_sorting_dict_no_keys(self, capsys):
-        """ Test sorting_dict_by_keys no args sorts list by dict value order. """
-        print_my_func_name()
-
-        input_dict = [
+        input_list_dict = [
             {"name": "Charlie"},
             {"name": "Alice"},
-            {"name": "Bob"}
+            {"name": "Bob"},
+            {"name": "Aska"},
         ]
-        print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict)
-        print(result)
-        assert result[0]["name"] == "Alice"
-        assert result[1]["name"] == "Bob"
-        assert result[2]["name"] == "Charlie"
-        assert len(result) == 3
+        print("input_list_dict:", input_list_dict)
+
+        # Wrong key
+        output_dict_1 = NewtUtil.sorting_dict_by_keys(input_list_dict, "age")
+        print("output_dict_1:", output_dict_1)
+        assert output_dict_1[0]["name"] == "Charlie"
+        assert output_dict_1[1]["name"] == "Alice"
+        assert output_dict_1[2]["name"] == "Bob"
+        assert output_dict_1[3]["name"] == "Aska"
+
+        # Wrong key + reverse
+        output_dict_2 = NewtUtil.sorting_dict_by_keys(input_list_dict, "age", reverse=True)
+        print("output_dict_2:", output_dict_2)
+        assert output_dict_2[0]["name"] == "Charlie"
+        assert output_dict_2[1]["name"] == "Alice"
+        assert output_dict_2[2]["name"] == "Bob"
+        assert output_dict_2[3]["name"] == "Aska"
+        assert input_list_dict == output_dict_2
+        assert output_dict_1 == output_dict_2
+
+        # Single key
+        output_dict_3 = NewtUtil.sorting_dict_by_keys(input_list_dict, "name")
+        print("output_dict_3:", output_dict_3)
+        assert output_dict_3[0]["name"] == "Alice"
+        assert output_dict_3[1]["name"] == "Aska"
+        assert output_dict_3[2]["name"] == "Bob"
+        assert output_dict_3[3]["name"] == "Charlie"
+
+        # Single key + reverse
+        output_dict_4 = NewtUtil.sorting_dict_by_keys(input_list_dict, "name", reverse=True)
+        print("output_dict_4:", output_dict_4)
+        assert output_dict_4[0]["name"] == "Charlie"
+        assert output_dict_4[1]["name"] == "Bob"
+        assert output_dict_4[2]["name"] == "Aska"
+        assert output_dict_4[3]["name"] == "Alice"
+
+        # No key
+        output_dict_5 = NewtUtil.sorting_dict_by_keys(input_list_dict)
+        print("output_dict_5:", output_dict_5)
+        assert output_dict_5[0]["name"] == "Alice"
+        assert output_dict_5[1]["name"] == "Aska"
+        assert output_dict_5[2]["name"] == "Bob"
+        assert output_dict_5[3]["name"] == "Charlie"
+        assert output_dict_3 == output_dict_5
+
+        # No key + reverse
+        output_dict_6 = NewtUtil.sorting_dict_by_keys(input_list_dict, reverse=True)
+        print("output_dict_6:", output_dict_6)
+        assert output_dict_6[0]["name"] == "Charlie"
+        assert output_dict_6[1]["name"] == "Bob"
+        assert output_dict_6[2]["name"] == "Aska"
+        assert output_dict_6[3]["name"] == "Alice"
+        assert output_dict_4 == output_dict_6
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}]\n[{'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Charlie'}]\n" in captured.out
+        assert "\ninput_list_dict: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]\n" in captured.out
+        assert "\noutput_dict_1: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]\n" in captured.out
+        assert "\noutput_dict_2: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]\n" in captured.out
+        assert "\noutput_dict_3: [{'name': 'Alice'}, {'name': 'Aska'}, {'name': 'Bob'}, {'name': 'Charlie'}]\n" in captured.out
+        assert "\noutput_dict_4: [{'name': 'Charlie'}, {'name': 'Bob'}, {'name': 'Aska'}, {'name': 'Alice'}]\n" in captured.out
+        assert "\noutput_dict_5: [{'name': 'Alice'}, {'name': 'Aska'}, {'name': 'Bob'}, {'name': 'Charlie'}]\n" in captured.out
+        assert "\noutput_dict_6: [{'name': 'Charlie'}, {'name': 'Bob'}, {'name': 'Aska'}, {'name': 'Alice'}]\n" in captured.out
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
-    def test_sorting_dict_multi_keys_no_args(self, capsys):
-        """ Test sorting_dict_by_keys no args returns unchanged multi-key dict list. """
+    def test_sorting_dict_by_keys_with_errors_no_stop(self, capsys):
+        """ Test sorting_dict_by_keys handles invalid input without raising exceptions. """
         print_my_func_name()
 
-        input_dict = [
-            {"name": "Charlie", "age": 25},
-            {"name": "Alice", "age": 30},
-            {"name": "Bob", "age": 20}
-        ]
-        print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict)
-        print(result)
-        # Should return in original order since no keys specified and dicts have multiple keys
-        assert result[0]["age"] == 25
-        assert result[1]["age"] == 30
-        assert result[2]["age"] == 20
-        assert result[0]["name"] == "Charlie"
-        assert result[1]["name"] == "Alice"
-        assert result[2]["name"] == "Bob"
-        assert len(result) == 3
+        # Not a list
+        input_dict = {"name": "Alice"}
+        print("input_dict:", input_dict)
+        output_1 = NewtUtil.sorting_dict_by_keys(input_dict, stop=False)  # type: ignore
+        print("output_1:", output_1)
 
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]\n[{'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 30}, {'name': 'Bob', 'age': 20}]\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_sorting_dict_mixed_struct_no_keys(self, capsys):
-        """ Test sorting_dict_by_keys no args unchanged for mixed dict structures. """
-        print_my_func_name()
-
-        input_dict = [
-            {"name": "Charlie"},
-            {"name": "Alice", "age": 30},
-            {"name": "Bob"}
-        ]
-        print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict)
-        print(result)
-        # Should return in original order since no keys specified and dicts have different structures
-        assert "age" not in result[0]  # Expected absence of result
-        assert result[1]["age"] == 30
-        assert "age" not in result[2]  # Expected absence of result
-        assert result[0]["name"] == "Charlie"
-        assert result[1]["name"] == "Alice"
-        assert result[2]["name"] == "Bob"
-        assert len(result) == 3
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[{'name': 'Charlie'}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]\n[{'name': 'Charlie'}, {'name': 'Alice', 'age': 30}, {'name': 'Bob'}]\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_sorting_dict_not_list(self, capsys):
-        """ Test sorting_dict_by_keys non-list input raises SystemExit or returns result. """
-        print_my_func_name()
-
-        input_str = "not a list"
-        print(input_str)
-
-        with pytest.raises(SystemExit) as exc_info:
-            NewtUtil.sorting_dict_by_keys(input_str, "key")  # type: ignore
-            print("This line will not be printed")
-        assert exc_info.value.code == 1
-
-        result = NewtUtil.sorting_dict_by_keys(input_str, "key", stop=False)  # type: ignore
-        print(result)
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert captured.out.count("\nLocation: Newt.console.validate_input > Newt.utility.sorting_dict_by_keys : data\n") == 2
-        assert captured.out.count("\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n") == 2
-        assert captured.out.count("\nValue: not a list\n") == 2
-        # Expected absence of result
-        assert "This line will not be printed" not in captured.out
-
-
-    def test_sorting_dict_not_dicts(self, capsys):
-        """ Test sorting_dict_by_keys non-dict list items raise SystemExit. """
-        print_my_func_name()
-
+        # List with non-dict elements
         input_list = [1, 2, 3]
-        print(input_list)
-        with pytest.raises(SystemExit) as exc_info:
-            NewtUtil.sorting_dict_by_keys(input_list, "key")  # type: ignore
-            print("This line will not be printed")
-        assert exc_info.value.code == 1
+        print("input_list:", input_list)
+        output_2 = NewtUtil.sorting_dict_by_keys(input_list, stop=False)  # type: ignore
+        print("output_2:", output_2)
 
-        result = NewtUtil.sorting_dict_by_keys(input_list, "key", stop=False)  # type: ignore
-        print(result)
+        # List with mixed valid and invalid elements
+        input_list_mix = [{"name": "Alice"}, 42, "string"]
+        print("input_list_mix:", input_list_mix)
+        output_3 = NewtUtil.sorting_dict_by_keys(input_list_mix, stop=False)
+        print("output_3:", output_3)
 
-        captured = capsys.readouterr()
-        print_my_captured(captured)
+        # Invalid key type
+        input_list_dict = [{123: "Alice"}]
+        print("input_list_dict:", input_list_dict)
+        output_4 = NewtUtil.sorting_dict_by_keys(input_list_dict, 123, stop=False)  # type: ignore
+        print("output_4:", output_4)
 
-        assert captured.out.count("\n::: ERROR :::\n") == 4
-        assert captured.out.count("\nLocation: Newt.console.validate_input\n") == 2
-        assert captured.out.count("\nExpected <class 'dict'>, got <class 'int'>\n") == 2
-        assert captured.out.count("\nValue: 1\n") == 2
-        assert captured.out.count("\nLocation: Newt.utility.sorting_dict_by_keys : data not all\n") == 2
-        assert captured.out.count("\nExpected a list of dictionaries\n") == 2
-        assert captured.out.count("\nData: [1, 2, 3]\n") == 2
-        # Expected absence of result
-        assert "This line will not be printed" not in captured.out
+        # Empty input
+        input_list_empty = []
+        print("input_list_empty:", input_list_empty)
+        output_5 = NewtUtil.sorting_dict_by_keys(input_list_empty)
+        print("output_5:", output_5)
 
-
-    def test_sorting_dict_invalid_key_type(self, capsys):
-        """ Test sorting_dict_by_keys non-str key raises SystemExit. """
-        print_my_func_name()
-
-        input_dict = [{"name": "Alice"}]
-        print(input_dict)
-        with pytest.raises(SystemExit) as exc_info:
-            NewtUtil.sorting_dict_by_keys(input_dict, 123)  # type: ignore
-            print("This line will not be printed")
-        assert exc_info.value.code == 1
-
-        result = NewtUtil.sorting_dict_by_keys(input_dict, 123, stop=False)  # type: ignore
-        print(result)
+        # None as input
+        input_None = None
+        print("input_None:", input_None)
+        output_6 = NewtUtil.sorting_dict_by_keys(input_None)  # type: ignore
+        print("output_6:", output_6)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("\n::: ERROR :::\n") == 4
-        assert captured.out.count("\nLocation: Newt.console.validate_input\n") == 2
-        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
-        assert captured.out.count("\nValue: 123\n") == 2
-        assert captured.out.count("\nLocation: Newt.utility.sorting_dict_by_keys : keys not all\n") == 2
-        assert captured.out.count("\nKeys must be strings\n") == 2
-        assert captured.out.count("\nKeys: (123,)\n") == 2
-        # Expected absence of result
-        assert "This line will not be printed" not in captured.out
+        assert "\ninput_dict: {'name': 'Alice'}\noutput_1: []\n" in captured.out
+        assert "\ninput_list: [1, 2, 3]\noutput_2: []\n" in captured.out
+        assert "\ninput_list_mix: [{'name': 'Alice'}, 42, 'string']\noutput_3: []\n" in captured.out
+        assert "\ninput_list_dict: [{123: 'Alice'}]\noutput_4: []\n" in captured.out
+        assert "\ninput_list_empty: []\noutput_5: []\n" in captured.out
+        assert "\ninput_None: None\noutput_6: []\n" in captured.out
 
+        assert captured.err.count("\n::: ERROR :::\n") == 10
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>\nExpected type: <class 'list'>\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in dl.keys() > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n" in captured.err
+        assert captured.err.count("\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type\n") == 5
+        assert "\nValue: 1\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert "\nValue: 2\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert "\nValue: 3\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert "\nValue: 42\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert "\nValue: string\nReceived type: <class 'str'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert captured.err.count("\nLocation: Newt.utility.sorting_dict_by_keys : invalid_element_type\n") == 2
+        assert "\nExpected a list of dictionaries\ndata_list: [1, 2, 3]\n" in captured.err
+        assert "\nExpected a list of dictionaries\ndata_list: [{'name': 'Alice'}, 42, 'string']\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_key_type\n" in captured.err
+        assert "\nExpected a keys of dictionaries to be str\ndata_list: [{123: 'Alice'}]\n" in captured.err
 
-    def test_sorting_dict_complex_keys(self, capsys):
-        """ Test sorting_dict_by_keys multi-level sort: category, priority, name. """
-        print_my_func_name()
-
-        input_dict = [
-            {"category": "A", "priority": 2, "name": "Item2"},
-            {"category": "B", "priority": 1, "name": "Item1"},
-            {"category": "A", "priority": 1, "name": "Item1"},
-            {"category": "A", "priority": 2, "name": "Item1"}
-        ]
-        print(input_dict)
-        result = NewtUtil.sorting_dict_by_keys(input_dict, "category", "priority", "name")
-        print(result)
-        assert result[0]["category"] == "A"
-        assert result[1]["category"] == "A"
-        assert result[2]["category"] == "A"
-        assert result[3]["category"] == "B"
-        assert result[0]["priority"] == 1
-        assert result[1]["priority"] == 2
-        assert result[2]["priority"] == 2
-        assert result[3]["priority"] == 1
-        assert result[0]["name"] == "Item1"
-        assert result[1]["name"] == "Item1"
-        assert result[2]["name"] == "Item2"
-        assert result[3]["name"] == "Item1"
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[{'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}]\n[{'category': 'A', 'priority': 1, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item1'}, {'category': 'A', 'priority': 2, 'name': 'Item2'}, {'category': 'B', 'priority': 1, 'name': 'Item1'}]\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+
+
+    def test_sorting_dict_by_keys_with_errors_and_stop(self, capsys):
+        """ Test sorting_dict_by_keys handles invalid input with raising exceptions. """
+        print_my_func_name()
+
+        # Not a list
+        input_dict = {"name": "Alice"}
+        print("input_dict:", input_dict)
+        with pytest.raises(SystemExit) as exc_info_1:
+            NewtUtil.sorting_dict_by_keys(input_dict)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info_1.value.code == 1
+
+        # List with non-dict elements
+        input_list = [1, 2, 3]
+        print("input_list:", input_list)
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtUtil.sorting_dict_by_keys(input_list)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info_2.value.code == 1
+
+        # List with mixed valid and invalid elements
+        input_list_mix = [{"name": "Alice"}, 42, "string"]
+        print("input_list_mix:", input_list_mix)
+        with pytest.raises(SystemExit) as exc_info_3:
+            NewtUtil.sorting_dict_by_keys(input_list_mix)
+            print("This line will not be printed")
+        assert exc_info_3.value.code == 1
+
+        # Invalid key type
+        input_list_dict = [{123: "Alice"}]
+        print("input_list_dict:", input_list_dict)
+        with pytest.raises(SystemExit) as exc_info_4:
+            NewtUtil.sorting_dict_by_keys(input_list_dict, 123)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info_4.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_dict: {'name': 'Alice'}\n" in captured.out
+        assert "\ninput_list: [1, 2, 3]\n" in captured.out
+        assert "\ninput_list_mix: [{'name': 'Alice'}, 42, 'string']\n" in captured.out
+        assert "\ninput_list_dict: [{123: 'Alice'}]\n" in captured.out
+
+        assert captured.err.count("\n::: ERROR :::\n") == 10
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>\nExpected type: <class 'list'>\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in dl.keys() > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n" in captured.err
+        assert captured.err.count("\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type\n") == 5
+        assert "\nValue: 1\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert "\nValue: 2\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert "\nValue: 3\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert "\nValue: 42\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert "\nValue: string\nReceived type: <class 'str'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
+        assert captured.err.count("\nLocation: Newt.utility.sorting_dict_by_keys : invalid_element_type\n") == 2
+        assert "\nExpected a list of dictionaries\ndata_list: [1, 2, 3]\n" in captured.err
+        assert "\nExpected a list of dictionaries\ndata_list: [{'name': 'Alice'}, 42, 'string']\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_key_type\n" in captured.err
+        assert "\nExpected a keys of dictionaries to be str\ndata_list: [{123: 'Alice'}]\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
 class TestSelectFromInput:

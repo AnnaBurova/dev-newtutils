@@ -136,7 +136,7 @@ def validate_type(
 
     Raises:
         SystemExit:
-            Raised when `stop=True` and the value type is invalid.
+            If an error occurs and `stop=True`, terminates with exit code 1.
     """
 
     if location:
@@ -250,7 +250,7 @@ def _retry_pause(
 
     Raises:
         SystemExit:
-            Raised if interrupted by user (Ctrl+C).
+            If an error occurs and `stop=True`, terminates with exit code 1. If `KeyboardInterrupt` by user (Ctrl+C) occurs, always terminates with exit code 1.
     """
 
     if not validate_type(
@@ -301,7 +301,7 @@ def check_location(
 
     Raises:
         SystemExit:
-            Raised if directories do not match.
+            If directories do not match, terminates with exit code 1.
     """
 
     validate_type(
