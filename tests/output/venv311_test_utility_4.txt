@@ -3,7 +3,7 @@ platform win32 -- Python 3.11.9, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv3
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 20 items
+collecting ... collected 21 items
 
 test_utility.py::TestSortingSequence::test_sorting_sequence_integers 
 START=======================================
@@ -347,6 +347,18 @@ output_dict_3: [{'name': 'Bob', 'age': 20}, None, {'name': 'Aska', 'age': None},
 (no stderr captured)
 END=========================================
 PASSED
+test_utility.py::TestSortingDictByKeys::test_sorting_dict_by_keys_with_complex_value_types 
+START=======================================
+=====captured.out=====
+Function: test_sorting_dict_by_keys_with_complex_value_types
+============================================
+input_list_dict: [{'name': 'Charlie', 'value': (2, 1)}, {'name': 'Alice', 'value': {1, 2}}, {'name': 'Bob', 'value': [1, 2, 3]}, {'name': 'Aska', 'value': 'beta'}, {'name': 'Derek', 'value': {'a': 1}}, {'name': 'Eve', 'value': None}, {'name': 'Frank', 'value': True}, {'name': 'Grace', 'value': False}, {'name': 'Felicia', 'value': 25}, {'name': 'Ofelia', 'value': 1.5}]
+output: [{'name': 'Aska', 'value': 'beta'}, {'name': 'Ofelia', 'value': 1.5}, {'name': 'Felicia', 'value': 25}, {'name': 'Grace', 'value': False}, {'name': 'Frank', 'value': True}, {'name': 'Derek', 'value': {'a': 1}}, {'name': 'Bob', 'value': [1, 2, 3]}, {'name': 'Alice', 'value': {1, 2}}, {'name': 'Charlie', 'value': (2, 1)}, {'name': 'Eve', 'value': None}]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
 test_utility.py::TestSortingDictByKeys::test_sorting_dict_single_key 
 START=======================================
 =====captured.out=====
@@ -662,4 +674,4 @@ Expected type: <class 'dict'>
 END=========================================
 PASSED
 
-============================= 20 passed in 0.07s ==============================
+============================= 21 passed in 0.07s ==============================

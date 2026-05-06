@@ -737,6 +737,59 @@ class TestSortingDictByKeys:
         assert "::: ERROR :::" not in captured.err
 
 
+    def test_sorting_dict_by_keys_with_complex_value_types(self, capsys):
+        """ Test sorting_dict_by_keys sorts unsupported value types using fallback string conversion. """
+        print_my_func_name()
+
+        input_list_dict = [
+            {"name": "Charlie", "value": (2, 1)},  # tuple
+            {"name": "Alice", "value": set([1, 2])},  # set
+            {"name": "Bob", "value": list([1, 2, 3])},  # list
+            {"name": "Aska", "value": "beta"},  # str
+            {"name": "Derek", "value": {"a": 1}},  # dict
+            {"name": "Eve", "value": None},  # None
+            {"name": "Frank", "value": True},  # bool
+            {"name": "Grace", "value": False},  # bool
+            {"name": "Felicia", "value": 25},  # int
+            {"name": "Ofelia", "value": 1.5},  # float
+        ]
+        print("input_list_dict:", input_list_dict)
+
+        output = NewtUtil.sorting_dict_by_keys(input_list_dict, "value")
+        print("output:", output)
+
+        assert output[0]["name"] == "Aska"
+        assert output[1]["name"] == "Ofelia"
+        assert output[2]["name"] == "Felicia"
+        assert output[3]["name"] == "Grace"
+        assert output[4]["name"] == "Frank"
+        assert output[5]["name"] == "Derek"
+        assert output[6]["name"] == "Bob"
+        assert output[7]["name"] == "Alice"
+        assert output[8]["name"] == "Charlie"
+        assert output[9]["name"] == "Eve"
+        assert output[0]["value"] == "beta"  # str - 0
+        assert output[1]["value"] == 1.5  # float - 1
+        assert output[2]["value"] == 25  # int - 1
+        assert output[3]["value"] == False  # bool - 2
+        assert output[4]["value"] == True  # bool - 2
+        assert output[5]["value"] == {"a": 1}  # dict - 3 D
+        assert output[6]["value"] == [1, 2, 3]  # list - 3 L
+        assert output[7]["value"] == {1, 2}  # set - 3 S
+        assert output[8]["value"] == (2, 1)  # tuple - 3 T
+        assert output[9]["value"] == None  # None - 4
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_list_dict: [{'name': 'Charlie', 'value': (2, 1)}, {'name': 'Alice', 'value': {1, 2}}, {'name': 'Bob', 'value': [1, 2, 3]}, {'name': 'Aska', 'value': 'beta'}, {'name': 'Derek', 'value': {'a': 1}}, {'name': 'Eve', 'value': None}, {'name': 'Frank', 'value': True}, {'name': 'Grace', 'value': False}, {'name': 'Felicia', 'value': 25}, {'name': 'Ofelia', 'value': 1.5}]\n" in captured.out
+        assert "\noutput: [{'name': 'Aska', 'value': 'beta'}, {'name': 'Ofelia', 'value': 1.5}, {'name': 'Felicia', 'value': 25}, {'name': 'Grace', 'value': False}, {'name': 'Frank', 'value': True}, {'name': 'Derek', 'value': {'a': 1}}, {'name': 'Bob', 'value': [1, 2, 3]}, {'name': 'Alice', 'value': {1, 2}}, {'name': 'Charlie', 'value': (2, 1)}, {'name': 'Eve', 'value': None}]\n" in captured.out
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
+
+
     def test_sorting_dict_single_key(self, capsys):
         """ Test sorting_dict_by_keys with single-key dicts: wrong key, correct key, no key. """
         print_my_func_name()
@@ -959,16 +1012,16 @@ class TestSelectFromInput:
     """ Tests for select_from_input function. """
 
 
-    @patch('newtutils.utility.input')
+    @patch("newtutils.utility.input")
     def test_select_from_input_all_flows(self, mock_input, capsys):
         """
         Test select_from_input behavior across multiple input scenarios.
 
         Covers:
         - Returns key for valid numbered choice (with and without counts).
-        - Retries on invalid input until valid choice or 'X' to exit.
+        - Retries on invalid input until valid choice or "X" to exit.
         - Strips whitespace from user input before validation.
-        - Raises SystemExit(1) on 'X' input (exit/cancel).
+        - Raises SystemExit(1) on "X" input (exit/cancel).
         - Raises SystemExit(1) on KeyboardInterrupt.
         """
         print_my_func_name()
