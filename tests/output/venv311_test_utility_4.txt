@@ -387,7 +387,9 @@ input_list: [1, 2, 3]
 output_2: []
 input_list_mix: [{'name': 'Alice'}, 42, 'string']
 output_3: []
-input_list_dict: [{123: 'Alice'}]
+input_list_dict_1: [{123: 'Alice'}]
+output_4: []
+input_list_dict_2: [{'name': 'Alice'}]
 output_4: []
 input_list_empty: []
 output_5: []
@@ -462,6 +464,19 @@ Location: Newt.utility.sorting_dict_by_keys : invalid_key_type
 Expected a keys of dictionaries to be str
 data_list: [{123: 'Alice'}]
 [0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : k in sorting_keys > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : sorting_keys
+::: ERROR :::
+Expected sorting keys to be str
+sorting_keys: (123,)
+[0m
 
 END=========================================
 PASSED
@@ -473,7 +488,8 @@ Function: test_sorting_dict_by_keys_with_errors_and_stop
 input_dict: {'name': 'Alice'}
 input_list: [1, 2, 3]
 input_list_mix: [{'name': 'Alice'}, 42, 'string']
-input_list_dict: [{123: 'Alice'}]
+input_list_dict_1: [{123: 'Alice'}]
+input_list_dict_2: [{'name': 'Alice'}]
 
 =====captured.err=====
 [1m[31m
@@ -542,6 +558,19 @@ Location: Newt.utility.sorting_dict_by_keys : invalid_key_type
 ::: ERROR :::
 Expected a keys of dictionaries to be str
 data_list: [{123: 'Alice'}]
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : k in sorting_keys > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.utility.sorting_dict_by_keys : sorting_keys
+::: ERROR :::
+Expected sorting keys to be str
+sorting_keys: (123,)
 [0m
 
 END=========================================

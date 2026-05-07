@@ -893,9 +893,15 @@ class TestSortingDictByKeys:
         print("output_3:", output_3)
 
         # Invalid key type
-        input_list_dict = [{123: "Alice"}]
-        print("input_list_dict:", input_list_dict)
-        output_4 = NewtUtil.sorting_dict_by_keys(input_list_dict, 123, stop=False)  # type: ignore
+        input_list_dict_1 = [{123: "Alice"}]
+        print("input_list_dict_1:", input_list_dict_1)
+        output_4 = NewtUtil.sorting_dict_by_keys(input_list_dict_1, 123, stop=False)  # type: ignore
+        print("output_4:", output_4)
+
+        # Invalid key type
+        input_list_dict_2 = [{"name": "Alice"}]
+        print("input_list_dict_2:", input_list_dict_2)
+        output_4 = NewtUtil.sorting_dict_by_keys(input_list_dict_2, 123, stop=False)  # type: ignore
         print("output_4:", output_4)
 
         # Empty input
@@ -916,11 +922,12 @@ class TestSortingDictByKeys:
         assert "\ninput_dict: {'name': 'Alice'}\noutput_1: []\n" in captured.out
         assert "\ninput_list: [1, 2, 3]\noutput_2: []\n" in captured.out
         assert "\ninput_list_mix: [{'name': 'Alice'}, 42, 'string']\noutput_3: []\n" in captured.out
-        assert "\ninput_list_dict: [{123: 'Alice'}]\noutput_4: []\n" in captured.out
+        assert "\ninput_list_dict_1: [{123: 'Alice'}]\noutput_4: []\n" in captured.out
+        assert "\ninput_list_dict_2: [{'name': 'Alice'}]\noutput_4: []\n" in captured.out
         assert "\ninput_list_empty: []\noutput_5: []\n" in captured.out
         assert "\ninput_None: None\noutput_6: []\n" in captured.out
 
-        assert captured.err.count("\n::: ERROR :::\n") == 10
+        assert captured.err.count("\n::: ERROR :::\n") == 12
         assert "\nLocation: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type\n" in captured.err
         assert "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>\nExpected type: <class 'list'>\n" in captured.err
         assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in dl.keys() > Newt.console.validate_type\n" in captured.err
@@ -936,6 +943,10 @@ class TestSortingDictByKeys:
         assert "\nExpected a list of dictionaries\ndata_list: [{'name': 'Alice'}, 42, 'string']\n" in captured.err
         assert "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_key_type\n" in captured.err
         assert "\nExpected a keys of dictionaries to be str\ndata_list: [{123: 'Alice'}]\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in sorting_keys > Newt.console.validate_type\n" in captured.err
+        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : sorting_keys\n" in captured.err
+        assert "\nExpected sorting keys to be str\nsorting_keys: (123,)\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -970,12 +981,20 @@ class TestSortingDictByKeys:
         assert exc_info_3.value.code == 1
 
         # Invalid key type
-        input_list_dict = [{123: "Alice"}]
-        print("input_list_dict:", input_list_dict)
+        input_list_dict_1 = [{123: "Alice"}]
+        print("input_list_dict_1:", input_list_dict_1)
         with pytest.raises(SystemExit) as exc_info_4:
-            NewtUtil.sorting_dict_by_keys(input_list_dict, 123)  # type: ignore
+            NewtUtil.sorting_dict_by_keys(input_list_dict_1, 123)  # type: ignore
             print("This line will not be printed")
         assert exc_info_4.value.code == 1
+
+        # Invalid key type
+        input_list_dict_2 = [{"name": "Alice"}]
+        print("input_list_dict_2:", input_list_dict_2)
+        with pytest.raises(SystemExit) as exc_info_5:
+            NewtUtil.sorting_dict_by_keys(input_list_dict_2, 123)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info_5.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -983,13 +1002,15 @@ class TestSortingDictByKeys:
         assert "\ninput_dict: {'name': 'Alice'}\n" in captured.out
         assert "\ninput_list: [1, 2, 3]\n" in captured.out
         assert "\ninput_list_mix: [{'name': 'Alice'}, 42, 'string']\n" in captured.out
-        assert "\ninput_list_dict: [{123: 'Alice'}]\n" in captured.out
+        assert "\ninput_list_dict_1: [{123: 'Alice'}]\n" in captured.out
+        assert "\ninput_list_dict_2: [{'name': 'Alice'}]\n" in captured.out
 
-        assert captured.err.count("\n::: ERROR :::\n") == 10
+        assert captured.err.count("\n::: ERROR :::\n") == 12
         assert "\nLocation: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type\n" in captured.err
         assert "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>\nExpected type: <class 'list'>\n" in captured.err
         assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in dl.keys() > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in sorting_keys > Newt.console.validate_type\n" in captured.err
+        assert captured.err.count("\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n") == 2
         assert captured.err.count("\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type\n") == 5
         assert "\nValue: 1\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
         assert "\nValue: 2\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
@@ -1001,6 +1022,8 @@ class TestSortingDictByKeys:
         assert "\nExpected a list of dictionaries\ndata_list: [{'name': 'Alice'}, 42, 'string']\n" in captured.err
         assert "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_key_type\n" in captured.err
         assert "\nExpected a keys of dictionaries to be str\ndata_list: [{123: 'Alice'}]\n" in captured.err
+        assert "\nLocation: Newt.utility.sorting_dict_by_keys : sorting_keys\n" in captured.err
+        assert "\nExpected sorting keys to be str\nsorting_keys: (123,)\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
