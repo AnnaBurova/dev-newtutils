@@ -4,7 +4,7 @@ cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collecting ... collected 21 items
+collecting ... collected 22 items
 
 test_utility.py::TestSortingSequence::test_sorting_sequence_integers 
 START=======================================
@@ -761,5 +761,22 @@ Expected type: <class 'dict'>
 
 END=========================================
 PASSED
+test_utility.py::TestSelectFromInput::test_select_from_input_exit_option_key 
+START=======================================
+=====captured.out=====
+Function: test_select_from_input_exit_option_key
+============================================
+input_dict: {'x': 'Exit should not be a key', '1': 'Option 1'}
 
-============================= 21 passed in 0.05s ==============================
+=====captured.err=====
+[1m[31m
+Location: Newt.utility.select_from_input : exit_option
+::: ERROR :::
+Please be sure there is no `x` as key in dict.
+Dict keys: dict_keys(['x', '1'])
+[0m
+
+END=========================================
+PASSED
+
+============================= 22 passed in 0.05s ==============================

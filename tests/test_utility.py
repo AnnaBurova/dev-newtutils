@@ -1188,3 +1188,33 @@ class TestSelectFromInput:
         assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
         assert "This line will not be printed" not in captured.err
+
+
+    def test_select_from_input_exit_option_key(self, capsys):
+        """Test select_from_input logs error when dict contains the exit key 'x'."""
+        print_my_func_name()
+
+        input_dict = {
+            "x": "Exit should not be a key",
+            "1": "Option 1",
+        }
+        print("input_dict:", input_dict)
+
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.select_from_input(input_dict)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "\ninput_dict: {'x': 'Exit should not be a key', '1': 'Option 1'}\n" in captured.out
+
+        assert "\n::: ERROR :::\n" in captured.err
+        assert "\nLocation: Newt.utility.select_from_input : exit_option\n" in captured.err
+        assert "\nPlease be sure there is no `x` as key in dict.\nDict keys: dict_keys(['x', '1'])\n" in captured.err
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
