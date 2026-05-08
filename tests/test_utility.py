@@ -1039,13 +1039,6 @@ class TestSelectFromInput:
     def test_select_from_input_all_flows(self, mock_input, capsys):
         """
         Test select_from_input behavior across multiple input scenarios.
-
-        Covers:
-        - Returns key for valid numbered choice (with and without counts).
-        - Retries on invalid input until valid choice or "X" to exit.
-        - Strips whitespace from user input before validation.
-        - Raises SystemExit(1) on "X" input (exit/cancel).
-        - Raises SystemExit(1) on KeyboardInterrupt.
         """
         print_my_func_name()
 
@@ -1065,6 +1058,7 @@ class TestSelectFromInput:
             "1": "Oslo",
             "2": "Stockholm",
             "3": "Berlin",
+            "4": "Madrid",
         }
         print("input_dict:", input_dict)
 
@@ -1098,6 +1092,7 @@ class TestSelectFromInput:
         with pytest.raises(SystemExit) as exc_info_5:
             NewtUtil.select_from_input(input_dict)
             print("This line will not be printed")
+        print("exc_info_5:", exc_info_5.value.code)
         assert exc_info_5.value.code == 1
 
         mock_input.side_effect = ["x"]
@@ -1105,6 +1100,7 @@ class TestSelectFromInput:
         with pytest.raises(SystemExit) as exc_info_6:
             NewtUtil.select_from_input(input_dict, missing_values_count)
             print("This line will not be printed")
+        print("exc_info_6:", exc_info_6.value.code)
         assert exc_info_6.value.code == 1
 
         mock_input.side_effect = KeyboardInterrupt()
@@ -1112,6 +1108,7 @@ class TestSelectFromInput:
         with pytest.raises(SystemExit) as exc_info_7:
             NewtUtil.select_from_input(input_dict)
             print("This line will not be printed")
+        print("exc_info_7:", exc_info_7.value.code)
         assert exc_info_7.value.code == 1
 
         mock_input.side_effect = KeyboardInterrupt()
@@ -1119,26 +1116,46 @@ class TestSelectFromInput:
         with pytest.raises(SystemExit) as exc_info_8:
             NewtUtil.select_from_input(input_dict, missing_values_count)
             print("This line will not be printed")
+        print("exc_info_8:", exc_info_8.value.code)
         assert exc_info_8.value.code == 1
+
+        mock_input.side_effect = ["a", "b", "c", "d", "e", "f"]
+
+        with pytest.raises(SystemExit) as exc_info_9:
+            NewtUtil.select_from_input(input_dict)
+            print("This line will not be printed")
+        print("exc_info_9:", exc_info_9.value.code)
+        assert exc_info_9.value.code == 1
+
+        mock_input.side_effect = ["a", "b", "c", "d", "e", "f"]
+
+        with pytest.raises(SystemExit) as exc_info_10:
+            NewtUtil.select_from_input(input_dict, missing_values_count)
+            print("This line will not be printed")
+        print("exc_info_10:", exc_info_10.value.code)
+        assert exc_info_10.value.code == 1
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
         assert "\nmissing_values_list: [(1, 'admin', 'Stockholm'), (2, 'user', 'Oslo'), (3, 'user', 'Stockholm'), (4, 'user', 'Berlin'), (5, 'admin', 'Oslo')]\n" in captured.out
         assert "\nmissing_values_count: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}\n" in captured.out
-        assert "\ninput_dict: {'1': 'Oslo', '2': 'Stockholm', '3': 'Berlin'}\n" in captured.out
-        assert "\n\n3 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  X: Exit / Cancel\n[INPUT]: 1\nSelected option: Oslo\n\nresult_1: 1\n" in captured.out
-        assert "\n\n3 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  X: Exit / Cancel\n[INPUT]: 1\nSelected option: Oslo\n\nresult_2: 1\n" in captured.out
-        assert "\n\n3 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  X: Exit / Cancel\n[INPUT]: abc\nOption not in list. Try again.\n[INPUT]: 999\nOption not in list. Try again.\n[INPUT]: 2\nSelected option: Stockholm\n\nresult_3: 2\n" in captured.out
-        assert "\n\n3 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  X: Exit / Cancel\n[INPUT]: abc\nOption not in list. Try again.\n[INPUT]: 999\nOption not in list. Try again.\n[INPUT]: 2\nSelected option: Stockholm\n\nresult_4: 2\n" in captured.out
-        assert "\n\n3 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  X: Exit / Cancel\n[INPUT]: x\n\n" in captured.out
-        assert "\n\n3 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  X: Exit / Cancel\n[INPUT]: x\n\n" in captured.out
-        assert "\n\n3 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  X: Exit / Cancel\n\n" in captured.out
-        assert "\n\n3 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  X: Exit / Cancel\n\n" in captured.out
+        assert "\ninput_dict: {'1': 'Oslo', '2': 'Stockholm', '3': 'Berlin', '4': 'Madrid'}\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n[INPUT]: 1\nSelected option: Oslo\n\nresult_1: 1\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n[INPUT]: 1\nSelected option: Oslo\n\nresult_2: 1\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n[INPUT]: abc\nOption not in list. Try again.\n[INPUT]: 999\nOption not in list. Try again.\n[INPUT]: 2\nSelected option: Stockholm\n\nresult_3: 2\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n[INPUT]: abc\nOption not in list. Try again.\n[INPUT]: 999\nOption not in list. Try again.\n[INPUT]: 2\nSelected option: Stockholm\n\nresult_4: 2\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n[INPUT]: x\nexc_info_5: 1\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n[INPUT]: x\nexc_info_6: 1\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n\nexc_info_7: 1\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n\nexc_info_8: 1\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n[INPUT]: a\nOption not in list. Try again.\n[INPUT]: b\nOption not in list. Try again.\n[INPUT]: c\nOption not in list. Try again.\n[INPUT]: d\nOption not in list. Try again.\n[INPUT]: e\nOption not in list. Try again.\nexc_info_9: 1\n" in captured.out
+        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n[INPUT]: a\nOption not in list. Try again.\n[INPUT]: b\nOption not in list. Try again.\n[INPUT]: c\nOption not in list. Try again.\n[INPUT]: d\nOption not in list. Try again.\n[INPUT]: e\nOption not in list. Try again.\nexc_info_10: 1\n" in captured.out
 
-        assert captured.err.count("\n::: ERROR :::\n") == 4
+        assert captured.err.count("\n::: ERROR :::\n") == 6
         assert captured.err.count("\nLocation: Newt.utility.select_from_input : choice = [X]\n::: ERROR :::\nSelection cancelled.\n") == 2
         assert captured.err.count("\nLocation: Newt.utility.select_from_input : KeyboardInterrupt\n::: ERROR :::\nSelection cancelled.\n") == 2
+        assert captured.err.count("\nLocation: Newt.utility.select_from_input : while attempt\n::: ERROR :::\nNo correct selection after attempt 5.\n") == 2
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
