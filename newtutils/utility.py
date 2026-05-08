@@ -168,10 +168,10 @@ def check_dict_keys(
             {"id", "name", "value"}
         location (str):
             Additional context appended to the error message location.<br>
-            Default is empty string.
+            Defaults to empty string.
         stop (bool):
             If True, stops execution on validation failure.<br>
-            Default is True.
+            Defaults to True.
 
     Returns:
         out (bool):
@@ -219,7 +219,7 @@ def count_values_by_position(
             Defaults to 0 (the first element).
         stop (bool):
             If True, stops execution on any error or validation failure.<br>
-            Default is False.
+            Defaults to False.
 
     Returns:
         out (dict[Any, int]):

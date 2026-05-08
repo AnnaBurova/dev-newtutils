@@ -13,6 +13,37 @@ Functions:
     def format_set_to_str(
         input_set: set
         ) -> str
+
+
+    def test_function_example(self, capsys):
+        print_my_func_name()
+
+        input_dict = {
+        }
+        print("input_dict:", input_dict)
+
+        with pytest.raises(SystemExit) as exc_info:
+            Newt.function(input_dict)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "" == captured.out
+        assert "" == captured.err
+        assert "Function:" \
+        "\n============================================" \
+        "\n" == captured.out
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
+        ## assert "This line will not be printed" not in captured.out
+        ## assert "This line will not be printed" not in captured.err
+
 """
 
 import inspect
@@ -60,6 +91,8 @@ def print_my_captured(
         print("(no stderr captured)")
 
     print("END=========================================")
+
+    # print(captured)
 
 
 def format_set_to_str(

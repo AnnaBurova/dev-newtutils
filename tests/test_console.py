@@ -72,7 +72,8 @@ class TestErrorMsg:
         "\n============================================" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Unknown\n::: ERROR :::" \
+        "\nLocation: Unknown" \
+        "\n::: ERROR :::" \
         "\nTest error" \
         "\n\x1b[0m" \
         "\n" == captured.err
@@ -98,7 +99,8 @@ class TestErrorMsg:
         "\n============================================" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Unknown\n::: ERROR :::" \
+        "\nLocation: Unknown" \
+        "\n::: ERROR :::" \
         "\nTest error" \
         "\n\x1b[0m" \
         "\n" == captured.err
@@ -127,7 +129,8 @@ class TestErrorMsg:
         "\n============================================" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Unknown\n::: ERROR :::" \
+        "\nLocation: Unknown" \
+        "\n::: ERROR :::" \
         "\nError 1\nError 2\nError 3" \
         "\n\x1b[0m" \
         "\n" == captured.err
@@ -155,7 +158,8 @@ class TestErrorMsg:
         "\n============================================" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: test.module\n::: ERROR :::" \
+        "\nLocation: test.module" \
+        "\n::: ERROR :::" \
         "\nTest error" \
         "\n\x1b[0m" \
         "\n" == captured.err
@@ -300,43 +304,53 @@ class TestValidateType:
         "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: None\nReceived type: <class 'NoneType'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: False\nReceived type: <class 'bool'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: 123\nReceived type: <class 'int'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: 3.14\nReceived type: <class 'float'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: Hello\nReceived type: <class 'str'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: b'Hello'\nReceived type: <class 'bytes'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: {123, 3.14, False, Hello}\nReceived type: <class 'set'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m" \
@@ -439,43 +453,53 @@ class TestValidateType:
         "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: None\nReceived type: <class 'NoneType'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: False\nReceived type: <class 'bool'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: 123\nReceived type: <class 'int'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: 3.14\nReceived type: <class 'float'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: Hello\nReceived type: <class 'str'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: b'Hello'\nReceived type: <class 'bytes'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: {123, 3.14, False, Hello}\nReceived type: <class 'set'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m" \
@@ -515,7 +539,8 @@ class TestValidateType:
         "\ninput_str: Hello / <class 'str'>" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: 3.14\nReceived type: <class 'float'>" \
         "\nExpected type: (<class 'int'>, <class 'str'>)" \
         "\n\x1b[0m" \
@@ -562,15 +587,18 @@ class TestValidateType:
         "\ninput_str: Hello / <class 'str'>" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: test.input_int > Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: test.input_int > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: 123\nReceived type: <class 'int'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: test.input_float > Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: test.input_float > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: 3.14\nReceived type: <class 'float'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: test.input_str > Newt.console.validate_type\n::: ERROR :::" \
+        "\nLocation: test.input_str > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
         "\nValue: Hello\nReceived type: <class 'str'>" \
         "\nExpected type: <class 'frozenset'>" \
         "\n\x1b[0m" \
@@ -653,34 +681,44 @@ class TestValidateType:
         "\ninput_set: set() / <class 'set'>" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: None\nType: <class 'NoneType'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: False\nType: <class 'bool'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: 0\nType: <class 'int'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: 0.0\nType: <class 'float'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: \nType: <class 'str'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: b''\nType: <class 'bytes'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: []\nType: <class 'list'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: ()\nType: <class 'tuple'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: {}\nType: <class 'dict'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
         "\nValue must not be empty\nValue: {}\nType: <class 'set'>" \
         "\n\x1b[0m" \
         "\n" == captured.err
@@ -716,11 +754,13 @@ class TestValidateType:
         "\ninput_frozenset_stop: frozenset() / <class 'frozenset'>" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : check_non_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : check_non_empty" \
+        "\n::: ERROR :::" \
         "\ncheck_non_empty is not supported for this type" \
         "\nValue: frozenset()\nType: <class 'frozenset'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.validate_type : check_non_empty\n::: ERROR :::" \
+        "\nLocation: Newt.console.validate_type : check_non_empty" \
+        "\n::: ERROR :::" \
         "\ncheck_non_empty is not supported for this type" \
         "\nValue: frozenset()\nType: <class 'frozenset'>" \
         "\n\x1b[0m" \
@@ -864,7 +904,8 @@ class TestRetryPause:
         "\nTime left: 1s" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.retry_pause : seconds int > Newt.console.validate_type" \
+        "\nLocation: Newt.console.retry_pause : seconds int" \
+        " > Newt.console.validate_type" \
         "\n::: ERROR :::" \
         "\nValue: invalid\nReceived type: <class 'str'>" \
         "\nExpected type: <class 'int'>" \
@@ -899,8 +940,8 @@ class TestRetryPause:
         "\nTime left: 1s" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.retry_pause : seconds int " \
-        "> Newt.console.validate_type : is_empty" \
+        "\nLocation: Newt.console.retry_pause : seconds int" \
+        " > Newt.console.validate_type : is_empty" \
         "\n::: ERROR :::" \
         "\nValue must not be empty" \
         "\nValue: 0\nType: <class 'int'>" \
@@ -935,7 +976,8 @@ class TestRetryPause:
         "\nTime left: 1s" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.retry_pause : seconds < 1\n::: ERROR :::" \
+        "\nLocation: Newt.console.retry_pause : seconds < 1" \
+        "\n::: ERROR :::" \
         "\nInvalid pause duration: -1" \
         "\n\x1b[0m" \
         "\n" == captured.err
@@ -970,7 +1012,8 @@ class TestRetryPause:
         "\nTime left: 5s" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.retry_pause : KeyboardInterrupt\n::: ERROR :::" \
+        "\nLocation: Newt.console.retry_pause : KeyboardInterrupt" \
+        "\n::: ERROR :::" \
         "\nRetry interrupted by user (Ctrl+C)" \
         "\n\x1b[0m" \
         "\n" == captured.err
@@ -1037,7 +1080,8 @@ class TestCheckLocation:
         "\n/home/user/project == /home/other/project" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.check_location : error_msg\n::: ERROR :::" \
+        "\nLocation: Newt.console.check_location : error_msg" \
+        "\n::: ERROR :::" \
         "\nCurrent position is wrong, check folder: /home/user/project" \
         "\n\x1b[0m" \
         "\n" == captured.err
@@ -1071,7 +1115,8 @@ class TestCheckLocation:
         "\n123 == /home/user/project" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.check_location : dir_global > Newt.console.validate_type" \
+        "\nLocation: Newt.console.check_location : dir_global" \
+        " > Newt.console.validate_type" \
         "\n::: ERROR :::" \
         "\nValue: 123\nReceived type: <class 'int'>" \
         "\nExpected type: <class 'str'>" \

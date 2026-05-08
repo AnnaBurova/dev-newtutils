@@ -62,11 +62,22 @@ class TestSortingSequence:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_1: [3, 1, 2, 3, 5, 1]\noutput_1: [1, 2, 3, 5]\n" in captured.out
-        assert "\ninput_list_2: [1]\noutput_2: [1]\n" in captured.out
-        assert "\ninput_list_3: [1, 1, 1, 1]\noutput_3: [1]\n" in captured.out
-        assert "\ninput_list_4: [1, 3, 2.5]\noutput_4: [1, 2.5, 3]\n" in captured.out
-        assert "\ninput_list_5: [100, 1, 50.0, 50, 1000, 5]\noutput_5: [1, 5, 50, 100, 1000]\n" in captured.out
+        assert "Function: test_sorting_sequence_integers" \
+        "\n============================================" \
+        "\ninput_list_1: [3, 1, 2, 3, 5, 1]" \
+        "\noutput_1: [1, 2, 3, 5]" \
+        "\ninput_list_2: [1]" \
+        "\noutput_2: [1]" \
+        "\ninput_list_3: [1, 1, 1, 1]" \
+        "\noutput_3: [1]" \
+        "\ninput_list_4: [1, 3, 2.5]" \
+        "\noutput_4: [1, 2.5, 3]" \
+        "\ninput_list_5: [100, 1, 50.0, 50, 1000, 5]" \
+        "\noutput_5: [1, 5, 50, 100, 1000]" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -124,12 +135,28 @@ class TestSortingSequence:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_1: ['c', 'a', 'b', 'c', 'z']\noutput_1: ['a', 'b', 'c', 'z']\n" in captured.out
-        assert "\ninput_list_2: ['a']\noutput_2: ['a']\n" in captured.out
-        assert "\ninput_list_3: ['a', 'a', 'a', 'a']\noutput_3: ['a']\n" in captured.out
-        assert "\ninput_list_4: ['ab', 'a', 'b', 'aa']\noutput_4: ['a', 'aa', 'ab', 'b']\n" in captured.out
-        assert "\ninput_list_5: ['ab', 'a', 'aaaa', 'aaa', 'aa']\noutput_5: ['a', 'aa', 'aaa', 'aaaa', 'ab']\n" in captured.out
-        assert "\ninput_list_6: ['!', '.', ',', '?', 'ä', 'a', 'ö', 'o', 'ü', 'u', '$', '#', '@', '%', '^', '(', ')', '{', '}', '[', ']', '_', '-', '+', '*', '/', '0', '5', '1', '10', '11', '9']\noutput_6: ['!', '#', '$', '%', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '10', '11', '5', '9', '?', '@', '[', ']', '^', '_', 'a', 'o', 'u', '{', '}', 'ä', 'ö', 'ü']\n" in captured.out
+        assert "Function: test_sorting_sequence_strings" \
+        "\n============================================" \
+        "\ninput_list_1: ['c', 'a', 'b', 'c', 'z']" \
+        "\noutput_1: ['a', 'b', 'c', 'z']" \
+        "\ninput_list_2: ['a']" \
+        "\noutput_2: ['a']" \
+        "\ninput_list_3: ['a', 'a', 'a', 'a']" \
+        "\noutput_3: ['a']" \
+        "\ninput_list_4: ['ab', 'a', 'b', 'aa']" \
+        "\noutput_4: ['a', 'aa', 'ab', 'b']" \
+        "\ninput_list_5: ['ab', 'a', 'aaaa', 'aaa', 'aa']" \
+        "\noutput_5: ['a', 'aa', 'aaa', 'aaaa', 'ab']" \
+        "\ninput_list_6: ['!', '.', ',', '?', 'ä', 'a', 'ö', 'o', 'ü', 'u'," \
+        " '$', '#', '@', '%', '^', '(', ')', '{', '}', '[', ']'," \
+        " '_', '-', '+', '*', '/', '0', '5', '1', '10', '11', '9']" \
+        "\noutput_6: ['!', '#', '$', '%', '(', ')', '*', '+', ',', '-', '.', '/'," \
+        " '0', '1', '10', '11', '5', '9', '?', '@', '[', ']', '^', '_'," \
+        " 'a', 'o', 'u', '{', '}', 'ä', 'ö', 'ü']" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -177,9 +204,22 @@ class TestSortingSequence:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_1: ['f', 4, 'a', 2, 'b', 1, 'a']\noutput_1: ['a', 'b', 'f', 1, 2, 4]\n" in captured.out
-        assert "\ninput_list_2: [1, 4.0, True, None, 'a', (5.0, 2, False, None, 'b', (6, 3.0, True, None, 'c'))]\noutput_2: ['a', 1, 4, None, True, ('b', 2, 5, False, None, ('c', 3, 6, None, True))]\n" in captured.out
-        assert "\ninput_list_3: [(3.0, 6.1, True, None, 'c'), (5.0, 2, False, None, 'b'), (6, 3, True, None, 'c')]\noutput_3: [('b', 2, 5, False, None), ('c', 3, 6, None, True), ('c', 3, 6.1, None, True)]\n" in captured.out
+        assert "Function: test_sorting_sequence_mixed" \
+        "\n============================================" \
+        "\ninput_list_1: ['f', 4, 'a', 2, 'b', 1, 'a']" \
+        "\noutput_1: ['a', 'b', 'f', 1, 2, 4]" \
+        "\ninput_list_2: [1, 4.0, True, None, 'a', (5.0, 2, False, None, 'b'," \
+        " (6, 3.0, True, None, 'c'))]" \
+        "\noutput_2: ['a', 1, 4, None, True, ('b', 2, 5, False, None," \
+        " ('c', 3, 6, None, True))]" \
+        "\ninput_list_3: [(3.0, 6.1, True, None, 'c'), (5.0, 2, False, None, 'b')," \
+        " (6, 3, True, None, 'c')]" \
+        "\noutput_3: [('b', 2, 5, False, None), ('c', 3, 6, None, True)," \
+        " ('c', 3, 6.1, None, True)]" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -206,11 +246,28 @@ class TestSortingSequence:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_1: []\ninput_list_2: []\noutput_2: []\n" in captured.out
+        assert "Function: test_sorting_sequence_empty" \
+        "\n============================================" \
+        "\ninput_list_1: []" \
+        "\ninput_list_2: []" \
+        "\noutput_2: []" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence : data_sequence" \
+        " > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: []\nType: <class 'list'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence : data_sequence" \
+        " > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: []\nType: <class 'list'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 2
-        assert captured.err.count("\nLocation: Newt.utility.sorting_sequence : data_sequence > Newt.console.validate_type : is_empty\n") == 2
-        assert captured.err.count("\nValue must not be empty\nValue: []\nType: <class 'list'>\n") == 2
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -237,16 +294,33 @@ class TestSortingSequence:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_str_1: not a list\noutput_1: []\n" in captured.out
-        assert "\ninput_list_2: [1, [1]]\noutput_2: []\n" in captured.out
+        assert "Function: test_sorting_sequence_not_a_list" \
+        "\n============================================" \
+        "\ninput_str_1: not a list\noutput_1: []" \
+        "\ninput_list_2: [1, [1]]\noutput_2: []" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence : data_sequence" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: not a list\nReceived type: <class 'str'>" \
+        "\nExpected type: (<class 'list'>, <class 'tuple'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence.is_valid_seq_value" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: [1]\nReceived type: <class 'list'>" \
+        "\nExpected type: (<class 'NoneType'>, <class 'bool'>, <class 'int'>," \
+        " <class 'float'>, <class 'str'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence : data_sequence not all" \
+        "\n::: ERROR :::" \
+        "\ndata_sequence must have only special types" \
+        "\ndata_sequence: [1, [1]]" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 3
-        assert "\nLocation: Newt.utility.sorting_sequence : data_sequence > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: not a list\nReceived type: <class 'str'>\nExpected type: (<class 'list'>, <class 'tuple'>)\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_sequence.is_valid_seq_value > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: [1]\nReceived type: <class 'list'>\nExpected type: (<class 'NoneType'>, <class 'bool'>, <class 'int'>, <class 'float'>, <class 'str'>)\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_sequence : data_sequence not all\n" in captured.err
-        assert "\ndata_sequence must have only special types\ndata_sequence: [1, [1]]\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -269,7 +343,14 @@ class TestCheckDictKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_dict: {'a': 1, 'b': 2} / <class 'dict'>\ninput_set: {a, b} / <class 'set'>\n" in captured.out
+        assert "Function: test_check_dict_keys_all_present" \
+        "\n============================================" \
+        "\ninput_dict: {'a': 1, 'b': 2} / <class 'dict'>" \
+        "\ninput_set: {a, b} / <class 'set'>" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -289,11 +370,19 @@ class TestCheckDictKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_dict: {'a': 1, 'b': 2} / <class 'dict'>\ninput_set: {a, b, c} / <class 'set'>\n" in captured.out
+        assert "Function: test_check_dict_keys_missing_keys_no_stop" \
+        "\n============================================" \
+        "\ninput_dict: {'a': 1, 'b': 2} / <class 'dict'>" \
+        "\ninput_set: {a, b, c} / <class 'set'>" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.check_dict_keys" \
+        "\n::: ERROR :::" \
+        "\nData keys: a, b\nMissing keys: c\nUnexpected keys: " \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.utility.check_dict_keys\n" in captured.err
-        assert "\nData keys: a, b\nMissing keys: c\nUnexpected keys: \n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -312,11 +401,19 @@ class TestCheckDictKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_dict: {'a': 1, 'b': 2, 'c': 3} / <class 'dict'>\ninput_set: {a, b} / <class 'set'>\n" in captured.out
+        assert "Function: test_check_dict_keys_extra_keys_no_stop" \
+        "\n============================================" \
+        "\ninput_dict: {'a': 1, 'b': 2, 'c': 3} / <class 'dict'>" \
+        "\ninput_set: {a, b} / <class 'set'>" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.check_dict_keys" \
+        "\n::: ERROR :::" \
+        "\nData keys: a, b, c\nMissing keys: \nUnexpected keys: c" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.utility.check_dict_keys\n" in captured.err
-        assert "\nData keys: a, b, c\nMissing keys: \nUnexpected keys: c\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -339,11 +436,19 @@ class TestCheckDictKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_dict: {'x': 9} / <class 'dict'>\ninput_set: {a, b} / <class 'set'>\n" in captured.out
+        assert "Function: test_check_dict_keys_missing_and_extra_stop" \
+        "\n============================================" \
+        "\ninput_dict: {'x': 9} / <class 'dict'>" \
+        "\ninput_set: {a, b} / <class 'set'>" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: TestCheckDictKeys > Newt.utility.check_dict_keys" \
+        "\n::: ERROR :::" \
+        "\nData keys: x\nMissing keys: a, b\nUnexpected keys: x" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: TestCheckDictKeys > Newt.utility.check_dict_keys\n" in captured.err
-        assert "\nData keys: x\nMissing keys: a, b\nUnexpected keys: x\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -359,40 +464,47 @@ class TestCountValuesByPosition:
         """ Test count_values_by_position returns correct counts for valid input. """
         print_my_func_name()
 
-        input_list_1 = [
+        input_list = [
             ("admin", 1, "Stockholm"),
             ("user", 2, "Oslo"),
             ("admin", 3, "Stockholm"),
             ("user", 4, "Berlin"),
             ("admin", 5, "Oslo"),
         ]
-        print("input_list_1:", input_list_1)
+        print("input_list:", input_list)
 
-        output_1 = NewtUtil.count_values_by_position(input_list_1)
+        output_1 = NewtUtil.count_values_by_position(input_list)
         print("output_1:", output_1)
         assert output_1 == {"admin": 3, "user": 2}
 
-        output_2 = NewtUtil.count_values_by_position(input_list_1, 0)
+        output_2 = NewtUtil.count_values_by_position(input_list, 0)
         print("output_2:", output_2)
         assert output_2 == {"admin": 3, "user": 2}
         assert output_1 == output_2
 
-        output_3 = NewtUtil.count_values_by_position(input_list_1, 1)
+        output_3 = NewtUtil.count_values_by_position(input_list, 1)
         print("output_3:", output_3)
         assert output_3 == {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
 
-        output_4 = NewtUtil.count_values_by_position(input_list_1, 2)
+        output_4 = NewtUtil.count_values_by_position(input_list, 2)
         print("output_4:", output_4)
         assert output_4 == {"Stockholm": 2, "Oslo": 2, "Berlin": 1}
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_1: [('admin', 1, 'Stockholm'), ('user', 2, 'Oslo'), ('admin', 3, 'Stockholm'), ('user', 4, 'Berlin'), ('admin', 5, 'Oslo')]\n" in captured.out
-        assert "\noutput_1: {'admin': 3, 'user': 2}\n" in captured.out
-        assert "\noutput_2: {'admin': 3, 'user': 2}\n" in captured.out
-        assert "\noutput_3: {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}\n" in captured.out
-        assert "\noutput_4: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}\n" in captured.out
+        assert "Function: test_count_values_by_position_no_errors" \
+        "\n============================================" \
+        "\ninput_list: [('admin', 1, 'Stockholm'), ('user', 2, 'Oslo')," \
+        " ('admin', 3, 'Stockholm'), ('user', 4, 'Berlin'), ('admin', 5, 'Oslo')]" \
+        "\noutput_1: {'admin': 3, 'user': 2}" \
+        "\noutput_2: {'admin': 3, 'user': 2}" \
+        "\noutput_3: {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}" \
+        "\noutput_4: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -415,7 +527,7 @@ class TestCountValuesByPosition:
         print("output_2:", output_2)
         assert output_2 == {"only": 1}
 
-        print("input_list_2:", input_list_2)
+        print("input_list_3:", input_list_2)
         output_3 = NewtUtil.count_values_by_position(input_list_2, 1)
         print("output_3:", output_3)
         assert output_3 == {1: 1}
@@ -435,11 +547,17 @@ class TestCountValuesByPosition:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_1: []\noutput_1: {}\n" in captured.out
-        assert "\ninput_list_2: [('only', 1)]\noutput_2: {'only': 1}\n" in captured.out
-        assert "\ninput_list_2: [('only', 1)]\noutput_3: {1: 1}\n" in captured.out
-        assert "\ninput_list_4: ()\noutput_4: {}\n" in captured.out
-        assert "\ninput_list_5: (['only', 1],)\noutput_5: {'only': 1}\n" in captured.out
+        assert "Function: test_count_values_by_position_edge_cases" \
+        "\n============================================" \
+        "\ninput_list_1: []\noutput_1: {}" \
+        "\ninput_list_2: [('only', 1)]\noutput_2: {'only': 1}" \
+        "\ninput_list_3: [('only', 1)]\noutput_3: {1: 1}" \
+        "\ninput_list_4: ()\noutput_4: {}" \
+        "\ninput_list_5: (['only', 1],)\noutput_5: {'only': 1}" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -483,23 +601,45 @@ class TestCountValuesByPosition:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_1: [('a', 'b'), ('c', 'd')]\noutput_1: {}\n" in captured.out
-        assert "\ninput_list_2: [('a', 'b'), ('c',)]\noutput_2: {}\n" in captured.out
-        assert "\ninput_list_3: [('a', 1), [('b', 2)]]\noutput_3: {}\n" in captured.out
-        assert "\ninput_list_4: not a sequence of sequences\noutput_4: {}\n" in captured.out
-        assert "\ninput_list_5: [('a', 'b'), ('c', 'd')]\noutput_5: {'a': 1, 'c': 1}\n" in captured.out
+        assert "Function: test_count_values_by_position_invalid_input_no_stop" \
+        "\n============================================" \
+        "\ninput_list_1: [('a', 'b'), ('c', 'd')]\noutput_1: {}" \
+        "\ninput_list_2: [('a', 'b'), ('c',)]\noutput_2: {}" \
+        "\ninput_list_3: [('a', 1), [('b', 2)]]\noutput_3: {}" \
+        "\ninput_list_4: not a sequence of sequences\noutput_4: {}" \
+        "\ninput_list_5: [('a', 'b'), ('c', 'd')]\noutput_5: {'a': 1, 'c': 1}" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : seq_len <= position" \
+        "\n::: ERROR :::" \
+        "\nPosition 5 out of range" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : seq_len" \
+        "\n::: ERROR :::" \
+        "\nAll items must have the same length 2" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : seq_type" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: [('b', 2)]\nReceived type: <class 'list'>" \
+        "\nExpected type: <class 'tuple'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : data_sequence" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: not a sequence of sequences" \
+        "\nReceived type: <class 'str'>" \
+        "\nExpected type: (<class 'list'>, <class 'tuple'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : position" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 5\nReceived type: <class 'str'>" \
+        "\nExpected type: <class 'int'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 5
-        assert "\nLocation: Newt.utility.count_values_by_position : seq_len <= position\n" in captured.err
-        assert "\nPosition 5 out of range\n" in captured.err
-        assert "\nLocation: Newt.utility.count_values_by_position : seq_len\n" in captured.err
-        assert "\nAll items must have the same length 2\n" in captured.err
-        assert "\nLocation: Newt.utility.count_values_by_position : seq_type > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: [('b', 2)]\nReceived type: <class 'list'>\nExpected type: <class 'tuple'>\n" in captured.err
-        assert "\nLocation: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: not a sequence of sequences\nReceived type: <class 'str'>\nExpected type: (<class 'list'>, <class 'tuple'>)\n" in captured.err
-        assert "\nLocation: Newt.utility.count_values_by_position : position > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: 5\nReceived type: <class 'str'>\nExpected type: <class 'int'>\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -540,20 +680,37 @@ class TestCountValuesByPosition:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_1: [('a', 'b'), ('c', 'd')]\n" in captured.out
-        assert "\ninput_list_2: [('a', 'b'), ('c',)]\n" in captured.out
-        assert "\ninput_list_3: [('a', 1), [('b', 2)]]\n" in captured.out
-        assert "\ninput_list_4: not a sequence of sequences\n" in captured.out
+        assert "Function: test_count_values_by_position_invalid_input_with_stop" \
+        "\n============================================" \
+        "\ninput_list_1: [('a', 'b'), ('c', 'd')]" \
+        "\ninput_list_2: [('a', 'b'), ('c',)]" \
+        "\ninput_list_3: [('a', 1), [('b', 2)]]" \
+        "\ninput_list_4: not a sequence of sequences" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : seq_len <= position" \
+        "\n::: ERROR :::" \
+        "\nPosition 5 out of range" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : seq_len" \
+        "\n::: ERROR :::" \
+        "\nAll items must have the same length 2" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : seq_type" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: [('b', 2)]\nReceived type: <class 'list'>" \
+        "\nExpected type: <class 'tuple'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : data_sequence" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: not a sequence of sequences\nReceived type: <class 'str'>" \
+        "\nExpected type: (<class 'list'>, <class 'tuple'>)" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 4
-        assert "\nLocation: Newt.utility.count_values_by_position : seq_len <= position\n" in captured.err
-        assert "\nPosition 5 out of range\n" in captured.err
-        assert "\nLocation: Newt.utility.count_values_by_position : seq_len\n" in captured.err
-        assert "\nAll items must have the same length 2\n" in captured.err
-        assert "\nLocation: Newt.utility.count_values_by_position : seq_type > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: [('b', 2)]\nReceived type: <class 'list'>\nExpected type: <class 'tuple'>\n" in captured.err
-        assert "\nLocation: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: not a sequence of sequences\nReceived type: <class 'str'>\nExpected type: (<class 'list'>, <class 'tuple'>)\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -652,12 +809,48 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_dict: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 25}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Bob', 'age': 20}]\n" in captured.out
-        assert "\noutput_dict_1: [{'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Bob', 'age': 25}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
-        assert "\noutput_dict_2: [{'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}, {'name': 'Bob', 'age': 25}, {'name': 'Charlie', 'age': 25}, {'name': 'Aska', 'age': 30}]\n" in captured.out
-        assert "\noutput_dict_3: [{'name': 'Aska', 'age': 30}, {'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 25}, {'name': 'Bob', 'age': 20}, {'name': 'Alice', 'age': 20}]\n" in captured.out
-        assert "\noutput_dict_4: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob', 'age': 25}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Bob', 'age': 20}]\n" in captured.out
-        assert "\noutput_dict_5: [{'name': 'Bob', 'age': 20}, {'name': 'Aska', 'age': 30}, {'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 25}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
+        assert "Function: test_sorting_dict_by_keys_no_error" \
+        "\n============================================" \
+        "\ninput_list_dict: " \
+        "[{'name': 'Charlie', 'age': 25}," \
+        " {'name': 'Bob', 'age': 25}," \
+        " {'name': 'Alice', 'age': 20}," \
+        " {'name': 'Aska', 'age': 30}," \
+        " {'name': 'Bob', 'age': 20}]" \
+        "\noutput_dict_1: " \
+        "[{'name': 'Alice', 'age': 20}," \
+        " {'name': 'Aska', 'age': 30}," \
+        " {'name': 'Bob', 'age': 25}," \
+        " {'name': 'Bob', 'age': 20}," \
+        " {'name': 'Charlie', 'age': 25}]" \
+        "\noutput_dict_2: " \
+        "[{'name': 'Alice', 'age': 20}," \
+        " {'name': 'Bob', 'age': 20}," \
+        " {'name': 'Bob', 'age': 25}," \
+        " {'name': 'Charlie', 'age': 25}," \
+        " {'name': 'Aska', 'age': 30}]" \
+        "\noutput_dict_3: " \
+        "[{'name': 'Aska', 'age': 30}," \
+        " {'name': 'Charlie', 'age': 25}," \
+        " {'name': 'Bob', 'age': 25}," \
+        " {'name': 'Bob', 'age': 20}," \
+        " {'name': 'Alice', 'age': 20}]" \
+        "\noutput_dict_4: " \
+        "[{'name': 'Charlie', 'age': 25}," \
+        " {'name': 'Bob', 'age': 25}," \
+        " {'name': 'Alice', 'age': 20}," \
+        " {'name': 'Aska', 'age': 30}," \
+        " {'name': 'Bob', 'age': 20}]" \
+        "\noutput_dict_5: " \
+        "[{'name': 'Bob', 'age': 20}," \
+        " {'name': 'Aska', 'age': 30}," \
+        " {'name': 'Alice', 'age': 20}," \
+        " {'name': 'Bob', 'age': 25}," \
+        " {'name': 'Charlie', 'age': 25}]" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -727,10 +920,40 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_dict: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob'}, {}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': None}, None, {'name': 'Bob', 'age': 20}]\n" in captured.out
-        assert "\noutput_dict_1: [{'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Aska', 'age': None}, {'name': 'Bob'}, {}, None]\n" in captured.out
-        assert "\noutput_dict_2: [None, {}, {'name': 'Bob'}, {'name': 'Aska', 'age': None}, {'name': 'Charlie', 'age': 25}, {'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}]\n" in captured.out
-        assert "\noutput_dict_3: [{'name': 'Bob', 'age': 20}, None, {'name': 'Aska', 'age': None}, {'name': 'Alice', 'age': 20}, {}, {'name': 'Bob'}, {'name': 'Charlie', 'age': 25}]\n" in captured.out
+        assert "Function: test_sorting_dict_by_keys_missing_keys" \
+        "\n============================================" \
+        "\ninput_list_dict: " \
+        "[{'name': 'Charlie', 'age': 25}," \
+        " {'name': 'Bob'}, {}," \
+        " {'name': 'Alice', 'age': 20}," \
+        " {'name': 'Aska', 'age': None}," \
+        " None," \
+        " {'name': 'Bob', 'age': 20}]" \
+        "\noutput_dict_1: " \
+        "[{'name': 'Alice', 'age': 20}," \
+        " {'name': 'Bob', 'age': 20}," \
+        " {'name': 'Charlie', 'age': 25}," \
+        " {'name': 'Aska', 'age': None}," \
+        " {'name': 'Bob'}," \
+        " {}, None]" \
+        "\noutput_dict_2: " \
+        "[None, {}," \
+        " {'name': 'Bob'}," \
+        " {'name': 'Aska', 'age': None}," \
+        " {'name': 'Charlie', 'age': 25}," \
+        " {'name': 'Alice', 'age': 20}," \
+        " {'name': 'Bob', 'age': 20}]" \
+        "\noutput_dict_3: " \
+        "[{'name': 'Bob', 'age': 20}," \
+        " None," \
+        " {'name': 'Aska', 'age': None}," \
+        " {'name': 'Alice', 'age': 20}," \
+        " {}, {'name': 'Bob'}," \
+        " {'name': 'Charlie', 'age': 25}]" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -782,8 +1005,34 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_dict: [{'name': 'Charlie', 'value': (2, 1)}, {'name': 'Alice', 'value': {1, 2}}, {'name': 'Bob', 'value': [1, 2, 3]}, {'name': 'Aska', 'value': 'beta'}, {'name': 'Derek', 'value': {'a': 1}}, {'name': 'Eve', 'value': None}, {'name': 'Frank', 'value': True}, {'name': 'Grace', 'value': False}, {'name': 'Felicia', 'value': 25}, {'name': 'Ofelia', 'value': 1.5}]\n" in captured.out
-        assert "\noutput: [{'name': 'Aska', 'value': 'beta'}, {'name': 'Ofelia', 'value': 1.5}, {'name': 'Felicia', 'value': 25}, {'name': 'Grace', 'value': False}, {'name': 'Frank', 'value': True}, {'name': 'Derek', 'value': {'a': 1}}, {'name': 'Bob', 'value': [1, 2, 3]}, {'name': 'Alice', 'value': {1, 2}}, {'name': 'Charlie', 'value': (2, 1)}, {'name': 'Eve', 'value': None}]\n" in captured.out
+        assert "Function: test_sorting_dict_by_keys_with_complex_value_types" \
+        "\n============================================" \
+        "\ninput_list_dict: " \
+        "[{'name': 'Charlie', 'value': (2, 1)}," \
+        " {'name': 'Alice', 'value': {1, 2}}," \
+        " {'name': 'Bob', 'value': [1, 2, 3]}," \
+        " {'name': 'Aska', 'value': 'beta'}," \
+        " {'name': 'Derek', 'value': {'a': 1}}," \
+        " {'name': 'Eve', 'value': None}," \
+        " {'name': 'Frank', 'value': True}," \
+        " {'name': 'Grace', 'value': False}," \
+        " {'name': 'Felicia', 'value': 25}," \
+        " {'name': 'Ofelia', 'value': 1.5}]" \
+        "\noutput: " \
+        "[{'name': 'Aska', 'value': 'beta'}," \
+        " {'name': 'Ofelia', 'value': 1.5}," \
+        " {'name': 'Felicia', 'value': 25}," \
+        " {'name': 'Grace', 'value': False}," \
+        " {'name': 'Frank', 'value': True}," \
+        " {'name': 'Derek', 'value': {'a': 1}}," \
+        " {'name': 'Bob', 'value': [1, 2, 3]}," \
+        " {'name': 'Alice', 'value': {1, 2}}," \
+        " {'name': 'Charlie', 'value': (2, 1)}," \
+        " {'name': 'Eve', 'value': None}]" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -857,13 +1106,47 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_list_dict: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]\n" in captured.out
-        assert "\noutput_dict_1: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]\n" in captured.out
-        assert "\noutput_dict_2: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]\n" in captured.out
-        assert "\noutput_dict_3: [{'name': 'Alice'}, {'name': 'Aska'}, {'name': 'Bob'}, {'name': 'Charlie'}]\n" in captured.out
-        assert "\noutput_dict_4: [{'name': 'Charlie'}, {'name': 'Bob'}, {'name': 'Aska'}, {'name': 'Alice'}]\n" in captured.out
-        assert "\noutput_dict_5: [{'name': 'Alice'}, {'name': 'Aska'}, {'name': 'Bob'}, {'name': 'Charlie'}]\n" in captured.out
-        assert "\noutput_dict_6: [{'name': 'Charlie'}, {'name': 'Bob'}, {'name': 'Aska'}, {'name': 'Alice'}]\n" in captured.out
+        assert "Function: test_sorting_dict_by_keys_single_key" \
+        "\n============================================" \
+        "\ninput_list_dict: " \
+        "[{'name': 'Charlie'}," \
+        " {'name': 'Alice'}," \
+        " {'name': 'Bob'}," \
+        " {'name': 'Aska'}]" \
+        "\noutput_dict_1: " \
+        "[{'name': 'Charlie'}," \
+        " {'name': 'Alice'}," \
+        " {'name': 'Bob'}," \
+        " {'name': 'Aska'}]" \
+        "\noutput_dict_2: " \
+        "[{'name': 'Charlie'}," \
+        " {'name': 'Alice'}," \
+        " {'name': 'Bob'}," \
+        " {'name': 'Aska'}]" \
+        "\noutput_dict_3: " \
+        "[{'name': 'Alice'}," \
+        " {'name': 'Aska'}," \
+        " {'name': 'Bob'}," \
+        " {'name': 'Charlie'}]" \
+        "\noutput_dict_4: " \
+        "[{'name': 'Charlie'}," \
+        " {'name': 'Bob'}," \
+        " {'name': 'Aska'}," \
+        " {'name': 'Alice'}]" \
+        "\noutput_dict_5: " \
+        "[{'name': 'Alice'}," \
+        " {'name': 'Aska'}," \
+        " {'name': 'Bob'}," \
+        " {'name': 'Charlie'}]" \
+        "\noutput_dict_6: " \
+        "[{'name': 'Charlie'}," \
+        " {'name': 'Bob'}," \
+        " {'name': 'Aska'}," \
+        " {'name': 'Alice'}]" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -901,52 +1184,105 @@ class TestSortingDictByKeys:
         # Invalid key type
         input_list_dict_2 = [{"name": "Alice"}]
         print("input_list_dict_2:", input_list_dict_2)
-        output_4 = NewtUtil.sorting_dict_by_keys(input_list_dict_2, 123, stop=False)  # type: ignore
-        print("output_4:", output_4)
+        output_5 = NewtUtil.sorting_dict_by_keys(input_list_dict_2, 123, stop=False)  # type: ignore
+        print("output_5:", output_5)
 
         # Empty input
         input_list_empty = []
         print("input_list_empty:", input_list_empty)
-        output_5 = NewtUtil.sorting_dict_by_keys(input_list_empty)
-        print("output_5:", output_5)
+        output_6 = NewtUtil.sorting_dict_by_keys(input_list_empty)
+        print("output_6:", output_6)
 
         # None as input
         input_None = None
         print("input_None:", input_None)
-        output_6 = NewtUtil.sorting_dict_by_keys(input_None)  # type: ignore
-        print("output_6:", output_6)
+        output_7 = NewtUtil.sorting_dict_by_keys(input_None)  # type: ignore
+        print("output_7:", output_7)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_dict: {'name': 'Alice'}\noutput_1: []\n" in captured.out
-        assert "\ninput_list: [1, 2, 3]\noutput_2: []\n" in captured.out
-        assert "\ninput_list_mix: [{'name': 'Alice'}, 42, 'string']\noutput_3: []\n" in captured.out
-        assert "\ninput_list_dict_1: [{123: 'Alice'}]\noutput_4: []\n" in captured.out
-        assert "\ninput_list_dict_2: [{'name': 'Alice'}]\noutput_4: []\n" in captured.out
-        assert "\ninput_list_empty: []\noutput_5: []\n" in captured.out
-        assert "\ninput_None: None\noutput_6: []\n" in captured.out
+        assert "Function: test_sorting_dict_by_keys_with_errors_no_stop" \
+        "\n============================================" \
+        "\ninput_dict: {'name': 'Alice'}\noutput_1: []" \
+        "\ninput_list: [1, 2, 3]\noutput_2: []" \
+        "\ninput_list_mix: [{'name': 'Alice'}, 42, 'string']\noutput_3: []" \
+        "\ninput_list_dict_1: [{123: 'Alice'}]\noutput_4: []" \
+        "\ninput_list_dict_2: [{'name': 'Alice'}]\noutput_5: []" \
+        "\ninput_list_empty: []\noutput_6: []" \
+        "\ninput_None: None\noutput_7: []" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>" \
+        "\nExpected type: <class 'list'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 1\nReceived type: <class 'int'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 2\nReceived type: <class 'int'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 3\nReceived type: <class 'int'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_element_type" \
+        "\n::: ERROR :::" \
+        "\nExpected a list of dictionaries\ndata_list: [1, 2, 3]" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 42\nReceived type: <class 'int'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: string\nReceived type: <class 'str'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_element_type" \
+        "\n::: ERROR :::" \
+        "\nExpected a list of dictionaries" \
+        "\ndata_list: [{'name': 'Alice'}, 42, 'string']" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : k in dl.keys()" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_key_type" \
+        "\n::: ERROR :::" \
+        "\nExpected a keys of dictionaries to be str" \
+        "\ndata_list: [{123: 'Alice'}]" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : k in sorting_keys" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : sorting_keys" \
+        "\n::: ERROR :::" \
+        "\nExpected sorting keys to be str" \
+        "\nsorting_keys: (123,)" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 12
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>\nExpected type: <class 'list'>\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in dl.keys() > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n" in captured.err
-        assert captured.err.count("\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type\n") == 5
-        assert "\nValue: 1\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert "\nValue: 2\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert "\nValue: 3\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert "\nValue: 42\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert "\nValue: string\nReceived type: <class 'str'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert captured.err.count("\nLocation: Newt.utility.sorting_dict_by_keys : invalid_element_type\n") == 2
-        assert "\nExpected a list of dictionaries\ndata_list: [1, 2, 3]\n" in captured.err
-        assert "\nExpected a list of dictionaries\ndata_list: [{'name': 'Alice'}, 42, 'string']\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_key_type\n" in captured.err
-        assert "\nExpected a keys of dictionaries to be str\ndata_list: [{123: 'Alice'}]\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in sorting_keys > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : sorting_keys\n" in captured.err
-        assert "\nExpected sorting keys to be str\nsorting_keys: (123,)\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -999,31 +1335,86 @@ class TestSortingDictByKeys:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_dict: {'name': 'Alice'}\n" in captured.out
-        assert "\ninput_list: [1, 2, 3]\n" in captured.out
-        assert "\ninput_list_mix: [{'name': 'Alice'}, 42, 'string']\n" in captured.out
-        assert "\ninput_list_dict_1: [{123: 'Alice'}]\n" in captured.out
-        assert "\ninput_list_dict_2: [{'name': 'Alice'}]\n" in captured.out
+        assert "Function: test_sorting_dict_by_keys_with_errors_and_stop" \
+        "\n============================================" \
+        "\ninput_dict: {'name': 'Alice'}" \
+        "\ninput_list: [1, 2, 3]" \
+        "\ninput_list_mix: [{'name': 'Alice'}, 42, 'string']" \
+        "\ninput_list_dict_1: [{123: 'Alice'}]" \
+        "\ninput_list_dict_2: [{'name': 'Alice'}]" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>" \
+        "\nExpected type: <class 'list'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 1\nReceived type: <class 'int'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 2\nReceived type: <class 'int'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 3\nReceived type: <class 'int'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_element_type" \
+        "\n::: ERROR :::" \
+        "\nExpected a list of dictionaries" \
+        "\ndata_list: [1, 2, 3]" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 42\nReceived type: <class 'int'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: string\nReceived type: <class 'str'>" \
+        "\nExpected type: (<class 'dict'>, <class 'NoneType'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_element_type" \
+        "\n::: ERROR :::" \
+        "\nExpected a list of dictionaries" \
+        "\ndata_list: [{'name': 'Alice'}, 42, 'string']" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : k in dl.keys()" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_key_type" \
+        "\n::: ERROR :::" \
+        "\nExpected a keys of dictionaries to be str" \
+        "\ndata_list: [{123: 'Alice'}]" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : k in sorting_keys" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : sorting_keys" \
+        "\n::: ERROR :::" \
+        "\nExpected sorting keys to be str" \
+        "\nsorting_keys: (123,)" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 12
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>\nExpected type: <class 'list'>\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in dl.keys() > Newt.console.validate_type\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : k in sorting_keys > Newt.console.validate_type\n" in captured.err
-        assert captured.err.count("\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n") == 2
-        assert captured.err.count("\nLocation: Newt.utility.sorting_dict_by_keys : dl in data_list > Newt.console.validate_type\n") == 5
-        assert "\nValue: 1\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert "\nValue: 2\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert "\nValue: 3\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert "\nValue: 42\nReceived type: <class 'int'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert "\nValue: string\nReceived type: <class 'str'>\nExpected type: (<class 'dict'>, <class 'NoneType'>)\n" in captured.err
-        assert captured.err.count("\nLocation: Newt.utility.sorting_dict_by_keys : invalid_element_type\n") == 2
-        assert "\nExpected a list of dictionaries\ndata_list: [1, 2, 3]\n" in captured.err
-        assert "\nExpected a list of dictionaries\ndata_list: [{'name': 'Alice'}, 42, 'string']\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : invalid_key_type\n" in captured.err
-        assert "\nExpected a keys of dictionaries to be str\ndata_list: [{123: 'Alice'}]\n" in captured.err
-        assert "\nLocation: Newt.utility.sorting_dict_by_keys : sorting_keys\n" in captured.err
-        assert "\nExpected sorting keys to be str\nsorting_keys: (123,)\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -1138,24 +1529,91 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nmissing_values_list: [(1, 'admin', 'Stockholm'), (2, 'user', 'Oslo'), (3, 'user', 'Stockholm'), (4, 'user', 'Berlin'), (5, 'admin', 'Oslo')]\n" in captured.out
-        assert "\nmissing_values_count: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}\n" in captured.out
-        assert "\ninput_dict: {'1': 'Oslo', '2': 'Stockholm', '3': 'Berlin', '4': 'Madrid'}\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n[INPUT]: 1\nSelected option: Oslo\n\nresult_1: 1\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n[INPUT]: 1\nSelected option: Oslo\n\nresult_2: 1\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n[INPUT]: abc\nOption not in list. Try again.\n[INPUT]: 999\nOption not in list. Try again.\n[INPUT]: 2\nSelected option: Stockholm\n\nresult_3: 2\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n[INPUT]: abc\nOption not in list. Try again.\n[INPUT]: 999\nOption not in list. Try again.\n[INPUT]: 2\nSelected option: Stockholm\n\nresult_4: 2\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n[INPUT]: x\nexc_info_5: 1\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n[INPUT]: x\nexc_info_6: 1\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n\nexc_info_7: 1\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n\nexc_info_8: 1\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid\n  X: Exit / Cancel\n[INPUT]: a\nOption not in list. Try again.\n[INPUT]: b\nOption not in list. Try again.\n[INPUT]: c\nOption not in list. Try again.\n[INPUT]: d\nOption not in list. Try again.\n[INPUT]: e\nOption not in list. Try again.\nexc_info_9: 1\n" in captured.out
-        assert "\n\n4 Available options to choose from:\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid\n  X: Exit / Cancel\n[INPUT]: a\nOption not in list. Try again.\n[INPUT]: b\nOption not in list. Try again.\n[INPUT]: c\nOption not in list. Try again.\n[INPUT]: d\nOption not in list. Try again.\n[INPUT]: e\nOption not in list. Try again.\nexc_info_10: 1\n" in captured.out
+        assert "Function: test_select_from_input_all_flows" \
+        "\n============================================" \
+        "\nmissing_values_list: [(1, 'admin', 'Stockholm'), (2, 'user', 'Oslo')," \
+        " (3, 'user', 'Stockholm'), (4, 'user', 'Berlin'), (5, 'admin', 'Oslo')]" \
+        "\nmissing_values_count: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}" \
+        "\ninput_dict: {'1': 'Oslo', '2': 'Stockholm', '3': 'Berlin', '4': 'Madrid'}" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid" \
+        "\n  X: Exit / Cancel\n[INPUT]: 1" \
+        "\nSelected option: Oslo\n\nresult_1: 1" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid" \
+        "\n  X: Exit / Cancel\n[INPUT]: 1" \
+        "\nSelected option: Oslo\n\nresult_2: 1" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid" \
+        "\n  X: Exit / Cancel\n[INPUT]: abc" \
+        "\nOption not in list. Try again.\n[INPUT]: 999" \
+        "\nOption not in list. Try again.\n[INPUT]: 2" \
+        "\nSelected option: Stockholm\n\nresult_3: 2" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid" \
+        "\n  X: Exit / Cancel\n[INPUT]: abc" \
+        "\nOption not in list. Try again.\n[INPUT]: 999" \
+        "\nOption not in list. Try again.\n[INPUT]: 2" \
+        "\nSelected option: Stockholm\n\nresult_4: 2" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid" \
+        "\n  X: Exit / Cancel\n[INPUT]: x" \
+        "\nexc_info_5: 1" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid" \
+        "\n  X: Exit / Cancel\n[INPUT]: x" \
+        "\nexc_info_6: 1" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid" \
+        "\n  X: Exit / Cancel\n\nexc_info_7: 1" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid" \
+        "\n  X: Exit / Cancel\n\nexc_info_8: 1" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid" \
+        "\n  X: Exit / Cancel\n[INPUT]: a" \
+        "\nOption not in list. Try again.\n[INPUT]: b" \
+        "\nOption not in list. Try again.\n[INPUT]: c" \
+        "\nOption not in list. Try again.\n[INPUT]: d" \
+        "\nOption not in list. Try again.\n[INPUT]: e" \
+        "\nOption not in list. Try again.\nexc_info_9: 1" \
+        "\n\n4 Available options to choose from:" \
+        "\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid" \
+        "\n  X: Exit / Cancel\n[INPUT]: a" \
+        "\nOption not in list. Try again.\n[INPUT]: b" \
+        "\nOption not in list. Try again.\n[INPUT]: c" \
+        "\nOption not in list. Try again.\n[INPUT]: d" \
+        "\nOption not in list. Try again.\n[INPUT]: e" \
+        "\nOption not in list. Try again.\nexc_info_10: 1" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.select_from_input : choice = [X]" \
+        "\n::: ERROR :::" \
+        "\nSelection cancelled." \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.select_from_input : choice = [X]" \
+        "\n::: ERROR :::" \
+        "\nSelection cancelled." \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.select_from_input : KeyboardInterrupt" \
+        "\n::: ERROR :::" \
+        "\nSelection cancelled." \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.select_from_input : KeyboardInterrupt" \
+        "\n::: ERROR :::" \
+        "\nSelection cancelled." \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.select_from_input : while attempt" \
+        "\n::: ERROR :::" \
+        "\nNo correct selection after attempt 5." \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.select_from_input : while attempt" \
+        "\n::: ERROR :::" \
+        "\nNo correct selection after attempt 5." \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 6
-        assert captured.err.count("\nLocation: Newt.utility.select_from_input : choice = [X]\n::: ERROR :::\nSelection cancelled.\n") == 2
-        assert captured.err.count("\nLocation: Newt.utility.select_from_input : KeyboardInterrupt\n::: ERROR :::\nSelection cancelled.\n") == 2
-        assert captured.err.count("\nLocation: Newt.utility.select_from_input : while attempt\n::: ERROR :::\nNo correct selection after attempt 5.\n") == 2
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -1178,11 +1636,20 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninvalid_input: not a dict\n" in captured.out
+        assert "Function: test_select_from_input_invalid_type" \
+        "\n============================================" \
+        "\ninvalid_input: not a dict" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.select_from_input : select_dict" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: not a dict\nReceived type: <class 'str'>" \
+        "\nExpected type: <class 'dict'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.utility.select_from_input : select_dict > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: not a dict\nReceived type: <class 'str'>\nExpected type: <class 'dict'>\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -1208,11 +1675,19 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_dict: {'x': 'Exit should not be a key', '1': 'Option 1'}\n" in captured.out
+        assert "Function: test_select_from_input_exit_option_key" \
+        "\n============================================" \
+        "\ninput_dict: {'x': 'Exit should not be a key', '1': 'Option 1'}" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.select_from_input : exit_option" \
+        "\n::: ERROR :::" \
+        "\nPlease be sure there is no `x` as key in dict." \
+        "\nDict keys: dict_keys(['x', '1'])" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.utility.select_from_input : exit_option\n" in captured.err
-        assert "\nPlease be sure there is no `x` as key in dict.\nDict keys: dict_keys(['x', '1'])\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out

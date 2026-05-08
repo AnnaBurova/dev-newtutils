@@ -189,7 +189,7 @@ START=======================================
 =====captured.out=====
 Function: test_count_values_by_position_no_errors
 ============================================
-input_list_1: [('admin', 1, 'Stockholm'), ('user', 2, 'Oslo'), ('admin', 3, 'Stockholm'), ('user', 4, 'Berlin'), ('admin', 5, 'Oslo')]
+input_list: [('admin', 1, 'Stockholm'), ('user', 2, 'Oslo'), ('admin', 3, 'Stockholm'), ('user', 4, 'Berlin'), ('admin', 5, 'Oslo')]
 output_1: {'admin': 3, 'user': 2}
 output_2: {'admin': 3, 'user': 2}
 output_3: {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
@@ -207,7 +207,7 @@ input_list_1: []
 output_1: {}
 input_list_2: [('only', 1)]
 output_2: {'only': 1}
-input_list_2: [('only', 1)]
+input_list_3: [('only', 1)]
 output_3: {1: 1}
 input_list_4: ()
 output_4: {}
@@ -373,11 +373,11 @@ output_3: []
 input_list_dict_1: [{123: 'Alice'}]
 output_4: []
 input_list_dict_2: [{'name': 'Alice'}]
-output_4: []
-input_list_empty: []
 output_5: []
-input_None: None
+input_list_empty: []
 output_6: []
+input_None: None
+output_7: []
 
 =====captured.err=====
 [1m[31m
