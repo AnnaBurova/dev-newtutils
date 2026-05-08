@@ -1,5 +1,5 @@
 """
-Updated on 2026-04
+Updated on 2026-05
 Created on 2025-11
 
 @author: NewtCode Anna Burova
@@ -37,7 +37,16 @@ class TestDivider:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "-----" * 10 in captured.out
+        assert "Function: test_divider_output" \
+        "\n============================================" \
+        "\n\n--------------------------------------------------\n" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert "\n" + "-----" * 10 + "\n" in captured.out
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
         assert "::: ERROR :::" not in captured.err
@@ -59,9 +68,16 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Unknown\n" in captured.err
-        assert "\nTest error\n" in captured.err
+        assert "Function: test_error_msg_with_stop" \
+        "\n============================================" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Unknown\n::: ERROR :::" \
+        "\nTest error" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -78,9 +94,16 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Unknown\n" in captured.err
-        assert "\nTest error\n" in captured.err
+        assert "Function: test_error_msg_without_stop" \
+        "\n============================================" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Unknown\n::: ERROR :::" \
+        "\nTest error" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -100,9 +123,16 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Unknown\n" in captured.err
-        assert "\nError 1\nError 2\nError 3\n" in captured.err
+        assert "Function: test_error_msg_multiple_args" \
+        "\n============================================" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Unknown\n::: ERROR :::" \
+        "\nError 1\nError 2\nError 3" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -121,9 +151,16 @@ class TestErrorMsg:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: test.module\n" in captured.err
-        assert "\nTest error\n" in captured.err
+        assert "Function: test_error_msg_with_location" \
+        "\n============================================" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: test.module\n::: ERROR :::" \
+        "\nTest error" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -180,16 +217,22 @@ class TestValidateType:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_None: None / <class 'NoneType'>\n" in captured.out
-        assert "\ninput_bool: False / <class 'bool'>\n" in captured.out
-        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
-        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
-        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
-        assert "\ninput_bytes: b'Hello' / <class 'bytes'>\n" in captured.out
-        assert "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>\n" in captured.out
-        assert "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>\n" in captured.out
-        assert "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>\n" in captured.out
-        assert "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>\n" in captured.out
+        assert "Function: test_validate_type_correct_type_not_empty" \
+        "\n============================================" \
+        "\ninput_None: None / <class 'NoneType'>" \
+        "\ninput_bool: False / <class 'bool'>" \
+        "\ninput_int: 123 / <class 'int'>" \
+        "\ninput_float: 3.14 / <class 'float'>" \
+        "\ninput_str: Hello / <class 'str'>" \
+        "\ninput_bytes: b'Hello' / <class 'bytes'>" \
+        "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>" \
+        "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>" \
+        "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>" \
+        "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -243,29 +286,63 @@ class TestValidateType:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_None: None / <class 'NoneType'>\n" in captured.out
-        assert "\ninput_bool: False / <class 'bool'>\n" in captured.out
-        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
-        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
-        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
-        assert "\ninput_bytes: b'Hello' / <class 'bytes'>\n" in captured.out
-        assert "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>\n" in captured.out
-        assert "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>\n" in captured.out
-        assert "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>\n" in captured.out
-        assert "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>\n" in captured.out
+        assert "Function: test_validate_type_incorrect_type_no_stop" \
+        "\n============================================" \
+        "\ninput_None: None / <class 'NoneType'>" \
+        "\ninput_bool: False / <class 'bool'>" \
+        "\ninput_int: 123 / <class 'int'>" \
+        "\ninput_float: 3.14 / <class 'float'>" \
+        "\ninput_str: Hello / <class 'str'>" \
+        "\ninput_bytes: b'Hello' / <class 'bytes'>" \
+        "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>" \
+        "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>" \
+        "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>" \
+        "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: None\nReceived type: <class 'NoneType'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: False\nReceived type: <class 'bool'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: 3.14\nReceived type: <class 'float'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: Hello\nReceived type: <class 'str'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: b'Hello'\nReceived type: <class 'bytes'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: {123, 3.14, False, Hello}\nReceived type: <class 'set'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 10
-        assert captured.err.count("\nLocation: Newt.console.validate_type\n") == 10
-        assert "\nValue: None\nReceived type: <class 'NoneType'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: False\nReceived type: <class 'bool'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: 3.14\nReceived type: <class 'float'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: Hello\nReceived type: <class 'str'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: b'Hello'\nReceived type: <class 'bytes'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: {123, 3.14, False, Hello}\nReceived type: <class 'set'>\nExpected type: <class 'frozenset'>\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -348,29 +425,63 @@ class TestValidateType:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_None: None / <class 'NoneType'>\n" in captured.out
-        assert "\ninput_bool: False / <class 'bool'>\n" in captured.out
-        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
-        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
-        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
-        assert "\ninput_bytes: b'Hello' / <class 'bytes'>\n" in captured.out
-        assert "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>\n" in captured.out
-        assert "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>\n" in captured.out
-        assert "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>\n" in captured.out
-        assert "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>\n" in captured.out
+        assert "Function: test_validate_type_incorrect_type_with_stop" \
+        "\n============================================" \
+        "\ninput_None: None / <class 'NoneType'>" \
+        "\ninput_bool: False / <class 'bool'>" \
+        "\ninput_int: 123 / <class 'int'>" \
+        "\ninput_float: 3.14 / <class 'float'>" \
+        "\ninput_str: Hello / <class 'str'>" \
+        "\ninput_bytes: b'Hello' / <class 'bytes'>" \
+        "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>" \
+        "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>" \
+        "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>" \
+        "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: None\nReceived type: <class 'NoneType'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: False\nReceived type: <class 'bool'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: 3.14\nReceived type: <class 'float'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: Hello\nReceived type: <class 'str'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: b'Hello'\nReceived type: <class 'bytes'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: {123, 3.14, False, Hello}\nReceived type: <class 'set'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 10
-        assert captured.err.count("\nLocation: Newt.console.validate_type\n") == 10
-        assert "\nValue: None\nReceived type: <class 'NoneType'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: False\nReceived type: <class 'bool'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: 3.14\nReceived type: <class 'float'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: Hello\nReceived type: <class 'str'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: b'Hello'\nReceived type: <class 'bytes'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: [False, 123, 3.14, 'Hello']\nReceived type: <class 'list'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: (False, 123, 3.14, 'Hello')\nReceived type: <class 'tuple'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: {1: False, 2: 123, 3: 3.14, 4: 'Hello'}\nReceived type: <class 'dict'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: {123, 3.14, False, Hello}\nReceived type: <class 'set'>\nExpected type: <class 'frozenset'>\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -397,13 +508,20 @@ class TestValidateType:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
-        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
-        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
+        assert "Function: test_validate_type_multiple_types" \
+        "\n============================================" \
+        "\ninput_int: 123 / <class 'int'>" \
+        "\ninput_float: 3.14 / <class 'float'>" \
+        "\ninput_str: Hello / <class 'str'>" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: 3.14\nReceived type: <class 'float'>" \
+        "\nExpected type: (<class 'int'>, <class 'str'>)" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.console.validate_type\n" in captured.err
-        assert "\nValue: 3.14\nReceived type: <class 'float'>\nExpected type: (<class 'int'>, <class 'str'>)\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -437,17 +555,28 @@ class TestValidateType:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_int: 123 / <class 'int'>\n" in captured.out
-        assert "\ninput_float: 3.14 / <class 'float'>\n" in captured.out
-        assert "\ninput_str: Hello / <class 'str'>\n" in captured.out
+        assert "Function: test_validate_type_with_location" \
+        "\n============================================" \
+        "\ninput_int: 123 / <class 'int'>" \
+        "\ninput_float: 3.14 / <class 'float'>" \
+        "\ninput_str: Hello / <class 'str'>" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: test.input_int > Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: test.input_float > Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: 3.14\nReceived type: <class 'float'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: test.input_str > Newt.console.validate_type\n::: ERROR :::" \
+        "\nValue: Hello\nReceived type: <class 'str'>" \
+        "\nExpected type: <class 'frozenset'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 3
-        assert "\nLocation: test.input_int > Newt.console.validate_type\n" in captured.err
-        assert "\nLocation: test.input_float > Newt.console.validate_type\n" in captured.err
-        assert "\nLocation: test.input_str > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: 3.14\nReceived type: <class 'float'>\nExpected type: <class 'frozenset'>\n" in captured.err
-        assert "\nValue: Hello\nReceived type: <class 'str'>\nExpected type: <class 'frozenset'>\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -459,70 +588,104 @@ class TestValidateType:
 
         input_None = None
         print("input_None:", input_None, "/", type(input_None))
-        assert NewtCons.validate_type(input_None, type(None), check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_None, type(None),
+            check_non_empty=True, stop=False) is False
 
         input_bool = False
         print("input_bool:", input_bool, "/", type(input_bool))
-        assert NewtCons.validate_type(input_bool, bool, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_bool, bool,
+            check_non_empty=True, stop=False) is False
 
         input_int = 0
         print("input_int:", input_int, "/", type(input_int))
-        assert NewtCons.validate_type(input_int, int, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_int, int,
+            check_non_empty=True, stop=False) is False
 
         input_float = 0.0
         print("input_float:", input_float, "/", type(input_float))
-        assert NewtCons.validate_type(input_float, float, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_float, float,
+            check_non_empty=True, stop=False) is False
 
         input_str = ""
         print("input_str:", input_str, "/", type(input_str))
-        assert NewtCons.validate_type(input_str, str, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_str, str,
+            check_non_empty=True, stop=False) is False
 
         input_bytes = b""
         print("input_bytes:", input_bytes, "/", type(input_bytes))
-        assert NewtCons.validate_type(input_bytes, bytes, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_bytes, bytes,
+            check_non_empty=True, stop=False) is False
 
         input_list = []
         print("input_list:", input_list, "/", type(input_list))
-        assert NewtCons.validate_type(input_list, list, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_list, list,
+            check_non_empty=True, stop=False) is False
 
         input_tuple = ()
         print("input_tuple:", input_tuple, "/", type(input_tuple))
-        assert NewtCons.validate_type(input_tuple, tuple, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_tuple, tuple,
+            check_non_empty=True, stop=False) is False
 
         input_dict = {}
         print("input_dict:", input_dict, "/", type(input_dict))
-        assert NewtCons.validate_type(input_dict, dict, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_dict, dict,
+            check_non_empty=True, stop=False) is False
 
         input_set = set()
         print("input_set:", input_set, "/", type(input_set))
-        assert NewtCons.validate_type(input_set, set, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_set, set,
+            check_non_empty=True, stop=False) is False
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_None: None / <class 'NoneType'>\n" in captured.out
-        assert "\ninput_bool: False / <class 'bool'>\n" in captured.out
-        assert "\ninput_int: 0 / <class 'int'>\n" in captured.out
-        assert "\ninput_float: 0.0 / <class 'float'>\n" in captured.out
-        assert "\ninput_str:  / <class 'str'>\n" in captured.out
-        assert "\ninput_bytes: b'' / <class 'bytes'>\n" in captured.out
-        assert "\ninput_list: [] / <class 'list'>\n" in captured.out
-        assert "\ninput_tuple: () / <class 'tuple'>\n" in captured.out
-        assert "\ninput_dict: {} / <class 'dict'>\n" in captured.out
-        assert "\ninput_set: set() / <class 'set'>\n" in captured.out
+        assert "Function: test_validate_type_correct_type_but_empty" \
+        "\n============================================" \
+        "\ninput_None: None / <class 'NoneType'>" \
+        "\ninput_bool: False / <class 'bool'>" \
+        "\ninput_int: 0 / <class 'int'>" \
+        "\ninput_float: 0.0 / <class 'float'>" \
+        "\ninput_str:  / <class 'str'>" \
+        "\ninput_bytes: b'' / <class 'bytes'>" \
+        "\ninput_list: [] / <class 'list'>" \
+        "\ninput_tuple: () / <class 'tuple'>" \
+        "\ninput_dict: {} / <class 'dict'>" \
+        "\ninput_set: set() / <class 'set'>" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: None\nType: <class 'NoneType'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: False\nType: <class 'bool'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: 0\nType: <class 'int'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: 0.0\nType: <class 'float'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: \nType: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: b''\nType: <class 'bytes'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: []\nType: <class 'list'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: ()\nType: <class 'tuple'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: {}\nType: <class 'dict'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : is_empty\n::: ERROR :::" \
+        "\nValue must not be empty\nValue: {}\nType: <class 'set'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 10
-        assert captured.err.count("\nLocation: Newt.console.validate_type : is_empty\n") == 10
-        assert "\nValue must not be empty\nValue: None\nType: <class 'NoneType'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: False\nType: <class 'bool'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: 0\nType: <class 'int'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: 0.0\nType: <class 'float'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: \nType: <class 'str'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: b''\nType: <class 'bytes'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: []\nType: <class 'list'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: ()\nType: <class 'tuple'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: {}\nType: <class 'dict'>\n" in captured.err
-        assert "\nValue must not be empty\nValue: {}\nType: <class 'set'>\n" in captured.err
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -534,7 +697,8 @@ class TestValidateType:
 
         input_frozenset = frozenset()
         print("input_frozenset:", input_frozenset, "/", type(input_frozenset))
-        assert NewtCons.validate_type(input_frozenset, frozenset, check_non_empty=True, stop=False) is False
+        assert NewtCons.validate_type(input_frozenset, frozenset,
+            check_non_empty=True, stop=False) is False
 
         input_frozenset_stop = frozenset()
         print("input_frozenset_stop:", input_frozenset_stop, "/", type(input_frozenset_stop))
@@ -546,12 +710,23 @@ class TestValidateType:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\ninput_frozenset: frozenset() / <class 'frozenset'>\n" in captured.out
-        assert "\ninput_frozenset_stop: frozenset() / <class 'frozenset'>\n" in captured.out
+        assert "Function: test_validate_type_unknown_type_and_empty" \
+        "\n============================================" \
+        "\ninput_frozenset: frozenset() / <class 'frozenset'>" \
+        "\ninput_frozenset_stop: frozenset() / <class 'frozenset'>" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : check_non_empty\n::: ERROR :::" \
+        "\ncheck_non_empty is not supported for this type" \
+        "\nValue: frozenset()\nType: <class 'frozenset'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.validate_type : check_non_empty\n::: ERROR :::" \
+        "\ncheck_non_empty is not supported for this type" \
+        "\nValue: frozenset()\nType: <class 'frozenset'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 2
-        assert captured.err.count("\nLocation: Newt.console.validate_type : check_non_empty\n") == 2
-        assert captured.err.count("\ncheck_non_empty is not supported for this type\nValue: frozenset()\nType: <class 'frozenset'>\n") == 2
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -581,9 +756,19 @@ class TestBeepBoop:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            pass
+            assert "Function: test_beep_boop" \
+            "\n============================================" \
+            "\n" == captured.out
         else:
-            assert "\nBeep Boop !!!\n" in captured.out
+            assert "Function: test_beep_boop" \
+            "\n============================================" \
+            "\n\x1b[1m\x1b[32m" \
+            "\nBeep Boop !!!" \
+            "\n\x1b[0m" \
+            "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -608,10 +793,21 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nRetrying in 2 seconds...\nTime left: 2s\nTime left: 1s\n" in captured.out
+        assert "Function: test_retry_pause_with_beep" \
+        "\n============================================" \
+        "\nRetrying in 2 seconds..." \
+        "\nTime left: 2s" \
+        "\nTime left: 1s" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
         assert "::: ERROR :::" not in captured.err
+        assert "Time left: 5s" not in captured.out
+        assert "Time left: 4s" not in captured.out
         assert "Time left: 3s" not in captured.out
 
 
@@ -628,10 +824,21 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nRetrying in 3 seconds...\nTime left: 3s\nTime left: 2s\nTime left: 1s\n" in captured.out
+        assert "Function: test_retry_pause_countdown" \
+        "\n============================================" \
+        "\nRetrying in 3 seconds..." \
+        "\nTime left: 3s" \
+        "\nTime left: 2s" \
+        "\nTime left: 1s" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
         assert "::: ERROR :::" not in captured.err
+        assert "Time left: 5s" not in captured.out
         assert "Time left: 4s" not in captured.out
 
 
@@ -647,11 +854,24 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nRetrying in 5 seconds...\nTime left: 5s\nTime left: 4s\nTime left: 3s\nTime left: 2s\nTime left: 1s\n" in captured.out
+        assert "Function: test_retry_pause_invalid_type" \
+        "\n============================================" \
+        "\nRetrying in 5 seconds..." \
+        "\nTime left: 5s" \
+        "\nTime left: 4s" \
+        "\nTime left: 3s" \
+        "\nTime left: 2s" \
+        "\nTime left: 1s" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.retry_pause : seconds int > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: invalid\nReceived type: <class 'str'>" \
+        "\nExpected type: <class 'int'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.console.retry_pause : seconds int > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: invalid\nReceived type: <class 'str'>\nExpected type: <class 'int'>\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -669,11 +889,25 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nRetrying in 5 seconds...\nTime left: 5s\nTime left: 4s\nTime left: 3s\nTime left: 2s\nTime left: 1s\n" in captured.out
+        assert "Function: test_retry_pause_invalid_seconds" \
+        "\n============================================" \
+        "\nRetrying in 5 seconds..." \
+        "\nTime left: 5s" \
+        "\nTime left: 4s" \
+        "\nTime left: 3s" \
+        "\nTime left: 2s" \
+        "\nTime left: 1s" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.retry_pause : seconds int " \
+        "> Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: 0\nType: <class 'int'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.console.retry_pause : seconds int > Newt.console.validate_type : is_empty\n" in captured.err
-        assert "\nValue must not be empty\nValue: 0\nType: <class 'int'>\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -691,11 +925,22 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nRetrying in 5 seconds...\nTime left: 5s\nTime left: 4s\nTime left: 3s\nTime left: 2s\nTime left: 1s\n" in captured.out
+        assert "Function: test_retry_pause_negative_seconds" \
+        "\n============================================" \
+        "\nRetrying in 5 seconds..." \
+        "\nTime left: 5s" \
+        "\nTime left: 4s" \
+        "\nTime left: 3s" \
+        "\nTime left: 2s" \
+        "\nTime left: 1s" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.retry_pause : seconds < 1\n::: ERROR :::" \
+        "\nInvalid pause duration: -1" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.console.retry_pause : seconds < 1\n" in captured.err
-        assert "\nInvalid pause duration: -1\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -719,11 +964,18 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nRetrying in 5 seconds...\nTime left: 5s\n" in captured.out
+        assert "Function: test_retry_pause_keyboard_interrupt" \
+        "\n============================================" \
+        "\nRetrying in 5 seconds..." \
+        "\nTime left: 5s" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.retry_pause : KeyboardInterrupt\n::: ERROR :::" \
+        "\nRetry interrupted by user (Ctrl+C)" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.console.retry_pause : KeyboardInterrupt\n" in captured.err
-        assert "\nRetry interrupted by user (Ctrl+C)\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -750,7 +1002,14 @@ class TestCheckLocation:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n/home/user/project == /home/user/project\n=== START ===\n" in captured.out
+        assert "Function: test_check_location_match" \
+        "\n============================================" \
+        "\n/home/user/project == /home/user/project" \
+        "\n=== START ===" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -773,11 +1032,17 @@ class TestCheckLocation:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n/home/user/project == /home/other/project\n" in captured.out
+        assert "Function: test_check_location_mismatch" \
+        "\n============================================" \
+        "\n/home/user/project == /home/other/project" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.check_location : error_msg\n::: ERROR :::" \
+        "\nCurrent position is wrong, check folder: /home/user/project" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.console.check_location : error_msg\n" in captured.err
-        assert "\nCurrent position is wrong, check folder: /home/user/project\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -801,11 +1066,19 @@ class TestCheckLocation:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n123 == /home/user/project\n" in captured.out
+        assert "Function: test_check_location_invalid_type" \
+        "\n============================================" \
+        "\n123 == /home/user/project" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.check_location : dir_global > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.console.check_location : dir_global > Newt.console.validate_type\n" in captured.err
-        assert "\nValue: 123\nReceived type: <class 'int'>\nExpected type: <class 'str'>\n" in captured.err
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
