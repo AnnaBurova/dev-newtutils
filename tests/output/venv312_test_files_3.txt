@@ -1,0 +1,52 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0
+rootdir: D:\VS_Code\dev-newtutils
+configfile: pyproject.toml
+collected 4 items
+
+test_files.py 
+START=======================================
+=====captured.out=====
+Function: test_ensure_dir_exists_empty_path
+============================================
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.ensure_dir_exists : file_path > Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 
+Type: <class 'str'>
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_ensure_dir_exists_current_directory
+============================================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_ensure_dir_exists_directory_exists
+============================================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_ensure_dir_exists_nested_directory
+============================================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 4 passed in 0.02s ==============================

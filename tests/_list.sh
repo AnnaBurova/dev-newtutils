@@ -19,6 +19,7 @@ IS_WSL=false
 # modules=("utility")
 # modules=("console" "utility")
 # modules=("files")
+# modules=("console" "utility" "files")
 # modules=("sql")
 # modules=("network")
 modules=("console" "utility" "files" "sql" "network")

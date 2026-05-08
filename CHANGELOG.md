@@ -5,6 +5,39 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## [vNext] — Upcoming
+
+### Added
+
+- `tests/output/`:
+  - Added results for files module across venv310-venv314 and venvLinux312.
+
+### Changed
+
+- `newtutils/files.py`:
+  - `ensure_dir_exists()`:
+    - Updated to return `None` explicitly when the path points to the current directory or when the target directory already exists.
+    - Wrapped directory creation in exception handling and now route unexpected errors through `NewtCons.error_msg()`.
+
+### Testing
+
+- `tests/_list.sh`:
+  - Added a commented module selection example for running the `console`, `utility`, and `files` test groups together.
+- `tests/test_files.py`:
+  - Switched the test helper import to a relative import.
+  - Reworked test suiteы to cover new cases.
+
+### Fixed
+
+- *(list bug fixes or error corrections)*
+
+### Removed
+
+- `tests/output/`:
+  - Removed outdated pytest output snapshots for `test_files_*.txt`
+
+---
+
 ## [0.3.2] — Reworked Module Utility
 
 ### Added

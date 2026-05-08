@@ -6,26 +6,6 @@ configfile: pyproject.toml
 plugins: cov-7.0.0
 collecting ... collected 41 items
 
-test_files.py::TestEnsureDirExists::test_creates_nested_directory 
-START=======================================
-=====captured.out=====
-Function: test_creates_nested_directory
-============================================
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
-test_files.py::TestEnsureDirExists::test_handles_current_directory 
-START=======================================
-=====captured.out=====
-Function: test_handles_current_directory
-============================================
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-PASSED
 test_files.py::TestCheckFileExists::test_existing_file_returns 
 START=======================================
 =====captured.out=====

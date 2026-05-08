@@ -1,5 +1,5 @@
 """
-Updated on 2026-02
+Updated on 2026-05
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -90,8 +90,7 @@ import newtutils.utility as NewtUtil
 def ensure_dir_exists(
         file_path: str
         ) -> None:
-    """
-    Ensure that the directory for a given file path exists.
+    """ ## Ensure that the directory for the given file path exists.
 
     Creates the target directory and any necessary parent directories if they do not exist.
     The function does not create or modify the file itself.
@@ -99,6 +98,10 @@ def ensure_dir_exists(
     Args:
         file_path (str):
             Full path to the target file (including the file name).
+
+    Raises:
+        SystemExit:
+            If file_path is an empty string.
     """
 
     NewtCons.validate_type(
@@ -110,10 +113,22 @@ def ensure_dir_exists(
 
     if not dir_path:
         # current directory, nothing to do
-        return
+        return None
 
-    if not os.path.exists(dir_path):
+    if os.path.exists(dir_path):
+        # directory exists, nothing to do
+        return None
+
+    try:
         os.makedirs(dir_path, exist_ok=True)
+        return None
+
+    # except OSError as e:
+    except Exception as e:
+        NewtCons.error_msg(
+            f"Found Exception: {e} (found? write test!)",  # TODO
+            location="Newt.files.ensure_dir_exists : Exception"
+        )
 
 
 def check_file_exists(

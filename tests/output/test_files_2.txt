@@ -6,8 +6,6 @@ configfile: pyproject.toml
 plugins: cov-7.0.0
 collecting ... collected 41 items
 
-test_files.py::TestEnsureDirExists::test_creates_nested_directory PASSED [  2%]
-test_files.py::TestEnsureDirExists::test_handles_current_directory PASSED [  4%]
 test_files.py::TestCheckFileExists::test_existing_file_returns PASSED    [  7%]
 test_files.py::TestCheckFileExists::test_invalid_filepath_raises_exit PASSED [  9%]
 test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [ 12%]

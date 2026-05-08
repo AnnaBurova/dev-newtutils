@@ -8,24 +8,6 @@ collected 41 items
 test_files.py 
 START=======================================
 =====captured.out=====
-Function: test_creates_nested_directory
-============================================
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
-Function: test_handles_current_directory
-============================================
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
 Function: test_existing_file_returns
 ============================================
 [1m [31m
