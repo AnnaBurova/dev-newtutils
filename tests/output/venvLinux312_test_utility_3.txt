@@ -327,7 +327,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_missing_keys
+Function: test_sorting_dict_by_keys_missing_keys
 ============================================
 input_list_dict: [{'name': 'Charlie', 'age': 25}, {'name': 'Bob'}, {}, {'name': 'Alice', 'age': 20}, {'name': 'Aska', 'age': None}, None, {'name': 'Bob', 'age': 20}]
 output_dict_1: [{'name': 'Alice', 'age': 20}, {'name': 'Bob', 'age': 20}, {'name': 'Charlie', 'age': 25}, {'name': 'Aska', 'age': None}, {'name': 'Bob'}, {}, None]
@@ -351,7 +351,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_sorting_dict_single_key
+Function: test_sorting_dict_by_keys_single_key
 ============================================
 input_list_dict: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]
 output_dict_1: [{'name': 'Charlie'}, {'name': 'Alice'}, {'name': 'Bob'}, {'name': 'Aska'}]

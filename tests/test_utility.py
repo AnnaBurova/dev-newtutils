@@ -664,7 +664,7 @@ class TestSortingDictByKeys:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_sorting_dict_missing_keys(self, capsys):
+    def test_sorting_dict_by_keys_missing_keys(self, capsys):
         """ Test sorting_dict_by_keys places missing key dicts at end. """
         print_my_func_name()
 
@@ -790,7 +790,7 @@ class TestSortingDictByKeys:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_sorting_dict_single_key(self, capsys):
+    def test_sorting_dict_by_keys_single_key(self, capsys):
         """ Test sorting_dict_by_keys with single-key dicts: wrong key, correct key, no key. """
         print_my_func_name()
 
