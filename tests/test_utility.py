@@ -1006,13 +1006,13 @@ class TestSortingDictByKeys:
         assert output[0]["value"] == "beta"  # str - 0
         assert output[1]["value"] == 1.5  # float - 1
         assert output[2]["value"] == 25  # int - 1
-        assert output[3]["value"] == False  # bool - 2
-        assert output[4]["value"] == True  # bool - 2
+        assert output[3]["value"] is False  # bool - 2
+        assert output[4]["value"] is True  # bool - 2
         assert output[5]["value"] == {"a": 1}  # dict - 3 D
         assert output[6]["value"] == [1, 2, 3]  # list - 3 L
         assert output[7]["value"] == {1, 2}  # set - 3 S
         assert output[8]["value"] == (2, 1)  # tuple - 3 T
-        assert output[9]["value"] == None  # None - 4
+        assert output[9]["value"] is None  # None - 4
 
         captured = capsys.readouterr()
         print_my_captured(captured)
