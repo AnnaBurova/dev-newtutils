@@ -23,6 +23,7 @@ START=======================================
 =====captured.out=====
 Function: test_error_msg_with_stop
 ============================================
+exc_info: 1
 
 =====captured.err=====
 [1m[31m
@@ -196,15 +197,25 @@ START=======================================
 Function: test_validate_type_incorrect_type_with_stop
 ============================================
 input_None: None / <class 'NoneType'>
+exc_info_None: 1
 input_bool: False / <class 'bool'>
+exc_info_bool: 1
 input_int: 123 / <class 'int'>
+exc_info_int: 1
 input_float: 3.14 / <class 'float'>
+exc_info_float: 1
 input_str: Hello / <class 'str'>
+exc_info_str: 1
 input_bytes: b'Hello' / <class 'bytes'>
+exc_info_bytes: 1
 input_list: [False, 123, 3.14, 'Hello'] / <class 'list'>
+exc_info_list: 1
 input_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>
+exc_info_tuple: 1
 input_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>
+exc_info_dict: 1
 input_set: {123, 3.14, False, Hello} / <class 'set'>
+exc_info_set: 1
 
 =====captured.err=====
 [1m[31m
@@ -431,6 +442,7 @@ Function: test_validate_type_unknown_type_and_empty
 ============================================
 input_frozenset: frozenset() / <class 'frozenset'>
 input_frozenset_stop: frozenset() / <class 'frozenset'>
+exc_info_frozenset: 1
 
 =====captured.err=====
 [1m[31m
@@ -561,6 +573,7 @@ Function: test_retry_pause_keyboard_interrupt
 ============================================
 Retrying in 5 seconds...
 Time left: 5s
+exc_info: 1
 
 =====captured.err=====
 [1m[31m
@@ -589,6 +602,7 @@ START=======================================
 Function: test_check_location_mismatch
 ============================================
 /home/user/project == /home/other/project
+exc_info: 1
 
 =====captured.err=====
 [1m[31m
@@ -605,6 +619,7 @@ START=======================================
 Function: test_check_location_invalid_type
 ============================================
 123 == /home/user/project
+exc_info: 1
 
 =====captured.err=====
 [1m[31m

@@ -64,12 +64,14 @@ class TestErrorMsg:
             NewtCons.error_msg("Test error")
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
         assert "Function: test_error_msg_with_stop" \
         "\n============================================" \
+        "\nexc_info: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Unknown" \
@@ -372,6 +374,7 @@ class TestValidateType:
             NewtCons.validate_type(input_None, frozenset)
             print("This line will not be printed")
         assert exc_info_None.value.code == 1
+        print("exc_info_None:", exc_info_None.value.code)
 
         input_bool = False
         print("input_bool:", input_bool, "/", type(input_bool))
@@ -379,6 +382,7 @@ class TestValidateType:
             NewtCons.validate_type(input_bool, frozenset)
             print("This line will not be printed")
         assert exc_info_bool.value.code == 1
+        print("exc_info_bool:", exc_info_bool.value.code)
 
         input_int = 123
         print("input_int:", input_int, "/", type(input_int))
@@ -386,6 +390,7 @@ class TestValidateType:
             NewtCons.validate_type(input_int, frozenset)
             print("This line will not be printed")
         assert exc_info_int.value.code == 1
+        print("exc_info_int:", exc_info_int.value.code)
 
         input_float = 3.14
         print("input_float:", input_float, "/", type(input_float))
@@ -393,6 +398,7 @@ class TestValidateType:
             NewtCons.validate_type(input_float, frozenset)
             print("This line will not be printed")
         assert exc_info_float.value.code == 1
+        print("exc_info_float:", exc_info_float.value.code)
 
         input_str = "Hello"
         print("input_str:", input_str, "/", type(input_str))
@@ -400,6 +406,7 @@ class TestValidateType:
             NewtCons.validate_type(input_str, frozenset)
             print("This line will not be printed")
         assert exc_info_str.value.code == 1
+        print("exc_info_str:", exc_info_str.value.code)
 
         input_bytes = b"Hello"
         print("input_bytes:", input_bytes, "/", type(input_bytes))
@@ -407,6 +414,7 @@ class TestValidateType:
             NewtCons.validate_type(input_bytes, frozenset)
             print("This line will not be printed")
         assert exc_info_bytes.value.code == 1
+        print("exc_info_bytes:", exc_info_bytes.value.code)
 
         input_list = [input_bool, input_int, input_float, input_str]
         print("input_list:", input_list, "/", type(input_list))
@@ -414,6 +422,7 @@ class TestValidateType:
             NewtCons.validate_type(input_list, frozenset)
             print("This line will not be printed")
         assert exc_info_list.value.code == 1
+        print("exc_info_list:", exc_info_list.value.code)
 
         input_tuple = (input_bool, input_int, input_float, input_str)
         print("input_tuple:", input_tuple, "/", type(input_tuple))
@@ -421,6 +430,7 @@ class TestValidateType:
             NewtCons.validate_type(input_tuple, frozenset)
             print("This line will not be printed")
         assert exc_info_tuple.value.code == 1
+        print("exc_info_tuple:", exc_info_tuple.value.code)
 
         input_dict = {1: input_bool, 2: input_int, 3: input_float, 4: input_str}
         print("input_dict:", input_dict, "/", type(input_dict))
@@ -428,6 +438,7 @@ class TestValidateType:
             NewtCons.validate_type(input_dict, frozenset)
             print("This line will not be printed")
         assert exc_info_dict.value.code == 1
+        print("exc_info_dict:", exc_info_dict.value.code)
 
         input_set = {input_bool, input_int, input_float, input_str}
         print(f"input_set: {format_set_to_str(input_set)} / {type(input_set)}")
@@ -435,6 +446,7 @@ class TestValidateType:
             NewtCons.validate_type(input_set, frozenset)
             print("This line will not be printed")
         assert exc_info_set.value.code == 1
+        print("exc_info_set:", exc_info_set.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -442,15 +454,25 @@ class TestValidateType:
         assert "Function: test_validate_type_incorrect_type_with_stop" \
         "\n============================================" \
         "\ninput_None: None / <class 'NoneType'>" \
+        "\nexc_info_None: 1" \
         "\ninput_bool: False / <class 'bool'>" \
+        "\nexc_info_bool: 1" \
         "\ninput_int: 123 / <class 'int'>" \
+        "\nexc_info_int: 1" \
         "\ninput_float: 3.14 / <class 'float'>" \
+        "\nexc_info_float: 1" \
         "\ninput_str: Hello / <class 'str'>" \
+        "\nexc_info_str: 1" \
         "\ninput_bytes: b'Hello' / <class 'bytes'>" \
+        "\nexc_info_bytes: 1" \
         "\ninput_list: [False, 123, 3.14, 'Hello'] / <class 'list'>" \
+        "\nexc_info_list: 1" \
         "\ninput_tuple: (False, 123, 3.14, 'Hello') / <class 'tuple'>" \
+        "\nexc_info_tuple: 1" \
         "\ninput_dict: {1: False, 2: 123, 3: 3.14, 4: 'Hello'} / <class 'dict'>" \
+        "\nexc_info_dict: 1" \
         "\ninput_set: {123, 3.14, False, Hello} / <class 'set'>" \
+        "\nexc_info_set: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.console.validate_type" \
@@ -744,6 +766,7 @@ class TestValidateType:
             NewtCons.validate_type(input_frozenset_stop, frozenset, check_non_empty=True)
             print("This line will not be printed")
         assert exc_info_frozenset.value.code == 1
+        print("exc_info_frozenset:", exc_info_frozenset.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -752,6 +775,7 @@ class TestValidateType:
         "\n============================================" \
         "\ninput_frozenset: frozenset() / <class 'frozenset'>" \
         "\ninput_frozenset_stop: frozenset() / <class 'frozenset'>" \
+        "\nexc_info_frozenset: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.console.validate_type : check_non_empty" \
@@ -1000,6 +1024,7 @@ class TestRetryPause:
             NewtCons._retry_pause(seconds=5, beep=True)
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
         assert mock_beep.call_count == 1
         assert mock_sleep.call_count == 1
 
@@ -1010,6 +1035,7 @@ class TestRetryPause:
         "\n============================================" \
         "\nRetrying in 5 seconds..." \
         "\nTime left: 5s" \
+        "\nexc_info: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.console.retry_pause : KeyboardInterrupt" \
@@ -1071,6 +1097,7 @@ class TestCheckLocation:
             NewtCons.check_location(location_1, location_2)
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -1078,6 +1105,7 @@ class TestCheckLocation:
         assert "Function: test_check_location_mismatch" \
         "\n============================================" \
         "\n/home/user/project == /home/other/project" \
+        "\nexc_info: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.console.check_location : error_msg" \
@@ -1106,6 +1134,7 @@ class TestCheckLocation:
             NewtCons.check_location(location_1, location_2)  # type: ignore
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -1113,6 +1142,7 @@ class TestCheckLocation:
         assert "Function: test_check_location_invalid_type" \
         "\n============================================" \
         "\n123 == /home/user/project" \
+        "\nexc_info: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.console.check_location : dir_global" \

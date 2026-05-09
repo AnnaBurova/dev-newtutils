@@ -1,5 +1,5 @@
 """
-Updated on 2026-04
+Updated on 2026-05
 Created on 2026-02
 
 @author: NewtCode Anna Burova
@@ -14,7 +14,7 @@ Functions:
         input_set: set
         ) -> str
 
-
+Test example:
     def test_function_example(self, capsys):
         print_my_func_name()
 
@@ -26,6 +26,7 @@ Functions:
             Newt.function(input_dict)
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -43,7 +44,6 @@ Functions:
         assert "::: ERROR :::" not in captured.err
         ## assert "This line will not be printed" not in captured.out
         ## assert "This line will not be printed" not in captured.err
-
 """
 
 import inspect
