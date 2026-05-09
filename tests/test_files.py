@@ -156,6 +156,83 @@ class TestCheckFileExists:
     """ Tests for check_file_exists function. """
 
 
+    def test_check_file_exists_invalid_file_name(self, capsys):
+        """ Test check_file_exists with invalid inputs: wrong type (int) and empty string. """
+        print_my_func_name()
+
+        file_name_1 = 123
+        print("file_name_1:", file_name_1)
+
+        with pytest.raises(SystemExit) as exc_info_1:
+            NewtFiles.check_file_exists(file_name_1)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info_1.value.code == 1
+        print("exc_info_1:", exc_info_1.value.code)
+
+        check_1 = NewtFiles.check_file_exists(file_name_1, stop=False)  # type: ignore
+        assert check_1 is False
+        print("check_1:", check_1)
+
+        file_name_2 = ""
+        print("file_name_2:", file_name_2)
+
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtFiles.check_file_exists(file_name_2)
+            print("This line will not be printed")
+        assert exc_info_2.value.code == 1
+        print("exc_info_2:", exc_info_2.value.code)
+
+        check_2 = NewtFiles.check_file_exists(file_name_2, stop=False)
+        assert check_2 is False
+        print("check_2:", check_2)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_check_file_exists_invalid_file_name" \
+        "\n============================================" \
+        "\nfile_name_1: 123" \
+        "\nexc_info_1: 1" \
+        "\ncheck_1: False" \
+        "\nfile_name_2: " \
+        "\nexc_info_2: 1" \
+        "\ncheck_2: False" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : file_path" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : file_path" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : file_path" \
+        " > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: \nType: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : file_path" \
+        " > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: \nType: <class 'str'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 4
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
+
+
     def test_existing_file_returns(self, capsys):
         """ Test NewtFiles.check_file_exists(): True for existing, False for missing, SystemExit with stop=True. """
         print_my_func_name()
@@ -191,11 +268,6 @@ class TestCheckFileExists:
     def test_invalid_filepath_raises_exit(self, capsys):
         """ Test NewtFiles.check_file_exists() raises SystemExit or returns False for invalid input. """
         print_my_func_name()
-
-        with pytest.raises(SystemExit) as exc_info:
-            NewtFiles.check_file_exists(123)  # type: ignore
-            print("This line will not be printed")
-        assert exc_info.value.code == 1
 
         assert NewtFiles.check_file_exists("123", stop=False) is False
 

@@ -11,6 +11,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 - `tests/output/`:
   - Added results for files module across venv310-venv314 and venvLinux312.
+- `newtutils/files.py`:
+  - `check_file_exists()`:
+    - New readability check for files, verifying that a file is readable before processing.
 
 ### Changed
 
@@ -18,6 +21,8 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - `ensure_dir_exists()`:
     - Updated to return `None` explicitly when the path points to the current directory or when the target directory already exists.
     - Wrapped directory creation in exception handling and now route unexpected errors through `NewtCons.error_msg()`.
+  - `check_file_exists()`:
+    - Refactored function for improved clarity and structure.
 
 ### Testing
 

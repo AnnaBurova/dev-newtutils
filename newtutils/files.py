@@ -11,7 +11,7 @@ Functions:
     def check_file_exists(
         file_path: str,
         stop: bool = True,
-        logging: bool = True
+        print_log: bool = True
         ) -> bool
     def _normalize_newlines(
         text: str
@@ -134,29 +134,33 @@ def ensure_dir_exists(
 def check_file_exists(
         file_path: str,
         stop: bool = True,
-        logging: bool = True
+        print_log: bool = True
         ) -> bool:
-    """
-    Check whether a file exists at the specified path.
+    """ ## Check whether a file exists at the specified path.
 
-    Verifies file existence and accessibility using os.path.isfile().
-    If missing and logging is enabled, logs an error via NewtCons.error_msg().
-    Optionally stops execution based on the stop parameter.
+    Verifies that the file exists and is readable.
+    If the file is missing or unreadable, optionally logs an error
+    via `NewtCons.error_msg()` and optionally stops execution.
 
     Args:
         file_path (str):
             Full path to the file to verify.
-        stop (bool, optional):
-            If True, stops execution when file not found.
+        stop (bool):
+            If True, stops execution on any validation failure.<br>
             Defaults to True.
-        logging (bool, optional):
-            If True, logs error message when file not found.
+        print_log (bool):
+            If True, logs an error message when the file is not found.<br>
+            Note: error is also logged when `stop=True`, regardless of this parameter.<br>
             Defaults to True.
 
     Returns:
         out (bool):
-            True if file exists and is accessible,
+            True if the file exists and is readable,<br>
             False otherwise.
+
+    Raises:
+        SystemExit:
+            If an error occurs and `stop=True`, terminates with exit code 1.
     """
 
     if not NewtCons.validate_type(
@@ -166,14 +170,24 @@ def check_file_exists(
         return False
 
     if os.path.isfile(file_path):
-        return True
+        if os.access(file_path, os.R_OK):
+            return True
 
-    if logging:
         NewtCons.error_msg(
-            f"File not found: {file_path}",
-            location="Newt.files.check_file_exists : logging",
+            f"File is not readable: {file_path}",
+            location="Newt.files.check_file_exists : os.access",
             stop=stop
         )
+
+        return False
+
+    if print_log or stop:
+        NewtCons.error_msg(
+            f"File not found: {file_path}",
+            location="Newt.files.check_file_exists : print_log",
+            stop=stop
+        )
+
     return False
 
 

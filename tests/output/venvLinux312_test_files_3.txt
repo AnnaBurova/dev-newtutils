@@ -8,7 +8,7 @@ Function _beep_boop will make no sound.
 Expected platform: win32 / Got: linux
 Expected OS name:  nt    / Got: posix
 
-collected 4 items
+collected 5 items
 
 test_files.py 
 START=======================================
@@ -60,5 +60,48 @@ dirname exists: False
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_check_file_exists_invalid_file_name
+============================================
+file_name_1: 123
+exc_info_1: 1
+check_1: False
+file_name_2: 
+exc_info_2: 1
+check_2: False
 
-============================== 4 passed in 0.18s ===============================
+=====captured.err=====
+[1m[31m
+Location: Newt.files.check_file_exists : file_path > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.files.check_file_exists : file_path > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.files.check_file_exists : file_path > Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 
+Type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.files.check_file_exists : file_path > Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: 
+Type: <class 'str'>
+[0m
+
+END=========================================
+.
+
+============================== 5 passed in 0.19s ===============================
