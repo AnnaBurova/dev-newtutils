@@ -4,6 +4,14 @@ set +e  # continue on error
 # > — Creates (or overwrites) the output.txt file.
 # >> — Appends output to the end of an existing file.
 
+# $ cd dev-newtutils/
+# $ pytest .\tests\ --cov=newtutils --cov-report=html
+# $ pytest .\tests\test_console.py -s -vv
+# $ pytest .\tests\test_utility.py -s -vv
+# $ pytest .\tests\test_files.py -s -vv
+# $ pytest .\tests\test_sql.py -s -vv
+# $ pytest .\tests\test_network.py -s -vv
+
 # $ cd dev-newtutils/tests/
 # $ ./_list.sh
 
