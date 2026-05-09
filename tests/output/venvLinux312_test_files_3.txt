@@ -15,6 +15,7 @@ START=======================================
 =====captured.out=====
 Function: test_ensure_dir_exists_empty_path
 ============================================
+exc_info: 1
 
 =====captured.err=====
 [1m[31m
@@ -31,6 +32,7 @@ START=======================================
 =====captured.out=====
 Function: test_ensure_dir_exists_current_directory
 ============================================
+dirname exists: False
 
 =====captured.err=====
 (no stderr captured)
@@ -40,6 +42,8 @@ START=======================================
 =====captured.out=====
 Function: test_ensure_dir_exists_directory_exists
 ============================================
+dirname exists: True
+dirname exists: False
 
 =====captured.err=====
 (no stderr captured)
@@ -49,6 +53,8 @@ START=======================================
 =====captured.out=====
 Function: test_ensure_dir_exists_nested_directory
 ============================================
+dirname exists: True
+dirname exists: False
 
 =====captured.err=====
 (no stderr captured)

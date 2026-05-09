@@ -25,16 +25,17 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - Added a commented module selection example for running the `console`, `utility`, and `files` test groups together.
 - `tests/test_files.py`:
   - Switched the test helper import to a relative import.
-  - Reworked test suiteы to cover new cases.
+  - Reworked test suites to cover new cases.
+  - Added `tempfile.TemporaryDirectory` lifecycle check helper to verify directory exists inside the context and is gone after.
 
 ### Fixed
 
-- *(list bug fixes or error corrections)*
+- Replaced loose `in` assertions in test files with exact full-string matching for both `captured.out` and `captured.err`.
 
 ### Removed
 
 - `tests/output/`:
-  - Removed outdated pytest output snapshots for `test_files_*.txt`
+  - Removed outdated pytest output snapshots for `test_files_*.txt`.
 
 ---
 

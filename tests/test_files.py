@@ -38,13 +38,25 @@ class TestEnsureDirExists:
             NewtFiles.ensure_dir_exists("")
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.err
-        assert "\nLocation: Newt.files.ensure_dir_exists : file_path > Newt.console.validate_type : is_empty\n" in captured.err
-        assert "\nValue must not be empty\nValue: \nType: <class 'str'>\n" in captured.err
+        assert "Function: test_ensure_dir_exists_empty_path" \
+        "\n============================================" \
+        "\nexc_info: 1" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.ensure_dir_exists : file_path" \
+        " > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: \nType: <class 'str'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -58,11 +70,20 @@ class TestEnsureDirExists:
 
         file_path = "file.txt"
         NewtFiles.ensure_dir_exists(file_path)
-
-        assert not os.path.exists(os.path.dirname(file_path))
+        dirname_exists = os.path.exists(os.path.dirname(file_path))
+        assert dirname_exists is False
+        print("dirname exists:", dirname_exists)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "Function: test_ensure_dir_exists_current_directory" \
+        "\n============================================" \
+        "\ndirname exists: False" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -74,15 +95,26 @@ class TestEnsureDirExists:
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            nested_path = os.path.join(tmpdir, "file.txt")
-
-            NewtFiles.ensure_dir_exists(nested_path)
-            assert os.path.exists(os.path.dirname(nested_path))
-
-        assert not os.path.exists(os.path.dirname(nested_path))
+            file_path = os.path.join(tmpdir, "file.txt")
+            NewtFiles.ensure_dir_exists(file_path)
+            dirname_exists = os.path.exists(os.path.dirname(file_path))
+            assert dirname_exists is True
+            print("dirname exists:", dirname_exists)
+        dirname_exists = os.path.exists(os.path.dirname(file_path))
+        assert dirname_exists is False
+        print("dirname exists:", dirname_exists)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "Function: test_ensure_dir_exists_directory_exists" \
+        "\n============================================" \
+        "\ndirname exists: True" \
+        "\ndirname exists: False" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -94,15 +126,26 @@ class TestEnsureDirExists:
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            nested_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
-
-            NewtFiles.ensure_dir_exists(nested_path)
-            assert os.path.exists(os.path.dirname(nested_path))
-
-        assert not os.path.exists(os.path.dirname(nested_path))
+            file_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
+            NewtFiles.ensure_dir_exists(file_path)
+            dirname_exists = os.path.exists(os.path.dirname(file_path))
+            assert dirname_exists is True
+            print("dirname exists:", dirname_exists)
+        dirname_exists = os.path.exists(os.path.dirname(file_path))
+        assert dirname_exists is False
+        print("dirname exists:", dirname_exists)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
+
+        assert "Function: test_ensure_dir_exists_nested_directory" \
+        "\n============================================" \
+        "\ndirname exists: True" \
+        "\ndirname exists: False" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out

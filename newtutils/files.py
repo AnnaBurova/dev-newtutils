@@ -101,7 +101,7 @@ def ensure_dir_exists(
 
     Raises:
         SystemExit:
-            If file_path is an empty string.
+            If file_path is an empty string, terminates with exit code 1.
     """
 
     NewtCons.validate_type(
@@ -124,7 +124,7 @@ def ensure_dir_exists(
         return None
 
     # except OSError as e:
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
             f"Found Exception: {e} (found? write test!)",  # TODO
             location="Newt.files.ensure_dir_exists : Exception"

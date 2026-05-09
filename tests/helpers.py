@@ -22,6 +22,15 @@ Test example:
         }
         print("input_dict:", input_dict)
 
+        with tempfile.TemporaryDirectory() as tmpdir:
+            file_path = os.path.join(tmpdir, "file.txt")
+            dirname_exists = os.path.exists(os.path.dirname(file_path))
+            assert dirname_exists is True
+            print("dirname exists:", dirname_exists)
+        dirname_exists = os.path.exists(os.path.dirname(file_path))
+        assert dirname_exists is False
+        print("dirname exists:", dirname_exists)
+
         with pytest.raises(SystemExit) as exc_info:
             Newt.function(input_dict)
             print("This line will not be printed")
@@ -92,7 +101,7 @@ def print_my_captured(
 
     print("END=========================================")
 
-    # print(captured)
+    # print(captured)  # TODO
 
 
 def format_set_to_str(
