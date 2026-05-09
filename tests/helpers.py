@@ -40,19 +40,19 @@ Test example:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "" == captured.out
-        assert "" == captured.err
         assert "Function:" \
         "\n============================================" \
         "\n" == captured.out
+        assert "" == captured.out
+        assert "" == captured.err
 
         assert captured.err.count("\n::: ERROR :::\n") == 1
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
         assert "::: ERROR :::" not in captured.err
-        ## assert "This line will not be printed" not in captured.out
-        ## assert "This line will not be printed" not in captured.err
+        # assert "This line will not be printed" not in captured.out
+        # assert "This line will not be printed" not in captured.err
 """
 
 import inspect
