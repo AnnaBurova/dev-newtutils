@@ -66,6 +66,7 @@ START=======================================
 Function: test_sorting_sequence_empty
 ============================================
 input_list_1: []
+exc_info: 1
 input_list_2: []
 output_2: []
 
@@ -173,6 +174,7 @@ Function: test_check_dict_keys_missing_and_extra_stop
 ============================================
 input_dict: {'x': 9} / <class 'dict'>
 input_set: {a, b} / <class 'set'>
+exc_info: 1
 
 =====captured.err=====
 [1m[31m
@@ -273,9 +275,13 @@ START=======================================
 Function: test_count_values_by_position_invalid_input_with_stop
 ============================================
 input_list_1: [('a', 'b'), ('c', 'd')]
+exc_info_1: 1
 input_list_2: [('a', 'b'), ('c',)]
+exc_info_2: 1
 input_list_3: [('a', 1), [('b', 2)]]
+exc_info_3: 1
 input_list_4: not a sequence of sequences
+exc_info_4: 1
 
 =====captured.err=====
 [1m[31m
@@ -468,10 +474,15 @@ START=======================================
 Function: test_sorting_dict_by_keys_with_errors_and_stop
 ============================================
 input_dict: {'name': 'Alice'}
+exc_info_1: 1
 input_list: [1, 2, 3]
+exc_info_2: 1
 input_list_mix: [{'name': 'Alice'}, 42, 'string']
+exc_info_3: 1
 input_list_dict_1: [{123: 'Alice'}]
+exc_info_4: 1
 input_list_dict_2: [{'name': 'Alice'}]
+exc_info_5: 1
 
 =====captured.err=====
 [1m[31m
@@ -728,6 +739,7 @@ START=======================================
 Function: test_select_from_input_invalid_type
 ============================================
 invalid_input: not a dict
+exc_info: 1
 
 =====captured.err=====
 [1m[31m
@@ -745,6 +757,7 @@ START=======================================
 Function: test_select_from_input_exit_option_key
 ============================================
 input_dict: {'x': 'Exit should not be a key', '1': 'Option 1'}
+exc_info: 1
 
 =====captured.err=====
 [1m[31m

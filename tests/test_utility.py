@@ -236,6 +236,7 @@ class TestSortingSequence:
             NewtUtil.sorting_sequence(input_list_1)
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         input_list_2 = []
         print("input_list_2:", input_list_2)
@@ -249,6 +250,7 @@ class TestSortingSequence:
         assert "Function: test_sorting_sequence_empty" \
         "\n============================================" \
         "\ninput_list_1: []" \
+        "\nexc_info: 1" \
         "\ninput_list_2: []" \
         "\noutput_2: []" \
         "\n" == captured.out
@@ -432,6 +434,7 @@ class TestCheckDictKeys:
             NewtUtil.check_dict_keys(input_dict, input_set, location="TestCheckDictKeys")
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -440,6 +443,7 @@ class TestCheckDictKeys:
         "\n============================================" \
         "\ninput_dict: {'x': 9} / <class 'dict'>" \
         "\ninput_set: {a, b} / <class 'set'>" \
+        "\nexc_info: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: TestCheckDictKeys > Newt.utility.check_dict_keys" \
@@ -655,6 +659,7 @@ class TestCountValuesByPosition:
             NewtUtil.count_values_by_position(input_list_1, 5, True)
             print("This line will not be printed")
         assert exc_info_1.value.code == 1
+        print("exc_info_1:", exc_info_1.value.code)
 
         input_list_2 = [("a", "b"), ("c",)]
         print("input_list_2:", input_list_2)
@@ -662,6 +667,7 @@ class TestCountValuesByPosition:
             NewtUtil.count_values_by_position(input_list_2, stop=True)
             print("This line will not be printed")
         assert exc_info_2.value.code == 1
+        print("exc_info_2:", exc_info_2.value.code)
 
         input_list_3 = [("a", 1), [("b", 2)]]
         print("input_list_3:", input_list_3)
@@ -669,6 +675,7 @@ class TestCountValuesByPosition:
             NewtUtil.count_values_by_position(input_list_3, stop=True)
             print("This line will not be printed")
         assert exc_info_3.value.code == 1
+        print("exc_info_3:", exc_info_3.value.code)
 
         input_list_4 = "not a sequence of sequences"
         print("input_list_4:", input_list_4)
@@ -676,6 +683,7 @@ class TestCountValuesByPosition:
             NewtUtil.count_values_by_position(input_list_4, stop=True)
             print("This line will not be printed")
         assert exc_info_4.value.code == 1
+        print("exc_info_4:", exc_info_4.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -683,9 +691,13 @@ class TestCountValuesByPosition:
         assert "Function: test_count_values_by_position_invalid_input_with_stop" \
         "\n============================================" \
         "\ninput_list_1: [('a', 'b'), ('c', 'd')]" \
+        "\nexc_info_1: 1" \
         "\ninput_list_2: [('a', 'b'), ('c',)]" \
+        "\nexc_info_2: 1" \
         "\ninput_list_3: [('a', 1), [('b', 2)]]" \
+        "\nexc_info_3: 1" \
         "\ninput_list_4: not a sequence of sequences" \
+        "\nexc_info_4: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.utility.count_values_by_position : seq_len <= position" \
@@ -1299,6 +1311,7 @@ class TestSortingDictByKeys:
             NewtUtil.sorting_dict_by_keys(input_dict)  # type: ignore
             print("This line will not be printed")
         assert exc_info_1.value.code == 1
+        print("exc_info_1:", exc_info_1.value.code)
 
         # List with non-dict elements
         input_list = [1, 2, 3]
@@ -1307,6 +1320,7 @@ class TestSortingDictByKeys:
             NewtUtil.sorting_dict_by_keys(input_list)  # type: ignore
             print("This line will not be printed")
         assert exc_info_2.value.code == 1
+        print("exc_info_2:", exc_info_2.value.code)
 
         # List with mixed valid and invalid elements
         input_list_mix = [{"name": "Alice"}, 42, "string"]
@@ -1315,6 +1329,7 @@ class TestSortingDictByKeys:
             NewtUtil.sorting_dict_by_keys(input_list_mix)
             print("This line will not be printed")
         assert exc_info_3.value.code == 1
+        print("exc_info_3:", exc_info_3.value.code)
 
         # Invalid key type
         input_list_dict_1 = [{123: "Alice"}]
@@ -1323,6 +1338,7 @@ class TestSortingDictByKeys:
             NewtUtil.sorting_dict_by_keys(input_list_dict_1, 123)  # type: ignore
             print("This line will not be printed")
         assert exc_info_4.value.code == 1
+        print("exc_info_4:", exc_info_4.value.code)
 
         # Invalid key type
         input_list_dict_2 = [{"name": "Alice"}]
@@ -1331,6 +1347,7 @@ class TestSortingDictByKeys:
             NewtUtil.sorting_dict_by_keys(input_list_dict_2, 123)  # type: ignore
             print("This line will not be printed")
         assert exc_info_5.value.code == 1
+        print("exc_info_5:", exc_info_5.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -1338,10 +1355,15 @@ class TestSortingDictByKeys:
         assert "Function: test_sorting_dict_by_keys_with_errors_and_stop" \
         "\n============================================" \
         "\ninput_dict: {'name': 'Alice'}" \
+        "\nexc_info_1: 1" \
         "\ninput_list: [1, 2, 3]" \
+        "\nexc_info_2: 1" \
         "\ninput_list_mix: [{'name': 'Alice'}, 42, 'string']" \
+        "\nexc_info_3: 1" \
         "\ninput_list_dict_1: [{123: 'Alice'}]" \
+        "\nexc_info_4: 1" \
         "\ninput_list_dict_2: [{'name': 'Alice'}]" \
+        "\nexc_info_5: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.utility.sorting_dict_by_keys : data_list" \
@@ -1428,9 +1450,7 @@ class TestSelectFromInput:
 
     @patch("newtutils.utility.input")
     def test_select_from_input_all_flows(self, mock_input, capsys):
-        """
-        Test select_from_input behavior across multiple input scenarios.
-        """
+        """ Test select_from_input behavior across multiple input scenarios. """
         print_my_func_name()
 
         missing_values_list = [
@@ -1483,48 +1503,48 @@ class TestSelectFromInput:
         with pytest.raises(SystemExit) as exc_info_5:
             NewtUtil.select_from_input(input_dict)
             print("This line will not be printed")
-        print("exc_info_5:", exc_info_5.value.code)
         assert exc_info_5.value.code == 1
+        print("exc_info_5:", exc_info_5.value.code)
 
         mock_input.side_effect = ["x"]
 
         with pytest.raises(SystemExit) as exc_info_6:
             NewtUtil.select_from_input(input_dict, missing_values_count)
             print("This line will not be printed")
-        print("exc_info_6:", exc_info_6.value.code)
         assert exc_info_6.value.code == 1
+        print("exc_info_6:", exc_info_6.value.code)
 
         mock_input.side_effect = KeyboardInterrupt()
 
         with pytest.raises(SystemExit) as exc_info_7:
             NewtUtil.select_from_input(input_dict)
             print("This line will not be printed")
-        print("exc_info_7:", exc_info_7.value.code)
         assert exc_info_7.value.code == 1
+        print("exc_info_7:", exc_info_7.value.code)
 
         mock_input.side_effect = KeyboardInterrupt()
 
         with pytest.raises(SystemExit) as exc_info_8:
             NewtUtil.select_from_input(input_dict, missing_values_count)
             print("This line will not be printed")
-        print("exc_info_8:", exc_info_8.value.code)
         assert exc_info_8.value.code == 1
+        print("exc_info_8:", exc_info_8.value.code)
 
         mock_input.side_effect = ["a", "b", "c", "d", "e", "f"]
 
         with pytest.raises(SystemExit) as exc_info_9:
             NewtUtil.select_from_input(input_dict)
             print("This line will not be printed")
-        print("exc_info_9:", exc_info_9.value.code)
         assert exc_info_9.value.code == 1
+        print("exc_info_9:", exc_info_9.value.code)
 
         mock_input.side_effect = ["a", "b", "c", "d", "e", "f"]
 
         with pytest.raises(SystemExit) as exc_info_10:
             NewtUtil.select_from_input(input_dict, missing_values_count)
             print("This line will not be printed")
-        print("exc_info_10:", exc_info_10.value.code)
         assert exc_info_10.value.code == 1
+        print("exc_info_10:", exc_info_10.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -1632,6 +1652,7 @@ class TestSelectFromInput:
             NewtUtil.select_from_input(invalid_input)  # type: ignore
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -1639,6 +1660,7 @@ class TestSelectFromInput:
         assert "Function: test_select_from_input_invalid_type" \
         "\n============================================" \
         "\ninvalid_input: not a dict" \
+        "\nexc_info: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.utility.select_from_input : select_dict" \
@@ -1658,7 +1680,7 @@ class TestSelectFromInput:
 
 
     def test_select_from_input_exit_option_key(self, capsys):
-        """Test select_from_input logs error when dict contains the exit key 'x'."""
+        """ Test select_from_input logs error when dict contains the exit key 'x'. """
         print_my_func_name()
 
         input_dict = {
@@ -1671,6 +1693,7 @@ class TestSelectFromInput:
             NewtUtil.select_from_input(input_dict)
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -1678,6 +1701,7 @@ class TestSelectFromInput:
         assert "Function: test_select_from_input_exit_option_key" \
         "\n============================================" \
         "\ninput_dict: {'x': 'Exit should not be a key', '1': 'Option 1'}" \
+        "\nexc_info: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.utility.select_from_input : exit_option" \
