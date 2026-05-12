@@ -29,7 +29,7 @@ class TestDivider:
 
 
     def test_divider_output(self, capsys):
-        """ Verify that NewtCons._divider() prints the expected divider line and no error message. """
+        """ Ensure that NewtCons._divider() prints the expected divider line and no error message. """
         print_my_func_name()
 
         NewtCons._divider()
@@ -89,7 +89,7 @@ class TestErrorMsg:
 
 
     def test_error_msg_without_stop(self, capsys):
-        """ Verify that NewtCons.error_msg() with stop=False prints the error message without raising SystemExit. """
+        """ Ensure NewtCons.error_msg() with stop=False prints error to stderr without raising SystemExit. """
         print_my_func_name()
 
         NewtCons.error_msg("Test error", stop=False)
@@ -114,7 +114,7 @@ class TestErrorMsg:
 
 
     def test_error_msg_multiple_args(self, capsys):
-        """ Check that NewtCons.error_msg() correctly prints multiple error messages when given several arguments. """
+        """ Ensure NewtCons.error_msg() with multiple args prints all messages to stderr correctly. """
         print_my_func_name()
 
         NewtCons.error_msg(
@@ -144,7 +144,7 @@ class TestErrorMsg:
 
 
     def test_error_msg_with_location(self, capsys):
-        """ Verify that NewtCons.error_msg() prints the provided custom location in the error message output. """
+        """ Ensure NewtCons.error_msg() with a custom location prints it correctly to stderr. """
         print_my_func_name()
 
         NewtCons.error_msg(
@@ -176,8 +176,8 @@ class TestValidateType:
     """ Tests for validate_type function. """
 
 
-    def test_validate_type_correct_type_not_empty(self, capsys):
-        """ Test that NewtCons.validate_type() returns True for inputs matching the expected types. """
+    def test_validate_type_returns_true_for_all_basic_types(self, capsys):
+        """ Ensure NewtCons.validate_type() returns True for all basic Python types with valid inputs. """
         print_my_func_name()
 
         input_None = None
@@ -223,7 +223,7 @@ class TestValidateType:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_validate_type_correct_type_not_empty" \
+        assert "Function: test_validate_type_returns_true_for_all_basic_types" \
         "\n============================================" \
         "\ninput_None: None / <class 'NoneType'>" \
         "\ninput_bool: False / <class 'bool'>" \
@@ -246,7 +246,7 @@ class TestValidateType:
 
 
     def test_validate_type_incorrect_type_no_stop(self, capsys):
-        """ Verify that NewtCons.validate_type() returns False and prints error for incorrect type when stop=False. """
+        """ Ensure NewtCons.validate_type() returns False and outputs error to stderr for all mismatched types with stop=False. """
         print_my_func_name()
 
         input_None = None
@@ -365,7 +365,7 @@ class TestValidateType:
 
 
     def test_validate_type_incorrect_type_with_stop(self, capsys):
-        """ Test that NewtCons.validate_type() raises SystemExit with correct error output for invalid type when stop=True. """
+        """ Ensure NewtCons.validate_type() raises SystemExit for all mismatched types and prints errors to stderr with stop=True. """
         print_my_func_name()
 
         input_None = None
@@ -536,7 +536,7 @@ class TestValidateType:
 
 
     def test_validate_type_multiple_types(self, capsys):
-        """ Verify NewtCons.validate_type() handles tuple of allowed types correctly, accepting valid ones and rejecting invalid. """
+        """ Ensure NewtCons.validate_type() accepts values matching a tuple of allowed types and rejects others with stop=False. """
         print_my_func_name()
 
         input_int = 123
@@ -575,7 +575,7 @@ class TestValidateType:
 
 
     def test_validate_type_with_location(self, capsys):
-        """ Test NewtCons.validate_type() returns False and prints error with custom location for incorrect type when stop=False. """
+        """ Ensure NewtCons.validate_type() with stop=False outputs custom location in error message to stderr on type mismatch. """
         print_my_func_name()
 
         input_int = 123
@@ -632,8 +632,8 @@ class TestValidateType:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_validate_type_correct_type_but_empty(self, capsys):
-        """ Test that NewtCons.validate_type() returns True for inputs matching the expected types, but false if inputs are empty. """
+    def test_validate_type_empty_values_with_check_non_empty(self, capsys):
+        """ Ensure NewtCons.validate_type() returns False for all falsy/empty values when check_non_empty=True. """
         print_my_func_name()
 
         input_None = None
@@ -689,7 +689,7 @@ class TestValidateType:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_validate_type_correct_type_but_empty" \
+        assert "Function: test_validate_type_empty_values_with_check_non_empty" \
         "\n============================================" \
         "\ninput_None: None / <class 'NoneType'>" \
         "\ninput_bool: False / <class 'bool'>" \
@@ -751,8 +751,8 @@ class TestValidateType:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_validate_type_unknown_type_and_empty(self, capsys):
-        """ Test that NewtCons.validate_type() returns True for inputs matching the expected types, but false if inputs are empty. """
+    def test_validate_type_unsupported_type_check_non_empty(self, capsys):
+        """ Ensure NewtCons.validate_type() errors when check_non_empty=True is used with an unsupported type like frozenset. """
         print_my_func_name()
 
         input_frozenset = frozenset()
@@ -771,7 +771,7 @@ class TestValidateType:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_validate_type_unknown_type_and_empty" \
+        assert "Function: test_validate_type_unsupported_type_check_non_empty" \
         "\n============================================" \
         "\ninput_frozenset: frozenset() / <class 'frozenset'>" \
         "\ninput_frozenset_stop: frozenset() / <class 'frozenset'>" \
@@ -803,8 +803,8 @@ class TestBeepBoop:
 
 
     @patch("newtutils.console.time.sleep")
-    def test_beep_boop(self, mock_sleep, capsys):
-        """ Test that _beep_boop on Windows triggers two beeps and two sleeps without error output or message at other OS. """
+    def test_beep_boop_platform_behavior(self, mock_sleep, capsys):
+        """ Ensure _beep_boop() calls Beep and sleep twice on Windows, or prints a message on other platforms. """
         print_my_func_name()
 
         if sys.platform == "win32" and os.name == "nt":
@@ -820,11 +820,11 @@ class TestBeepBoop:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            assert "Function: test_beep_boop" \
+            assert "Function: test_beep_boop_platform_behavior" \
             "\n============================================" \
             "\n" == captured.out
         else:
-            assert "Function: test_beep_boop" \
+            assert "Function: test_beep_boop_platform_behavior" \
             "\n============================================" \
             "\n\x1b[1m\x1b[32m" \
             "\nBeep Boop !!!" \
@@ -845,8 +845,8 @@ class TestRetryPause:
 
     @patch("newtutils.console._beep_boop")
     @patch("newtutils.console.time.sleep")
-    def test_retry_pause_with_beep(self, mock_sleep, mock_beep, capsys):
-        """ Test _retry_pause(2) calls _beep_boop once, two sleeps, prints countdown. """
+    def test_retry_pause_two_seconds(self, mock_sleep, mock_beep, capsys):
+        """ Ensure _retry_pause(2) calls _beep_boop once, sleeps twice, and prints a 2-second countdown to stdout. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=2)
@@ -857,7 +857,7 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_retry_pause_with_beep" \
+        assert "Function: test_retry_pause_two_seconds" \
         "\n============================================" \
         "\nRetrying in 2 seconds..." \
         "\nTime left: 2s" \
@@ -877,8 +877,8 @@ class TestRetryPause:
 
     @patch("newtutils.console._beep_boop")
     @patch("newtutils.console.time.sleep")
-    def test_retry_pause_countdown(self, mock_sleep, mock_beep, capsys):
-        """ Test _retry_pause(3, beep=False) skips beep, does three sleeps, prints countdown. """
+    def test_retry_pause_three_seconds_no_beep(self, mock_sleep, mock_beep, capsys):
+        """ Ensure _retry_pause(3, beep=False) skips _beep_boop, sleeps three times, and prints a 3-second countdown. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=3, beep=False)
@@ -888,7 +888,7 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_retry_pause_countdown" \
+        assert "Function: test_retry_pause_three_seconds_no_beep" \
         "\n============================================" \
         "\nRetrying in 3 seconds..." \
         "\nTime left: 3s" \
@@ -907,8 +907,8 @@ class TestRetryPause:
 
 
     @patch("newtutils.console.time.sleep")
-    def test_retry_pause_invalid_type(self, mock_sleep, capsys):
-        """ Test _retry_pause invalid seconds str uses default 5s countdown with error. """
+    def test_retry_pause_falls_back_to_default_on_invalid_type(self, mock_sleep, capsys):
+        """ Ensure _retry_pause() defaults to 5s countdown and outputs a type error to stderr when seconds is not an int. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds="invalid", beep=False)  # type: ignore
@@ -918,7 +918,7 @@ class TestRetryPause:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_retry_pause_invalid_type" \
+        assert "Function: test_retry_pause_falls_back_to_default_on_invalid_type" \
         "\n============================================" \
         "\nRetrying in 5 seconds..." \
         "\nTime left: 5s" \
@@ -944,7 +944,7 @@ class TestRetryPause:
 
     @patch("newtutils.console.time.sleep")
     def test_retry_pause_invalid_seconds(self, mock_sleep, capsys):
-        """ Test _retry_pause(0) falls back to 5s countdown, logs invalid duration error. """
+        """ Ensure _retry_pause(0, beep=False) defaults to 5s countdown and outputs an is_empty error to stderr. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=0, beep=False)
@@ -980,7 +980,7 @@ class TestRetryPause:
 
     @patch("newtutils.console.time.sleep")
     def test_retry_pause_negative_seconds(self, mock_sleep, capsys):
-        """ Test _retry_pause(-1) defaults to 5s countdown, logs invalid duration error. """
+        """ Ensure _retry_pause(-1, beep=False) defaults to 5s countdown and outputs an invalid duration error to stderr. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=-1, beep=False)
@@ -1015,7 +1015,7 @@ class TestRetryPause:
     @patch("newtutils.console._beep_boop")
     @patch("newtutils.console.time.sleep")
     def test_retry_pause_keyboard_interrupt(self, mock_sleep, mock_beep, capsys):
-        """ Test _retry_pause raises SystemExit on KeyboardInterrupt during sleep. """
+        """ Ensure _retry_pause() raises SystemExit and prints a Ctrl+C error to stderr when sleep is interrupted by KeyboardInterrupt. """
         print_my_func_name()
 
         mock_sleep.side_effect = KeyboardInterrupt()
@@ -1060,8 +1060,63 @@ class TestCheckLocation:
     """ Tests for check_location function. """
 
 
+    def test_check_location_invalid_type_both_args(self, capsys):
+        """ Ensure check_location() raises SystemExit via validate_type when either argument is a non-str value. """
+        print_my_func_name()
+
+        location_1 = 123
+        location_2 = "/home/user/project"
+        print(location_1, "==", location_2)
+
+        with pytest.raises(SystemExit) as exc_info_1:
+            NewtCons.check_location(location_1, location_2)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info_1.value.code == 1
+        print("exc_info_1:", exc_info_1.value.code)
+
+        location_3 = "/home/user/project"
+        location_4 = 123
+        print(location_3, "==", location_4)
+
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtCons.check_location(location_3, location_4)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info_2.value.code == 1
+        print("exc_info_2:", exc_info_2.value.code)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_check_location_invalid_type_both_args" \
+        "\n============================================" \
+        "\n123 == /home/user/project" \
+        "\nexc_info_1: 1" \
+        "\n/home/user/project == 123" \
+        "\nexc_info_2: 1" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.check_location : dir_global > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.console.check_location : must_location > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 2
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
+
+
     def test_check_location_match(self, capsys):
-        """ Test check_location matching paths prints START message. """
+        """ Ensure check_location() prints '=== START ===' to stdout when both location paths match. """
         print_my_func_name()
 
         location_1 = "/home/user/project"
@@ -1086,7 +1141,7 @@ class TestCheckLocation:
 
 
     def test_check_location_mismatch(self, capsys):
-        """ Test check_location mismatch raises SystemExit with error message. """
+        """ Ensure check_location() raises SystemExit and prints a mismatch error to stderr when paths differ. """
         print_my_func_name()
 
         location_1 = "/home/user/project"
@@ -1111,45 +1166,6 @@ class TestCheckLocation:
         "\nLocation: Newt.console.check_location : error_msg" \
         "\n::: ERROR :::" \
         "\nCurrent position is wrong, check folder: /home/user/project" \
-        "\n\x1b[0m" \
-        "\n" == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 1
-
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        assert "This line will not be printed" not in captured.out
-        assert "This line will not be printed" not in captured.err
-
-
-    def test_check_location_invalid_type(self, capsys):
-        """ Test check_location non-str arg triggers validate_type SystemExit. """
-        print_my_func_name()
-
-        location_1 = 123
-        location_2 = "/home/user/project"
-        print(location_1, "==", location_2)
-
-        with pytest.raises(SystemExit) as exc_info:
-            NewtCons.check_location(location_1, location_2)  # type: ignore
-            print("This line will not be printed")
-        assert exc_info.value.code == 1
-        print("exc_info:", exc_info.value.code)
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "Function: test_check_location_invalid_type" \
-        "\n============================================" \
-        "\n123 == /home/user/project" \
-        "\nexc_info: 1" \
-        "\n" == captured.out
-        assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.console.check_location : dir_global" \
-        " > Newt.console.validate_type" \
-        "\n::: ERROR :::" \
-        "\nValue: 123\nReceived type: <class 'int'>" \
-        "\nExpected type: <class 'str'>" \
         "\n\x1b[0m" \
         "\n" == captured.err
 

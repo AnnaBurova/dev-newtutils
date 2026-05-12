@@ -87,10 +87,10 @@ Test error
 
 END=========================================
 PASSED
-test_console.py::TestValidateType::test_validate_type_correct_type_not_empty 
+test_console.py::TestValidateType::test_validate_type_returns_true_for_all_basic_types 
 START=======================================
 =====captured.out=====
-Function: test_validate_type_correct_type_not_empty
+Function: test_validate_type_returns_true_for_all_basic_types
 ============================================
 input_None: None / <class 'NoneType'>
 input_bool: False / <class 'bool'>
@@ -351,10 +351,10 @@ Expected type: <class 'frozenset'>
 
 END=========================================
 PASSED
-test_console.py::TestValidateType::test_validate_type_correct_type_but_empty 
+test_console.py::TestValidateType::test_validate_type_empty_values_with_check_non_empty 
 START=======================================
 =====captured.out=====
-Function: test_validate_type_correct_type_but_empty
+Function: test_validate_type_empty_values_with_check_non_empty
 ============================================
 input_None: None / <class 'NoneType'>
 input_bool: False / <class 'bool'>
@@ -441,10 +441,10 @@ Type: <class 'set'>
 
 END=========================================
 PASSED
-test_console.py::TestValidateType::test_validate_type_unknown_type_and_empty 
+test_console.py::TestValidateType::test_validate_type_unsupported_type_check_non_empty 
 START=======================================
 =====captured.out=====
-Function: test_validate_type_unknown_type_and_empty
+Function: test_validate_type_unsupported_type_check_non_empty
 ============================================
 input_frozenset: frozenset() / <class 'frozenset'>
 input_frozenset_stop: frozenset() / <class 'frozenset'>
@@ -468,10 +468,10 @@ Type: <class 'frozenset'>
 
 END=========================================
 PASSED
-test_console.py::TestBeepBoop::test_beep_boop 
+test_console.py::TestBeepBoop::test_beep_boop_platform_behavior 
 START=======================================
 =====captured.out=====
-Function: test_beep_boop
+Function: test_beep_boop_platform_behavior
 ============================================
 [1m[32m
 Beep Boop !!!
@@ -481,10 +481,10 @@ Beep Boop !!!
 (no stderr captured)
 END=========================================
 PASSED
-test_console.py::TestRetryPause::test_retry_pause_with_beep 
+test_console.py::TestRetryPause::test_retry_pause_two_seconds 
 START=======================================
 =====captured.out=====
-Function: test_retry_pause_with_beep
+Function: test_retry_pause_two_seconds
 ============================================
 Retrying in 2 seconds...
 Time left: 2s
@@ -494,10 +494,10 @@ Time left: 1s
 (no stderr captured)
 END=========================================
 PASSED
-test_console.py::TestRetryPause::test_retry_pause_countdown 
+test_console.py::TestRetryPause::test_retry_pause_three_seconds_no_beep 
 START=======================================
 =====captured.out=====
-Function: test_retry_pause_countdown
+Function: test_retry_pause_three_seconds_no_beep
 ============================================
 Retrying in 3 seconds...
 Time left: 3s
@@ -508,10 +508,10 @@ Time left: 1s
 (no stderr captured)
 END=========================================
 PASSED
-test_console.py::TestRetryPause::test_retry_pause_invalid_type 
+test_console.py::TestRetryPause::test_retry_pause_falls_back_to_default_on_invalid_type 
 START=======================================
 =====captured.out=====
-Function: test_retry_pause_invalid_type
+Function: test_retry_pause_falls_back_to_default_on_invalid_type
 ============================================
 Retrying in 5 seconds...
 Time left: 5s
@@ -593,6 +593,34 @@ Retry interrupted by user (Ctrl+C)
 
 END=========================================
 PASSED
+test_console.py::TestCheckLocation::test_check_location_invalid_type_both_args 
+START=======================================
+=====captured.out=====
+Function: test_check_location_invalid_type_both_args
+============================================
+123 == /home/user/project
+exc_info_1: 1
+/home/user/project == 123
+exc_info_2: 1
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.check_location : dir_global > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.console.check_location : must_location > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+
+END=========================================
+PASSED
 test_console.py::TestCheckLocation::test_check_location_match 
 START=======================================
 =====captured.out=====
@@ -618,25 +646,6 @@ exc_info: 1
 Location: Newt.console.check_location : error_msg
 ::: ERROR :::
 Current position is wrong, check folder: /home/user/project
-[0m
-
-END=========================================
-PASSED
-test_console.py::TestCheckLocation::test_check_location_invalid_type 
-START=======================================
-=====captured.out=====
-Function: test_check_location_invalid_type
-============================================
-123 == /home/user/project
-exc_info: 1
-
-=====captured.err=====
-[1m[31m
-Location: Newt.console.check_location : dir_global > Newt.console.validate_type
-::: ERROR :::
-Value: 123
-Received type: <class 'int'>
-Expected type: <class 'str'>
 [0m
 
 END=========================================

@@ -79,7 +79,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_validate_type_correct_type_not_empty
+Function: test_validate_type_returns_true_for_all_basic_types
 ============================================
 input_None: None / <class 'NoneType'>
 input_bool: False / <class 'bool'>
@@ -338,7 +338,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_validate_type_correct_type_but_empty
+Function: test_validate_type_empty_values_with_check_non_empty
 ============================================
 input_None: None / <class 'NoneType'>
 input_bool: False / <class 'bool'>
@@ -427,7 +427,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_validate_type_unknown_type_and_empty
+Function: test_validate_type_unsupported_type_check_non_empty
 ============================================
 input_frozenset: frozenset() / <class 'frozenset'>
 input_frozenset_stop: frozenset() / <class 'frozenset'>
@@ -453,7 +453,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_beep_boop
+Function: test_beep_boop_platform_behavior
 ============================================
 
 =====captured.err=====
@@ -462,7 +462,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_retry_pause_with_beep
+Function: test_retry_pause_two_seconds
 ============================================
 Retrying in 2 seconds...
 Time left: 2s
@@ -474,7 +474,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_retry_pause_countdown
+Function: test_retry_pause_three_seconds_no_beep
 ============================================
 Retrying in 3 seconds...
 Time left: 3s
@@ -487,7 +487,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_retry_pause_invalid_type
+Function: test_retry_pause_falls_back_to_default_on_invalid_type
 ============================================
 Retrying in 5 seconds...
 Time left: 5s
@@ -568,6 +568,33 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
+Function: test_check_location_invalid_type_both_args
+============================================
+123 == /home/user/project
+exc_info_1: 1
+/home/user/project == 123
+exc_info_2: 1
+
+=====captured.err=====
+[1m[31m
+Location: Newt.console.check_location : dir_global > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.console.check_location : must_location > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
 Function: test_check_location_match
 ============================================
 /home/user/project == /home/user/project
@@ -589,24 +616,6 @@ exc_info: 1
 Location: Newt.console.check_location : error_msg
 ::: ERROR :::
 Current position is wrong, check folder: /home/user/project
-[0m
-
-END=========================================
-.
-START=======================================
-=====captured.out=====
-Function: test_check_location_invalid_type
-============================================
-123 == /home/user/project
-exc_info: 1
-
-=====captured.err=====
-[1m[31m
-Location: Newt.console.check_location : dir_global > Newt.console.validate_type
-::: ERROR :::
-Value: 123
-Received type: <class 'int'>
-Expected type: <class 'str'>
 [0m
 
 END=========================================
