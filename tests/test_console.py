@@ -29,7 +29,7 @@ class TestDivider:
 
 
     def test_divider_output(self, capsys):
-        """ Ensure that NewtCons._divider() prints the expected divider line and no error message. """
+        """ Ensure NewtCons._divider() prints the expected divider line and no error message. """
         print_my_func_name()
 
         NewtCons._divider()
@@ -57,7 +57,7 @@ class TestErrorMsg:
 
 
     def test_error_msg_with_stop(self, capsys):
-        """ Ensure that NewtCons.error_msg() with stop=True raises SystemExit and prints the correct error output. """
+        """ Ensure NewtCons.error_msg() with stop=True raises SystemExit and prints the correct error output. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info:
@@ -804,7 +804,7 @@ class TestBeepBoop:
 
     @patch("newtutils.console.time.sleep")
     def test_beep_boop_platform_behavior(self, mock_sleep, capsys):
-        """ Ensure _beep_boop() calls Beep and sleep twice on Windows, or prints a message on other platforms. """
+        """ Ensure NewtCons._beep_boop() calls Beep and sleep twice on Windows, or prints a message on other platforms. """
         print_my_func_name()
 
         if sys.platform == "win32" and os.name == "nt":
@@ -846,7 +846,7 @@ class TestRetryPause:
     @patch("newtutils.console._beep_boop")
     @patch("newtutils.console.time.sleep")
     def test_retry_pause_two_seconds(self, mock_sleep, mock_beep, capsys):
-        """ Ensure _retry_pause(2) calls _beep_boop once, sleeps twice, and prints a 2-second countdown to stdout. """
+        """ Ensure NewtCons._retry_pause(2) calls _beep_boop once, sleeps twice, and prints a 2-second countdown to stdout. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=2)
@@ -878,7 +878,7 @@ class TestRetryPause:
     @patch("newtutils.console._beep_boop")
     @patch("newtutils.console.time.sleep")
     def test_retry_pause_three_seconds_no_beep(self, mock_sleep, mock_beep, capsys):
-        """ Ensure _retry_pause(3, beep=False) skips _beep_boop, sleeps three times, and prints a 3-second countdown. """
+        """ Ensure NewtCons._retry_pause(3, beep=False) skips _beep_boop, sleeps three times, and prints a 3-second countdown. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=3, beep=False)
@@ -908,7 +908,7 @@ class TestRetryPause:
 
     @patch("newtutils.console.time.sleep")
     def test_retry_pause_falls_back_to_default_on_invalid_type(self, mock_sleep, capsys):
-        """ Ensure _retry_pause() defaults to 5s countdown and outputs a type error to stderr when seconds is not an int. """
+        """ Ensure NewtCons._retry_pause() defaults to 5s countdown and outputs a type error to stderr when seconds is not an int. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds="invalid", beep=False)  # type: ignore
@@ -944,7 +944,7 @@ class TestRetryPause:
 
     @patch("newtutils.console.time.sleep")
     def test_retry_pause_invalid_seconds(self, mock_sleep, capsys):
-        """ Ensure _retry_pause(0, beep=False) defaults to 5s countdown and outputs an is_empty error to stderr. """
+        """ Ensure NewtCons._retry_pause(0, beep=False) defaults to 5s countdown and outputs an is_empty error to stderr. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=0, beep=False)
@@ -980,7 +980,7 @@ class TestRetryPause:
 
     @patch("newtutils.console.time.sleep")
     def test_retry_pause_negative_seconds(self, mock_sleep, capsys):
-        """ Ensure _retry_pause(-1, beep=False) defaults to 5s countdown and outputs an invalid duration error to stderr. """
+        """ Ensure NewtCons._retry_pause(-1, beep=False) defaults to 5s countdown and outputs an invalid duration error to stderr. """
         print_my_func_name()
 
         NewtCons._retry_pause(seconds=-1, beep=False)
@@ -1015,7 +1015,7 @@ class TestRetryPause:
     @patch("newtutils.console._beep_boop")
     @patch("newtutils.console.time.sleep")
     def test_retry_pause_keyboard_interrupt(self, mock_sleep, mock_beep, capsys):
-        """ Ensure _retry_pause() raises SystemExit and prints a Ctrl+C error to stderr when sleep is interrupted by KeyboardInterrupt. """
+        """ Ensure NewtCons._retry_pause() raises SystemExit and prints a Ctrl+C error to stderr when sleep is interrupted by KeyboardInterrupt. """
         print_my_func_name()
 
         mock_sleep.side_effect = KeyboardInterrupt()
@@ -1061,7 +1061,7 @@ class TestCheckLocation:
 
 
     def test_check_location_invalid_type_both_args(self, capsys):
-        """ Ensure check_location() raises SystemExit via validate_type when either argument is a non-str value. """
+        """ Ensure NewtCons.check_location() raises SystemExit via validate_type when either argument is a non-str value. """
         print_my_func_name()
 
         location_1 = 123
@@ -1116,7 +1116,7 @@ class TestCheckLocation:
 
 
     def test_check_location_match(self, capsys):
-        """ Ensure check_location() prints '=== START ===' to stdout when both location paths match. """
+        """ Ensure NewtCons.check_location() prints '=== START ===' to stdout when both location paths match. """
         print_my_func_name()
 
         location_1 = "/home/user/project"
@@ -1141,7 +1141,7 @@ class TestCheckLocation:
 
 
     def test_check_location_mismatch(self, capsys):
-        """ Ensure check_location() raises SystemExit and prints a mismatch error to stderr when paths differ. """
+        """ Ensure NewtCons.check_location() raises SystemExit and prints a mismatch error to stderr when paths differ. """
         print_my_func_name()
 
         location_1 = "/home/user/project"

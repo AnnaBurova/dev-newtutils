@@ -25,8 +25,109 @@ class TestSortingSequence:
     """ Tests for sorting_sequence function. """
 
 
+    def test_sorting_sequence_empty_input(self, capsys):
+        """ Ensure NewtUtil.sorting_sequence() raises SystemExit and returns [] for empty input. """
+        print_my_func_name()
+
+        input_list_1 = []
+        print("input_list_1:", input_list_1)
+        with pytest.raises(SystemExit) as exc_info:
+            NewtUtil.sorting_sequence(input_list_1)
+            print("This line will not be printed")
+        assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
+
+        input_list_2 = []
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.sorting_sequence(input_list_2, stop=False)
+        print("output_2:", output_2)
+        assert output_2 == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_sorting_sequence_empty_input" \
+        "\n============================================" \
+        "\ninput_list_1: []" \
+        "\nexc_info: 1" \
+        "\ninput_list_2: []" \
+        "\noutput_2: []" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence : data_sequence" \
+        " > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: []\nType: <class 'list'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence : data_sequence" \
+        " > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: []\nType: <class 'list'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 2
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
+
+
+    def test_sorting_sequence_not_a_list(self, capsys):
+        """ Ensure NewtUtil.sorting_sequence() returns [] and logs errors for invalid input types. """
+        print_my_func_name()
+
+        input_str_1 = "not a list"
+        print("input_str_1:", input_str_1)
+        output_1 = NewtUtil.sorting_sequence(input_str_1, stop=False)
+        print("output_1:", output_1)
+        assert output_1 == []
+
+        input_list_2 = [1, [1]]
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.sorting_sequence(input_list_2, stop=False)
+        print("output_2:", output_2)
+        assert output_2 == []
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_sorting_sequence_not_a_list" \
+        "\n============================================" \
+        "\ninput_str_1: not a list\noutput_1: []" \
+        "\ninput_list_2: [1, [1]]\noutput_2: []" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence : data_sequence > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: not a list\nReceived type: <class 'str'>" \
+        "\nExpected type: (<class 'list'>, <class 'tuple'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence.is_valid_seq_value" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: [1]\nReceived type: <class 'list'>" \
+        "\nExpected type: (<class 'NoneType'>, <class 'bool'>, <class 'int'>," \
+        " <class 'float'>, <class 'str'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.sorting_sequence : data_sequence not all" \
+        "\n::: ERROR :::" \
+        "\ndata_sequence must have only special types" \
+        "\ndata_sequence: [1, [1]]" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 3
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+
+
     def test_sorting_sequence_integers(self, capsys):
-        """ Test sorting_sequence removes duplicates from integers, returns unique sorted. """
+        """ Ensure NewtUtil.sorting_sequence() deduplicates and sorts numeric lists correctly. """
         print_my_func_name()
 
         input_list_1 = [3, 1, 2, 3, 5, 1]
@@ -85,7 +186,7 @@ class TestSortingSequence:
 
 
     def test_sorting_sequence_strings(self, capsys):
-        """ Test sorting_sequence removes duplicates from strings, returns unique sorted. """
+        """ Ensure NewtUtil.sorting_sequence() deduplicates and sorts string lists correctly. """
         print_my_func_name()
 
         input_list_1 = ["c", "a", "b", "c", "z"]
@@ -164,7 +265,7 @@ class TestSortingSequence:
 
 
     def test_sorting_sequence_mixed(self, capsys):
-        """ Test sorting_sequence handles mixed str/int, removes duplicates, sorts uniquely. """
+        """ Ensure NewtUtil.sorting_sequence() deduplicates and sorts mixed-type lists correctly. """
         print_my_func_name()
 
         input_list_1 = ["f", 4, "a", 2, "b", 1, "a"]
@@ -206,15 +307,25 @@ class TestSortingSequence:
 
         assert "Function: test_sorting_sequence_mixed" \
         "\n============================================" \
-        "\ninput_list_1: ['f', 4, 'a', 2, 'b', 1, 'a']" \
-        "\noutput_1: ['a', 'b', 'f', 1, 2, 4]" \
-        "\ninput_list_2: [1, 4.0, True, None, 'a', (5.0, 2, False, None, 'b'," \
+        "\ninput_list_1:" \
+        " ['f', 4, 'a', 2, 'b', 1, 'a']" \
+        "\noutput_1:" \
+        " ['a', 'b', 'f', 1, 2, 4]" \
+        "\ninput_list_2:" \
+        " [1, 4.0, True, None, 'a'," \
+        " (5.0, 2, False, None, 'b'," \
         " (6, 3.0, True, None, 'c'))]" \
-        "\noutput_2: ['a', 1, 4, None, True, ('b', 2, 5, False, None," \
+        "\noutput_2:" \
+        " ['a', 1, 4, None, True," \
+        " ('b', 2, 5, False, None," \
         " ('c', 3, 6, None, True))]" \
-        "\ninput_list_3: [(3.0, 6.1, True, None, 'c'), (5.0, 2, False, None, 'b')," \
+        "\ninput_list_3:" \
+        " [(3.0, 6.1, True, None, 'c')," \
+        " (5.0, 2, False, None, 'b')," \
         " (6, 3, True, None, 'c')]" \
-        "\noutput_3: [('b', 2, 5, False, None), ('c', 3, 6, None, True)," \
+        "\noutput_3:" \
+        " [('b', 2, 5, False, None)," \
+        " ('c', 3, 6, None, True)," \
         " ('c', 3, 6.1, None, True)]" \
         "\n" == captured.out
         assert "" == captured.err
@@ -226,114 +337,12 @@ class TestSortingSequence:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_sorting_sequence_empty(self, capsys):
-        """ Test sorting_sequence returns empty list for empty input. """
-        print_my_func_name()
-
-        input_list_1 = []
-        print("input_list_1:", input_list_1)
-        with pytest.raises(SystemExit) as exc_info:
-            NewtUtil.sorting_sequence(input_list_1)
-            print("This line will not be printed")
-        assert exc_info.value.code == 1
-        print("exc_info:", exc_info.value.code)
-
-        input_list_2 = []
-        print("input_list_2:", input_list_2)
-        output_2 = NewtUtil.sorting_sequence(input_list_2, stop=False)
-        print("output_2:", output_2)
-        assert output_2 == []
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "Function: test_sorting_sequence_empty" \
-        "\n============================================" \
-        "\ninput_list_1: []" \
-        "\nexc_info: 1" \
-        "\ninput_list_2: []" \
-        "\noutput_2: []" \
-        "\n" == captured.out
-        assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.sorting_sequence : data_sequence" \
-        " > Newt.console.validate_type : is_empty" \
-        "\n::: ERROR :::" \
-        "\nValue must not be empty" \
-        "\nValue: []\nType: <class 'list'>" \
-        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.sorting_sequence : data_sequence" \
-        " > Newt.console.validate_type : is_empty" \
-        "\n::: ERROR :::" \
-        "\nValue must not be empty" \
-        "\nValue: []\nType: <class 'list'>" \
-        "\n\x1b[0m" \
-        "\n" == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 2
-
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        assert "This line will not be printed" not in captured.out
-        assert "This line will not be printed" not in captured.err
-
-
-    def test_sorting_sequence_not_a_list(self, capsys):
-        """ Test sorting_sequence non-list input returns empty list with error logged. """
-        print_my_func_name()
-
-        input_str_1 = "not a list"
-        print("input_str_1:", input_str_1)
-        output_1 = NewtUtil.sorting_sequence(input_str_1, stop=False)
-        print("output_1:", output_1)
-        assert output_1 == []
-
-        input_list_2 = [1, [1]]
-        print("input_list_2:", input_list_2)
-        output_2 = NewtUtil.sorting_sequence(input_list_2, stop=False)
-        print("output_2:", output_2)
-        assert output_2 == []
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "Function: test_sorting_sequence_not_a_list" \
-        "\n============================================" \
-        "\ninput_str_1: not a list\noutput_1: []" \
-        "\ninput_list_2: [1, [1]]\noutput_2: []" \
-        "\n" == captured.out
-        assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.sorting_sequence : data_sequence" \
-        " > Newt.console.validate_type" \
-        "\n::: ERROR :::" \
-        "\nValue: not a list\nReceived type: <class 'str'>" \
-        "\nExpected type: (<class 'list'>, <class 'tuple'>)" \
-        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.sorting_sequence.is_valid_seq_value" \
-        " > Newt.console.validate_type" \
-        "\n::: ERROR :::" \
-        "\nValue: [1]\nReceived type: <class 'list'>" \
-        "\nExpected type: (<class 'NoneType'>, <class 'bool'>, <class 'int'>," \
-        " <class 'float'>, <class 'str'>)" \
-        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.sorting_sequence : data_sequence not all" \
-        "\n::: ERROR :::" \
-        "\ndata_sequence must have only special types" \
-        "\ndata_sequence: [1, [1]]" \
-        "\n\x1b[0m" \
-        "\n" == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 3
-
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
 class TestCheckDictKeys:
     """ Tests for check_dict_keys function. """
 
 
     def test_check_dict_keys_all_present(self, capsys):
-        """ Test check_dict_keys returns True for exact key match. """
+        """ Ensure NewtUtil.check_dict_keys() returns True when all expected keys are present. """
         print_my_func_name()
 
         input_dict = {"a": 1, "b": 2}
@@ -360,7 +369,7 @@ class TestCheckDictKeys:
 
 
     def test_check_dict_keys_missing_keys_no_stop(self, capsys):
-        """ Test check_dict_keys missing key returns False, logs details with stop=False. """
+        """ Ensure NewtUtil.check_dict_keys() returns False and logs missing keys with stop=False. """
         print_my_func_name()
 
         input_dict = {"a": 1, "b": 2}
@@ -391,7 +400,7 @@ class TestCheckDictKeys:
 
 
     def test_check_dict_keys_extra_keys_no_stop(self, capsys):
-        """ Test check_dict_keys extra key returns False, logs details with stop=False. """
+        """ Ensure NewtUtil.check_dict_keys() returns False and logs unexpected keys with stop=False. """
         print_my_func_name()
 
         input_dict = {"a": 1, "b": 2, "c": 3}
@@ -422,7 +431,7 @@ class TestCheckDictKeys:
 
 
     def test_check_dict_keys_missing_and_extra_stop(self, capsys):
-        """ Test check_dict_keys mismatch with stop=True raises SystemExit. """
+        """ Ensure NewtUtil.check_dict_keys() raises SystemExit for missing and unexpected keys. """
         print_my_func_name()
 
         input_dict = {"x": 9}
@@ -464,8 +473,70 @@ class TestCountValuesByPosition:
     """ Tests for count_values_by_position function. """
 
 
+    def test_count_values_by_position_invalid_input(self, capsys):
+        """ Ensure NewtUtil.count_values_by_position() handles empty inputs and raises SystemExit on invalid type. """
+        print_my_func_name()
+
+        input_list_1 = []
+        print("input_list_1:", input_list_1)
+        output_1 = NewtUtil.count_values_by_position(input_list_1)
+        print("output_1:", output_1)
+        assert output_1 == {}
+
+        input_list_2 = ()
+        print("input_list_2:", input_list_2)
+        output_2 = NewtUtil.count_values_by_position(input_list_2)
+        print("output_2:", output_2)
+        assert output_2 == {}
+
+        input_list_3 = "not a sequence of sequences"
+        print("input_list_3:", input_list_3)
+        with pytest.raises(SystemExit) as exc_info_3:
+            NewtUtil.count_values_by_position(input_list_3, stop=True)
+            print("This line will not be printed")
+        assert exc_info_3.value.code == 1
+        print("exc_info_3:", exc_info_3.value.code)
+
+        print("input_list_4:", input_list_3)
+        output_4 = NewtUtil.count_values_by_position(input_list_3)
+        print("output_4:", output_4)
+        assert output_4 == {}
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_count_values_by_position_invalid_input" \
+        "\n============================================" \
+        "\ninput_list_1: []\noutput_1: {}" \
+        "\ninput_list_2: ()\noutput_2: {}" \
+        "\ninput_list_3: not a sequence of sequences\nexc_info_3: 1" \
+        "\ninput_list_4: not a sequence of sequences\noutput_4: {}" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : data_sequence" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: not a sequence of sequences\nReceived type: <class 'str'>" \
+        "\nExpected type: (<class 'list'>, <class 'tuple'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.count_values_by_position : data_sequence" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: not a sequence of sequences\nReceived type: <class 'str'>" \
+        "\nExpected type: (<class 'list'>, <class 'tuple'>)" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 2
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
+
+
     def test_count_values_by_position_no_errors(self, capsys):
-        """ Test count_values_by_position returns correct counts for valid input. """
+        """ Ensure NewtUtil.count_values_by_position() returns correct value counts for each position index. """
         print_my_func_name()
 
         input_list = [
@@ -499,8 +570,12 @@ class TestCountValuesByPosition:
 
         assert "Function: test_count_values_by_position_no_errors" \
         "\n============================================" \
-        "\ninput_list: [('admin', 1, 'Stockholm'), ('user', 2, 'Oslo')," \
-        " ('admin', 3, 'Stockholm'), ('user', 4, 'Berlin'), ('admin', 5, 'Oslo')]" \
+        "\ninput_list: " \
+        "[('admin', 1, 'Stockholm')," \
+        " ('user', 2, 'Oslo')," \
+        " ('admin', 3, 'Stockholm')," \
+        " ('user', 4, 'Berlin')," \
+        " ('admin', 5, 'Oslo')]" \
         "\noutput_1: {'admin': 3, 'user': 2}" \
         "\noutput_2: {'admin': 3, 'user': 2}" \
         "\noutput_3: {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}" \
@@ -515,49 +590,35 @@ class TestCountValuesByPosition:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_count_values_by_position_edge_cases(self, capsys):
-        """ Test count_values_by_position handles edge cases: empty input, single element, tuple outer sequence. """
+    def test_count_values_by_position_valid_single_and_tuple(self, capsys):
+        """ Ensure NewtUtil.count_values_by_position() counts correctly for single-item and outer-tuple inputs. """
         print_my_func_name()
 
-        input_list_1 = []
+        input_list_1 = [("only", 5)]
         print("input_list_1:", input_list_1)
         output_1 = NewtUtil.count_values_by_position(input_list_1)
         print("output_1:", output_1)
-        assert output_1 == {}
+        assert output_1 == {"only": 1}
 
-        input_list_2 = [("only", 1)]
-        print("input_list_2:", input_list_2)
-        output_2 = NewtUtil.count_values_by_position(input_list_2)
+        print("input_list_2:", input_list_1)
+        output_2 = NewtUtil.count_values_by_position(input_list_1, 1)
         print("output_2:", output_2)
-        assert output_2 == {"only": 1}
+        assert output_2 == {5: 1}
 
-        print("input_list_3:", input_list_2)
-        output_3 = NewtUtil.count_values_by_position(input_list_2, 1)
+        input_list_3 = (["only", 5],)
+        print("input_list_3:", input_list_3)
+        output_3 = NewtUtil.count_values_by_position(input_list_3)
         print("output_3:", output_3)
-        assert output_3 == {1: 1}
-
-        input_list_4 = ()
-        print("input_list_4:", input_list_4)
-        output_4 = NewtUtil.count_values_by_position(input_list_4)
-        print("output_4:", output_4)
-        assert output_4 == {}
-
-        input_list_5 = (["only", 1],)
-        print("input_list_5:", input_list_5)
-        output_5 = NewtUtil.count_values_by_position(input_list_5)
-        print("output_5:", output_5)
-        assert output_5 == {"only": 1}
+        assert output_3 == {"only": 1}
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_count_values_by_position_edge_cases" \
+        assert "Function: test_count_values_by_position_valid_single_and_tuple" \
         "\n============================================" \
-        "\ninput_list_1: []\noutput_1: {}" \
-        "\ninput_list_2: [('only', 1)]\noutput_2: {'only': 1}" \
-        "\ninput_list_3: [('only', 1)]\noutput_3: {1: 1}" \
-        "\ninput_list_4: ()\noutput_4: {}" \
-        "\ninput_list_5: (['only', 1],)\noutput_5: {'only': 1}" \
+        "\ninput_list_1: [('only', 5)]\noutput_1: {'only': 1}" \
+        "\ninput_list_2: [('only', 5)]\noutput_2: {5: 1}" \
+        "\ninput_list_3: (['only', 5],)\noutput_3: {'only': 1}" \
         "\n" == captured.out
         assert "" == captured.err
 
@@ -569,7 +630,7 @@ class TestCountValuesByPosition:
 
 
     def test_count_values_by_position_invalid_input_no_stop(self, capsys):
-        """ Test count_values_by_position returns empty dict on invalid input without stopping execution. """
+        """ Ensure NewtUtil.count_values_by_position() returns {} on invalid input when stop=False. """
         print_my_func_name()
 
         input_list_1 = [("a", "b"), ("c", "d")]
@@ -590,17 +651,11 @@ class TestCountValuesByPosition:
         print("output_3:", output_3)
         assert output_3 == {}
 
-        input_list_4 = "not a sequence of sequences"
+        input_list_4 = [("a", "b"), ("c", "d")]
         print("input_list_4:", input_list_4)
-        output_4 = NewtUtil.count_values_by_position(input_list_4)
+        output_4 = NewtUtil.count_values_by_position(input_list_4, "5")  # type: ignore
         print("output_4:", output_4)
-        assert output_4 == {}
-
-        input_list_5 = [("a", "b"), ("c", "d")]
-        print("input_list_5:", input_list_5)
-        output_5 = NewtUtil.count_values_by_position(input_list_5, "5")  # type: ignore
-        print("output_5:", output_5)
-        assert output_5 == {"a": 1, "c": 1}
+        assert output_4 == {"a": 1, "c": 1}
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -610,8 +665,7 @@ class TestCountValuesByPosition:
         "\ninput_list_1: [('a', 'b'), ('c', 'd')]\noutput_1: {}" \
         "\ninput_list_2: [('a', 'b'), ('c',)]\noutput_2: {}" \
         "\ninput_list_3: [('a', 1), [('b', 2)]]\noutput_3: {}" \
-        "\ninput_list_4: not a sequence of sequences\noutput_4: {}" \
-        "\ninput_list_5: [('a', 'b'), ('c', 'd')]\noutput_5: {'a': 1, 'c': 1}" \
+        "\ninput_list_4: [('a', 'b'), ('c', 'd')]\noutput_4: {'a': 1, 'c': 1}" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.utility.count_values_by_position : seq_len <= position" \
@@ -628,13 +682,6 @@ class TestCountValuesByPosition:
         "\nValue: [('b', 2)]\nReceived type: <class 'list'>" \
         "\nExpected type: <class 'tuple'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.count_values_by_position : data_sequence" \
-        " > Newt.console.validate_type" \
-        "\n::: ERROR :::" \
-        "\nValue: not a sequence of sequences" \
-        "\nReceived type: <class 'str'>" \
-        "\nExpected type: (<class 'list'>, <class 'tuple'>)" \
-        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
         "\nLocation: Newt.utility.count_values_by_position : position" \
         " > Newt.console.validate_type" \
         "\n::: ERROR :::" \
@@ -643,14 +690,14 @@ class TestCountValuesByPosition:
         "\n\x1b[0m" \
         "\n" == captured.err
 
-        assert captured.err.count("\n::: ERROR :::\n") == 5
+        assert captured.err.count("\n::: ERROR :::\n") == 4
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
     def test_count_values_by_position_invalid_input_with_stop(self, capsys):
-        """ Test count_values_by_position raises SystemExit on invalid input when stop=True. """
+        """ Ensure NewtUtil.count_values_by_position() raises SystemExit on invalid input with stop=True. """
         print_my_func_name()
 
         input_list_1 = [("a", "b"), ("c", "d")]
@@ -677,14 +724,6 @@ class TestCountValuesByPosition:
         assert exc_info_3.value.code == 1
         print("exc_info_3:", exc_info_3.value.code)
 
-        input_list_4 = "not a sequence of sequences"
-        print("input_list_4:", input_list_4)
-        with pytest.raises(SystemExit) as exc_info_4:
-            NewtUtil.count_values_by_position(input_list_4, stop=True)
-            print("This line will not be printed")
-        assert exc_info_4.value.code == 1
-        print("exc_info_4:", exc_info_4.value.code)
-
         captured = capsys.readouterr()
         print_my_captured(captured)
 
@@ -696,8 +735,6 @@ class TestCountValuesByPosition:
         "\nexc_info_2: 1" \
         "\ninput_list_3: [('a', 1), [('b', 2)]]" \
         "\nexc_info_3: 1" \
-        "\ninput_list_4: not a sequence of sequences" \
-        "\nexc_info_4: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.utility.count_values_by_position : seq_len <= position" \
@@ -713,16 +750,10 @@ class TestCountValuesByPosition:
         "\n::: ERROR :::" \
         "\nValue: [('b', 2)]\nReceived type: <class 'list'>" \
         "\nExpected type: <class 'tuple'>" \
-        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.count_values_by_position : data_sequence" \
-        " > Newt.console.validate_type" \
-        "\n::: ERROR :::" \
-        "\nValue: not a sequence of sequences\nReceived type: <class 'str'>" \
-        "\nExpected type: (<class 'list'>, <class 'tuple'>)" \
         "\n\x1b[0m" \
         "\n" == captured.err
 
-        assert captured.err.count("\n::: ERROR :::\n") == 4
+        assert captured.err.count("\n::: ERROR :::\n") == 3
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
@@ -735,7 +766,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_by_keys_no_error(self, capsys):
-        """ Test sorting_dict_by_keys with single key, multiple keys, reverse, and no keys. """
+        """ Ensure NewtUtil.sorting_dict_by_keys() sorts by one key, multiple keys, reverse, and no keys. """
         print_my_func_name()
 
         input_list_dict = [
@@ -870,7 +901,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_by_keys_missing_keys(self, capsys):
-        """ Test sorting_dict_by_keys places missing key dicts at end. """
+        """ Ensure NewtUtil.sorting_dict_by_keys() places dicts with missing keys, None, and empty dicts last. """
         print_my_func_name()
 
         input_list_dict = [
@@ -936,7 +967,8 @@ class TestSortingDictByKeys:
         "\n============================================" \
         "\ninput_list_dict: " \
         "[{'name': 'Charlie', 'age': 25}," \
-        " {'name': 'Bob'}, {}," \
+        " {'name': 'Bob'}," \
+        " {}," \
         " {'name': 'Alice', 'age': 20}," \
         " {'name': 'Aska', 'age': None}," \
         " None," \
@@ -947,9 +979,11 @@ class TestSortingDictByKeys:
         " {'name': 'Charlie', 'age': 25}," \
         " {'name': 'Aska', 'age': None}," \
         " {'name': 'Bob'}," \
-        " {}, None]" \
+        " {}," \
+        " None]" \
         "\noutput_dict_2: " \
-        "[None, {}," \
+        "[None," \
+        " {}," \
         " {'name': 'Bob'}," \
         " {'name': 'Aska', 'age': None}," \
         " {'name': 'Charlie', 'age': 25}," \
@@ -960,7 +994,8 @@ class TestSortingDictByKeys:
         " None," \
         " {'name': 'Aska', 'age': None}," \
         " {'name': 'Alice', 'age': 20}," \
-        " {}, {'name': 'Bob'}," \
+        " {}," \
+        " {'name': 'Bob'}," \
         " {'name': 'Charlie', 'age': 25}]" \
         "\n" == captured.out
         assert "" == captured.err
@@ -973,7 +1008,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_by_keys_with_complex_value_types(self, capsys):
-        """ Test sorting_dict_by_keys sorts unsupported value types using fallback string conversion. """
+        """ Ensure NewtUtil.sorting_dict_by_keys() sorts mixed value types using fallback string conversion. """
         print_my_func_name()
 
         input_list_dict = [
@@ -1052,7 +1087,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_by_keys_single_key(self, capsys):
-        """ Test sorting_dict_by_keys with single-key dicts: wrong key, correct key, no key. """
+        """ Ensure NewtUtil.sorting_dict_by_keys() handles wrong key, correct key, no key, and reverse on single-key dicts. """
         print_my_func_name()
 
         input_list_dict = [
@@ -1166,7 +1201,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_by_keys_with_errors_no_stop(self, capsys):
-        """ Test sorting_dict_by_keys handles invalid input without raising exceptions. """
+        """ Ensure NewtUtil.sorting_dict_by_keys() returns [] and logs errors on invalid input when stop=False. """
         print_my_func_name()
 
         # Not a list
@@ -1225,8 +1260,7 @@ class TestSortingDictByKeys:
         "\ninput_None: None\noutput_7: []" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.sorting_dict_by_keys : data_list" \
-        " > Newt.console.validate_type" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type" \
         "\n::: ERROR :::" \
         "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>" \
         "\nExpected type: <class 'list'>" \
@@ -1301,7 +1335,7 @@ class TestSortingDictByKeys:
 
 
     def test_sorting_dict_by_keys_with_errors_and_stop(self, capsys):
-        """ Test sorting_dict_by_keys handles invalid input with raising exceptions. """
+        """ Ensure NewtUtil.sorting_dict_by_keys() raises SystemExit on invalid input when stop=True. """
         print_my_func_name()
 
         # Not a list
@@ -1366,8 +1400,7 @@ class TestSortingDictByKeys:
         "\nexc_info_5: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.sorting_dict_by_keys : data_list" \
-        " > Newt.console.validate_type" \
+        "\nLocation: Newt.utility.sorting_dict_by_keys : data_list > Newt.console.validate_type" \
         "\n::: ERROR :::" \
         "\nValue: {'name': 'Alice'}\nReceived type: <class 'dict'>" \
         "\nExpected type: <class 'list'>" \
@@ -1450,7 +1483,7 @@ class TestSelectFromInput:
 
     @patch("newtutils.utility.input")
     def test_select_from_input_all_flows(self, mock_input, capsys):
-        """ Test select_from_input behavior across multiple input scenarios. """
+        """ Ensure NewtUtil.select_from_input() handles valid input, retries, cancel, interrupt, and max attempts. """
         print_my_func_name()
 
         missing_values_list = [
@@ -1551,8 +1584,12 @@ class TestSelectFromInput:
 
         assert "Function: test_select_from_input_all_flows" \
         "\n============================================" \
-        "\nmissing_values_list: [(1, 'admin', 'Stockholm'), (2, 'user', 'Oslo')," \
-        " (3, 'user', 'Stockholm'), (4, 'user', 'Berlin'), (5, 'admin', 'Oslo')]" \
+        "\nmissing_values_list: " \
+        "[(1, 'admin', 'Stockholm')," \
+        " (2, 'user', 'Oslo')," \
+        " (3, 'user', 'Stockholm')," \
+        " (4, 'user', 'Berlin')," \
+        " (5, 'admin', 'Oslo')]" \
         "\nmissing_values_count: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}" \
         "\ninput_dict: {'1': 'Oslo', '2': 'Stockholm', '3': 'Berlin', '4': 'Madrid'}" \
         "\n\n4 Available options to choose from:" \
@@ -1641,8 +1678,8 @@ class TestSelectFromInput:
         assert "This line will not be printed" not in captured.err
 
 
-    def test_select_from_input_invalid_type(self, capsys):
-        """ Test select_from_input non-dict arg triggers validate_type SystemExit. """
+    def test_select_from_input_invalid_dict_type(self, capsys):
+        """ Ensure NewtUtil.select_from_input() raises SystemExit when argument is not a dict. """
         print_my_func_name()
 
         invalid_input = "not a dict"
@@ -1657,14 +1694,13 @@ class TestSelectFromInput:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_select_from_input_invalid_type" \
+        assert "Function: test_select_from_input_invalid_dict_type" \
         "\n============================================" \
         "\ninvalid_input: not a dict" \
         "\nexc_info: 1" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.utility.select_from_input : select_dict" \
-        " > Newt.console.validate_type" \
+        "\nLocation: Newt.utility.select_from_input : select_dict > Newt.console.validate_type" \
         "\n::: ERROR :::" \
         "\nValue: not a dict\nReceived type: <class 'str'>" \
         "\nExpected type: <class 'dict'>" \
@@ -1680,7 +1716,7 @@ class TestSelectFromInput:
 
 
     def test_select_from_input_exit_option_key(self, capsys):
-        """ Test select_from_input logs error when dict contains the exit key 'x'. """
+        """ Ensure NewtUtil.select_from_input() raises SystemExit when dict contains reserved key 'x'. """
         print_my_func_name()
 
         input_dict = {

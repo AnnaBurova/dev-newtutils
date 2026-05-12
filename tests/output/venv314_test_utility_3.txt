@@ -3,67 +3,12 @@ platform win32 -- Python 3.14.4, pytest-9.0.3, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collected 22 items
+collected 23 items
 
 test_utility.py 
 START=======================================
 =====captured.out=====
-Function: test_sorting_sequence_integers
-============================================
-input_list_1: [3, 1, 2, 3, 5, 1]
-output_1: [1, 2, 3, 5]
-input_list_2: [1]
-output_2: [1]
-input_list_3: [1, 1, 1, 1]
-output_3: [1]
-input_list_4: [1, 3, 2.5]
-output_4: [1, 2.5, 3]
-input_list_5: [100, 1, 50.0, 50, 1000, 5]
-output_5: [1, 5, 50, 100, 1000]
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
-Function: test_sorting_sequence_strings
-============================================
-input_list_1: ['c', 'a', 'b', 'c', 'z']
-output_1: ['a', 'b', 'c', 'z']
-input_list_2: ['a']
-output_2: ['a']
-input_list_3: ['a', 'a', 'a', 'a']
-output_3: ['a']
-input_list_4: ['ab', 'a', 'b', 'aa']
-output_4: ['a', 'aa', 'ab', 'b']
-input_list_5: ['ab', 'a', 'aaaa', 'aaa', 'aa']
-output_5: ['a', 'aa', 'aaa', 'aaaa', 'ab']
-input_list_6: ['!', '.', ',', '?', 'ä', 'a', 'ö', 'o', 'ü', 'u', '$', '#', '@', '%', '^', '(', ')', '{', '}', '[', ']', '_', '-', '+', '*', '/', '0', '5', '1', '10', '11', '9']
-output_6: ['!', '#', '$', '%', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '10', '11', '5', '9', '?', '@', '[', ']', '^', '_', 'a', 'o', 'u', '{', '}', 'ä', 'ö', 'ü']
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
-Function: test_sorting_sequence_mixed
-============================================
-input_list_1: ['f', 4, 'a', 2, 'b', 1, 'a']
-output_1: ['a', 'b', 'f', 1, 2, 4]
-input_list_2: [1, 4.0, True, None, 'a', (5.0, 2, False, None, 'b', (6, 3.0, True, None, 'c'))]
-output_2: ['a', 1, 4, None, True, ('b', 2, 5, False, None, ('c', 3, 6, None, True))]
-input_list_3: [(3.0, 6.1, True, None, 'c'), (5.0, 2, False, None, 'b'), (6, 3, True, None, 'c')]
-output_3: [('b', 2, 5, False, None), ('c', 3, 6, None, True), ('c', 3, 6.1, None, True)]
-
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-START=======================================
-=====captured.out=====
-Function: test_sorting_sequence_empty
+Function: test_sorting_sequence_empty_input
 ============================================
 input_list_1: []
 exc_info: 1
@@ -119,6 +64,61 @@ data_sequence must have only special types
 data_sequence: [1, [1]]
 [0m
 
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_sequence_integers
+============================================
+input_list_1: [3, 1, 2, 3, 5, 1]
+output_1: [1, 2, 3, 5]
+input_list_2: [1]
+output_2: [1]
+input_list_3: [1, 1, 1, 1]
+output_3: [1]
+input_list_4: [1, 3, 2.5]
+output_4: [1, 2.5, 3]
+input_list_5: [100, 1, 50.0, 50, 1000, 5]
+output_5: [1, 5, 50, 100, 1000]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_sequence_strings
+============================================
+input_list_1: ['c', 'a', 'b', 'c', 'z']
+output_1: ['a', 'b', 'c', 'z']
+input_list_2: ['a']
+output_2: ['a']
+input_list_3: ['a', 'a', 'a', 'a']
+output_3: ['a']
+input_list_4: ['ab', 'a', 'b', 'aa']
+output_4: ['a', 'aa', 'ab', 'b']
+input_list_5: ['ab', 'a', 'aaaa', 'aaa', 'aa']
+output_5: ['a', 'aa', 'aaa', 'aaaa', 'ab']
+input_list_6: ['!', '.', ',', '?', 'ä', 'a', 'ö', 'o', 'ü', 'u', '$', '#', '@', '%', '^', '(', ')', '{', '}', '[', ']', '_', '-', '+', '*', '/', '0', '5', '1', '10', '11', '9']
+output_6: ['!', '#', '$', '%', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '10', '11', '5', '9', '?', '@', '[', ']', '^', '_', 'a', 'o', 'u', '{', '}', 'ä', 'ö', 'ü']
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_sorting_sequence_mixed
+============================================
+input_list_1: ['f', 4, 'a', 2, 'b', 1, 'a']
+output_1: ['a', 'b', 'f', 1, 2, 4]
+input_list_2: [1, 4.0, True, None, 'a', (5.0, 2, False, None, 'b', (6, 3.0, True, None, 'c'))]
+output_2: ['a', 1, 4, None, True, ('b', 2, 5, False, None, ('c', 3, 6, None, True))]
+input_list_3: [(3.0, 6.1, True, None, 'c'), (5.0, 2, False, None, 'b'), (6, 3, True, None, 'c')]
+output_3: [('b', 2, 5, False, None), ('c', 3, 6, None, True), ('c', 3, 6.1, None, True)]
+
+=====captured.err=====
+(no stderr captured)
 END=========================================
 .
 START=======================================
@@ -189,6 +189,37 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
+Function: test_count_values_by_position_invalid_input
+============================================
+input_list_1: []
+output_1: {}
+input_list_2: ()
+output_2: {}
+input_list_3: not a sequence of sequences
+exc_info_3: 1
+input_list_4: not a sequence of sequences
+output_4: {}
+
+=====captured.err=====
+[1m[31m
+Location: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type
+::: ERROR :::
+Value: not a sequence of sequences
+Received type: <class 'str'>
+Expected type: (<class 'list'>, <class 'tuple'>)
+[0m
+[1m[31m
+Location: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type
+::: ERROR :::
+Value: not a sequence of sequences
+Received type: <class 'str'>
+Expected type: (<class 'list'>, <class 'tuple'>)
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
 Function: test_count_values_by_position_no_errors
 ============================================
 input_list: [('admin', 1, 'Stockholm'), ('user', 2, 'Oslo'), ('admin', 3, 'Stockholm'), ('user', 4, 'Berlin'), ('admin', 5, 'Oslo')]
@@ -203,18 +234,14 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_count_values_by_position_edge_cases
+Function: test_count_values_by_position_valid_single_and_tuple
 ============================================
-input_list_1: []
-output_1: {}
-input_list_2: [('only', 1)]
-output_2: {'only': 1}
-input_list_3: [('only', 1)]
-output_3: {1: 1}
-input_list_4: ()
-output_4: {}
-input_list_5: (['only', 1],)
-output_5: {'only': 1}
+input_list_1: [('only', 5)]
+output_1: {'only': 1}
+input_list_2: [('only', 5)]
+output_2: {5: 1}
+input_list_3: (['only', 5],)
+output_3: {'only': 1}
 
 =====captured.err=====
 (no stderr captured)
@@ -230,10 +257,8 @@ input_list_2: [('a', 'b'), ('c',)]
 output_2: {}
 input_list_3: [('a', 1), [('b', 2)]]
 output_3: {}
-input_list_4: not a sequence of sequences
-output_4: {}
-input_list_5: [('a', 'b'), ('c', 'd')]
-output_5: {'a': 1, 'c': 1}
+input_list_4: [('a', 'b'), ('c', 'd')]
+output_4: {'a': 1, 'c': 1}
 
 =====captured.err=====
 [1m[31m
@@ -252,13 +277,6 @@ Location: Newt.utility.count_values_by_position : seq_type > Newt.console.valida
 Value: [('b', 2)]
 Received type: <class 'list'>
 Expected type: <class 'tuple'>
-[0m
-[1m[31m
-Location: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type
-::: ERROR :::
-Value: not a sequence of sequences
-Received type: <class 'str'>
-Expected type: (<class 'list'>, <class 'tuple'>)
 [0m
 [1m[31m
 Location: Newt.utility.count_values_by_position : position > Newt.console.validate_type
@@ -280,8 +298,6 @@ input_list_2: [('a', 'b'), ('c',)]
 exc_info_2: 1
 input_list_3: [('a', 1), [('b', 2)]]
 exc_info_3: 1
-input_list_4: not a sequence of sequences
-exc_info_4: 1
 
 =====captured.err=====
 [1m[31m
@@ -300,13 +316,6 @@ Location: Newt.utility.count_values_by_position : seq_type > Newt.console.valida
 Value: [('b', 2)]
 Received type: <class 'list'>
 Expected type: <class 'tuple'>
-[0m
-[1m[31m
-Location: Newt.utility.count_values_by_position : data_sequence > Newt.console.validate_type
-::: ERROR :::
-Value: not a sequence of sequences
-Received type: <class 'str'>
-Expected type: (<class 'list'>, <class 'tuple'>)
 [0m
 
 END=========================================
@@ -736,7 +745,7 @@ END=========================================
 .
 START=======================================
 =====captured.out=====
-Function: test_select_from_input_invalid_type
+Function: test_select_from_input_invalid_dict_type
 ============================================
 invalid_input: not a dict
 exc_info: 1
@@ -770,4 +779,4 @@ Dict keys: dict_keys(['x', '1'])
 END=========================================
 .
 
-============================= 22 passed in 0.05s ==============================
+============================= 23 passed in 0.05s ==============================
