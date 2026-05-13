@@ -14,6 +14,8 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - `newtutils/files.py`:
   - `check_file_exists()`:
     - New readability check for files, verifying that a file is readable before processing.
+  - `obscure_logic()`:
+    - Performs the masking logic using a character-level replacement approach with walrus operator support.
 
 ### Changed
 
@@ -24,8 +26,10 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - `check_file_exists()`:
     - Refactored function for improved clarity and structure.
     - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
-    - `obscure_logic()` inner function performs the masking logic using a character-level replacement approach with walrus operator support.
     - `msg_file_path` variable used in place of raw `file_path` in all error messages when `obscure_list` is provided.
+  - `_normalize_newlines()`:
+    - Now strips trailing whitespace with `rstrip()` before replacing newlines, and appends a trailing `\n` to the result.
+    - Now also converts old Mac-style `\r` line endings to Unix `\n`, in addition to Windows-style `\r\n`.
 
 ### Testing
 

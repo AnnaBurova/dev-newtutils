@@ -5,6 +5,11 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
+    def _obscure_logic(
+        file_path_str: str,
+        show_list: list[str],
+        mask_char: str = "*"
+        ) -> str
     def ensure_dir_exists(
         file_path: str
         ) -> None
@@ -14,11 +19,6 @@ Functions:
         stop: bool = True,
         print_log: bool = True
         ) -> bool
-            def obscure_logic(
-                file_path_str: str,
-                show_list: list[str],
-                mask_char: str = "*"
-                ) -> str
     def _normalize_newlines(
         text: str
         ) -> str
@@ -91,6 +91,47 @@ from datetime import datetime, timedelta, timezone
 
 import newtutils.console as NewtCons
 import newtutils.utility as NewtUtil
+
+
+def _obscure_logic(
+        file_path_str: str,
+        show_list: list[str],
+        mask_char: str = "*"
+        ) -> str:
+    """ ## Replace all characters in a string except specified substrings with a mask character.
+
+    Builds a fully masked version of `file_path_str` using `mask_char`,
+    then iterates over `show_list` and restores each matching substring
+    back to its original characters using the walrus operator `:=` for
+    position lookup.
+
+    Args:
+        file_path_str (str):
+            The original string (e.g. a file path) to be masked.
+        show_list (list[str]):
+            A list of substrings that should remain visible (unmasked) in the result.<br>
+            All other characters will be replaced by `mask_char`.
+        mask_char (str):
+            The character used to mask hidden parts of the string.<br>
+            Defaults to "*".
+
+    Returns:
+        out (str):
+            A masked version of `file_path_str` where every character is replaced by `mask_char`,
+            except for occurrences of substrings found in `show_list`.
+    """
+
+    masked_text = list(mask_char * len(file_path_str))
+
+    for substring in show_list:
+        start = 0
+        # walrus operator :=
+        while (pos := file_path_str.find(substring, start)) != -1:
+            for i in range(pos, pos + len(substring)):
+                masked_text[i] = file_path_str[i]
+            start = pos + len(substring)
+
+    return "".join(masked_text)
 
 
 def ensure_dir_exists(
@@ -181,30 +222,9 @@ def check_file_exists(
     ):
         return False
 
-    # --------------------------------------------------------------------------
-    def obscure_logic(
-            file_path_str: str,
-            show_list: list[str],
-            mask_char: str = "*"
-            ) -> str:
-        """ Replace all characters except substrings in show_list with mask_char. """
-
-        masked_text = list(mask_char * len(file_path_str))
-
-        for substring in show_list:
-            start = 0
-            # walrus operator :=
-            while (pos := file_path_str.find(substring, start)) != -1:
-                for i in range(pos, pos + len(substring)):
-                    masked_text[i] = file_path_str[i]
-                start = pos + len(substring)
-
-        return "".join(masked_text)
-    # --------------------------------------------------------------------------
-
     msg_file_path = file_path
     if obscure_list:
-        msg_file_path = obscure_logic(file_path, obscure_list)
+        msg_file_path = _obscure_logic(file_path, obscure_list)
 
     if os.path.isfile(file_path):
         if os.access(file_path, os.R_OK):
