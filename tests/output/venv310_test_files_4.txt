@@ -3,7 +3,7 @@ platform win32 -- Python 3.10.11, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 7 items
+collecting ... collected 8 items
 
 test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path 
 START=======================================
@@ -152,5 +152,19 @@ File not found: C:\Users\*******\AppData\Local\Temp\***********
 
 END=========================================
 PASSED
+test_files.py::TestNormalizeNewlines::test_converts_windows_newlines 
+START=======================================
+=====captured.out=====
+Function: test_converts_windows_newlines
+============================================
+text_1: 'line1\r\nline2\r\nline3\r\nline4\r\nline5\r\n'
+result_1: 'line1\nline2\nline3\nline4\nline5\n'
+text_2: '    line1\r\nline2\nline3\r\nline4\rline5\r\n'
+result_2: '    line1\nline2\nline3\nline4\nline5\n'
 
-============================== 7 passed in 0.03s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 8 passed in 0.03s ==============================

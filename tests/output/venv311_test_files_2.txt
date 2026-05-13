@@ -3,14 +3,15 @@ platform win32 -- Python 3.11.9, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv3
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 7 items
+collecting ... collected 8 items
 
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path PASSED [ 14%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_current_directory PASSED [ 28%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_directory_exists PASSED [ 42%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_directory PASSED [ 57%]
-test_files.py::TestCheckFileExists::test_check_file_exists_invalid_file_name PASSED [ 71%]
-test_files.py::TestCheckFileExists::test_check_file_exists_not_found PASSED [ 85%]
-test_files.py::TestCheckFileExists::test_check_file_exists_obscure PASSED [100%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path PASSED [ 12%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_current_directory PASSED [ 25%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_directory_exists PASSED [ 37%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_directory PASSED [ 50%]
+test_files.py::TestCheckFileExists::test_check_file_exists_invalid_file_name PASSED [ 62%]
+test_files.py::TestCheckFileExists::test_check_file_exists_not_found PASSED [ 75%]
+test_files.py::TestCheckFileExists::test_check_file_exists_obscure PASSED [ 87%]
+test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [100%]
 
-============================== 7 passed in 0.03s ==============================
+============================== 8 passed in 0.03s ==============================

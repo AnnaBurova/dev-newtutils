@@ -3,7 +3,7 @@ platform win32 -- Python 3.14.4, pytest-9.0.3, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 plugins: cov-7.1.0
-collected 7 items
+collected 8 items
 
 test_files.py 
 START=======================================
@@ -146,5 +146,18 @@ File not found: C:\Users\*******\AppData\Local\Temp\***********
 
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_converts_windows_newlines
+============================================
+text_1: 'line1\r\nline2\r\nline3\r\nline4\r\nline5\r\n'
+result_1: 'line1\nline2\nline3\nline4\nline5\n'
+text_2: '    line1\r\nline2\nline3\r\nline4\rline5\r\n'
+result_2: '    line1\nline2\nline3\nline4\nline5\n'
 
-============================== 7 passed in 0.04s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 8 passed in 0.05s ==============================

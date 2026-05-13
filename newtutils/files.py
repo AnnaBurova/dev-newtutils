@@ -232,10 +232,9 @@ def check_file_exists(
 def _normalize_newlines(
         text: str
         ) -> str:
-    """
-    Normalize newline characters in a text string to Unix-style newlines.
+    """ ## Normalize newline characters in a text string to Unix-style newlines.
 
-    Converts Windows-style newlines (`\r\n`) and old Mac-style (`\r`) to Unix-style (`\n`).
+    Converts Windows-style newlines (\\r\\n) and old Mac-style (\\r) to Unix-style (\\n).
     Strips trailing whitespace from the end of the normalized text.
 
     Args:
@@ -244,15 +243,15 @@ def _normalize_newlines(
 
     Returns:
         out (str):
-            Normalized text with consistent Unix-style newlines (`\n`).
+            Normalized text with consistent Unix-style newlines (\\n).
     """
 
     NewtCons.validate_type(
         text, str,
-        location="Newt.files._normalize_newlines : text"
+        location="Newt.files._normalize_newlines"
     )
 
-    return text.replace("\r\n", "\n").rstrip()
+    return text.rstrip().replace("\r\n", "\n").replace("\r", "\n")+"\n"
 
 
 def choose_file_from_folder(

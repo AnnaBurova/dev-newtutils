@@ -9,7 +9,7 @@ Function _beep_boop will make no sound.
 Expected platform: win32 / Got: linux
 Expected OS name:  nt    / Got: posix
 
-collected 7 items
+collected 8 items
 
 test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path 
 START=======================================
@@ -158,5 +158,19 @@ File not found: /tmp/***********
 
 END=========================================
 PASSED
+test_files.py::TestNormalizeNewlines::test_converts_windows_newlines 
+START=======================================
+=====captured.out=====
+Function: test_converts_windows_newlines
+============================================
+text_1: 'line1\r\nline2\r\nline3\r\nline4\r\nline5\r\n'
+result_1: 'line1\nline2\nline3\nline4\nline5\n'
+text_2: '    line1\r\nline2\nline3\r\nline4\rline5\r\n'
+result_2: '    line1\nline2\nline3\nline4\nline5\n'
 
-============================== 7 passed in 0.19s ===============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 8 passed in 0.20s ===============================
