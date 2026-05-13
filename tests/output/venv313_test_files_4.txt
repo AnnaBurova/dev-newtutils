@@ -3,7 +3,7 @@ platform win32 -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 5 items
+collecting ... collected 7 items
 
 test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path 
 START=======================================
@@ -28,7 +28,7 @@ START=======================================
 =====captured.out=====
 Function: test_ensure_dir_exists_current_directory
 ============================================
-dirname exists: False
+dirname_exists: False
 
 =====captured.err=====
 (no stderr captured)
@@ -39,8 +39,9 @@ START=======================================
 =====captured.out=====
 Function: test_ensure_dir_exists_directory_exists
 ============================================
-dirname exists: True
-dirname exists: False
+dirname_exists: True
+dirname_exists: True
+dirname_exists: False
 
 =====captured.err=====
 (no stderr captured)
@@ -51,8 +52,9 @@ START=======================================
 =====captured.out=====
 Function: test_ensure_dir_exists_nested_directory
 ============================================
-dirname exists: True
-dirname exists: False
+dirname_exists: False
+dirname_exists: True
+dirname_exists: False
 
 =====captured.err=====
 (no stderr captured)
@@ -102,5 +104,53 @@ Type: <class 'str'>
 
 END=========================================
 PASSED
+test_files.py::TestCheckFileExists::test_check_file_exists_not_found 
+START=======================================
+=====captured.out=====
+Function: test_check_file_exists_not_found
+============================================
+file_name: file.txt
+check_1: False
+exc_info_2: 1
+check_3: False
+exc_info_4: 1
 
-============================== 5 passed in 0.02s ==============================
+=====captured.err=====
+[1m[31m
+Location: Newt.files.check_file_exists : print_log
+::: ERROR :::
+File not found: file.txt
+[0m
+[1m[31m
+Location: Newt.files.check_file_exists : print_log
+::: ERROR :::
+File not found: file.txt
+[0m
+[1m[31m
+Location: Newt.files.check_file_exists : print_log
+::: ERROR :::
+File not found: file.txt
+[0m
+
+END=========================================
+PASSED
+test_files.py::TestCheckFileExists::test_check_file_exists_obscure 
+START=======================================
+=====captured.out=====
+Function: test_check_file_exists_obscure
+============================================
+check_1: True
+check_2: True
+check_3: False
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.check_file_exists : print_log
+::: ERROR :::
+File not found: C:\Users\*******\AppData\Local\Temp\***********
+[0m
+
+END=========================================
+PASSED
+
+============================== 7 passed in 0.02s ==============================

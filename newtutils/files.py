@@ -10,9 +10,15 @@ Functions:
         ) -> None
     def check_file_exists(
         file_path: str,
+        obscure_list: list = [],
         stop: bool = True,
         print_log: bool = True
         ) -> bool
+            def obscure_logic(
+                file_path_str: str,
+                show_list: list[str],
+                mask_char: str = "*"
+                ) -> str
     def _normalize_newlines(
         text: str
         ) -> str
@@ -133,6 +139,7 @@ def ensure_dir_exists(
 
 def check_file_exists(
         file_path: str,
+        obscure_list: list = [],
         stop: bool = True,
         print_log: bool = True
         ) -> bool:
@@ -145,6 +152,11 @@ def check_file_exists(
     Args:
         file_path (str):
             Full path to the file to verify.
+        obscure_list (list):
+            List of substrings to keep visible in log messages.<br>
+            All other characters in `file_path` will be masked with `*`.<br>
+            If empty, the full path is shown as-is.<br>
+            Defaults to [].
         stop (bool):
             If True, stops execution on any validation failure.<br>
             Defaults to True.
@@ -169,21 +181,47 @@ def check_file_exists(
     ):
         return False
 
+    # --------------------------------------------------------------------------
+    def obscure_logic(
+            file_path_str: str,
+            show_list: list[str],
+            mask_char: str = "*"
+            ) -> str:
+        """ Replace all characters except substrings in show_list with mask_char. """
+
+        masked_text = list(mask_char * len(file_path_str))
+
+        for substring in show_list:
+            start = 0
+            # walrus operator :=
+            while (pos := file_path_str.find(substring, start)) != -1:
+                for i in range(pos, pos + len(substring)):
+                    masked_text[i] = file_path_str[i]
+                start = pos + len(substring)
+
+        return "".join(masked_text)
+    # --------------------------------------------------------------------------
+
+    msg_file_path = file_path
+    if obscure_list:
+        msg_file_path = obscure_logic(file_path, obscure_list)
+
     if os.path.isfile(file_path):
         if os.access(file_path, os.R_OK):
             return True
 
-        NewtCons.error_msg(
-            f"File is not readable: {file_path}",
+        NewtCons.error_msg(  # pragma: no cover
+            f"Found Error Msg: (found? write test!)",  # TODO
+            f"File is not readable: {msg_file_path}",
             location="Newt.files.check_file_exists : os.access",
             stop=stop
         )
 
-        return False
+        return False  # pragma: no cover
 
     if print_log or stop:
         NewtCons.error_msg(
-            f"File not found: {file_path}",
+            f"File not found: {msg_file_path}",
             location="Newt.files.check_file_exists : print_log",
             stop=stop
         )

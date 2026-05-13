@@ -31,7 +31,7 @@ class TestEnsureDirExists:
 
 
     def test_ensure_dir_exists_empty_path(self, capsys):
-        """ Verify empty file_path triggers validate_type SystemExit. """
+        """ Ensure NewtFiles.ensure_dir_exists() raises SystemExit on empty path. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info:
@@ -65,21 +65,22 @@ class TestEnsureDirExists:
 
 
     def test_ensure_dir_exists_current_directory(self, capsys):
-        """ Verify NewtFiles.ensure_dir_exists() skips dir creation and errors for current dir files. """
+        """ Ensure NewtFiles.ensure_dir_exists() handles current-directory file paths without errors. """
         print_my_func_name()
 
         file_path = "file.txt"
         NewtFiles.ensure_dir_exists(file_path)
+
         dirname_exists = os.path.exists(os.path.dirname(file_path))
         assert dirname_exists is False
-        print("dirname exists:", dirname_exists)
+        print("dirname_exists:", dirname_exists)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
         assert "Function: test_ensure_dir_exists_current_directory" \
         "\n============================================" \
-        "\ndirname exists: False" \
+        "\ndirname_exists: False" \
         "\n" == captured.out
         assert "" == captured.err
 
@@ -91,26 +92,34 @@ class TestEnsureDirExists:
 
 
     def test_ensure_dir_exists_directory_exists(self, capsys):
-        """ Verify existing directory path does not call os.makedirs(). """
+        """ Ensure NewtFiles.ensure_dir_exists() skips makedirs when directory already exists. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "file.txt")
-            NewtFiles.ensure_dir_exists(file_path)
+
             dirname_exists = os.path.exists(os.path.dirname(file_path))
             assert dirname_exists is True
-            print("dirname exists:", dirname_exists)
+            print("dirname_exists:", dirname_exists)
+
+            NewtFiles.ensure_dir_exists(file_path)
+
+            dirname_exists = os.path.exists(os.path.dirname(file_path))
+            assert dirname_exists is True
+            print("dirname_exists:", dirname_exists)
+
         dirname_exists = os.path.exists(os.path.dirname(file_path))
         assert dirname_exists is False
-        print("dirname exists:", dirname_exists)
+        print("dirname_exists:", dirname_exists)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
         assert "Function: test_ensure_dir_exists_directory_exists" \
         "\n============================================" \
-        "\ndirname exists: True" \
-        "\ndirname exists: False" \
+        "\ndirname_exists: True" \
+        "\ndirname_exists: True" \
+        "\ndirname_exists: False" \
         "\n" == captured.out
         assert "" == captured.err
 
@@ -122,26 +131,34 @@ class TestEnsureDirExists:
 
 
     def test_ensure_dir_exists_nested_directory(self, capsys):
-        """ Test ensure_dir_exists creates nested parent directories. """
+        """ Ensure NewtFiles.ensure_dir_exists() creates nested parent directories. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
+
+            dirname_exists = os.path.exists(os.path.dirname(file_path))
+            assert dirname_exists is False
+            print("dirname_exists:", dirname_exists)
+
             NewtFiles.ensure_dir_exists(file_path)
+
             dirname_exists = os.path.exists(os.path.dirname(file_path))
             assert dirname_exists is True
-            print("dirname exists:", dirname_exists)
+            print("dirname_exists:", dirname_exists)
+
         dirname_exists = os.path.exists(os.path.dirname(file_path))
         assert dirname_exists is False
-        print("dirname exists:", dirname_exists)
+        print("dirname_exists:", dirname_exists)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
         assert "Function: test_ensure_dir_exists_nested_directory" \
         "\n============================================" \
-        "\ndirname exists: True" \
-        "\ndirname exists: False" \
+        "\ndirname_exists: False" \
+        "\ndirname_exists: True" \
+        "\ndirname_exists: False" \
         "\n" == captured.out
         assert "" == captured.err
 
@@ -157,7 +174,7 @@ class TestCheckFileExists:
 
 
     def test_check_file_exists_invalid_file_name(self, capsys):
-        """ Test check_file_exists with invalid inputs: wrong type (int) and empty string. """
+        """ Ensure NewtFiles.check_file_exists() raises SystemExit for invalid file names. """
         print_my_func_name()
 
         file_name_1 = 123
@@ -191,12 +208,8 @@ class TestCheckFileExists:
 
         assert "Function: test_check_file_exists_invalid_file_name" \
         "\n============================================" \
-        "\nfile_name_1: 123" \
-        "\nexc_info_1: 1" \
-        "\ncheck_1: False" \
-        "\nfile_name_2: " \
-        "\nexc_info_2: 1" \
-        "\ncheck_2: False" \
+        "\nfile_name_1: 123\nexc_info_1: 1\ncheck_1: False" \
+        "\nfile_name_2: \nexc_info_2: 1\ncheck_2: False" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.files.check_file_exists : file_path" \
@@ -233,58 +246,122 @@ class TestCheckFileExists:
         assert "This line will not be printed" not in captured.err
 
 
-    def test_existing_file_returns(self, capsys):
-        """ Test NewtFiles.check_file_exists(): True for existing, False for missing, SystemExit with stop=True. """
+    def test_check_file_exists_not_found(self, capsys):
+        """ Ensure NewtFiles.check_file_exists() returns False and exits for missing file. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(delete=False) as tmp:
-            tmp.write(b"test")
-            tmp_path = tmp.name
+        file_name = "file.txt"
+        print("file_name:", file_name)
+
+        check_1 = NewtFiles.check_file_exists(file_name, stop=False, print_log=False)
+        assert check_1 is False
+        print("check_1:", check_1)
+
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtFiles.check_file_exists(file_name, stop=True, print_log=False)
+            print("This line will not be printed")
+        assert exc_info_2.value.code == 1
+        print("exc_info_2:", exc_info_2.value.code)
+
+        check_3 = NewtFiles.check_file_exists(file_name, stop=False, print_log=True)
+        assert check_3 is False
+        print("check_3:", check_3)
+
+        with pytest.raises(SystemExit) as exc_info_4:
+            NewtFiles.check_file_exists(file_name, stop=True, print_log=True)
+            print("This line will not be printed")
+        assert exc_info_4.value.code == 1
+        print("exc_info_4:", exc_info_4.value.code)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_check_file_exists_not_found" \
+        "\n============================================" \
+        "\nfile_name: file.txt" \
+        "\ncheck_1: False" \
+        "\nexc_info_2: 1" \
+        "\ncheck_3: False" \
+        "\nexc_info_4: 1" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : print_log" \
+        "\n::: ERROR :::" \
+        "\nFile not found: file.txt" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : print_log" \
+        "\n::: ERROR :::" \
+        "\nFile not found: file.txt" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : print_log" \
+        "\n::: ERROR :::" \
+        "\nFile not found: file.txt" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 3
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
+
+
+    def test_check_file_exists_obscure(self, capsys):
+        """ Ensure NewtFiles.check_file_exists() obscures path in error output for missing file. """
+        print_my_func_name()
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as tmpfile:
+            tmpfile.write("test")
+            tmpfile_path = tmpfile.name
+
+            check_1 = NewtFiles.check_file_exists(tmpfile_path)
+            assert check_1 is True
+            print("check_1:", check_1)
 
         try:
-            assert NewtFiles.check_file_exists(tmp_path) is True
+            check_2 = NewtFiles.check_file_exists(tmpfile_path)
+            assert check_2 is True
+            print("check_2:", check_2)
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(tmpfile_path):
+                os.unlink(tmpfile_path)
 
-        with pytest.raises(SystemExit) as exc_info:
-            NewtFiles.check_file_exists(tmp_path)
-            print("This line will not be printed")
-        assert exc_info.value.code == 1
-
-        assert NewtFiles.check_file_exists(tmp_path, stop=False) is False
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert captured.out.count("\nLocation: Newt.files.check_file_exists : logging\n") == 2
-        assert captured.out.count("\nFile not found: ") == 2
-        # Expected absence of result
-        assert "This line will not be printed" not in captured.out
-
-
-    def test_invalid_filepath_raises_exit(self, capsys):
-        """ Test NewtFiles.check_file_exists() raises SystemExit or returns False for invalid input. """
-        print_my_func_name()
-
-        assert NewtFiles.check_file_exists("123", stop=False) is False
-
-        assert NewtFiles.check_file_exists("abc", stop=False, logging=False) is False
+        obscure_list = [
+            "C:\\Users\\",
+            "\\AppData\\Local\\Temp\\",
+            "/tmp/",
+            ]
+        check_3 = NewtFiles.check_file_exists(tmpfile_path, obscure_list, stop=False)
+        assert check_3 is False
+        print("check_3:", check_3)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert "\nLocation: Newt.console.validate_input > Newt.files.check_file_exists : file_path\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
-        assert "\nValue: 123\n" in captured.out
-        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
-        assert "\nFile not found: 123\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********"
+        else:
+            file_not_found = "/tmp/***********"
+
+        assert "Function: test_check_file_exists_obscure" \
+        "\n============================================" \
+        "\ncheck_1: True" \
+        "\ncheck_2: True" \
+        "\ncheck_3: False" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : print_log" \
+        "\n::: ERROR :::" \
+        "\nFile not found: " + file_not_found + \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
+
         # Expected absence of result
-        assert "This line will not be printed" not in captured.out
-        assert "File not found: abc" not in captured.out
+        assert "::: ERROR :::" not in captured.out
 
 
 class TestNormalizeNewlines:

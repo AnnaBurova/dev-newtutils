@@ -24,9 +24,11 @@ Test example:
 
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "file.txt")
+
             dirname_exists = os.path.exists(os.path.dirname(file_path))
             assert dirname_exists is True
             print("dirname exists:", dirname_exists)
+
         dirname_exists = os.path.exists(os.path.dirname(file_path))
         assert dirname_exists is False
         print("dirname exists:", dirname_exists)
@@ -36,6 +38,12 @@ Test example:
             print("This line will not be printed")
         assert exc_info.value.code == 1
         print("exc_info:", exc_info.value.code)
+
+        if sys.platform == "win32" and os.name == "nt":
+            # On Windows
+            pass
+        else:
+            pass
 
         captured = capsys.readouterr()
         print_my_captured(captured)

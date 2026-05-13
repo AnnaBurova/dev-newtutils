@@ -23,6 +23,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Wrapped directory creation in exception handling and now route unexpected errors through `NewtCons.error_msg()`.
   - `check_file_exists()`:
     - Refactored function for improved clarity and structure.
+    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
+    - `obscure_logic()` inner function performs the masking logic using a character-level replacement approach with walrus operator support.
+    - `msg_file_path` variable used in place of raw `file_path` in all error messages when `obscure_list` is provided.
 
 ### Testing
 
