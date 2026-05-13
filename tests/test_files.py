@@ -7,9 +7,9 @@ Created on 2025-11
 Comprehensive unit tests for newtutils.files module.
 
 Tests cover:
+- TestNormalizeNewlines
 - TestEnsureDirExists
 - TestCheckFileExists
-- TestNormalizeNewlines
 - TestChooseFileFromFolder
 - TestTextFiles
 - TestConvertStrToJson
@@ -25,6 +25,47 @@ from unittest.mock import patch
 
 from .helpers import print_my_func_name, print_my_captured
 import newtutils.files as NewtFiles
+
+
+class TestNormalizeNewlines:
+    """ Tests for _normalize_newlines function. """
+
+
+    def test_normalize_newlines_converts_windows(self, capsys):
+        """ Ensure NewtFiles._normalize_newlines() converts Windows CRLF to Unix LF. """
+        print_my_func_name()
+
+        text_1 = "line1\r\nline2\r\nline3\r\nline4\r\nline5\r\n"
+        print("text_1:", repr(text_1))
+
+        result_1 = NewtFiles._normalize_newlines(text_1)
+        print("result_1:", repr(result_1))
+        assert result_1 == "line1\nline2\nline3\nline4\nline5\n"
+
+        text_2 = "    line1\r\nline2\nline3\r\nline4\rline5\r\n"
+        print("text_2:", repr(text_2))
+
+        result_2 = NewtFiles._normalize_newlines(text_2)
+        print("result_2:", repr(result_2))
+        assert result_2 == "    line1\nline2\nline3\nline4\nline5\n"
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_normalize_newlines_converts_windows" \
+        "\n============================================" \
+        "\ntext_1: 'line1\\r\\nline2\\r\\nline3\\r\\nline4\\r\\nline5\\r\\n'" \
+        "\nresult_1: 'line1\\nline2\\nline3\\nline4\\nline5\\n'" \
+        "\ntext_2: '    line1\\r\\nline2\\nline3\\r\\nline4\\rline5\\r\\n'" \
+        "\nresult_2: '    line1\\nline2\\nline3\\nline4\\nline5\\n'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
 class TestEnsureDirExists:
@@ -363,47 +404,6 @@ class TestCheckFileExists:
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
-
-
-class TestNormalizeNewlines:
-    """ Tests for _normalize_newlines function. """
-
-
-    def test_converts_windows_newlines(self, capsys):
-        """ Test NewtFiles._normalize_newlines() converts Windows CRLF to Unix LF. """
-        print_my_func_name()
-
-        text_1 = "line1\r\nline2\r\nline3\r\nline4\r\nline5\r\n"
-        print("text_1:", repr(text_1))
-
-        result_1 = NewtFiles._normalize_newlines(text_1)
-        print("result_1:", repr(result_1))
-        assert result_1 == "line1\nline2\nline3\nline4\nline5\n"
-
-        text_2 = "    line1\r\nline2\nline3\r\nline4\rline5\r\n"
-        print("text_2:", repr(text_2))
-
-        result_2 = NewtFiles._normalize_newlines(text_2)
-        print("result_2:", repr(result_2))
-        assert result_2 == "    line1\nline2\nline3\nline4\nline5\n"
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "Function: test_converts_windows_newlines" \
-        "\n============================================" \
-        "\ntext_1: 'line1\\r\\nline2\\r\\nline3\\r\\nline4\\r\\nline5\\r\\n'" \
-        "\nresult_1: 'line1\\nline2\\nline3\\nline4\\nline5\\n'" \
-        "\ntext_2: '    line1\\r\\nline2\\nline3\\r\\nline4\\rline5\\r\\n'" \
-        "\nresult_2: '    line1\\nline2\\nline3\\nline4\\nline5\\n'" \
-        "\n" == captured.out
-        assert "" == captured.err
-
-        assert captured.err.count("\n::: ERROR :::\n") == 0
-
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-        assert "::: ERROR :::" not in captured.err
 
 
 class TestChooseFileFromFolder:

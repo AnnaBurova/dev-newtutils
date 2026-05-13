@@ -7,6 +7,19 @@ collected 8 items
 test_files.py 
 START=======================================
 =====captured.out=====
+Function: test_normalize_newlines_converts_windows
+============================================
+text_1: 'line1\r\nline2\r\nline3\r\nline4\r\nline5\r\n'
+result_1: 'line1\nline2\nline3\nline4\nline5\n'
+text_2: '    line1\r\nline2\nline3\r\nline4\rline5\r\n'
+result_2: '    line1\nline2\nline3\nline4\nline5\n'
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
 Function: test_ensure_dir_exists_empty_path
 ============================================
 exc_info: 1
@@ -145,18 +158,5 @@ File not found: C:\Users\*******\AppData\Local\Temp\***********
 
 END=========================================
 .
-START=======================================
-=====captured.out=====
-Function: test_converts_windows_newlines
-============================================
-text_1: 'line1\r\nline2\r\nline3\r\nline4\r\nline5\r\n'
-result_1: 'line1\nline2\nline3\nline4\nline5\n'
-text_2: '    line1\r\nline2\nline3\r\nline4\rline5\r\n'
-result_2: '    line1\nline2\nline3\nline4\nline5\n'
 
-=====captured.err=====
-(no stderr captured)
-END=========================================
-.
-
-============================== 8 passed in 0.03s ==============================
+============================== 8 passed in 0.02s ==============================

@@ -41,9 +41,9 @@ Test example:
 
         if sys.platform == "win32" and os.name == "nt":
             # On Windows
-            pass
+            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********"
         else:
-            pass
+            file_not_found = "/tmp/***********"
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -51,6 +51,7 @@ Test example:
         assert "Function:" \
         "\n============================================" \
         "\n" == captured.out
+
         assert "" == captured.out
         assert "" == captured.err
 

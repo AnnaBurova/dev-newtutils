@@ -5,6 +5,9 @@ Created on 2025-10
 @author: NewtCode Anna Burova
 
 Functions:
+    def _normalize_newlines(
+        text: str
+        ) -> str
     def _obscure_logic(
         file_path_str: str,
         show_list: list[str],
@@ -19,9 +22,6 @@ Functions:
         stop: bool = True,
         print_log: bool = True
         ) -> bool
-    def _normalize_newlines(
-        text: str
-        ) -> str
     def choose_file_from_folder(
         folder_path: str,
         missing_values: dict[str, int] | None = None
@@ -91,6 +91,31 @@ from datetime import datetime, timedelta, timezone
 
 import newtutils.console as NewtCons
 import newtutils.utility as NewtUtil
+
+
+def _normalize_newlines(
+        text: str
+        ) -> str:
+    """ ## Normalize newline characters in a text string to Unix-style newlines.
+
+    Converts Windows-style newlines (\\r\\n) and old Mac-style (\\r) to Unix-style (\\n).
+    Strips trailing whitespace from the end of the normalized text.
+
+    Args:
+        text (str):
+            Input text containing mixed newline characters.
+
+    Returns:
+        out (str):
+            Normalized text with consistent Unix-style newlines (\\n).
+    """
+
+    NewtCons.validate_type(
+        text, str,
+        location="Newt.files._normalize_newlines"
+    )
+
+    return text.rstrip().replace("\r\n", "\n").replace("\r", "\n")+"\n"
 
 
 def _obscure_logic(
@@ -247,31 +272,6 @@ def check_file_exists(
         )
 
     return False
-
-
-def _normalize_newlines(
-        text: str
-        ) -> str:
-    """ ## Normalize newline characters in a text string to Unix-style newlines.
-
-    Converts Windows-style newlines (\\r\\n) and old Mac-style (\\r) to Unix-style (\\n).
-    Strips trailing whitespace from the end of the normalized text.
-
-    Args:
-        text (str):
-            Input text containing mixed newline characters.
-
-    Returns:
-        out (str):
-            Normalized text with consistent Unix-style newlines (\\n).
-    """
-
-    NewtCons.validate_type(
-        text, str,
-        location="Newt.files._normalize_newlines"
-    )
-
-    return text.rstrip().replace("\r\n", "\n").replace("\r", "\n")+"\n"
 
 
 def choose_file_from_folder(

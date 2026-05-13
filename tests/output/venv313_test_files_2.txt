@@ -5,13 +5,13 @@ rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
 collecting ... collected 8 items
 
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path PASSED [ 12%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_current_directory PASSED [ 25%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_directory_exists PASSED [ 37%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_directory PASSED [ 50%]
-test_files.py::TestCheckFileExists::test_check_file_exists_invalid_file_name PASSED [ 62%]
-test_files.py::TestCheckFileExists::test_check_file_exists_not_found PASSED [ 75%]
-test_files.py::TestCheckFileExists::test_check_file_exists_obscure PASSED [ 87%]
-test_files.py::TestNormalizeNewlines::test_converts_windows_newlines PASSED [100%]
+test_files.py::TestNormalizeNewlines::test_normalize_newlines_converts_windows PASSED [ 12%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path PASSED [ 25%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_current_directory PASSED [ 37%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_directory_exists PASSED [ 50%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_directory PASSED [ 62%]
+test_files.py::TestCheckFileExists::test_check_file_exists_invalid_file_name PASSED [ 75%]
+test_files.py::TestCheckFileExists::test_check_file_exists_not_found PASSED [ 87%]
+test_files.py::TestCheckFileExists::test_check_file_exists_obscure PASSED [100%]
 
 ============================== 8 passed in 0.03s ==============================
