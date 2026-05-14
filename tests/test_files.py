@@ -21,10 +21,12 @@ Tests cover:
 import sys
 import os
 import pytest
-import tempfile
 from unittest.mock import patch
+import tempfile
 
 from .helpers import print_my_func_name, print_my_captured
+# import newtutils.console as NewtCons
+import newtutils.utility as NewtUtil
 import newtutils.files as NewtFiles
 
 

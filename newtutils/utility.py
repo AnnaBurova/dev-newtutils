@@ -34,7 +34,7 @@ Functions:
                 ) -> list[tuple[int, Any]]
     def select_from_input(
         select_dict: dict[str, str],
-        missing_values: dict[str, int] | None = None
+        todo_dict: dict[str, int] | None = None
         ) -> str | None
 """
 
@@ -438,7 +438,7 @@ def sorting_dict_by_keys(
 
 def select_from_input(
         select_dict: dict[str, str],
-        missing_values: dict[str, int] | None = None
+        todo_dict: dict[str, int] | None = None
         ) -> str | None:
     """ ## Display a numbered list of options and prompt user to select one.
 
@@ -447,7 +447,7 @@ def select_from_input(
     Args:
         select_dict (dict[str, str]):
             Dictionary mapping string keys (numbers) to option names.
-        missing_values (dict[str, int] | None):
+        todo_dict (dict[str, int] | None):
             Maps option names to a count displayed as prefix.<br>
             See `NewtUtil.count_values_by_position()`.<br>
             Defaults to None.
@@ -466,10 +466,10 @@ def select_from_input(
         location="Newt.utility.select_from_input : select_dict"
     )
 
-    if missing_values:
+    if todo_dict:
         NewtCons.validate_type(
-            missing_values, dict,
-            location="Newt.utility.select_from_input : missing_values"
+            todo_dict, dict,
+            location="Newt.utility.select_from_input : todo_dict"
         )
 
     user_choice = "x"
@@ -486,12 +486,12 @@ def select_from_input(
 
     # Right-align column width: longest key length + 2 spaces of padding
     max_key_len = len(max(select_dict.keys(), key=len)) + 2
-    max_count_len = len(str(max(missing_values.values()))) if missing_values else 0
+    max_count_len = len(str(max(todo_dict.values()))) if todo_dict else 0
 
     for nr, name in select_dict.items():
-        if missing_values:
-            if name in missing_values:
-                name = f"({missing_values[name]:>{max_count_len}}) " + name
+        if todo_dict:
+            if name in todo_dict:
+                name = f"({todo_dict[name]:>{max_count_len}}) " + name
             else:
                 name = f"({'':>{max_count_len}}) " + name
         print(f"{nr:>{max_key_len}}: {name}")

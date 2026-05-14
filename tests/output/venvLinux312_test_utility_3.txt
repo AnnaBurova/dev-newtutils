@@ -586,8 +586,8 @@ START=======================================
 =====captured.out=====
 Function: test_select_from_input_all_flows
 ============================================
-missing_values_list: [(1, 'admin', 'Stockholm'), (2, 'user', 'Oslo'), (3, 'user', 'Stockholm'), (4, 'user', 'Berlin'), (5, 'admin', 'Oslo')]
-missing_values_count: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}
+todo_list: [(1, 'admin', 'Stockholm'), (2, 'user', 'Oslo'), (3, 'user', 'Stockholm'), (4, 'user', 'Berlin'), (5, 'admin', 'Oslo')]
+todo_dict: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}
 input_dict: {'1': 'Oslo', '2': 'Stockholm', '3': 'Berlin', '4': 'Madrid'}
 
 4 Available options to choose from:
@@ -599,7 +599,6 @@ input_dict: {'1': 'Oslo', '2': 'Stockholm', '3': 'Berlin', '4': 'Madrid'}
 [INPUT]: 1
 Selected option: Oslo
 
-result_1: 1
 
 4 Available options to choose from:
   1: (2) Oslo
@@ -610,7 +609,6 @@ result_1: 1
 [INPUT]: 1
 Selected option: Oslo
 
-result_2: 1
 
 4 Available options to choose from:
   1: Oslo
@@ -625,7 +623,6 @@ Option not in list. Try again.
 [INPUT]: 2
 Selected option: Stockholm
 
-result_3: 2
 
 4 Available options to choose from:
   1: (2) Oslo
@@ -640,7 +637,6 @@ Option not in list. Try again.
 [INPUT]: 2
 Selected option: Stockholm
 
-result_4: 2
 
 4 Available options to choose from:
   1: Oslo
@@ -784,4 +780,4 @@ Dict keys: dict_keys(['x', '1'])
 END=========================================
 .
 
-============================== 23 passed in 0.24s ==============================
+============================== 23 passed in 0.28s ==============================

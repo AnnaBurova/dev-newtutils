@@ -19,6 +19,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Changed
 
+- `newtutils/utility.py`:
+  - `select_from_input()`:
+    - Parameter renamed from `missing_values` to `todo_dict`.
 - `newtutils/files.py`:
   - `ensure_dir_exists()`:
     - Updated to return `None` explicitly when the path points to the current directory or when the target directory already exists.

@@ -18,6 +18,7 @@ import pytest
 from unittest.mock import patch
 
 from .helpers import print_my_func_name, print_my_captured, format_set_to_str
+# import newtutils.console as NewtCons
 import newtutils.utility as NewtUtil
 
 
@@ -1486,17 +1487,17 @@ class TestSelectFromInput:
         """ Ensure NewtUtil.select_from_input() handles valid input, retries, cancel, interrupt, and max attempts. """
         print_my_func_name()
 
-        missing_values_list = [
+        todo_list = [
             (1, "admin", "Stockholm"),
             (2, "user", "Oslo"),
             (3, "user", "Stockholm"),
             (4, "user", "Berlin"),
             (5, "admin", "Oslo"),
         ]
-        print("missing_values_list:", missing_values_list)
+        print("todo_list:", todo_list)
 
-        missing_values_count = NewtUtil.count_values_by_position(missing_values_list, 2)
-        print("missing_values_count:", missing_values_count)
+        todo_dict = NewtUtil.count_values_by_position(todo_list, 2)
+        print("todo_dict:", todo_dict)
 
         input_dict = {
             "1": "Oslo",
@@ -1509,26 +1510,22 @@ class TestSelectFromInput:
         mock_input.side_effect = ["1"]
 
         result_1 = NewtUtil.select_from_input(input_dict)
-        print("result_1:", result_1)
         assert result_1 == "1"
 
         mock_input.side_effect = ["1"]
 
-        result_2 = NewtUtil.select_from_input(input_dict, missing_values_count)
-        print("result_2:", result_2)
+        result_2 = NewtUtil.select_from_input(input_dict, todo_dict)
         assert result_2 == "1"
 
         mock_input.side_effect = ["abc", "999", "2"]
 
         result_3 = NewtUtil.select_from_input(input_dict)
-        print("result_3:", result_3)
         assert result_3 == "2"
 
         # Check .strip()
         mock_input.side_effect = ["abc", " 999 ", " 2 "]
 
-        result_4 = NewtUtil.select_from_input(input_dict, missing_values_count)
-        print("result_4:", result_4)
+        result_4 = NewtUtil.select_from_input(input_dict, todo_dict)
         assert result_4 == "2"
 
         mock_input.side_effect = ["x"]
@@ -1542,7 +1539,7 @@ class TestSelectFromInput:
         mock_input.side_effect = ["x"]
 
         with pytest.raises(SystemExit) as exc_info_6:
-            NewtUtil.select_from_input(input_dict, missing_values_count)
+            NewtUtil.select_from_input(input_dict, todo_dict)
             print("This line will not be printed")
         assert exc_info_6.value.code == 1
         print("exc_info_6:", exc_info_6.value.code)
@@ -1558,7 +1555,7 @@ class TestSelectFromInput:
         mock_input.side_effect = KeyboardInterrupt()
 
         with pytest.raises(SystemExit) as exc_info_8:
-            NewtUtil.select_from_input(input_dict, missing_values_count)
+            NewtUtil.select_from_input(input_dict, todo_dict)
             print("This line will not be printed")
         assert exc_info_8.value.code == 1
         print("exc_info_8:", exc_info_8.value.code)
@@ -1574,7 +1571,7 @@ class TestSelectFromInput:
         mock_input.side_effect = ["a", "b", "c", "d", "e", "f"]
 
         with pytest.raises(SystemExit) as exc_info_10:
-            NewtUtil.select_from_input(input_dict, missing_values_count)
+            NewtUtil.select_from_input(input_dict, todo_dict)
             print("This line will not be printed")
         assert exc_info_10.value.code == 1
         print("exc_info_10:", exc_info_10.value.code)
@@ -1584,34 +1581,34 @@ class TestSelectFromInput:
 
         assert "Function: test_select_from_input_all_flows" \
         "\n============================================" \
-        "\nmissing_values_list: " \
+        "\ntodo_list: " \
         "[(1, 'admin', 'Stockholm')," \
         " (2, 'user', 'Oslo')," \
         " (3, 'user', 'Stockholm')," \
         " (4, 'user', 'Berlin')," \
         " (5, 'admin', 'Oslo')]" \
-        "\nmissing_values_count: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}" \
+        "\ntodo_dict: {'Stockholm': 2, 'Oslo': 2, 'Berlin': 1}" \
         "\ninput_dict: {'1': 'Oslo', '2': 'Stockholm', '3': 'Berlin', '4': 'Madrid'}" \
         "\n\n4 Available options to choose from:" \
         "\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid" \
         "\n  X: Exit / Cancel\n[INPUT]: 1" \
-        "\nSelected option: Oslo\n\nresult_1: 1" \
+        "\nSelected option: Oslo\n" \
         "\n\n4 Available options to choose from:" \
         "\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid" \
         "\n  X: Exit / Cancel\n[INPUT]: 1" \
-        "\nSelected option: Oslo\n\nresult_2: 1" \
+        "\nSelected option: Oslo\n" \
         "\n\n4 Available options to choose from:" \
         "\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid" \
         "\n  X: Exit / Cancel\n[INPUT]: abc" \
         "\nOption not in list. Try again.\n[INPUT]: 999" \
         "\nOption not in list. Try again.\n[INPUT]: 2" \
-        "\nSelected option: Stockholm\n\nresult_3: 2" \
+        "\nSelected option: Stockholm\n" \
         "\n\n4 Available options to choose from:" \
         "\n  1: (2) Oslo\n  2: (2) Stockholm\n  3: (1) Berlin\n  4: ( ) Madrid" \
         "\n  X: Exit / Cancel\n[INPUT]: abc" \
         "\nOption not in list. Try again.\n[INPUT]: 999" \
         "\nOption not in list. Try again.\n[INPUT]: 2" \
-        "\nSelected option: Stockholm\n\nresult_4: 2" \
+        "\nSelected option: Stockholm\n" \
         "\n\n4 Available options to choose from:" \
         "\n  1: Oslo\n  2: Stockholm\n  3: Berlin\n  4: Madrid" \
         "\n  X: Exit / Cancel\n[INPUT]: x" \

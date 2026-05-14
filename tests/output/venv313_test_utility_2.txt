@@ -29,4 +29,4 @@ test_utility.py::TestSelectFromInput::test_select_from_input_all_flows PASSED [ 
 test_utility.py::TestSelectFromInput::test_select_from_input_invalid_dict_type PASSED [ 95%]
 test_utility.py::TestSelectFromInput::test_select_from_input_exit_option_key PASSED [100%]
 
-============================= 23 passed in 0.08s ==============================
+============================= 23 passed in 0.09s ==============================

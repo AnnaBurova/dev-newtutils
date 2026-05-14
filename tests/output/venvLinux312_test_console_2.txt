@@ -28,4 +28,4 @@ test_console.py::TestCheckLocation::test_check_location_invalid_type_both_args P
 test_console.py::TestCheckLocation::test_check_location_match PASSED     [ 95%]
 test_console.py::TestCheckLocation::test_check_location_mismatch PASSED  [100%]
 
-============================== 22 passed in 0.26s ==============================
+============================== 22 passed in 0.27s ==============================
