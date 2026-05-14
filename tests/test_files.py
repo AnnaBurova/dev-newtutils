@@ -8,6 +8,7 @@ Comprehensive unit tests for newtutils.files module.
 
 Tests cover:
 - TestNormalizeNewlines
+- TestObscureLogic
 - TestEnsureDirExists
 - TestCheckFileExists
 - TestChooseFileFromFolder
@@ -58,6 +59,47 @@ class TestNormalizeNewlines:
         "\nresult_1: 'line1\\nline2\\nline3\\nline4\\nline5\\n'" \
         "\ntext_2: '    line1\\r\\nline2\\nline3\\r\\nline4\\rline5\\r\\n'" \
         "\nresult_2: '    line1\\nline2\\nline3\\nline4\\nline5\\n'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
+
+
+class TestObscureLogic:
+    """ Tests for _obscure_logic function. """
+
+    def test_obscure_logic_masks_path_segments(self, capsys):
+        """ Ensure NewtFiles._obscure_logic() masks path segments with asterisks. """
+        print_my_func_name()
+
+        if sys.platform == "win32" and os.name == "nt":
+            file_name = "C:\\Users\\abcdefg\\AppData\\Local\\Temp\\1234567890"
+        else:
+            file_name = "/tmp/1234567890"
+
+        obscure_list = [
+            "C:\\Users\\",
+            "\\AppData\\Local\\Temp\\",
+            "/tmp/",
+            ]
+        file_not_found = NewtFiles._obscure_logic(file_name, obscure_list)
+
+        if sys.platform == "win32" and os.name == "nt":
+            assert file_not_found == "C:\\Users\\*******\\AppData\\Local\\Temp\\**********"
+        else:
+            assert file_not_found == "/tmp/**********"
+        print("file_not_found:", file_not_found)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_obscure_logic_masks_path_segments" \
+        "\n============================================" \
+        "\nfile_not_found: " + file_not_found + \
         "\n" == captured.out
         assert "" == captured.err
 

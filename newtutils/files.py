@@ -10,7 +10,7 @@ Functions:
         ) -> str
     def _obscure_logic(
         file_path_str: str,
-        show_list: list[str],
+        obscure_list: list[str],
         mask_char: str = "*"
         ) -> str
     def ensure_dir_exists(
@@ -120,20 +120,20 @@ def _normalize_newlines(
 
 def _obscure_logic(
         file_path_str: str,
-        show_list: list[str],
+        obscure_list: list[str],
         mask_char: str = "*"
         ) -> str:
     """ ## Replace all characters in a string except specified substrings with a mask character.
 
     Builds a fully masked version of `file_path_str` using `mask_char`,
-    then iterates over `show_list` and restores each matching substring
+    then iterates over `obscure_list` and restores each matching substring
     back to its original characters using the walrus operator `:=` for
     position lookup.
 
     Args:
         file_path_str (str):
             The original string (e.g. a file path) to be masked.
-        show_list (list[str]):
+        obscure_list (list[str]):
             A list of substrings that should remain visible (unmasked) in the result.<br>
             All other characters will be replaced by `mask_char`.
         mask_char (str):
@@ -148,7 +148,7 @@ def _obscure_logic(
 
     masked_text = list(mask_char * len(file_path_str))
 
-    for substring in show_list:
+    for substring in obscure_list:
         start = 0
         # walrus operator :=
         while (pos := file_path_str.find(substring, start)) != -1:

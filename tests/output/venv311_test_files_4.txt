@@ -19,6 +19,17 @@ result_2: '    line1\nline2\nline3\nline4\nline5\n'
 (no stderr captured)
 END=========================================
 PASSED
+test_files.py::TestObscureLogic::test_obscure_logic_masks_path_segments 
+START=======================================
+=====captured.out=====
+Function: test_obscure_logic_masks_path_segments
+============================================
+file_not_found: C:\Users\*******\AppData\Local\Temp\**********
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
 test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path 
 START=======================================
 =====captured.out=====
