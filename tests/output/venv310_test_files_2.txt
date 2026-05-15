@@ -3,15 +3,20 @@ platform win32 -- Python 3.10.11, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 8 items
+collecting ... collected 13 items
 
-test_files.py::TestNormalizeNewlines::test_normalize_newlines_converts_windows PASSED [ 12%]
-test_files.py::TestObscureLogic::test_obscure_logic_masks_path_segments PASSED [ 25%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path PASSED [ 37%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_current_directory PASSED [ 50%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_directory_exists PASSED [ 62%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_directory PASSED [ 75%]
-test_files.py::TestCheckFileExists::test_check_file_exists_invalid_file_name PASSED [ 87%]
-test_files.py::TestCheckFileExists::test_check_file_exists_not_found PASSED [100%]
+test_files.py::TestNormalizeNewlines::test_normalize_newlines_converts_windows PASSED [  7%]
+test_files.py::TestObscureLogic::test_obscure_logic_masks_path_segments PASSED [ 15%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path PASSED [ 23%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_current_directory PASSED [ 30%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_directory_exists PASSED [ 38%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_directory PASSED [ 46%]
+test_files.py::TestCheckFileExists::test_check_file_exists_invalid_file_name PASSED [ 53%]
+test_files.py::TestCheckFileExists::test_check_file_exists_not_found PASSED [ 61%]
+test_files.py::TestCheckFileExists::test_check_file_exists_obscure PASSED [ 69%]
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_invalid_input PASSED [ 76%]
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_nonexistent_folder_raises_exit PASSED [ 84%]
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_empty_folder_exit PASSED [ 92%]
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_cancel_x_raises_exit PASSED [100%]
 
-============================== 8 passed in 0.03s ==============================
+============================= 13 passed in 0.07s ==============================

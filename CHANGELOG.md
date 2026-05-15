@@ -23,6 +23,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - `select_from_input()`:
     - Parameter renamed from `missing_values` to `todo_dict`.
 - `newtutils/files.py`:
+  - `_normalize_newlines()`:
+    - Now strips trailing whitespace with `rstrip()` before replacing newlines, and appends a trailing `\n` to the result.
+    - Now also converts old Mac-style `\r` line endings to Unix `\n`, in addition to Windows-style `\r\n`.
   - `ensure_dir_exists()`:
     - Updated to return `None` explicitly when the path points to the current directory or when the target directory already exists.
     - Wrapped directory creation in exception handling and now route unexpected errors through `NewtCons.error_msg()`.
@@ -30,9 +33,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Refactored function for improved clarity and structure.
     - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
     - `msg_file_path` variable used in place of raw `file_path` in all error messages when `obscure_list` is provided.
-  - `_normalize_newlines()`:
-    - Now strips trailing whitespace with `rstrip()` before replacing newlines, and appends a trailing `\n` to the result.
-    - Now also converts old Mac-style `\r` line endings to Unix `\n`, in addition to Windows-style `\r\n`.
+  - `choose_file_from_folder()`:
+    - Parameter renamed from `missing_values` to `todo_dict`.
+    - Refined to drop deduplication `list(set(file_list))` and rely on plain `file_list`.
 
 ### Testing
 

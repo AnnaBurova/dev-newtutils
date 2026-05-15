@@ -454,27 +454,87 @@ class TestChooseFileFromFolder:
     """ Tests for choose_file_from_folder function. """
 
 
-    def test_nonexistent_folder_raises_exit(self, capsys):
-        """ Test NewtFiles.choose_file_from_folder() raises SystemExit for nonexistent folder. """
+    def test_choose_file_from_folder_invalid_input(self, capsys):
+        """ Ensure NewtFiles.choose_file_from_folder() raises SystemExit(1) for invalid folder path. """
+        print_my_func_name()
+
+        with pytest.raises(SystemExit) as exc_info_1:
+            NewtFiles.choose_file_from_folder("")
+            print("This line will not be printed")
+        assert exc_info_1.value.code == 1
+        print("exc_info_1:", exc_info_1.value.code)
+
+        with pytest.raises(SystemExit) as exc_info_2:
+            NewtFiles.choose_file_from_folder(123)  # type: ignore
+            print("This line will not be printed")
+        assert exc_info_2.value.code == 1
+        print("exc_info_2:", exc_info_2.value.code)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_choose_file_from_folder_invalid_input" \
+        "\n============================================" \
+        "\nexc_info_1: 1" \
+        "\nexc_info_2: 1" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.choose_file_from_folder : folder_path" \
+        " > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: \nType: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.choose_file_from_folder : folder_path" \
+        " > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 2
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
+
+
+    def test_choose_file_from_folder_nonexistent_folder_raises_exit(self, capsys):
+        """ Ensure NewtFiles.choose_file_from_folder() raises SystemExit for nonexistent folder. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info:
             NewtFiles.choose_file_from_folder("/nonexistent/folder")
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.choose_file_from_folder : folder_path not dir\n" in captured.out
-        assert "\nFolder not found: /nonexistent/folder\n" in captured.out
+        assert "Function: test_choose_file_from_folder_nonexistent_folder_raises_exit" \
+        "\n============================================" \
+        "\nexc_info: 1" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.choose_file_from_folder : not isdir folder_path" \
+        "\n::: ERROR :::" \
+        "\nFolder not found: /nonexistent/folder" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
-    def test_empty_folder_raises_exit(self, capsys):
-        """ Test NewtFiles.choose_file_from_folder() raises SystemExit for empty folder. """
+    def test_choose_file_from_folder_empty_folder_exit(self, capsys):
+        """ Ensure NewtFiles.choose_file_from_folder() raises SystemExit for empty folder. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -482,70 +542,109 @@ class TestChooseFileFromFolder:
                 NewtFiles.choose_file_from_folder(tmpdir)
                 print("This line will not be printed")
             assert exc_info.value.code == 1
+            print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.choose_file_from_folder : file_list empty\n" in captured.out
-        assert "\nNo files found in this folder.\n" in captured.out
+        assert "Function: test_choose_file_from_folder_empty_folder_exit" \
+        "\n============================================" \
+        "\nexc_info: 1" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.choose_file_from_folder : file_list empty" \
+        "\n::: ERROR :::" \
+        "\nNo files found in this folder." \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
-    @patch('newtutils.utility.input', side_effect=["abc", "999", "X"])
-    def test_user_cancel_x_raises_exit(self, mock_input, capsys):
-        """ Test NewtFiles.choose_file_from_folder() raises SystemExit on user 'x' cancel. """
+    @patch('newtutils.utility.input')
+    def test_choose_file_from_folder_cancel_x_raises_exit(self, mock_input, capsys):
+        """ Ensure NewtFiles.choose_file_from_folder() raises SystemExit when user inputs 'X'. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             # Create several files in the temporary directory
+            dir_files = []
             for i in range(3):
-                filepath = os.path.join(tmpdir, f"dummy_file_{i}.txt")
+                file_name = f"dummy_file_{i}.txt"
+                filepath = os.path.join(tmpdir, file_name)
+                dir_files.append([file_name])
                 with open(filepath, "w", encoding="utf-8") as f:
                     f.write("dummy content\n")
+
+            todo_dict = NewtUtil.count_values_by_position(dir_files)
+
+            mock_input.side_effect = ["abc", "999", "X"]
 
             with pytest.raises(SystemExit) as exc_info:
                 NewtFiles.choose_file_from_folder(tmpdir)
                 print("This line will not be printed")
             assert exc_info.value.code == 1
+            print("exc_info:", exc_info.value.code)
+
+            mock_input.side_effect = ["1"]
+
+            selected_file = NewtFiles.choose_file_from_folder(tmpdir)
+            assert selected_file == "dummy_file_0.txt"
+
+            mock_input.side_effect = ["2"]
+
+            selected_file = NewtFiles.choose_file_from_folder(tmpdir, todo_dict)
+            assert selected_file == "dummy_file_1.txt"
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\nAvailable list: 3\n" in captured.out
-        assert "\n  1: dummy_file_0.txt\n" in captured.out
-        assert "\n  2: dummy_file_1.txt\n" in captured.out
-        assert "\n  3: dummy_file_2.txt\n" in captured.out
-        assert "\n  X: Exit / Cancel\n" in captured.out
-        assert "\n[INPUT]: abc\nInvalid input. Please enter a number.\n" in captured.out
-        assert "\n[INPUT]: 999\nNumber out of range. Try again.\n" in captured.out
-        assert "\n[INPUT]: x\n" in captured.out
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.utility.select_from_input : choice = [X]\n" in captured.out
-        assert "\nSelection cancelled.\n" in captured.out
+        assert "Function: test_choose_file_from_folder_cancel_x_raises_exit" \
+        "\n============================================" \
+        "\n\n3 Available options to choose from:" \
+        "\n  1: dummy_file_0.txt" \
+        "\n  2: dummy_file_1.txt" \
+        "\n  3: dummy_file_2.txt" \
+        "\n  X: Exit / Cancel" \
+        "\n[INPUT]: abc" \
+        "\nOption not in list. Try again." \
+        "\n[INPUT]: 999" \
+        "\nOption not in list. Try again." \
+        "\n[INPUT]: x" \
+        "\nexc_info: 1" \
+        "\n\n3 Available options to choose from:" \
+        "\n  1: dummy_file_0.txt" \
+        "\n  2: dummy_file_1.txt" \
+        "\n  3: dummy_file_2.txt" \
+        "\n  X: Exit / Cancel" \
+        "\n[INPUT]: 1" \
+        "\nSelected option: dummy_file_0.txt\n" \
+        "\n\n3 Available options to choose from:" \
+        "\n  1: (1) dummy_file_0.txt" \
+        "\n  2: (1) dummy_file_1.txt" \
+        "\n  3: (1) dummy_file_2.txt" \
+        "\n  X: Exit / Cancel" \
+        "\n[INPUT]: 2" \
+        "\nSelected option: dummy_file_1.txt\n" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.utility.select_from_input : choice = [X]" \
+        "\n::: ERROR :::" \
+        "\nSelection cancelled." \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
-
-
-    def test_invalid_folderpath_raises_exit(self, capsys):
-        """ Test NewtFiles.choose_file_from_folder() raises SystemExit for invalid folder input. """
-        print_my_func_name()
-
-        with pytest.raises(SystemExit) as exc_info:
-            NewtFiles.choose_file_from_folder(123)  # type: ignore
-            print("This line will not be printed")
-        assert exc_info.value.code == 1
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.files.choose_file_from_folder : folder_path\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
-        assert "\nValue: 123\n" in captured.out
-        # Expected absence of result
-        assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
 class TestTextFiles:

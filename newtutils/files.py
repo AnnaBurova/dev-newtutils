@@ -24,7 +24,7 @@ Functions:
         ) -> bool
     def choose_file_from_folder(
         folder_path: str,
-        missing_values: dict[str, int] | None = None
+        todo_dict: dict[str, int] | None = None
         ) -> str
     === TEXT ===
     def read_text_from_file(
@@ -198,8 +198,9 @@ def ensure_dir_exists(
     # except OSError as e:
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Found Exception: {e} (found? write test!)",  # TODO
-            location="Newt.files.ensure_dir_exists : Exception"
+            f"Found Error Msg: (found? write test!)",  # TODO
+            f"Exception: {e}",
+            location="Newt.files.ensure_dir_exists : Exception makedirs"
         )
 
 
@@ -258,7 +259,7 @@ def check_file_exists(
         NewtCons.error_msg(  # pragma: no cover
             f"Found Error Msg: (found? write test!)",  # TODO
             f"File is not readable: {msg_file_path}",
-            location="Newt.files.check_file_exists : os.access",
+            location="Newt.files.check_file_exists : os.access file_path",
             stop=stop
         )
 
@@ -276,10 +277,9 @@ def check_file_exists(
 
 def choose_file_from_folder(
         folder_path: str,
-        missing_values: dict[str, int] | None = None
+        todo_dict: dict[str, int] | None = None
         ) -> str:
-    """
-    Display files in a folder and let user interactively select one.
+    """ ## Display files in a folder and let user interactively select one.
 
     Lists existing files in the directory (sorted alphabetically), shows numbered menu,
     prompts for selection (1-N or X to cancel), with 5 attempts max before timeout.
@@ -288,6 +288,10 @@ def choose_file_from_folder(
     Args:
         folder_path (str):
             Path to directory containing files to choose from.
+        todo_dict (dict[str, int] | None):
+            Maps option names to a count displayed as prefix.<br>
+            See `NewtUtil.count_values_by_position()`.<br>
+            Defaults to None.
 
     Returns:
         out (str):
@@ -308,19 +312,20 @@ def choose_file_from_folder(
     if not os.path.isdir(folder_path):
         NewtCons.error_msg(
             f"Folder not found: {folder_path}",
-            location="Newt.files.choose_file_from_folder : folder_path not dir"
+            location="Newt.files.choose_file_from_folder : not isdir folder_path"
         )
 
     # Get file list
     try:
         file_list = [
             f for f in os.listdir(folder_path)
-            if check_file_exists(os.path.join(folder_path, f), stop=False, logging=False)
+            if check_file_exists(os.path.join(folder_path, f), stop=False)
         ]
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Failed to list directory: {e} (found? write test!)",  # TODO
-            location="Newt.files.choose_file_from_folder : Exception file_list sorted"
+            f"Found Error Msg: (found? write test!)",  # TODO
+            f"Exception Failed to list directory: {e}",
+            location="Newt.files.choose_file_from_folder : Exception file_list"
         )
 
     if not file_list:
@@ -329,11 +334,11 @@ def choose_file_from_folder(
             location="Newt.files.choose_file_from_folder : file_list empty"
         )
 
-    sorted_file_list = sorted(list(set(file_list)))
+    sorted_file_list = sorted(file_list)
     sorted_file_dict = {}
     for idx, name in enumerate(sorted_file_list, start=1):
         sorted_file_dict[str(idx)] = name
-    choice = NewtUtil.select_from_input(sorted_file_dict, missing_values)
+    choice = NewtUtil.select_from_input(sorted_file_dict, todo_dict)
     selected_file = sorted_file_dict[choice]
     return selected_file
 
