@@ -27,11 +27,11 @@ Test example:
 
             dirname_exists = os.path.exists(os.path.dirname(file_path))
             assert dirname_exists is True
-            print("dirname exists:", dirname_exists)
+            print("dirname_exists:", dirname_exists)
 
         dirname_exists = os.path.exists(os.path.dirname(file_path))
         assert dirname_exists is False
-        print("dirname exists:", dirname_exists)
+        print("dirname_exists:", dirname_exists)
 
         with pytest.raises(SystemExit) as exc_info:
             Newt.function(input_dict)
@@ -39,6 +39,11 @@ Test example:
         assert exc_info.value.code == 1
         print("exc_info:", exc_info.value.code)
 
+        obscure_list = [
+            "C:\\Users\\",
+            "\\AppData\\Local\\Temp\\",
+            "/tmp/",
+            ]
         if sys.platform == "win32" and os.name == "nt":
             # On Windows
             file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********"

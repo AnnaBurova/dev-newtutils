@@ -12,6 +12,7 @@ set +e  # continue on error
 # $ pytest .\tests\test_sql.py -s -vv
 # $ pytest .\tests\test_network.py -s -vv
 
+# $ cd /mnt/d/VS_Code/dev-newtutils/tests/
 # $ cd dev-newtutils/tests/
 # $ ./_list.sh
 

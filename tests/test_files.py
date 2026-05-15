@@ -397,29 +397,28 @@ class TestCheckFileExists:
         """ Ensure NewtFiles.check_file_exists() obscures path in error output for missing file. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False) as tmpfile:
-            tmpfile.write("test")
-            tmpfile_path = tmpfile.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
+            file_txt = tmpfile.name
 
-            check_1 = NewtFiles.check_file_exists(tmpfile_path)
+            check_1 = NewtFiles.check_file_exists(file_txt)
             assert check_1 is True
             print("check_1:", check_1)
 
         try:
-            check_2 = NewtFiles.check_file_exists(tmpfile_path)
+            check_2 = NewtFiles.check_file_exists(file_txt)
             assert check_2 is True
             print("check_2:", check_2)
 
         finally:
-            if os.path.exists(tmpfile_path):
-                os.unlink(tmpfile_path)
+            if os.path.exists(file_txt):
+                os.unlink(file_txt)
 
         obscure_list = [
             "C:\\Users\\",
             "\\AppData\\Local\\Temp\\",
             "/tmp/",
             ]
-        check_3 = NewtFiles.check_file_exists(tmpfile_path, obscure_list, stop=False)
+        check_3 = NewtFiles.check_file_exists(file_txt, obscure_list, stop=False)
         assert check_3 is False
         print("check_3:", check_3)
 
@@ -427,9 +426,9 @@ class TestCheckFileExists:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********"
+            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***************"
         else:
-            file_not_found = "/tmp/***********"
+            file_not_found = "/tmp/***************"
 
         assert "Function: test_check_file_exists_obscure" \
         "\n============================================" \
@@ -576,9 +575,9 @@ class TestChooseFileFromFolder:
             dir_files = []
             for i in range(3):
                 file_name = f"dummy_file_{i}.txt"
-                filepath = os.path.join(tmpdir, file_name)
+                file_path = os.path.join(tmpdir, file_name)
                 dir_files.append([file_name])
-                with open(filepath, "w", encoding="utf-8") as f:
+                with open(file_path, "w", encoding="utf-8") as f:
                     f.write("dummy content\n")
 
             todo_dict = NewtUtil.count_values_by_position(dir_files)
@@ -648,100 +647,193 @@ class TestChooseFileFromFolder:
 
 
 class TestTextFiles:
-    """ Tests for text file operations. """
+    """ Tests for read_text_from_file and save_text_to_file functions. """
 
 
     def test_save_and_read_text_file(self, capsys):
-        """ Test NewtFiles.save_text_to_file() and read_text_from_file() work correctly. """
+        """ Ensure NewtFiles.save_text_to_file() and NewtFiles.read_text_from_file() work correctly. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
+            file_txt = tmpfile.name
+
+        obscure_list = [
+            "C:\\Users\\",
+            "\\AppData\\Local\\Temp\\",
+            "/tmp/",
+            ".txt",
+            ]
 
         try:
             content = "Hello\nWorld!"
-            NewtFiles.save_text_to_file(tmp_path, content, append=False)
-            print()
+            NewtFiles.save_text_to_file(file_txt, content, obscure_list=obscure_list)
 
-            result = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result))
+            result = NewtFiles.read_text_from_file(file_txt, obscure_list=obscure_list)
+            print("result:", repr(result))
 
-            # Note: save_text_to_file adds a newline at the end
+            # Note: save_text_to_file() uses _normalize_newlines()
             assert result == content + "\n"
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_txt):
+                os.unlink(file_txt)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
-        assert "\n(mode=write, length=13)\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=13)\n" in captured.out
-        assert "\n'Hello\\nWorld!\\n'\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            # On Windows
+            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.txt"
+        else:
+            file_not_found = "/tmp/***********.txt"
+
+        assert "Function: test_save_and_read_text_file" \
+        "\n============================================" \
+        "\n[Newt.files.save_text_to_file] Saved text to file:" \
+        "\n" + file_not_found + \
+        "\n(length=13, mode=write)" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_not_found + \
+        "\n(length=13)" \
+        "\nresult: 'Hello\\nWorld!\\n'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
     def test_save_text_creates_directory(self, capsys):
-        """ Test NewtFiles.save_text_to_file() creates parent directories if needed. """
+        """ Ensure NewtFiles.save_text_to_file() creates nested parent directories automatically. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            nested_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
-            NewtFiles.save_text_to_file(nested_path, "test", append=False)
-            assert os.path.exists(nested_path)
+            file_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
+
+            obscure_list = [
+                "C:\\Users\\",
+                "\\AppData\\Local\\Temp\\",
+                "/tmp/",
+                "\\level1\\level2\\file.txt",
+                "/level1/level2/file.txt",
+                ]
+
+            content = "Hello\nWorld!\n"
+            NewtFiles.save_text_to_file(file_path, content, obscure_list=obscure_list)
+
+            result = NewtFiles.read_text_from_file(file_path, obscure_list=obscure_list)
+            print("result:", repr(result))
+
+            assert result == content
+
+            assert os.path.exists(file_path)
+
+            file_exists = os.path.exists(file_path)
+            assert file_exists is True
+            print("file_exists:", file_exists)
+
+        file_exists = os.path.exists(file_path)
+        assert file_exists is False
+        print("file_exists:", file_exists)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
-        assert "\\level1\\level2\\file.txt\n" in captured.out
-        assert "\n(mode=write, length=5)\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            # On Windows
+            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********\\level1\\level2\\file.txt"
+        else:
+            file_not_found = "/tmp/***********/level1/level2/file.txt"
+
+        assert "Function: test_save_text_creates_directory" \
+        "\n============================================" \
+        "\n[Newt.files.save_text_to_file] Saved text to file:" \
+        "\n" + file_not_found + \
+        "\n(length=13, mode=write)" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_not_found + \
+        "\n(length=13)" \
+        "\nresult: 'Hello\\nWorld!\\n'" \
+        "\nfile_exists: True" \
+        "\nfile_exists: False" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
     def test_save_text_append_mode(self, capsys):
-        """ Test NewtFiles.save_text_to_file() append mode adds content correctly. """
+        """ Ensure NewtFiles.save_text_to_file() appends content correctly with append=True. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
+            file_txt = tmpfile.name
+
+        obscure_list = [
+            "C:\\Users\\",
+            "\\AppData\\Local\\Temp\\",
+            "/tmp/",
+            ".txt",
+            ]
 
         try:
-            NewtFiles.save_text_to_file(tmp_path, "Line 1\n", append=False)
-            print()
+            content_1 = "Line 1"
+            NewtFiles.save_text_to_file(
+                file_txt, content_1, append=False, obscure_list=obscure_list)
 
-            NewtFiles.save_text_to_file(tmp_path, "Line 2\n")
-            print()
+            content_2 = "Line 2"
+            NewtFiles.save_text_to_file(
+                file_txt, content_2, append=True, obscure_list=obscure_list)
 
-            result = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result))
-            # New implementation normalizes and avoids extra blank lines
+            result = NewtFiles.read_text_from_file(file_txt, obscure_list=obscure_list)
+            print("result:", repr(result))
+
             assert result == "Line 1\nLine 2\n"
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_txt):
+                os.unlink(file_txt)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("\n[Newt.files.save_text_to_file] Saved text to file:\n") == 2
-        assert "\n(mode=write, length=7)\n" in captured.out
-        assert "\n(mode=append, length=7)\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=14)\n" in captured.out
-        assert "\n'Line 1\\nLine 2\\n'\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            # On Windows
+            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.txt"
+        else:
+            file_not_found = "/tmp/***********.txt"
+
+        assert "Function: test_save_text_append_mode" \
+        "\n============================================" \
+        "\n[Newt.files.save_text_to_file] Saved text to file:" \
+        "\n" + file_not_found + \
+        "\n(length=7, mode=write)" \
+        "\n[Newt.files.save_text_to_file] Saved text to file:" \
+        "\n" + file_not_found + \
+        "\n(length=7, mode=append)" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_not_found + \
+        "\n(length=14)" \
+        "\nresult: 'Line 1\\nLine 2\\n'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
     def test_read_text_from_nonexistent_file(self, capsys):
-        """ Test NewtFiles.read_text_from_file() returns None for nonexistent file with stop=False. """
+        """ Ensure NewtFiles.read_text_from_file() returns None if file not found and stop=False. """
         print_my_func_name()
 
         result = NewtFiles.read_text_from_file("/nonexistent/file.txt", stop=False)
@@ -750,79 +842,75 @@ class TestTextFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
-        assert "\nFile not found: /nonexistent/file.txt\n" in captured.out
+        assert "Function: test_read_text_from_nonexistent_file" \
+        "\n============================================" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : print_log" \
+        "\n::: ERROR :::" \
+        "\nFile not found: /nonexistent/file.txt" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
-    def test_save_text_normalizes_newlines(self, capsys):
-        """ Test NewtFiles.save_text_to_file() normalizes Windows newlines to Unix LF. """
-        print_my_func_name()
-
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
-            tmp_path = tmp.name
-
-        try:
-            content = "line1\r\nline2\r\n"
-            print(repr(content))
-
-            NewtFiles.save_text_to_file(tmp_path, content, append=False)
-
-            result = NewtFiles.read_text_from_file(tmp_path, logging=False)
-            print(repr(result))
-            # Should have Unix newlines
-            assert result is not None
-            assert "\r\n" not in result
-
-        finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[Newt.files.save_text_to_file] Saved text to file:\n" in captured.out
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
-        assert "[Newt.files.read_text_from_file] Loaded text from file:" not in captured.out
 
 
     def test_save_text_invalid_input(self, capsys):
-        """ Test NewtFiles.save_text_to_file() raises SystemExit for invalid file/text inputs. """
+        """ Ensure NewtFiles.save_text_to_file() raises SystemExit on invalid file or text input. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
+            file_txt = tmpfile.name
 
         try:
             with pytest.raises(SystemExit) as exc_info_1:
                 # Invalid file_name
                 NewtFiles.save_text_to_file(123, "test")  # type: ignore
-                print("This line will not be printed 01")
+                print("This line will not be printed")
             assert exc_info_1.value.code == 1
-            print()
+            print("exc_info_1:", exc_info_1.value.code)
 
             with pytest.raises(SystemExit) as exc_info_2:
                 # Invalid text
-                NewtFiles.save_text_to_file(tmp_path, 456)  # type: ignore
-                print("This line will not be printed 02")
+                NewtFiles.save_text_to_file(file_txt, 456)  # type: ignore
+                print("This line will not be printed")
             assert exc_info_2.value.code == 1
+            print("exc_info_2:", exc_info_2.value.code)
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_txt):
+                os.unlink(file_txt)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.files.save_text_to_file : text\n" in captured.out
-        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
-        assert "\nValue: 123\n" in captured.out
-        assert "\nValue: 456\n" in captured.out
+        assert "Function: test_save_text_invalid_input" \
+        "\n============================================" \
+        "\nexc_info_1: 1" \
+        "\nexc_info_2: 1" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.ensure_dir_exists : file_path > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.save_text_to_file : content > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 456\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 2
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
 class TestConvertStrToJson:

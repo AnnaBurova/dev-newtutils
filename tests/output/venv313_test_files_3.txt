@@ -2,7 +2,7 @@
 platform win32 -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collected 13 items
+collected 18 items
 
 test_files.py 
 START=======================================
@@ -163,7 +163,7 @@ check_3: False
 [1m[31m
 Location: Newt.files.check_file_exists : print_log
 ::: ERROR :::
-File not found: C:\Users\*******\AppData\Local\Temp\***********
+File not found: C:\Users\*******\AppData\Local\Temp\***************
 [0m
 
 END=========================================
@@ -267,5 +267,97 @@ Selection cancelled.
 
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_save_and_read_text_file
+============================================
+[Newt.files.save_text_to_file] Saved text to file:
+C:\Users\*******\AppData\Local\Temp\***********.txt
+(length=13, mode=write)
+[Newt.files.read_text_from_file] Loaded text from file:
+C:\Users\*******\AppData\Local\Temp\***********.txt
+(length=13)
+result: 'Hello\nWorld!\n'
 
-============================= 13 passed in 0.07s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_save_text_creates_directory
+============================================
+[Newt.files.save_text_to_file] Saved text to file:
+C:\Users\*******\AppData\Local\Temp\***********\level1\level2\file.txt
+(length=13, mode=write)
+[Newt.files.read_text_from_file] Loaded text from file:
+C:\Users\*******\AppData\Local\Temp\***********\level1\level2\file.txt
+(length=13)
+result: 'Hello\nWorld!\n'
+file_exists: True
+file_exists: False
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_save_text_append_mode
+============================================
+[Newt.files.save_text_to_file] Saved text to file:
+C:\Users\*******\AppData\Local\Temp\***********.txt
+(length=7, mode=write)
+[Newt.files.save_text_to_file] Saved text to file:
+C:\Users\*******\AppData\Local\Temp\***********.txt
+(length=7, mode=append)
+[Newt.files.read_text_from_file] Loaded text from file:
+C:\Users\*******\AppData\Local\Temp\***********.txt
+(length=14)
+result: 'Line 1\nLine 2\n'
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_read_text_from_nonexistent_file
+============================================
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.check_file_exists : print_log
+::: ERROR :::
+File not found: /nonexistent/file.txt
+[0m
+
+END=========================================
+.
+START=======================================
+=====captured.out=====
+Function: test_save_text_invalid_input
+============================================
+exc_info_1: 1
+exc_info_2: 1
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.ensure_dir_exists : file_path > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.files.save_text_to_file : content > Newt.console.validate_type
+::: ERROR :::
+Value: 456
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+
+END=========================================
+.
+
+============================= 18 passed in 0.09s ==============================

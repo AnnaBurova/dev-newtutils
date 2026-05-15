@@ -16,6 +16,12 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - New readability check for files, verifying that a file is readable before processing.
   - `obscure_logic()`:
     - Performs the masking logic using a character-level replacement approach with walrus operator support.
+  - `check_file_exists()`:
+    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
+  - `read_text_from_file()`:
+    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
+  - `save_text_to_file()`:
+    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
 
 ### Changed
 
@@ -30,12 +36,18 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Updated to return `None` explicitly when the path points to the current directory or when the target directory already exists.
     - Wrapped directory creation in exception handling and now route unexpected errors through `NewtCons.error_msg()`.
   - `check_file_exists()`:
+    - Parameter renamed from `logging` to `print_log`.
     - Refactored function for improved clarity and structure.
-    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
     - `msg_file_path` variable used in place of raw `file_path` in all error messages when `obscure_list` is provided.
   - `choose_file_from_folder()`:
     - Parameter renamed from `missing_values` to `todo_dict`.
     - Refined to drop deduplication `list(set(file_list))` and rely on plain `file_list`.
+  - `read_text_from_file()`:
+    - Parameter renamed from `logging` to `print_log`.
+  - `save_text_to_file()`:
+    - Parameter renamed from `logging` to `print_log`.
+    - Parameter renamed from `text` to `content`.
+    - `append` default changed from `True` to `False`.
 
 ### Testing
 

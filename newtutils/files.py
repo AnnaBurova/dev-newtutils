@@ -29,14 +29,16 @@ Functions:
     === TEXT ===
     def read_text_from_file(
         file_name: str,
+        obscure_list: list = [],
         stop: bool = True,
-        logging: bool = True
+        print_log: bool = True
         ) -> str | None
     def save_text_to_file(
         file_name: str,
-        text: str,
-        append: bool = True,
-        logging: bool = True
+        content: str,
+        append: bool = False,
+        obscure_list: list = [],
+        print_log: bool = True
         ) -> None
     === JSON ===
     def convert_str_to_json(
@@ -262,7 +264,6 @@ def check_file_exists(
             location="Newt.files.check_file_exists : os.access file_path",
             stop=stop
         )
-
         return False  # pragma: no cover
 
     if print_log or stop:
@@ -340,6 +341,7 @@ def choose_file_from_folder(
         sorted_file_dict[str(idx)] = name
     choice = NewtUtil.select_from_input(sorted_file_dict, todo_dict)
     selected_file = sorted_file_dict[choice]
+
     return selected_file
 
 
@@ -347,107 +349,142 @@ def choose_file_from_folder(
 
 def read_text_from_file(
         file_name: str,
+        obscure_list: list = [],
         stop: bool = True,
-        logging: bool = True
+        print_log: bool = True
         ) -> str | None:
-    """
-    Read UTF-8 text content from a file.
+    """ ## Read UTF-8 text content from a file.
 
-    Opens a text file and returns its content.
-    Returns None if the file does not exist or cannot be read.
+    Opens a text file and returns its full content as a string.
+    If the file does not exist or cannot be read, returns None.
+    Uses check_file_exists() to verify files are accessible.
 
     Args:
         file_name (str):
-            Full path to the text file.
+            Full path to the text file to read.
+        obscure_list (list):
+            List of substrings to keep visible in log messages.<br>
+            All other characters in `file_path` will be masked with `*`.<br>
+            If empty, the full path is shown as-is.<br>
+            Defaults to [].
         stop (bool):
-            If True, stops execution when file not found.
+            If True, terminates execution when the file is not found.<br>
             Defaults to True.
-        logging (bool):
-            If True, prints a confirmation message after loading.
+        print_log (bool):
+            If True, prints a confirmation message with file path and
+            content length after successful loading.<br>
             Defaults to True.
 
     Returns:
         out (str | None):
-            Text content of the file,
-            or None if reading fails.
+            The full UTF-8 text content of the file,<br>
+            or None if the file does not exist or reading fails.
 
     Raises:
         SystemExit:
-            Raised when `stop=True` and file not found.
+            If `stop=True` and the file is not found, terminates with exit code 1.
     """
 
-    if not check_file_exists(file_name, stop=stop, logging=logging):
+    if not check_file_exists(file_name, stop=stop, print_log=print_log):
         return None
+
+    msg_file_path = file_name
+    if obscure_list:
+        msg_file_path = _obscure_logic(file_name, obscure_list)
 
     try:
         with open(file_name, "r", encoding="utf-8") as f:
             content = f.read()
 
-        if logging:
-            print("[Newt.files.read_text_from_file] Loaded text from file:")
-            print(file_name)
-            print(f"(length={len(content)})")
-
-        return content
-
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
+            f"Found Error Msg: (found? write test!)",  # TODO
+            f"Exception: {e}",
             location="Newt.files.read_text_from_file : Exception"
         )
+        return None
 
-    return None
+    if print_log:
+        print("[Newt.files.read_text_from_file] Loaded text from file:")
+        print(msg_file_path)
+        print(f"(length={len(content)})")
+
+    return content
 
 
 def save_text_to_file(
         file_name: str,
-        text: str,
-        append: bool = True,
-        logging: bool = True
+        content: str,
+        append: bool = False,
+        obscure_list: list = [],
+        print_log: bool = True
         ) -> None:
-    """
-    Write or append text content to a UTF-8 file.
+    """ ## Write or append UTF-8 text content to a file.
 
     Automatically creates the target directory if it does not exist.
-    All newline characters are normalized to Unix-style (`\\n`).
+    All newline characters are normalized to Unix-style (`\\n`) before writing.
+    If `append=True` and the file exists, content is appended;
+    otherwise the file is created or overwritten.
+    Uses check_file_exists() to verify files are accessible.
 
     Args:
         file_name (str):
-            Full path to the target file.
-        text (str):
-            Text content to write.
+            Full path to the target file to write or append to.
+        content (str):
+            Text content to save.
         append (bool):
-            If True, appends instead of overwriting.
+            If True, appends to the existing file when it exists;<br>
+            otherwise overwrites or creates a new file.<br>
+            Defaults to False.
+        obscure_list (list):
+            List of substrings to keep visible in log messages.<br>
+            All other characters in `file_path` will be masked with `*`.<br>
+            If empty, the full path is shown as-is.<br>
+            Defaults to [].
+        print_log (bool):
+            If True, prints a confirmation message with file path,
+            content length, and write mode after saving.<br>
             Defaults to True.
-        logging (bool):
-            If True, prints a confirmation message after saving.
-            Defaults to True.
+
+    Returns:
+        out (None):
+            The function does not return a value.
     """
 
     NewtCons.validate_type(
-        text, str,
-        location="Newt.files.save_text_to_file : text"
+        content, str,
+        location="Newt.files.save_text_to_file : content"
     )
 
+    content = _normalize_newlines(content)
+
     ensure_dir_exists(file_name)
-    text = _normalize_newlines(text) + "\n"
-    mode_file = "a" if append else "w"
-    mode_text = "append" if append else "write"
+
+    msg_file_path = file_name
+    if obscure_list:
+        msg_file_path = _obscure_logic(file_name, obscure_list)
+
+    if append and check_file_exists(file_name, stop=False, print_log=print_log):
+        mode_file, mode_text = "a", "append"
+    else:
+        mode_file, mode_text = "w", "write"
 
     try:
         with open(file_name, mode_file, encoding="utf-8", newline="\n") as f:
-            f.write(text)
-
-        if logging:
-            print("[Newt.files.save_text_to_file] Saved text to file:")
-            print(file_name)
-            print(f"(mode={mode_text}, length={len(text)})")
+            f.write(content)
 
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
+            f"Found Error Msg: (found? write test!)",  # TODO
+            f"Exception: {e}",
             location="Newt.files.save_text_to_file : Exception"
         )
+        return None
+
+    if print_log:
+        print("[Newt.files.save_text_to_file] Saved text to file:")
+        print(msg_file_path)
+        print(f"(length={len(content)}, mode={mode_text})")
 
 
 # === JSON ===
