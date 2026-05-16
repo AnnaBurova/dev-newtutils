@@ -1226,13 +1226,15 @@ class TestSortingDictByKeys:
         # Invalid key type
         input_list_dict_1 = [{123: "Alice"}]
         print("input_list_dict_1:", input_list_dict_1)
-        output_4 = NewtUtil.sorting_dict_by_keys(input_list_dict_1, 123, stop=False)  # type: ignore
+        output_4 = NewtUtil.sorting_dict_by_keys(
+            input_list_dict_1, 123, stop=False)  # type: ignore
         print("output_4:", output_4)
 
         # Invalid key type
         input_list_dict_2 = [{"name": "Alice"}]
         print("input_list_dict_2:", input_list_dict_2)
-        output_5 = NewtUtil.sorting_dict_by_keys(input_list_dict_2, 123, stop=False)  # type: ignore
+        output_5 = NewtUtil.sorting_dict_by_keys(
+            input_list_dict_2, 123, stop=False)  # type: ignore
         print("output_5:", output_5)
 
         # Empty input

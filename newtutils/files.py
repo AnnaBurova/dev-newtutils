@@ -46,14 +46,16 @@ Functions:
         ) -> list | dict | None
     def read_json_from_file(
         file_name: str,
+        obscure_list: list = [],
         stop: bool = True,
-        logging: bool = True
+        print_log: bool = True
         ) -> list | dict | None
     def save_json_to_file(
         file_name: str,
-        data: list | dict,
+        content: list | dict,
         indent: int = 2,
-        logging: bool = True
+        obscure_list: list = [],
+        print_log: bool = True
         ) -> None
     === CSV ===
     def read_csv_from_file(
@@ -446,9 +448,9 @@ def save_text_to_file(
             content length, and write mode after saving.<br>
             Defaults to True.
 
-    Returns:
-        out (None):
-            The function does not return a value.
+    Raises:
+        SystemExit:
+            If an error occurs, terminates with exit code 1.
     """
 
     NewtCons.validate_type(
@@ -566,126 +568,162 @@ def convert_str_to_json(
 
 def read_json_from_file(
         file_name: str,
+        obscure_list: list = [],
         stop: bool = True,
-        logging: bool = True
+        print_log: bool = True
         ) -> list | dict | None:
-    """
-    Read and parse JSON data from a file.
+    """ ## Read and parse JSON data from a file.
 
     Opens and deserializes JSON content from a UTF-8 encoded file.
-    Supports both list and dict structures.
-    Returns None if the file is missing or invalid.
+    Supports both list and dict top-level structures.
+    Returns None if the file is missing, unreadable,
+    or contains an unexpected type after deserialization.
 
     Args:
         file_name (str):
-            Path to the JSON file.
+            Path to the JSON file to read.
+        obscure_list (list):
+            List of substrings to keep visible in log messages.<br>
+            All other characters in `file_path` will be masked with `*`.<br>
+            If empty, the full path is shown as-is.<br>
+            Defaults to [].
         stop (bool):
-            If True, stops execution when file not found.
+            If True, terminates execution when the file is not found.<br>
+            If False, returns None instead.<br>
             Defaults to True.
-        logging (bool):
-            If True, prints a confirmation message after loading.
+        print_log (bool):
+            If True, prints a confirmation message with the file path
+            and content type after successful loading.<br>
             Defaults to True.
 
     Returns:
         out (list | dict | None):
-            Parsed JSON data,
-            or None if missing or invalid.
+            Parsed JSON content as a list or dict,<br>
+            or None if the file is missing, unreadable,
+            or the deserialized value is not a list or dict.
 
     Raises:
         SystemExit:
-            Raised when `stop=True` and file not found.
+            If the file is not found and `stop=True`,
+            terminates with exit code 1.
     """
 
-    if not check_file_exists(file_name, stop=stop, logging=logging):
+    if not check_file_exists(file_name, stop=stop, print_log=print_log):
         return None
+
+    msg_file_path = file_name
+    if obscure_list:
+        msg_file_path = _obscure_logic(file_name, obscure_list)
 
     try:
         with open(file_name, "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-        # Normalize output to always be a list or dict
-        if NewtCons.validate_type(
-            data, (list, dict), stop=False,
-            location="Newt.files.read_json_from_file : data"
-        ):
-            if logging:
-                print("[Newt.files.read_json_from_file] Loaded JSON from file:")
-                print(file_name)
-                print(f"(type={type(data)})")
-
-            return data
-
-        return None
+            content = json.load(f)
 
     except Exception as e:
         NewtCons.error_msg(
-            f"Exception: {e}",
-            location="Newt.files.read_json_from_file : Exception"
+            f"Failed to parse content to JSON: {e}",
+            location="Newt.files.read_json_from_file : json.load file",
+            stop=stop
         )
+        return None
+
+    # Normalize output to always be a list or dict
+    if NewtCons.validate_type(
+        content, (list, dict), stop=False,
+        location="Newt.files.read_json_from_file : content"
+    ):
+        if print_log:
+            print("[Newt.files.read_json_from_file] Loaded JSON from file:")
+            print(msg_file_path)
+            print(f"(type={type(content)})")
+
+        return content
 
     return None
 
 
 def save_json_to_file(
         file_name: str,
-        data: list | dict,
+        content: list | dict,
         indent: int = 2,
-        logging: bool = True
+        obscure_list: list = [],
+        print_log: bool = True
         ) -> None:
-    """
-    Write JSON data to a file.
+    """ ## Save a Python object as a formatted JSON file.
 
-    Serializes a Python object as formatted JSON and saves it to disk.
+    Serializes a Python list or dict as formatted JSON and writes it to disk.
     Creates parent directories if they do not exist.
     Appends a final newline for text file compatibility.
+    Validates `content` type and `indent` value before writing;
+    falls back to `indent=2` if the provided value is invalid or negative.
 
     Args:
         file_name (str):
             Path to the output JSON file.
-        data (list | dict):
-            Python data to serialize.
+        content (list | dict):
+            Python data to serialize. Must be a list or dict.
         indent (int):
-            Indentation level for pretty-printing.
+            Indentation level for pretty-printing the JSON output.<br>
+            Must be a non-negative integer; defaults to 2 if invalid.
             Defaults to 2.
-        logging (bool):
-            If True, prints a confirmation message after saving.
+        obscure_list (list):
+            List of substrings to keep visible in log messages.<br>
+            All other characters in `file_path` will be masked with `*`.<br>
+            If empty, the full path is shown as-is.<br>
+            Defaults to [].
+        print_log (bool):
+            If True, prints a confirmation message with the file path,
+            content type, and indent level after saving.
             Defaults to True.
+
+    Raises:
+        SystemExit:
+            If an error occurs, terminates with exit code 1.
     """
 
     NewtCons.validate_type(
-        data, (list, dict),
-        location="Newt.files.save_json_to_file : data"
+        content, (list, dict),
+        location="Newt.files.save_json_to_file : content"
     )
 
-    NewtCons.validate_type(
-        indent, int, check_non_empty=True,
+    if not NewtCons.validate_type(
+        indent, int, check_non_empty=True, stop=False,
         location="Newt.files.save_json_to_file : indent"
-    )
+    ):
+        indent = 2
 
     if indent < 0:
         NewtCons.error_msg(
             "Indent must be a non-negative integer.",
-            location="Newt.files.save_json_to_file : indent < 0"
+            location="Newt.files.save_json_to_file : indent < 0",
+            stop=False
         )
+        indent = 2
 
     ensure_dir_exists(file_name)
 
+    msg_file_path = file_name
+    if obscure_list:
+        msg_file_path = _obscure_logic(file_name, obscure_list)
+
     try:
         with open(file_name, "w", encoding="utf-8", newline="\n") as f:
-            json.dump(data, f, indent=indent, ensure_ascii=False)
+            json.dump(content, f, indent=indent, ensure_ascii=False)
             f.write("\n")
-
-        if logging:
-            print("[Newt.files.save_json_to_file] Saved JSON to file:")
-            print(file_name)
-            print(f"(type={type(data)}, indent={indent})")
 
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
+            f"Found Error Msg: (found? write test!)",  # TODO
+            f"Exception: {e}",
             location="Newt.files.save_json_to_file : Exception",
             stop=False
         )
+        return None
+
+    if print_log:
+        print("[Newt.files.save_json_to_file] Saved JSON to file:")
+        print(msg_file_path)
+        print(f"(type={type(content)}, indent={indent})")
 
 
 # === CSV ===

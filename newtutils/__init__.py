@@ -40,7 +40,8 @@ from .files import (
     read_text_from_file,
     save_text_to_file,
     convert_str_to_json,
-    read_json_from_file, save_json_to_file,
+    read_json_from_file,
+    save_json_to_file,
     read_csv_from_file, save_csv_to_file,
     setup_logging, cleanup_logging,
 )
@@ -80,7 +81,8 @@ __all__ = [
     "read_text_from_file",
     "save_text_to_file",
     "convert_str_to_json",
-    "read_json_from_file", "save_json_to_file",
+    "read_json_from_file",
+    "save_json_to_file",
     "read_csv_from_file", "save_csv_to_file",
     "setup_logging", "cleanup_logging",
     # SQL ----------

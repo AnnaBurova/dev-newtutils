@@ -3,7 +3,7 @@ platform win32 -- Python 3.10.11, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 22 items
+collecting ... collected 28 items
 
 test_files.py::TestNormalizeNewlines::test_normalize_newlines_converts_windows 
 START=======================================
@@ -24,7 +24,7 @@ START=======================================
 =====captured.out=====
 Function: test_obscure_logic_masks_path_segments
 ============================================
-file_not_found: C:\Users\*******\AppData\Local\Temp\**********
+file_obscure_name: C:\Users\*******\AppData\Local\Temp\**********
 
 =====captured.err=====
 (no stderr captured)
@@ -523,5 +523,147 @@ Cannot convert STR to JSON.
 
 END=========================================
 PASSED
+test_files.py::TestJsonFiles::test_save_and_read_json_file_dict 
+START=======================================
+=====captured.out=====
+Function: test_save_and_read_json_file_dict
+============================================
+content: {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
+[Newt.files.save_json_to_file] Saved JSON to file:
+C:\Users\*******\AppData\Local\Temp\***********.json
+(type=<class 'dict'>, indent=2)
+[Newt.files.read_json_from_file] Loaded JSON from file:
+C:\Users\*******\AppData\Local\Temp\***********.json
+(type=<class 'dict'>)
+result_dict: {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
+[Newt.files.read_text_from_file] Loaded text from file:
+C:\Users\*******\AppData\Local\Temp\***********.json
+(length=75)
+result_txt: '{\n  "name": "test",\n  "value": 123,\n  "items": [\n    1,\n    2,\n    3\n  ]\n}\n'
 
-============================= 22 passed in 0.08s ==============================
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestJsonFiles::test_save_and_read_json_file_list 
+START=======================================
+=====captured.out=====
+Function: test_save_and_read_json_file_list
+============================================
+content: [1, 2, 3, {'key': 'value'}]
+[Newt.files.save_json_to_file] Saved JSON to file:
+C:\Users\*******\AppData\Local\Temp\***********.json
+(type=<class 'list'>, indent=2)
+[Newt.files.read_json_from_file] Loaded JSON from file:
+C:\Users\*******\AppData\Local\Temp\***********.json
+(type=<class 'list'>)
+result_list: [1, 2, 3, {'key': 'value'}]
+[Newt.files.read_text_from_file] Loaded text from file:
+C:\Users\*******\AppData\Local\Temp\***********.json
+(length=46)
+result_txt: '[\n  1,\n  2,\n  3,\n  {\n    "key": "value"\n  }\n]\n'
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestJsonFiles::test_save_and_read_json_file_nested_dirs 
+START=======================================
+=====captured.out=====
+Function: test_save_and_read_json_file_nested_dirs
+============================================
+content: {'test': 'data'}
+[Newt.files.save_json_to_file] Saved JSON to file:
+C:\Users\*******\AppData\Local\Temp\***********\level1\level2\file.json
+(type=<class 'dict'>, indent=4)
+[Newt.files.read_json_from_file] Loaded JSON from file:
+C:\Users\*******\AppData\Local\Temp\***********\level1\level2\file.json
+(type=<class 'dict'>)
+result_dict: {'test': 'data'}
+[Newt.files.read_text_from_file] Loaded text from file:
+C:\Users\*******\AppData\Local\Temp\***********\level1\level2\file.json
+(length=23)
+result_txt: '{\n    "test": "data"\n}\n'
+file_exists: True
+file_exists: False
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestJsonFiles::test_read_json_from_nonexistent_file 
+START=======================================
+=====captured.out=====
+Function: test_read_json_from_nonexistent_file
+============================================
+result: None
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.check_file_exists : print_log
+::: ERROR :::
+File not found: /nonexistent/file.json
+[0m
+
+END=========================================
+PASSED
+test_files.py::TestJsonFiles::test_read_json_invalid_file_content 
+START=======================================
+=====captured.out=====
+Function: test_read_json_invalid_file_content
+============================================
+exc_info: 1
+result: None
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.read_json_from_file : json.load file
+::: ERROR :::
+Failed to parse content to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+[0m
+[1m[31m
+Location: Newt.files.read_json_from_file : json.load file
+::: ERROR :::
+Failed to parse content to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+[0m
+
+END=========================================
+PASSED
+test_files.py::TestJsonFiles::test_read_json_from_file_non_dict 
+START=======================================
+=====captured.out=====
+Function: test_read_json_from_file_non_dict
+============================================
+result: None
+[Newt.files.save_json_to_file] Saved JSON to file:
+C:\Users\*******\AppData\Local\Temp\***********.json
+(type=<class 'dict'>, indent=2)
+[Newt.files.save_json_to_file] Saved JSON to file:
+C:\Users\*******\AppData\Local\Temp\***********.json
+(type=<class 'dict'>, indent=2)
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.read_json_from_file : content > Newt.console.validate_type
+::: ERROR :::
+Value: just a string
+Received type: <class 'str'>
+Expected type: (<class 'list'>, <class 'dict'>)
+[0m
+[1m[31m
+Location: Newt.files.save_json_to_file : indent > Newt.console.validate_type
+::: ERROR :::
+Value: text
+Received type: <class 'str'>
+Expected type: <class 'int'>
+[0m
+[1m[31m
+Location: Newt.files.save_json_to_file : indent < 0
+::: ERROR :::
+Indent must be a non-negative integer.
+[0m
+
+END=========================================
+PASSED
+
+============================= 28 passed in 0.11s ==============================

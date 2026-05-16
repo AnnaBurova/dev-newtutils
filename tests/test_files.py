@@ -23,6 +23,7 @@ import os
 import pytest
 from unittest.mock import patch
 import tempfile
+import json
 
 from .helpers import print_my_func_name, print_my_captured
 # import newtutils.console as NewtCons
@@ -88,20 +89,20 @@ class TestObscureLogic:
             "\\AppData\\Local\\Temp\\",
             "/tmp/",
             ]
-        file_not_found = NewtFiles._obscure_logic(file_name, obscure_list)
+        file_obscure_name = NewtFiles._obscure_logic(file_name, obscure_list)
 
         if sys.platform == "win32" and os.name == "nt":
-            assert file_not_found == "C:\\Users\\*******\\AppData\\Local\\Temp\\**********"
+            assert file_obscure_name == "C:\\Users\\*******\\AppData\\Local\\Temp\\**********"
         else:
-            assert file_not_found == "/tmp/**********"
-        print("file_not_found:", file_not_found)
+            assert file_obscure_name == "/tmp/**********"
+        print("file_obscure_name:", file_obscure_name)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
         assert "Function: test_obscure_logic_masks_path_segments" \
         "\n============================================" \
-        "\nfile_not_found: " + file_not_found + \
+        "\nfile_obscure_name: " + file_obscure_name + \
         "\n" == captured.out
         assert "" == captured.err
 
@@ -426,9 +427,9 @@ class TestCheckFileExists:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***************"
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***************"
         else:
-            file_not_found = "/tmp/***************"
+            file_obscure_name = "/tmp/***************"
 
         assert "Function: test_check_file_exists_obscure" \
         "\n============================================" \
@@ -439,7 +440,7 @@ class TestCheckFileExists:
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.files.check_file_exists : print_log" \
         "\n::: ERROR :::" \
-        "\nFile not found: " + file_not_found + \
+        "\nFile not found: " + file_obscure_name + \
         "\n\x1b[0m" \
         "\n" == captured.err
 
@@ -683,17 +684,17 @@ class TestTextFiles:
 
         if sys.platform == "win32" and os.name == "nt":
             # On Windows
-            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.txt"
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.txt"
         else:
-            file_not_found = "/tmp/***********.txt"
+            file_obscure_name = "/tmp/***********.txt"
 
         assert "Function: test_save_and_read_text_file" \
         "\n============================================" \
         "\n[Newt.files.save_text_to_file] Saved text to file:" \
-        "\n" + file_not_found + \
+        "\n" + file_obscure_name + \
         "\n(length=13, mode=write)" \
         "\n[Newt.files.read_text_from_file] Loaded text from file:" \
-        "\n" + file_not_found + \
+        "\n" + file_obscure_name + \
         "\n(length=13)" \
         "\nresult: 'Hello\\nWorld!\\n'" \
         "\n" == captured.out
@@ -729,8 +730,6 @@ class TestTextFiles:
 
             assert result == content
 
-            assert os.path.exists(file_path)
-
             file_exists = os.path.exists(file_path)
             assert file_exists is True
             print("file_exists:", file_exists)
@@ -744,17 +743,17 @@ class TestTextFiles:
 
         if sys.platform == "win32" and os.name == "nt":
             # On Windows
-            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********\\level1\\level2\\file.txt"
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********\\level1\\level2\\file.txt"
         else:
-            file_not_found = "/tmp/***********/level1/level2/file.txt"
+            file_obscure_name = "/tmp/***********/level1/level2/file.txt"
 
         assert "Function: test_save_text_creates_directory" \
         "\n============================================" \
         "\n[Newt.files.save_text_to_file] Saved text to file:" \
-        "\n" + file_not_found + \
+        "\n" + file_obscure_name + \
         "\n(length=13, mode=write)" \
         "\n[Newt.files.read_text_from_file] Loaded text from file:" \
-        "\n" + file_not_found + \
+        "\n" + file_obscure_name + \
         "\n(length=13)" \
         "\nresult: 'Hello\\nWorld!\\n'" \
         "\nfile_exists: True" \
@@ -806,20 +805,20 @@ class TestTextFiles:
 
         if sys.platform == "win32" and os.name == "nt":
             # On Windows
-            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.txt"
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.txt"
         else:
-            file_not_found = "/tmp/***********.txt"
+            file_obscure_name = "/tmp/***********.txt"
 
         assert "Function: test_save_text_append_mode" \
         "\n============================================" \
         "\n[Newt.files.save_text_to_file] Saved text to file:" \
-        "\n" + file_not_found + \
+        "\n" + file_obscure_name + \
         "\n(length=7, mode=write)" \
         "\n[Newt.files.save_text_to_file] Saved text to file:" \
-        "\n" + file_not_found + \
+        "\n" + file_obscure_name + \
         "\n(length=7, mode=append)" \
         "\n[Newt.files.read_text_from_file] Loaded text from file:" \
-        "\n" + file_not_found + \
+        "\n" + file_obscure_name + \
         "\n(length=14)" \
         "\nresult: 'Line 1\\nLine 2\\n'" \
         "\n" == captured.out
@@ -953,12 +952,14 @@ class TestConvertStrToJson:
         "\nresult_5: None" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.files.convert_str_to_json : content > Newt.console.validate_type : is_empty" \
+        "\nLocation: Newt.files.convert_str_to_json : content" \
+        " > Newt.console.validate_type : is_empty" \
         "\n::: ERROR :::" \
         "\nValue must not be empty" \
         "\nValue: \nType: <class 'str'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.files.convert_str_to_json : content > Newt.console.validate_type : is_empty" \
+        "\nLocation: Newt.files.convert_str_to_json : content" \
+        " > Newt.console.validate_type : is_empty" \
         "\n::: ERROR :::" \
         "\nValue must not be empty" \
         "\nValue:    \nType: <class 'str'>" \
@@ -1086,7 +1087,8 @@ class TestConvertStrToJson:
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON" \
         "\n::: ERROR :::" \
-        "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)" \
+        "\nFailed to parse string to JSON:" \
+        " Expecting property name enclosed in double quotes: line 1 column 2 (char 1)" \
         "\nText size: 30" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
         "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON" \
@@ -1135,12 +1137,14 @@ class TestConvertStrToJson:
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON" \
         "\n::: ERROR :::" \
-        "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)" \
+        "\nFailed to parse string to JSON:" \
+        " Expecting property name enclosed in double quotes: line 1 column 3 (char 2)" \
         "\nText size: 16" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
         "\nLocation: Newt.files.convert_str_to_json : Exception replace quotes" \
         "\n::: ERROR :::" \
-        "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)" \
+        "\nFailed to parse string to JSON:" \
+        " Expecting property name enclosed in double quotes: line 1 column 3 (char 2)" \
         "\nText size: 16" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
         "\nLocation: Newt.files.convert_str_to_json : Unknown type" \
@@ -1170,256 +1174,365 @@ class TestConvertStrToJson:
 
 
 class TestJsonFiles:
-    """ Tests for JSON file operations. """
+    """ Tests for read_json_from_file and save_json_to_file functions. """
 
 
-    def test_save_and_read_json_dict(self, capsys):
-        """ Test NewtFiles.save_json_to_file() and read_json_from_file() correctly persist JSON dict. """
+    def test_save_and_read_json_file_dict(self, capsys):
+        """ Ensure NewtFiles.save_json_to_file() and NewtFiles.read_json_from_file() work with dict. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmpfile:
+            file_json = tmpfile.name
+
+        obscure_list = [
+            "C:\\Users\\",
+            "\\AppData\\Local\\Temp\\",
+            "/tmp/",
+            ".json",
+            ]
 
         try:
-            data = {"name": "test", "value": 123, "items": [1, 2, 3]}
-            print(repr(data))
-            print()
+            content = {"name": "test", "value": 123, "items": [1, 2, 3]}
+            print("content:", repr(content))
+            NewtFiles.save_json_to_file(file_json, content, obscure_list=obscure_list)
 
-            NewtFiles.save_json_to_file(tmp_path, data)
-            print()
+            result_dict = NewtFiles.read_json_from_file(file_json, obscure_list=obscure_list)
+            print("result_dict:", repr(result_dict))
+            assert isinstance(result_dict, dict)
 
-            result_json = NewtFiles.read_json_from_file(tmp_path)
-            print(repr(result_json))
-            assert result_json == data
-            print()
+            assert result_dict == content
 
-            result_text = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result_text))
-            print(result_text)
+            result_txt = NewtFiles.read_text_from_file(file_json, obscure_list=obscure_list)
+            print("result_txt:", repr(result_txt))
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_json):
+                os.unlink(file_json)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
-        assert "\n(type=<class 'dict'>, indent=2)\n" in captured.out
-        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
-        assert "\n(type=<class 'dict'>)\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=75)\n" in captured.out
-        assert "\n\'{\\n  \"name\": \"test\",\\n  \"value\": 123,\\n  \"items\": [\\n    1,\\n    2,\\n    3\\n  ]\\n}\\n\'\n" in captured.out
-        assert "\n{\n  \"name\": \"test\",\n  \"value\": 123,\n  \"items\": [\n    1,\n    2,\n    3\n  ]\n}\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            # On Windows
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.json"
+        else:
+            file_obscure_name = "/tmp/***********.json"
+
+        assert "Function: test_save_and_read_json_file_dict" \
+        "\n============================================" \
+        "\ncontent: {\'name\': \'test\', \'value\': 123, \'items\': [1, 2, 3]}" \
+        "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
+        "\n" + file_obscure_name + \
+        "\n(type=<class \'dict\'>, indent=2)" \
+        "\n[Newt.files.read_json_from_file] Loaded JSON from file:" \
+        "\n" + file_obscure_name + \
+        "\n(type=<class \'dict\'>)" \
+        "\nresult_dict: {\'name\': \'test\', \'value\': 123, \'items\': [1, 2, 3]}" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_obscure_name + \
+        "\n(length=75)" \
+        "\nresult_txt: \'{\\n  \"name\": \"test\",\\n  \"value\": 123,\\n  \"items\":" \
+        " [\\n    1,\\n    2,\\n    3\\n  ]\\n}\\n\'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
-    def test_save_and_read_json_list(self, capsys):
-        """ Test NewtFiles.save_json_to_file() and read_json_from_file() correctly persist JSON list. """
+    def test_save_and_read_json_file_list(self, capsys):
+        """ Ensure NewtFiles.save_json_to_file() and NewtFiles.read_json_from_file() work with list. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmpfile:
+            file_json = tmpfile.name
+
+        obscure_list = [
+            "C:\\Users\\",
+            "\\AppData\\Local\\Temp\\",
+            "/tmp/",
+            ".json",
+            ]
 
         try:
-            data = [1, 2, 3, {"key": "value"}]
-            print(repr(data))
+            content = [1, 2, 3, {"key": "value"}]
+            print("content:", repr(content))
+            NewtFiles.save_json_to_file(file_json, content, obscure_list=obscure_list)
 
-            NewtFiles.save_json_to_file(tmp_path, data)
-            print()
+            result_list = NewtFiles.read_json_from_file(file_json, obscure_list=obscure_list)
+            print("result_list:", repr(result_list))
+            assert isinstance(result_list, list)
 
-            result_json = NewtFiles.read_json_from_file(tmp_path)
-            print(repr(result_json))
-            assert result_json == data
-            print()
+            assert result_list == content
 
-            result_text = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result_text))
-            print(result_text)
+            result_txt = NewtFiles.read_text_from_file(file_json, obscure_list=obscure_list)
+            print("result_txt:", repr(result_txt))
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_json):
+                os.unlink(file_json)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
-        assert "\n(type=<class 'list'>, indent=2)\n" in captured.out
-        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
-        assert "\n(type=<class 'list'>)\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=46)\n" in captured.out
-        assert "\n\'[\\n  1,\\n  2,\\n  3,\\n  {\\n    \"key\": \"value\"\\n  }\\n]\\n'\n" in captured.out
-        assert "\n[\n  1,\n  2,\n  3,\n  {\n    \"key\": \"value\"\n  }\n]\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            # On Windows
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.json"
+        else:
+            file_obscure_name = "/tmp/***********.json"
+
+        assert "Function: test_save_and_read_json_file_list" \
+        "\n============================================" \
+        "\ncontent: [1, 2, 3, {\'key\': \'value\'}]" \
+        "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
+        "\n" + file_obscure_name + \
+        "\n(type=<class \'list\'>, indent=2)" \
+        "\n[Newt.files.read_json_from_file] Loaded JSON from file:" \
+        "\n" + file_obscure_name + \
+        "\n(type=<class \'list\'>)" \
+        "\nresult_list: [1, 2, 3, {\'key\': \'value\'}]" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_obscure_name + \
+        "\n(length=46)" \
+        "\nresult_txt: \'[\\n  1,\\n  2,\\n  3,\\n  {\\n    \"key\": \"value\"\\n  }\\n]\\n\'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
+
+
+    def test_save_and_read_json_file_nested_dirs(self, capsys):
+        """ Ensure NewtFiles.save_json_to_file() works with nested directories. """
+        print_my_func_name()
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            file_path = os.path.join(tmpdir, "level1", "level2", "file.json")
+
+            obscure_list = [
+                "C:\\Users\\",
+                "\\AppData\\Local\\Temp\\",
+                "/tmp/",
+                "\\level1\\level2\\file.json",
+                "/level1/level2/file.json",
+                ]
+
+            content = {"test": "data"}
+            print("content:", repr(content))
+            NewtFiles.save_json_to_file(file_path, content, indent=4, obscure_list=obscure_list)
+
+            result_dict = NewtFiles.read_json_from_file(file_path, obscure_list=obscure_list)
+            print("result_dict:", repr(result_dict))
+            assert isinstance(result_dict, dict)
+
+            assert result_dict == content
+
+            result_txt = NewtFiles.read_text_from_file(file_path, obscure_list=obscure_list)
+            print("result_txt:", repr(result_txt))
+
+            file_exists = os.path.exists(file_path)
+            assert file_exists is True
+            print("file_exists:", file_exists)
+
+        file_exists = os.path.exists(file_path)
+        assert file_exists is False
+        print("file_exists:", file_exists)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        if sys.platform == "win32" and os.name == "nt":
+            # On Windows
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********\\level1\\level2\\file.json"
+        else:
+            file_obscure_name = "/tmp/***********/level1/level2/file.json"
+
+        assert "Function: test_save_and_read_json_file_nested_dirs" \
+        "\n============================================" \
+        "\ncontent: {\'test\': \'data\'}" \
+        "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
+        "\n" + file_obscure_name + \
+        "\n(type=<class \'dict\'>, indent=4)" \
+        "\n[Newt.files.read_json_from_file] Loaded JSON from file:" \
+        "\n" + file_obscure_name + \
+        "\n(type=<class \'dict\'>)" \
+        "\nresult_dict: {\'test\': \'data\'}" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_obscure_name + \
+        "\n(length=23)" \
+        "\nresult_txt: \'{\\n    \"test\": \"data\"\\n}\\n\'" \
+        "\nfile_exists: True" \
+        "\nfile_exists: False" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
     def test_read_json_from_nonexistent_file(self, capsys):
-        """ Test NewtFiles.read_json_from_file(stop=False) returns None for nonexistent file. """
+        """ Ensure NewtFiles.read_json_from_file() returns None for nonexistent file. """
         print_my_func_name()
 
         result = NewtFiles.read_json_from_file("/nonexistent/file.json", stop=False)
-        print(repr(result))
+        print("result:", repr(result))
         assert result == None
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
-        assert "\nFile not found: /nonexistent/file.json\n" in captured.out
+        assert "Function: test_read_json_from_nonexistent_file" \
+        "\n============================================" \
+        "\nresult: None" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : print_log" \
+        "\n::: ERROR :::" \
+        "\nFile not found: /nonexistent/file.json" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
+        assert captured.err.count("\n::: ERROR :::\n") == 1
 
-    def test_save_json_creates_directory(self, capsys):
-        """ Test that save_json_to_file creates parent directories. """
-        print_my_func_name()
-
-        with tempfile.TemporaryDirectory() as tmpdir:
-            nested_path = os.path.join(tmpdir, "level1", "level2", "file.json")
-
-            data = {"test": "data"}
-            print(repr(data))
-
-            NewtFiles.save_json_to_file(nested_path, data)
-            assert os.path.exists(nested_path)
-
-            result = NewtFiles.read_json_from_file(nested_path)
-            print(repr(result))
-            assert result == {"test": "data"}
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
-        assert "\n(type=<class 'dict'>, indent=2)\n" in captured.out
-        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
-        assert "\n(type=<class 'dict'>)\n" in captured.out
-        assert captured.out.count("\\level1\\level2\\file.json\n") == 2
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_save_json_custom_indent(self, capsys):
-        """ Test saving JSON with custom indent. """
+    def test_read_json_invalid_file_content(self, capsys):
+        """ Ensure NewtFiles.read_json_from_file() raises SystemExit on invalid JSON. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
-            tmp_path = tmp.name
-
-        try:
-            data = {"a": 1, "b": 2}
-            print(repr(data))
-            NewtFiles.save_json_to_file(tmp_path, data, indent=4)
-            print()
-
-            result_json = NewtFiles.read_json_from_file(tmp_path)
-            print(repr(result_json))
-            assert result_json == data
-            print()
-
-            result_text = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result_text))
-            print(result_text)
-
-        finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n[Newt.files.save_json_to_file] Saved JSON to file:\n" in captured.out
-        assert "\n[Newt.files.read_json_from_file] Loaded JSON from file:\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "'{\\n    \"a\": 1,\\n    \"b\": 2\\n}\\n'\n{\n    \"a\": 1,\n    \"b\": 2\n}\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_read_json_invalid_file(self, capsys):
-        """ Test reading invalid JSON raises SystemExit. """
-        print_my_func_name()
-
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
-            tmp.write("{ invalid json }")
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmpfile:
+            tmpfile.write("{ invalid json }")
+            file_json = tmpfile.name
 
         try:
             with pytest.raises(SystemExit) as exc_info:
-                result = NewtFiles.read_json_from_file(tmp_path)
+                NewtFiles.read_json_from_file(file_json)
                 print("This line will not be printed")
             assert exc_info.value.code == 1
+            print("exc_info:", exc_info.value.code)
+
+            result = NewtFiles.read_json_from_file(file_json, stop=False)
+            print("result:", repr(result))
+            assert result == None
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_json):
+                os.unlink(file_json)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.read_json_from_file : Exception\n" in captured.out
-        assert "\nException: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)\n" in captured.out
+        assert "Function: test_read_json_invalid_file_content" \
+        "\n============================================" \
+        "\nexc_info: 1" \
+        "\nresult: None" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.read_json_from_file : json.load file" \
+        "\n::: ERROR :::" \
+        "\nFailed to parse content to JSON:" \
+        " Expecting property name enclosed in double quotes: line 1 column 3 (char 2)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.read_json_from_file : json.load file" \
+        "\n::: ERROR :::" \
+        "\nFailed to parse content to JSON:" \
+        " Expecting property name enclosed in double quotes: line 1 column 3 (char 2)" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 2
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
-    def test_save_json_invalid_input(self, capsys):
-        """ Test that invalid input is handled gracefully. """
+    def test_read_json_from_file_non_dict(self, capsys):
+        """ Ensure NewtFiles.read_json_from_file() returns None for non-dict JSON. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmpfile:
+            json.dump("just a string", tmpfile)
+            file_json = tmpfile.name
+
+        obscure_list = [
+            "C:\\Users\\",
+            "\\AppData\\Local\\Temp\\",
+            "/tmp/",
+            ".json",
+            ]
 
         try:
-            with pytest.raises(SystemExit) as exc_info_1:
-                # Invalid file_name
-                NewtFiles.save_json_to_file(123, {"test": "data"})  # type: ignore
-                print("This line will not be printed 01")
-            assert exc_info_1.value.code == 1
-            print()
+            result = NewtFiles.read_json_from_file(file_json)
+            print("result:", repr(result))
+            assert result == None
 
-            with pytest.raises(SystemExit) as exc_info_2:
-                # Invalid data (not list or dict)
-                NewtFiles.save_json_to_file(tmp_path, "not a dict or list")  # type: ignore
-                print("This line will not be printed 02")
-            assert exc_info_2.value.code == 1
-            print()
-
-            with pytest.raises(SystemExit) as exc_info_3:
-                NewtFiles.read_json_from_file(tmp_path)
-                print("This line will not be printed 03")
-            assert exc_info_3.value.code == 1
-
-            result_text = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result_text))
-            assert result_text == ""
+            content = {"test": "data"}
+            NewtFiles.save_json_to_file(
+                file_json, content, indent="text",  # type: ignore
+                obscure_list=obscure_list
+            )
+            NewtFiles.save_json_to_file(
+                file_json, content, indent=-8,
+                obscure_list=obscure_list
+            )
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_json):
+                os.unlink(file_json)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("\n::: ERROR :::\n") == 3
-        assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
-        assert "\nValue: 123\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.files.save_json_to_file : data\n" in captured.out
-        assert "\nExpected (<class 'list'>, <class 'dict'>), got <class 'str'>\n" in captured.out
-        assert "\nValue: not a dict or list\n" in captured.out
-        assert "\nLocation: Newt.files.read_json_from_file : Exception\n" in captured.out
-        assert "\nException: Expecting value: line 1 column 1 (char 0)\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=0)\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            # On Windows
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.json"
+        else:
+            file_obscure_name = "/tmp/***********.json"
+
+        assert "Function: test_read_json_from_file_non_dict" \
+        "\n============================================" \
+        "\nresult: None" \
+        "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
+        "\n" + file_obscure_name + \
+        "\n(type=<class 'dict'>, indent=2)" \
+        "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
+        "\n" + file_obscure_name + \
+        "\n(type=<class 'dict'>, indent=2)" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.read_json_from_file : content > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: just a string\nReceived type: <class 'str'>" \
+        "\nExpected type: (<class 'list'>, <class 'dict'>)" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.save_json_to_file : indent > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: text\nReceived type: <class 'str'>" \
+        "\nExpected type: <class 'int'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.save_json_to_file : indent < 0" \
+        "\n::: ERROR :::" \
+        "\nIndent must be a non-negative integer." \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 3
+
         # Expected absence of result
-        assert "This line will not be printed" not in captured.out
+        assert "::: ERROR :::" not in captured.out
 
 
 class TestCsvFiles:

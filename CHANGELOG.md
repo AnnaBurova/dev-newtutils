@@ -22,6 +22,10 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
   - `save_text_to_file()`:
     - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
+  - `read_json_from_file()`:
+    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
+  - `save_json_to_file()`:
+    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
 
 ### Changed
 
@@ -30,6 +34,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Parameter renamed from `missing_values` to `todo_dict`.
 - `newtutils/files.py`:
   - `_normalize_newlines()`:
+    - Parameter renamed from `text` to `content`.
     - Now strips trailing whitespace with `rstrip()` before replacing newlines, and appends a trailing `\n` to the result.
     - Now also converts old Mac-style `\r` line endings to Unix `\n`, in addition to Windows-style `\r\n`.
   - `ensure_dir_exists()`:
@@ -48,6 +53,14 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Parameter renamed from `logging` to `print_log`.
     - Parameter renamed from `text` to `content`.
     - `append` default changed from `True` to `False`.
+  - `convert_str_to_json()`:
+    - Parameter renamed from `text` to `content`.
+  - `read_json_from_file()`:
+    - Parameter renamed from `logging` to `print_log`.
+  - `save_json_to_file()`:
+    - Parameter renamed from `logging` to `print_log`.
+    - Parameter renamed from `data` to `content`.
+    - Now validates `indent` type gracefully: falls back to `indent=2` if invalid or negative instead of raising `SystemExit`.
 
 ### Testing
 
