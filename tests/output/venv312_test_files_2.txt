@@ -3,25 +3,29 @@ platform win32 -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 18 items
+collecting ... collected 22 items
 
-test_files.py::TestNormalizeNewlines::test_normalize_newlines_converts_windows PASSED [  5%]
-test_files.py::TestObscureLogic::test_obscure_logic_masks_path_segments PASSED [ 11%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path PASSED [ 16%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_current_directory PASSED [ 22%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_directory_exists PASSED [ 27%]
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_directory PASSED [ 33%]
-test_files.py::TestCheckFileExists::test_check_file_exists_invalid_file_name PASSED [ 38%]
-test_files.py::TestCheckFileExists::test_check_file_exists_not_found PASSED [ 44%]
-test_files.py::TestCheckFileExists::test_check_file_exists_obscure PASSED [ 50%]
-test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_invalid_input PASSED [ 55%]
-test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_nonexistent_folder_raises_exit PASSED [ 61%]
-test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_empty_folder_exit PASSED [ 66%]
-test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_cancel_x_raises_exit PASSED [ 72%]
-test_files.py::TestTextFiles::test_save_and_read_text_file PASSED        [ 77%]
-test_files.py::TestTextFiles::test_save_text_creates_directory PASSED    [ 83%]
-test_files.py::TestTextFiles::test_save_text_append_mode PASSED          [ 88%]
-test_files.py::TestTextFiles::test_read_text_from_nonexistent_file PASSED [ 94%]
-test_files.py::TestTextFiles::test_save_text_invalid_input PASSED        [100%]
+test_files.py::TestNormalizeNewlines::test_normalize_newlines_converts_windows PASSED [  4%]
+test_files.py::TestObscureLogic::test_obscure_logic_masks_path_segments PASSED [  9%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path PASSED [ 13%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_current_directory PASSED [ 18%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_directory_exists PASSED [ 22%]
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_directory PASSED [ 27%]
+test_files.py::TestCheckFileExists::test_check_file_exists_invalid_file_name PASSED [ 31%]
+test_files.py::TestCheckFileExists::test_check_file_exists_not_found PASSED [ 36%]
+test_files.py::TestCheckFileExists::test_check_file_exists_obscure PASSED [ 40%]
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_invalid_input PASSED [ 45%]
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_nonexistent_folder_raises_exit PASSED [ 50%]
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_empty_folder_exit PASSED [ 54%]
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_cancel_x_raises_exit PASSED [ 59%]
+test_files.py::TestTextFiles::test_save_and_read_text_file PASSED        [ 63%]
+test_files.py::TestTextFiles::test_save_text_creates_directory PASSED    [ 68%]
+test_files.py::TestTextFiles::test_save_text_append_mode PASSED          [ 72%]
+test_files.py::TestTextFiles::test_read_text_from_nonexistent_file PASSED [ 77%]
+test_files.py::TestTextFiles::test_save_text_invalid_input PASSED        [ 81%]
+test_files.py::TestConvertStrToJson::test_convert_str_to_json_returns_none_invalid PASSED [ 86%]
+test_files.py::TestConvertStrToJson::test_convert_str_to_json_valid_json PASSED [ 90%]
+test_files.py::TestConvertStrToJson::test_convert_str_to_json_single_quotes PASSED [ 95%]
+test_files.py::TestConvertStrToJson::test_invalid_json_prints_errors PASSED [100%]
 
-============================= 18 passed in 0.09s ==============================
+============================= 22 passed in 0.09s ==============================

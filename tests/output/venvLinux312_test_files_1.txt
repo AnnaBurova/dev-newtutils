@@ -2,8 +2,8 @@
 platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0
 rootdir: /mnt/d/VS_Code/dev-newtutils
 configfile: pyproject.toml
-collected 18 items
+collected 22 items
 
-test_files.py ..................                                         [100%]
+test_files.py ......................                                     [100%]
 
-============================== 18 passed in 0.31s ==============================
+============================== 22 passed in 0.37s ==============================

@@ -6,7 +6,7 @@ Created on 2025-10
 
 Functions:
     def _normalize_newlines(
-        text: str
+        content: str
         ) -> str
     def _obscure_logic(
         file_path_str: str,
@@ -42,7 +42,7 @@ Functions:
         ) -> None
     === JSON ===
     def convert_str_to_json(
-        text: str
+        content: str
         ) -> list | dict | None
     def read_json_from_file(
         file_name: str,
@@ -96,7 +96,7 @@ import newtutils.utility as NewtUtil
 
 
 def _normalize_newlines(
-        text: str
+        content: str
         ) -> str:
     """ ## Normalize newline characters in a text string to Unix-style newlines.
 
@@ -104,7 +104,7 @@ def _normalize_newlines(
     Strips trailing whitespace from the end of the normalized text.
 
     Args:
-        text (str):
+        content (str):
             Input text containing mixed newline characters.
 
     Returns:
@@ -113,11 +113,11 @@ def _normalize_newlines(
     """
 
     NewtCons.validate_type(
-        text, str,
+        content, str,
         location="Newt.files._normalize_newlines"
     )
 
-    return text.rstrip().replace("\r\n", "\n").replace("\r", "\n")+"\n"
+    return content.rstrip().replace("\r\n", "\n").replace("\r", "\n")+"\n"
 
 
 def _obscure_logic(
@@ -490,47 +490,46 @@ def save_text_to_file(
 # === JSON ===
 
 def convert_str_to_json(
-        text: str
+        content: str
         ) -> list | dict | None:
-    """
-    Parse a string into a JSON-compatible Python object.
+    """ ## Parse a string into a JSON-compatible Python object.
 
-    Tries `json.loads` first, falls back to `ast.literal_eval`,
-    and as a last resort attempts a simple single-quote -> double-quote
-    substitution before retrying `json.loads`.
+    Tries `json.loads` on the stripped input first.
+    If that fails, replaces all single quotes with double quotes and retries `json.loads`.
+    Returns None if all attempts fail.
 
     Args:
-        text (str):
+        content (str):
             Input string containing JSON-like data.
 
     Returns:
         out (list | dict | None):
-            Parsed Python object on success,
-            otherwise None.
+            Parsed Python `list` or `dict` on success,<br>
+            or None if all parsing attempts fail or input is invalid.
     """
 
     if not NewtCons.validate_type(
-        text, str, check_non_empty=True, stop=False,
-        location="Newt.files.convert_str_to_json : text"
+        content, str, check_non_empty=True, stop=False,
+        location="Newt.files.convert_str_to_json : content"
     ):
         return None
 
-    text_strip = text.strip()
+    content_strip = content.strip()
 
     # Try standard JSON first
     try:
-        data = json.loads(text_strip)
+        data = json.loads(content_strip)
 
         if NewtCons.validate_type(
             data, (list, dict), stop=False,
-            location="Newt.files.convert_str_to_json : json.loads(text_strip)"
+            location="Newt.files.convert_str_to_json : json.loads content_strip"
         ):
             return data
 
     except Exception as e:
         NewtCons.error_msg(
             f"Failed to parse string to JSON: {e}",
-            f"Text size: {len(text_strip)}",
+            f"Text size: {len(content_strip)}",
             location="Newt.files.convert_str_to_json : Exception standard JSON",
             stop=False
         )
@@ -539,20 +538,20 @@ def convert_str_to_json(
 
     # Try to replace single quotes with double quotes and try JSON again
     try:
-        text_replace = text_strip.replace("'", '"')
-        data = json.loads(text_replace)
+        content_replace = content_strip.replace("'", '"')
+        data = json.loads(content_replace)
 
         if NewtCons.validate_type(
             data, (list, dict), stop=False,
-            location="Newt.files.convert_str_to_json : json.loads(text_replace)"
+            location="Newt.files.convert_str_to_json : json.loads content_replace"
         ):
             return data
 
     except Exception as e:
         NewtCons.error_msg(
             f"Failed to parse string to JSON: {e}",
-            f"Text size: {len(text_replace)}",
-            location="Newt.files.convert_str_to_json : Exception replace single quotes with double quotes",
+            f"Text size: {len(content_replace)}",
+            location="Newt.files.convert_str_to_json : Exception replace quotes",
             stop=False
         )
 

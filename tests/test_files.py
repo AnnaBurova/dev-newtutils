@@ -917,262 +917,253 @@ class TestConvertStrToJson:
     """ Tests for convert_str_to_json function. """
 
 
-    def test_parses_valid_json_dict(self, capsys):
-        """ Test NewtFiles.convert_str_to_json() parses valid JSON dict correctly. """
-        print_my_func_name()
-
-        json_str = '{"name": "test", "value": 123, "items": [1, 2, 3]}'
-        print(repr(json_str))
-
-        result = NewtFiles.convert_str_to_json(json_str)
-        print(repr(result))
-        assert isinstance(result, dict)
-        assert result == {"name": "test", "value": 123, "items": [1, 2, 3]}
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n'{\"name\": \"test\", \"value\": 123, \"items\": [1, 2, 3]}'\n{'name': 'test', 'value': 123, 'items': [1, 2, 3]}\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_parses_valid_json_list(self, capsys):
-        """ Test NewtFiles.convert_str_to_json() parses valid JSON list correctly. """
-        print_my_func_name()
-
-        json_str = '[1, 2, 3, {"key": "value"}]'
-        print(repr(json_str))
-
-        result = NewtFiles.convert_str_to_json(json_str)
-        print(repr(result))
-        assert isinstance(result, list)
-        assert result == [1, 2, 3, {"key": "value"}]
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n'[1, 2, 3, {\"key\": \"value\"}]'\n[1, 2, 3, {'key': 'value'}]\n" in captured.out
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_parses_single_quotes_dict(self, capsys):
-        """ Test NewtFiles.convert_str_to_json() handles single quotes in dict string. """
-        print_my_func_name()
-
-        json_str = "{'name': 'test', 'value': 123}"
-        print(repr(json_str))
-
-        result = NewtFiles.convert_str_to_json(json_str)
-        print(repr(result))
-        assert isinstance(result, dict)
-        assert result == {"name": "test", "value": 123}
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
-        assert "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n" in captured.out
-        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
-
-
-    def test_parses_single_quotes_list(self, capsys):
-        """ Test NewtFiles.convert_str_to_json() handles single quotes in list string. """
-        print_my_func_name()
-
-        json_str = "['item1', 'item2', 'item3']"
-        print(repr(json_str))
-
-        result = NewtFiles.convert_str_to_json(json_str)
-        print(repr(result))
-        assert isinstance(result, list)
-        assert result == ["item1", "item2", "item3"]
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
-        assert "\nFailed to parse string to JSON: Expecting value: line 1 column 2 (char 1)\n" in captured.out
-        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
-
-
-    def test_returns_none_for_empty_string(self, capsys):
-        """ Test NewtFiles.convert_str_to_json() returns None for empty/whitespace strings. """
+    def test_convert_str_to_json_returns_none_invalid(self, capsys):
+        """ Ensure NewtFiles.convert_str_to_json() returns None for invalid or empty inputs. """
         print_my_func_name()
 
         result_1 = NewtFiles.convert_str_to_json("")
-        print(repr(result_1))
+        print("result_1:", repr(result_1))
         assert result_1 is None
-        print()
 
         result_2 = NewtFiles.convert_str_to_json("   ")
-        print(repr(result_2))
+        print("result_2:", repr(result_2))
         assert result_2 is None
 
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert captured.out.count("\n::: ERROR :::\n") == 2
-        assert captured.out.count("\nLocation: Newt.console.validate_input : is_empty > Newt.files.convert_str_to_json : text\n") == 2
-        assert captured.out.count("\nValue must be non-empty\n") == 2
-        assert "\nValue: \n" in captured.out
-        assert "\nValue:    \n" in captured.out
-
-
-    def test_invalid_json_input_raises_exit(self, capsys):
-        """ Test NewtFiles.convert_str_to_json() raises SystemExit for non-string inputs. """
-        print_my_func_name()
-
-        result_1 = NewtFiles.convert_str_to_json(123)  # type: ignore
-        print(repr(result_1))
-        assert result_1 is None
-        print()
-
-        result_2 = NewtFiles.convert_str_to_json(None)  # type: ignore
-        print(repr(result_2))
-        assert result_2 is None
-        print()
-
-        result_3 = NewtFiles.convert_str_to_json(["not", "a", "string"])  # type: ignore
-        print(repr(result_3))
+        result_3 = NewtFiles.convert_str_to_json(None)  # type: ignore
+        print("result_3:", repr(result_3))
         assert result_3 is None
 
+        result_4 = NewtFiles.convert_str_to_json(123)  # type: ignore
+        print("result_4:", repr(result_4))
+        assert result_4 is None
+
+        result_5 = NewtFiles.convert_str_to_json(["not", "a", "string"])  # type: ignore
+        print("result_5:", repr(result_5))
+        assert result_5 is None
+
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("\n::: ERROR :::\n") == 3
-        assert captured.out.count("\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : text\n") == 3
-        assert "\nExpected <class 'str'>, got <class 'int'>\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'NoneType'>\n" in captured.out
-        assert "\nExpected <class 'str'>, got <class 'list'>\n" in captured.out
-        assert "\nValue: 123\n" in captured.out
-        assert "\nValue: None\n" in captured.out
-        assert "\nValue: ['not', 'a', 'string']\n" in captured.out
+        assert "Function: test_convert_str_to_json_returns_none_invalid" \
+        "\n============================================" \
+        "\nresult_1: None" \
+        "\nresult_2: None" \
+        "\nresult_3: None" \
+        "\nresult_4: None" \
+        "\nresult_5: None" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : content > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue: \nType: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : content > Newt.console.validate_type : is_empty" \
+        "\n::: ERROR :::" \
+        "\nValue must not be empty" \
+        "\nValue:    \nType: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : content > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: None\nReceived type: <class 'NoneType'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : content > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : content > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: ['not', 'a', 'string']\nReceived type: <class 'list'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 5
+
         # Expected absence of result
-        assert "This line will not be printed" not in captured.out
+        assert "::: ERROR :::" not in captured.out
+
+
+    def test_convert_str_to_json_valid_json(self, capsys):
+        """ Ensure NewtFiles.convert_str_to_json() parses valid JSON dict and list strings. """
+        print_my_func_name()
+
+        json_str_1 = '{"name": "test", "value": 123, "items": [1, 2, 3]}'
+        print("json_str_1:", repr(json_str_1))
+
+        result_1 = NewtFiles.convert_str_to_json(json_str_1)
+        print("result_1:", repr(result_1))
+
+        assert isinstance(result_1, dict)
+        assert result_1 == {"name": "test", "value": 123, "items": [1, 2, 3]}
+
+        json_str_2 = '[1, 2, 3, {"key": "value"}]'
+        print("json_str_2:", repr(json_str_2))
+
+        result_2 = NewtFiles.convert_str_to_json(json_str_2)
+        print("result_2:", repr(result_2))
+
+        assert isinstance(result_2, list)
+        assert result_2 == [1, 2, 3, {"key": "value"}]
+
+        json_str_3 = '{"outer": {"inner": {"deep": [1, 2, 3]}}}'
+        print("json_str_3:", repr(json_str_3))
+
+        result_3 = NewtFiles.convert_str_to_json(json_str_3)
+        print("result_3:", repr(result_3))
+
+        assert isinstance(result_3, dict)
+        assert result_3 == {"outer": {"inner": {"deep": [1, 2, 3]}}}
+
+        json_str_4 = '   {"key": "value"}   '
+        print("json_str_4:", repr(json_str_4))
+
+        result_4 = NewtFiles.convert_str_to_json(json_str_4)
+        print("result_4:", repr(result_4))
+
+        assert isinstance(result_4, dict)
+        assert result_4 == {"key": "value"}
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_convert_str_to_json_valid_json" \
+        "\n============================================" \
+        "\njson_str_1: \'{\"name\": \"test\", \"value\": 123, \"items\": [1, 2, 3]}\'" \
+        "\nresult_1: {\'name\': \'test\', \'value\': 123, \'items\': [1, 2, 3]}" \
+        "\njson_str_2: \'[1, 2, 3, {\"key\": \"value\"}]\'" \
+        "\nresult_2: [1, 2, 3, {\'key\': \'value\'}]" \
+        "\njson_str_3: \'{\"outer\": {\"inner\": {\"deep\": [1, 2, 3]}}}\'" \
+        "\nresult_3: {\'outer\': {\'inner\': {\'deep\': [1, 2, 3]}}}" \
+        "\njson_str_4: '   {\"key\": \"value\"}   '" \
+        "\nresult_4: {'key': 'value'}" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
+
+
+    def test_convert_str_to_json_single_quotes(self, capsys):
+        """ Ensure NewtFiles.convert_str_to_json() parses single-quoted dict and list strings. """
+        print_my_func_name()
+
+        json_str_1 = "{'name': 'test', 'value': 123}"
+        print("json_str_1:", repr(json_str_1))
+
+        result_1 = NewtFiles.convert_str_to_json(json_str_1)
+        print("result_1:", repr(result_1))
+
+        assert isinstance(result_1, dict)
+        assert result_1 == {"name": "test", "value": 123}
+
+        json_str_2 = "['item1', 'item2', 'item3']"
+        print("json_str_2:", repr(json_str_2))
+
+        result_2 = NewtFiles.convert_str_to_json(json_str_2)
+        print("result_2:", repr(result_2))
+
+        assert isinstance(result_2, list)
+        assert result_2 == ["item1", "item2", "item3"]
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        assert "Function: test_convert_str_to_json_single_quotes" \
+        "\n============================================" \
+        "\njson_str_1: \"{\'name\': \'test\', \'value\': 123}\"" \
+        "\nTrying to replace single quotes with double quotes..." \
+        "\nresult_1: {\'name\': \'test\', \'value\': 123}" \
+        "\njson_str_2: \"[\'item1\', \'item2\', \'item3\']\"" \
+        "\nTrying to replace single quotes with double quotes..." \
+        "\nresult_2: [\'item1\', \'item2\', \'item3\']" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON" \
+        "\n::: ERROR :::" \
+        "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)" \
+        "\nText size: 30" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON" \
+        "\n::: ERROR :::" \
+        "\nFailed to parse string to JSON: Expecting value: line 1 column 2 (char 1)" \
+        "\nText size: 27" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 2
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
     def test_invalid_json_prints_errors(self, capsys):
         """ Ensure invalid JSON returns None and prints expected error messages. """
         print_my_func_name()
 
-        invalid_json = "{ invalid json }"
-        print(repr(invalid_json))
-        result = NewtFiles.convert_str_to_json(invalid_json)
-        print(repr(result))
-        assert result is None
+        json_str_1 = "{ invalid json }"
+        print("json_str_1:", repr(json_str_1))
+
+        result_1 = NewtFiles.convert_str_to_json(json_str_1)
+        print("result_1:", repr(result_1))
+        assert result_1 is None
+
+        json_str_2 = "not json at all"
+        print("json_str_2:", repr(json_str_2))
+
+        result_2 = NewtFiles.convert_str_to_json(json_str_2)
+        print("result_2:", repr(result_2))
+        assert result_2 is None
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("\n::: ERROR :::\n") == 3
-        assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
-        assert "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)\n" in captured.out
-        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
-        assert "\nLocation: Newt.files.convert_str_to_json : Exception replace single quotes with double quotes\n" in captured.out
-        assert "\nLocation: Newt.files.convert_str_to_json : Unknown type\n" in captured.out
-        assert "\nCannot convert STR to JSON.\n" in captured.out
+        assert "Function: test_invalid_json_prints_errors" \
+        "\n============================================" \
+        "\njson_str_1: '{ invalid json }'" \
+        "\nTrying to replace single quotes with double quotes..." \
+        "\nresult_1: None" \
+        "\njson_str_2: 'not json at all'" \
+        "\nTrying to replace single quotes with double quotes..." \
+        "\nresult_2: None" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON" \
+        "\n::: ERROR :::" \
+        "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)" \
+        "\nText size: 16" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : Exception replace quotes" \
+        "\n::: ERROR :::" \
+        "\nFailed to parse string to JSON: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)" \
+        "\nText size: 16" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : Unknown type" \
+        "\n::: ERROR :::" \
+        "\nCannot convert STR to JSON." \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON" \
+        "\n::: ERROR :::" \
+        "\nFailed to parse string to JSON: Expecting value: line 1 column 1 (char 0)" \
+        "\nText size: 15" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : Exception replace quotes" \
+        "\n::: ERROR :::" \
+        "\nFailed to parse string to JSON: Expecting value: line 1 column 1 (char 0)" \
+        "\nText size: 15" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.convert_str_to_json : Unknown type" \
+        "\n::: ERROR :::" \
+        "\nCannot convert STR to JSON." \
+        "\n\x1b[0m" \
+        "\n" == captured.err
 
-
-    def test_nonjson_str_prints_errors(self, capsys):
-        """ Ensure non-JSON strings return None and print expected errors. """
-        print_my_func_name()
-
-        invalid_json = "not json at all"
-        print(repr(invalid_json))
-        result = NewtFiles.convert_str_to_json(invalid_json)
-        print(repr(result))
-        assert result is None
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert captured.out.count("\n::: ERROR :::\n") == 3
-        assert "\nLocation: Newt.files.convert_str_to_json : Exception standard JSON\n" in captured.out
-        assert "\nTrying to replace single quotes with double quotes...\n" in captured.out
-        assert "\nLocation: Newt.files.convert_str_to_json : Exception replace single quotes with double quotes\n" in captured.out
-        assert captured.out.count("\nFailed to parse string to JSON: Expecting value: line 1 column 1 (char 0)\n") == 2
-        assert "\nLocation: Newt.files.convert_str_to_json : Unknown type\n" in captured.out
-        assert "\nCannot convert STR to JSON.\n" in captured.out
-
-
-    def test_returns_none_for_non_list_or_dict_json(self, capsys):
-        """ Test NewtFiles.convert_str_to_json() returns None for non-list/dict JSON. """
-        print_my_func_name()
-
-        json_str = '"just a string"'
-        print(repr(json_str))
-        result = NewtFiles.convert_str_to_json(json_str)
-        print(repr(result))
-        assert result is None
-        print()
-
-        json_str = "123"
-        print(repr(json_str))
-        result = NewtFiles.convert_str_to_json(json_str)
-        print(repr(result))
-        assert result is None
-        print()
-
-        json_str = "true"
-        print(repr(json_str))
-        result = NewtFiles.convert_str_to_json(json_str)
-        print(repr(result))
-        assert result is None
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        assert captured.out.count("\n::: ERROR :::\n") == 9
-        assert captured.out.count("\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_strip)\n") == 3
-        assert captured.out.count("\nTrying to replace single quotes with double quotes...\n") == 3
-        assert captured.out.count("\nLocation: Newt.console.validate_input > Newt.files.convert_str_to_json : json.loads(text_replace)\n") == 3
-        assert captured.out.count("\nExpected (<class 'list'>, <class 'dict'>), got <class 'str'>\n") == 2
-        assert captured.out.count("\nExpected (<class 'list'>, <class 'dict'>), got <class 'int'>\n") == 2
-        assert captured.out.count("\nExpected (<class 'list'>, <class 'dict'>), got <class 'bool'>\n") == 2
-        assert captured.out.count("\nValue: just a string\n") == 2
-        assert captured.out.count("\nValue: 123\n") == 2
-        assert captured.out.count("\nValue: True\n") == 2
-        assert captured.out.count("\nLocation: Newt.files.convert_str_to_json : Unknown type\n") == 3
-        assert captured.out.count("\nCannot convert STR to JSON.\n") == 3
-
-
-    def test_handles_whitespace(self, capsys):
-        """ Test NewtFiles.convert_str_to_json() trims whitespace correctly. """
-        print_my_func_name()
-
-        json_str = '   {"key": "value"}   '
-        print(repr(json_str))
-
-        result = NewtFiles.convert_str_to_json(json_str)
-        print(repr(result))
-        assert isinstance(result, dict)
-        assert result == {"key": "value"}
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
-
-        # Expected absence of result
-        assert "::: ERROR :::" not in captured.out
-
-
-    def test_handles_nested_structures(self, capsys):
-        """ Test NewtFiles.convert_str_to_json() parses nested dict/list structures. """
-        print_my_func_name()
-
-        json_str = '{"outer": {"inner": {"deep": [1, 2, 3]}}}'
-        print(repr(json_str))
-
-        result = NewtFiles.convert_str_to_json(json_str)
-        print(repr(result))
-        assert isinstance(result, dict)
-        assert result == {"outer": {"inner": {"deep": [1, 2, 3]}}}
-
-        captured = capsys.readouterr()
-        print_my_captured(captured)
+        assert captured.err.count("\n::: ERROR :::\n") == 6
 
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
