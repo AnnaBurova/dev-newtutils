@@ -100,7 +100,7 @@ __all__ = [
     "fetch_data_from_url",
 ]
 
-__version__ = "0.3.2"
+__version__ = "0.3.3"
 __author__ = "NewtCode Anna Burova"
 __description__ = (
     "NewtUtils — A collection of utility functions for common programming tasks."

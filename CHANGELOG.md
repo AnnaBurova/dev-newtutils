@@ -5,7 +5,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
-## [vNext] — Upcoming
+## [0.3.3] — Reworked Module Files
 
 ### Added
 
