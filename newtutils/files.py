@@ -61,15 +61,17 @@ Functions:
     def read_csv_from_file(
         file_name: str,
         delimiter: str = ";",
+        obscure_list: list = [],
         stop: bool = True,
-        logging: bool = True
+        print_log: bool = True
         ) -> list[list[str]] | None
     def save_csv_to_file(
         file_name: str,
-        rows: Sequence[Sequence[object]],
+        rows: list[list[str]],
         append: bool = False,
         delimiter: str = ";",
-        logging: bool = True
+        obscure_list: list = [],
+        print_log: bool = True
         ) -> None
     === LOG ===
     def setup_logging(
@@ -731,37 +733,40 @@ def save_json_to_file(
 def read_csv_from_file(
         file_name: str,
         delimiter: str = ";",
+        obscure_list: list = [],
         stop: bool = True,
-        logging: bool = True
+        print_log: bool = True
         ) -> list[list[str]] | None:
-    """
-    Read CSV data from a UTF-8 file.
+    """ ## Read CSV data from a UTF-8 encoded file.
 
     Loads CSV content into a list of string lists.
-    Each sublist represents one row of data.
-    Returns None if reading fails.
+    Each sublist represents one row of the CSV file.
+    Returns None if the file is not found or reading fails.
 
     Args:
         file_name (str):
-            Path to the CSV file.
+            Path to the CSV file to read.
         delimiter (str):
-            Column separator character.
-            Defaults to `;`.
+            Column separator character used in the CSV file.<br>
+            Defaults to ";".
+        obscure_list (list):
+            List of substrings used to obscure the file path in log output.<br>
+            Defaults to [] (no obscuring applied).
         stop (bool):
-            If True, stops execution when file not found.
+            If True, terminates execution when the file is not found.<br>
             Defaults to True.
-        logging (bool):
-            If True, prints a confirmation message after loading.
+        print_log (bool):
+            If True, prints a confirmation message with row count and delimiter after loading.<br>
             Defaults to True.
 
     Returns:
         out (list[list[str]] | None):
-            List of CSV rows,
-            or None on failure.
+            A list of rows where each row is a list of string values,
+            or None if the file is not found or an exception occurs.
 
     Raises:
         SystemExit:
-            Raised when `stop=True` and file not found.
+            If the file is not found and `stop=True`, terminates with exit code 1.
     """
 
     NewtCons.validate_type(
@@ -769,61 +774,77 @@ def read_csv_from_file(
         location="Newt.files.read_csv_from_file : delimiter"
     )
 
-    if not check_file_exists(file_name, stop=stop, logging=logging):
+    if not check_file_exists(file_name, stop=stop, print_log=print_log):
         return None
 
+    msg_file_path = file_name
+    if obscure_list:
+        msg_file_path = _obscure_logic(file_name, obscure_list)
+
     try:
-        with open(file_name, "r", encoding="utf-8", newline="") as f:
+        with open(file_name, "r", encoding="utf-8") as f:
             rows = list(csv.reader(f, delimiter=delimiter))
-
-        if logging:
-            print("[Newt.files.read_csv_from_file] Loaded CSV from file:")
-            print(file_name)
-            print(f"(rows={len(rows)}, delimiter='{delimiter}')")
-
-        return rows
 
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
-            location="Newt.files.read_csv_from_file : Exception",
-            stop=False
+            f"Found Error Msg: (found? write test!)",  # TODO
+            f"Exception: {e}",
+            location="Newt.files.read_csv_from_file : Exception"
         )
+        return None
 
-    return None
+    if print_log:
+        print("[Newt.files.read_csv_from_file] Loaded CSV from file:")
+        print(msg_file_path)
+        print(f"(rows={len(rows)}, delimiter='{delimiter}')")
+
+    return rows
 
 
 def save_csv_to_file(
         file_name: str,
-        rows: Sequence[Sequence[object]],
+        rows: list[list[str]],
         append: bool = False,
         delimiter: str = ";",
-        logging: bool = True
+        obscure_list: list = [],
+        print_log: bool = True
         ) -> None:
-    """
-    Write tabular data to a CSV file.
+    """ ## Write tabular data to a UTF-8 encoded CSV file.
 
-    Saves a list of rows (lists of values) into a UTF-8 encoded CSV file.
-    Automatically creates directories if necessary.
-    Normalizes newlines in all cell data.
+    Saves a list of rows (lists of string values) into a CSV file.
+    Automatically creates missing directories if necessary.
+    Normalizes newlines in all cell data before writing.
 
     Args:
         file_name (str):
             Path to the output CSV file.
-        rows (Sequence[Sequence[object]]):
-            Tabular data, where each row is a sequence of values.
+        rows (list[list[str]]):
+            Tabular data where each inner list represents one row of values.<br>
+            Each cell value is converted to string and newlines are normalized.
         append (bool):
-            If True, appends to the file instead of overwriting.
+            If True, appends data to the existing file instead of overwriting it.<br>
             Defaults to False.
         delimiter (str):
-            Column separator character. Defaults to `;`.
-        logging (bool):
-            If True, prints a confirmation message after saving.
+            Column separator character used in the CSV file.<br>
+            Defaults to ";".
+        obscure_list (list):
+            List of substrings used to obscure the file path in log output.<br>
+            Defaults to [] (no obscuring applied).
+        print_log (bool):
+            If True, prints a confirmation message with row count and mode after saving.<br>
             Defaults to True.
+
+    Returns:
+        out (None):
+            The function does not return a value.
+
+    Raises:
+        SystemExit:
+            If an error occurs and `stop=True`, terminates with exit code 1.
     """
 
     NewtCons.validate_type(
-        rows, (list, tuple),
+        rows, list,
         location="Newt.files.save_csv_to_file : rows"
     )
 
@@ -834,32 +855,37 @@ def save_csv_to_file(
 
     ensure_dir_exists(file_name)
 
-    mode_file = "a" if append else "w"
-    mode_text = "append" if append else "write"
+    msg_file_path = file_name
+    if obscure_list:
+        msg_file_path = _obscure_logic(file_name, obscure_list)
+
+    if append and check_file_exists(file_name, stop=False, print_log=print_log):
+        mode_file, mode_text = "a", "append"
+    else:
+        mode_file, mode_text = "w", "write"
+
+    # Normalize newlines in cell data
+    normalized_rows = [
+        [_normalize_newlines(str(cell)) for cell in row]
+        for row in rows
+    ]
 
     try:
-        # Normalize newlines in cell data
-        normalized_rows = [
-            [_normalize_newlines(str(cell)) for cell in row]
-            for row in rows
-        ]
-
         with open(file_name, mode_file, encoding="utf-8", newline="\n") as f:
             writer = csv.writer(f, delimiter=delimiter, lineterminator="\n")
             writer.writerows(normalized_rows)
 
-        if logging:
-            print("[Newt.files.save_csv_to_file] Saved CSV to file:")
-            print(file_name)
-            print(f"(rows={len(normalized_rows)}, mode={mode_text}, delimiter='{delimiter}')")
-
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
-            repr(file_name),
-            location="Newt.files.save_csv_to_file : Exception",
-            stop=False
+            f"Found Error Msg: (found? write test!)",  # TODO
+            f"Exception: {e}",
+            location="Newt.files.save_csv_to_file : Exception"
         )
+
+    if print_log:
+        print("[Newt.files.save_csv_to_file] Saved CSV to file:")
+        print(msg_file_path)
+        print(f"(rows={len(normalized_rows)}, mode={mode_text}, delimiter='{delimiter}')")
 
 
 # === LOG ===

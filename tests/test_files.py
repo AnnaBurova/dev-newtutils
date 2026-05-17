@@ -30,38 +30,49 @@ from .helpers import print_my_func_name, print_my_captured
 import newtutils.utility as NewtUtil
 import newtutils.files as NewtFiles
 
+obscure_list = [
+    "C:\\Users\\",
+    "\\AppData\\Local\\Temp\\",
+    "/tmp/",
+    "\\level1\\level2\\file",
+    "/level1/level2/file",
+    ".txt",
+    ".json",
+    ".csv",
+    ]
+
 
 class TestNormalizeNewlines:
     """ Tests for _normalize_newlines function. """
 
 
-    def test_normalize_newlines_converts_windows(self, capsys):
-        """ Ensure NewtFiles._normalize_newlines() converts Windows CRLF to Unix LF. """
+    def test_normalize_newlines_mixed_endings(self, capsys):
+        """ Ensure NewtFiles._normalize_newlines() handles mixed line endings correctly. """
         print_my_func_name()
 
         text_1 = "line1\r\nline2\r\nline3\r\nline4\r\nline5\r\n"
         print("text_1:", repr(text_1))
 
         result_1 = NewtFiles._normalize_newlines(text_1)
+        assert result_1 == "line1\nline2\nline3\nline4\nline5"
         print("result_1:", repr(result_1))
-        assert result_1 == "line1\nline2\nline3\nline4\nline5\n"
 
         text_2 = "    line1\r\nline2\nline3\r\nline4\rline5\r\n"
         print("text_2:", repr(text_2))
 
         result_2 = NewtFiles._normalize_newlines(text_2)
+        assert result_2 == "    line1\nline2\nline3\nline4\nline5"
         print("result_2:", repr(result_2))
-        assert result_2 == "    line1\nline2\nline3\nline4\nline5\n"
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_normalize_newlines_converts_windows" \
+        assert "Function: test_normalize_newlines_mixed_endings" \
         "\n============================================" \
         "\ntext_1: 'line1\\r\\nline2\\r\\nline3\\r\\nline4\\r\\nline5\\r\\n'" \
-        "\nresult_1: 'line1\\nline2\\nline3\\nline4\\nline5\\n'" \
+        "\nresult_1: 'line1\\nline2\\nline3\\nline4\\nline5'" \
         "\ntext_2: '    line1\\r\\nline2\\nline3\\r\\nline4\\rline5\\r\\n'" \
-        "\nresult_2: '    line1\\nline2\\nline3\\nline4\\nline5\\n'" \
+        "\nresult_2: '    line1\\nline2\\nline3\\nline4\\nline5'" \
         "\n" == captured.out
         assert "" == captured.err
 
@@ -75,8 +86,9 @@ class TestNormalizeNewlines:
 class TestObscureLogic:
     """ Tests for _obscure_logic function. """
 
-    def test_obscure_logic_masks_path_segments(self, capsys):
-        """ Ensure NewtFiles._obscure_logic() masks path segments with asterisks. """
+
+    def test_obscure_logic_path_segments(self, capsys):
+        """ Ensure NewtFiles._obscure_logic() masks path segments from obscure list. """
         print_my_func_name()
 
         if sys.platform == "win32" and os.name == "nt":
@@ -1536,15 +1548,15 @@ class TestJsonFiles:
 
 
 class TestCsvFiles:
-    """ Tests for CSV file operations. """
+    """ Tests for read_csv_from_file and save_csv_to_file functions. """
 
 
-    def test_save_and_read_csv_basic_settings(self, capsys):
-        """ Test saving and reading a CSV file. """
+    def test_save_and_read_csv_multirow(self, capsys):
+        """ Ensure NewtFiles.save_csv_to_file() and read_csv_from_file() handle multiple rows. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            file_csv = tmpfile.name
 
         try:
             rows = [
@@ -1552,286 +1564,440 @@ class TestCsvFiles:
                 ["Alice", "30", "New York"],
                 ["Bob", "25", "London"]
             ]
-            print(repr(rows))
-            print()
+            print("rows:", rows)
 
-            NewtFiles.save_csv_to_file(tmp_path, rows)
-            print()
+            NewtFiles.save_csv_to_file(file_csv, rows, obscure_list=obscure_list)
 
-            result_csv = NewtFiles.read_csv_from_file(tmp_path)
-            print(repr(result_csv))
+            result_csv = NewtFiles.read_csv_from_file(file_csv, obscure_list=obscure_list)
             assert result_csv == rows
-            print()
+            print("result_csv:", result_csv)
 
-            result_text = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result_text))
+            result_text = NewtFiles.read_text_from_file(file_csv, obscure_list=obscure_list)
+            print("result_text_repr:", repr(result_text))
+            print("result_text:")
             print(result_text)
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
-        assert "\n(rows=3, mode=write, delimiter=';')\n" in captured.out
-        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
-        assert "\n(rows=3, delimiter=';')\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=46)\n" in captured.out
-        assert "\n'Name;Age;City\\nAlice;30;New York\\nBob;25;London\\n'\nName;Age;City\nAlice;30;New York\nBob;25;London\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.csv"
+        else:
+            file_obscure_name = "/tmp/***********.csv"
+
+        assert "Function: test_save_and_read_csv_multirow" \
+        "\n============================================" \
+        "\nrows: [['Name', 'Age', 'City'], ['Alice', '30', 'New York'], ['Bob', '25', 'London']]" \
+        "\n[Newt.files.save_csv_to_file] Saved CSV to file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=3, mode=write, delimiter=';')" \
+        "\n[Newt.files.read_csv_from_file] Loaded CSV from file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=3, delimiter=';')" \
+        "\nresult_csv: [['Name', 'Age', 'City'], ['Alice', '30', 'New York'], ['Bob', '25', 'London']]" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_obscure_name + \
+        "\n(length=46)" \
+        "\nresult_text_repr: 'Name;Age;City\\nAlice;30;New York\\nBob;25;London\\n'" \
+        "\nresult_text:\nName;Age;City\nAlice;30;New York\nBob;25;London\n" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
-    def test_save_and_read_csv_custom_delimiter(self, capsys):
-        """ Test saving and reading CSV with custom delimiter. """
+    def test_save_and_read_csv_from_file(self, capsys):
+        """ Ensure NewtFiles.save_csv_to_file() and read_csv_from_file() round-trip correctly. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            file_csv = tmpfile.name
 
         try:
-            rows = [["A", "B"], ["1", "2"]]
-            print(repr(rows))
-            print()
+            rows_1 = [["A", "B"], ["1", "2"]]
+            print("rows_1:", rows_1)
 
-            NewtFiles.save_csv_to_file(tmp_path, rows, delimiter=",")
-            print()
+            NewtFiles.save_csv_to_file(file_csv, rows_1, delimiter=",", obscure_list=obscure_list)
 
-            result_csv = NewtFiles.read_csv_from_file(tmp_path, delimiter=",")
-            print(repr(result_csv))
-            assert result_csv == rows
-            print()
+            result_csv_1 = NewtFiles.read_csv_from_file(file_csv, delimiter=",", obscure_list=obscure_list)
+            assert result_csv_1 == rows_1
+            print("result_csv_1:", result_csv_1)
 
-            result_text = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result_text))
-            print(result_text)
+            result_text_1 = NewtFiles.read_text_from_file(file_csv, obscure_list=obscure_list)
+            print("result_text_1:", repr(result_text_1))
+
+            rows_2 = [["C", "D"], ["3", "4"]]
+            print("rows_2:", rows_2)
+
+            NewtFiles.save_csv_to_file(file_csv, rows_2, append=True, delimiter=",", obscure_list=obscure_list)
+
+            result_csv_2 = NewtFiles.read_csv_from_file(file_csv, delimiter=",", obscure_list=obscure_list)
+            assert result_csv_2 == rows_1 + rows_2
+            print("result_csv_2:", result_csv_2)
+
+            result_text_2 = NewtFiles.read_text_from_file(file_csv, obscure_list=obscure_list)
+            print("result_text_2:", repr(result_text_2))
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
-        assert "\n(rows=2, mode=write, delimiter=',')\n" in captured.out
-        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
-        assert "\n(rows=2, delimiter=',')\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=8)\n" in captured.out
-        assert "\n'A,B\\n1,2\\n'\nA,B\n1,2\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.csv"
+        else:
+            file_obscure_name = "/tmp/***********.csv"
+
+        assert "Function: test_save_and_read_csv_from_file" \
+        "\n============================================" \
+        "\nrows_1: [['A', 'B'], ['1', '2']]" \
+        "\n[Newt.files.save_csv_to_file] Saved CSV to file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=2, mode=write, delimiter=',')" \
+        "\n[Newt.files.read_csv_from_file] Loaded CSV from file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=2, delimiter=',')" \
+        "\nresult_csv_1: [['A', 'B'], ['1', '2']]" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_obscure_name + \
+        "\n(length=8)" \
+        "\nresult_text_1: 'A,B\\n1,2\\n'" \
+        "\nrows_2: [['C', 'D'], ['3', '4']]" \
+        "\n[Newt.files.save_csv_to_file] Saved CSV to file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=2, mode=append, delimiter=',')" \
+        "\n[Newt.files.read_csv_from_file] Loaded CSV from file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=4, delimiter=',')" \
+        "\nresult_csv_2: [['A', 'B'], ['1', '2'], ['C', 'D'], ['3', '4']]" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_obscure_name + \
+        "\n(length=16)" \
+        "\nresult_text_2: 'A,B\\n1,2\\nC,D\\n3,4\\n'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
-    def test_read_csv_from_nonexistent_file(self, capsys):
-        """ Test reading from non-existent CSV file returns empty list. """
+    def test_read_csv_from_file_missing_file(self, capsys):
+        """ Ensure NewtFiles.read_csv_from_file() returns None for nonexistent file. """
         print_my_func_name()
 
         result = NewtFiles.read_csv_from_file("/nonexistent/file.csv", stop=False)
-        print(repr(result))
-        assert result == None
+        assert result is None
+        print("result:", result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n::: ERROR :::\n" in captured.out
-        assert "\nLocation: Newt.files.check_file_exists : logging\n" in captured.out
-        assert "\nFile not found: /nonexistent/file.csv\n" in captured.out
+        assert "Function: test_read_csv_from_file_missing_file" \
+        "\n============================================" \
+        "\nresult: None" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.check_file_exists : print_log" \
+        "\n::: ERROR :::" \
+        "\nFile not found: /nonexistent/file.csv" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 1
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
 
 
-    def test_save_csv_creates_directory(self, capsys):
-        """ Test that save_csv_to_file creates parent directories. """
+    def test_save_csv_to_file_creates_nested_dirs(self, capsys):
+        """ Ensure NewtFiles.save_csv_to_file() creates nested directories as needed. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            nested_path = os.path.join(tmpdir, "level1", "level2", "file.csv")
+            file_path = os.path.join(tmpdir, "level1", "level2", "file.csv")
 
             rows = [["Header"], ["Data"]]
-            print(repr(rows))
+            print("rows:", rows)
 
-            NewtFiles.save_csv_to_file(nested_path, rows)
-            assert os.path.exists(nested_path)
+            NewtFiles.save_csv_to_file(file_path, rows, obscure_list=obscure_list)
+            assert os.path.exists(file_path)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
-        assert "\\level1\\level2\\file.csv\n" in captured.out
-        assert "\n(rows=2, mode=write, delimiter=';')\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********\\level1\\level2\\file.csv"
+        else:
+            file_obscure_name = "/tmp/***********/level1/level2/file.csv"
+
+        assert "Function: test_save_csv_to_file_creates_nested_dirs" \
+        "\n============================================" \
+        "\nrows: [['Header'], ['Data']]" \
+        "\n[Newt.files.save_csv_to_file] Saved CSV to file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=2, mode=write, delimiter=';')" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
-    def test_save_csv_normalizes_newlines_in_cells(self, capsys):
-        """ Test that CSV cells with Windows newlines are normalized. """
+    def test_save_csv_to_file_normalizes_newlines(self, capsys):
+        """ Ensure NewtFiles.save_csv_to_file() strips embedded newlines from cell values. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            file_csv = tmpfile.name
 
         try:
             rows = [["Cell1\r\nLine2", "Cell2"]]
-            print(repr(rows))
-            print()
+            print("rows:", rows)
 
-            NewtFiles.save_csv_to_file(tmp_path, rows)
-            print()
+            NewtFiles.save_csv_to_file(file_csv, rows, obscure_list=obscure_list)
 
-            result_csv = NewtFiles.read_csv_from_file(tmp_path)
-            print(repr(result_csv))
-            # Check that newlines are normalized
+            result_csv = NewtFiles.read_csv_from_file(file_csv, obscure_list=obscure_list)
             assert result_csv is not None
             assert "\r\n" not in result_csv[0][0]
-            print()
+            print("result_csv:", repr(result_csv))
+            print("result_csv:", result_csv)
 
-            result_text = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result_text))
-            print(result_text)
+            result_text = NewtFiles.read_text_from_file(file_csv, obscure_list=obscure_list)
+            print("result_text:", repr(result_text))
+            print("result_text:", result_text)
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
-        assert "\n(rows=1, mode=write, delimiter=';')\n" in captured.out
-        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
-        assert "\n(rows=1, delimiter=';')\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=20)\n" in captured.out
-        assert "\n'\"Cell1\\nLine2\";Cell2\\n'\n\"Cell1\nLine2\";Cell2\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.csv"
+        else:
+            file_obscure_name = "/tmp/***********.csv"
+
+        assert "Function: test_save_csv_to_file_normalizes_newlines" \
+        "\n============================================" \
+        "\nrows: [[\'Cell1\\r\\nLine2\', \'Cell2\']]" \
+        "\n[Newt.files.save_csv_to_file] Saved CSV to file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=1, mode=write, delimiter=\';\')" \
+        "\n[Newt.files.read_csv_from_file] Loaded CSV from file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=1, delimiter=\';\')" \
+        "\nresult_csv: [[\'Cell1\\nLine2\', \'Cell2\']]" \
+        "\nresult_csv: [[\'Cell1\\nLine2\', \'Cell2\']]" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_obscure_name + \
+        "\n(length=20)" \
+        "\nresult_text: \'\"Cell1\\nLine2\";Cell2\\n\'" \
+        "\nresult_text: \"Cell1\nLine2\";Cell2\n" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
-    def test_save_csv_with_various_types(self, capsys):
-        """ Test saving CSV with various data types. """
+    def test_save_csv_to_file_mixed_types(self, capsys):
+        """ Ensure NewtFiles.save_csv_to_file() converts mixed-type row values to strings. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            file_csv = tmpfile.name
 
         try:
             rows = [["String", 123, 45.67, True]]
-            print(repr(rows))
-            print()
+            print("rows:", rows)
 
-            NewtFiles.save_csv_to_file(tmp_path, rows)
-            print()
+            NewtFiles.save_csv_to_file(file_csv, rows, obscure_list=obscure_list)
 
-            result_csv = NewtFiles.read_csv_from_file(tmp_path)
-            print(repr(result_csv))
-            # All values should be strings in CSV
+            result_csv = NewtFiles.read_csv_from_file(file_csv, obscure_list=obscure_list)
             assert result_csv is not None
             assert all(isinstance(cell, str) for row in result_csv for cell in row)
-            print()
+            print("result_csv:", result_csv)
 
-            result_text = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result_text))
-            print(result_text)
+            result_text = NewtFiles.read_text_from_file(file_csv, obscure_list=obscure_list)
+            print("result_text:", repr(result_text))
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.save_csv_to_file] Saved CSV to file:\n" in captured.out
-        assert "\n(rows=1, mode=write, delimiter=';')\n" in captured.out
-        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
-        assert "\n(rows=1, delimiter=';')\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=22)\n" in captured.out
-        assert "\n'String;123;45.67;True\\n'\nString;123;45.67;True\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.csv"
+        else:
+            file_obscure_name = "/tmp/***********.csv"
+
+        assert "Function: test_save_csv_to_file_mixed_types" \
+        "\n============================================" \
+        "\nrows: [['String', 123, 45.67, True]]" \
+        "\n[Newt.files.save_csv_to_file] Saved CSV to file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=1, mode=write, delimiter=';')" \
+        "\n[Newt.files.read_csv_from_file] Loaded CSV from file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=1, delimiter=';')" \
+        "\nresult_csv: [['String', '123', '45.67', 'True']]" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_obscure_name + \
+        "\n(length=22)" \
+        "\nresult_text: 'String;123;45.67;True\\n'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
 
 
-    def test_save_csv_invalid_input(self, capsys):
-        """ Test that invalid input is handled gracefully. """
+    def test_save_csv_to_file_invalid_args(self, capsys):
+        """ Ensure NewtFiles.save_csv_to_file() exits for invalid filename, rows, or delimiter. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            file_csv = tmpfile.name
 
         try:
             with pytest.raises(SystemExit) as exc_info_1:
                 # Invalid file_name
                 NewtFiles.save_csv_to_file(123, [["test"]])  # type: ignore
-                print("This line will not be printed 01")
+                print("This line will not be printed")
             assert exc_info_1.value.code == 1
-            print()
+            print("exc_info_1:", exc_info_1.value.code)
 
             with pytest.raises(SystemExit) as exc_info_2:
                 # Invalid rows (not a list)
-                NewtFiles.save_csv_to_file(tmp_path, "not a list")
-                print("This line will not be printed 02")
+                NewtFiles.save_csv_to_file(file_csv, "not a list")  # type: ignore
+                print("This line will not be printed")
             assert exc_info_2.value.code == 1
-            print()
+            print("exc_info_2:", exc_info_2.value.code)
 
             with pytest.raises(SystemExit) as exc_info_3:
                 # Invalid delimiter
-                NewtFiles.save_csv_to_file(tmp_path, [["test"]], delimiter=123)  # type: ignore
-                print("This line will not be printed 03")
+                NewtFiles.save_csv_to_file(file_csv, [["test"]], delimiter=123)  # type: ignore
+                print("This line will not be printed")
             assert exc_info_3.value.code == 1
+            print("exc_info_3:", exc_info_3.value.code)
 
-            result_text = NewtFiles.read_text_from_file(tmp_path)
-            print(repr(result_text))
+            result_text = NewtFiles.read_text_from_file(file_csv, obscure_list=obscure_list)
             assert result_text == ""
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert captured.out.count("\n::: ERROR :::\n") == 3
-        assert "\nLocation: Newt.console.validate_input > Newt.files.ensure_dir_exists : file_path\n" in captured.out
-        assert captured.out.count("\nExpected <class 'str'>, got <class 'int'>\n") == 2
-        assert "\nLocation: Newt.console.validate_input > Newt.files.save_csv_to_file : rows\n" in captured.out
-        assert "\nExpected (<class 'list'>, <class 'tuple'>), got <class 'str'>\n" in captured.out
-        assert "\nLocation: Newt.console.validate_input > Newt.files.save_csv_to_file : delimiter\n" in captured.out
-        assert "\n[Newt.files.read_text_from_file] Loaded text from file:\n" in captured.out
-        assert "\n(length=0)\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.csv"
+        else:
+            file_obscure_name = "/tmp/***********.csv"
+
+        assert "Function: test_save_csv_to_file_invalid_args" \
+        "\n============================================" \
+        "\nexc_info_1: 1" \
+        "\nexc_info_2: 1" \
+        "\nexc_info_3: 1" \
+        "\n[Newt.files.read_text_from_file] Loaded text from file:" \
+        "\n" + file_obscure_name + \
+        "\n(length=0)" \
+        "\n" == captured.out
+        assert "\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.ensure_dir_exists : file_path > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.save_csv_to_file : rows > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: not a list\nReceived type: <class 'str'>" \
+        "\nExpected type: <class 'list'>" \
+        "\n\x1b[0m\n\x1b[1m\x1b[31m" \
+        "\nLocation: Newt.files.save_csv_to_file : delimiter > Newt.console.validate_type" \
+        "\n::: ERROR :::" \
+        "\nValue: 123\nReceived type: <class 'int'>" \
+        "\nExpected type: <class 'str'>" \
+        "\n\x1b[0m" \
+        "\n" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 3
+
         # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
         assert "This line will not be printed" not in captured.out
+        assert "This line will not be printed" not in captured.err
 
 
-    def test_read_csv_invalid_delimiter(self, capsys):
-        """ Test reading CSV with invalid delimiter still parses but with wrong splitting. """
+    def test_read_csv_from_file_wrong_delimiter(self, capsys):
+        """ Ensure NewtFiles.read_csv_from_file() handles wrong delimiter without splitting. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
-            tmp.write("A;B\n1;2")
-            tmp_path = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            tmpfile.write("A;B\n1;2")
+            file_csv = tmpfile.name
 
         try:
             # Wrong delimiter
-            result = NewtFiles.read_csv_from_file(tmp_path, delimiter=",")
-            print(repr(result))
+            result = NewtFiles.read_csv_from_file(file_csv, delimiter=",", obscure_list=obscure_list)
             assert result is not None
-            print(repr(result[0][0]))
-            # Should still read but with wrong parsing
             assert isinstance(result, list)
+            print("result:", result)
             assert isinstance(result[0][0], str)
             assert result[0][0] == "A;B"
+            print("result[0][0]:", repr(result[0][0]))
 
         finally:
-            if os.path.exists(tmp_path):
-                os.unlink(tmp_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "\n[Newt.files.read_csv_from_file] Loaded CSV from file:\n" in captured.out
-        assert "\n(rows=2, delimiter=',')\n" in captured.out
+        if sys.platform == "win32" and os.name == "nt":
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.csv"
+        else:
+            file_obscure_name = "/tmp/***********.csv"
+
+        assert "Function: test_read_csv_from_file_wrong_delimiter" \
+        "\n============================================" \
+        "\n[Newt.files.read_csv_from_file] Loaded CSV from file:" \
+        "\n" + file_obscure_name + \
+        "\n(rows=2, delimiter=',')" \
+        "\nresult: [['A;B'], ['1;2']]" \
+        "\nresult[0][0]: 'A;B'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
         # Expected absence of result
         assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err

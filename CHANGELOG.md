@@ -26,6 +26,10 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
   - `save_json_to_file()`:
     - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
+  - `read_csv_from_file()`:
+    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
+  - `save_csv_to_file()`:
+    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
 
 ### Changed
 
@@ -61,6 +65,12 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Parameter renamed from `logging` to `print_log`.
     - Parameter renamed from `data` to `content`.
     - Now validates `indent` type gracefully: falls back to `indent=2` if invalid or negative instead of raising `SystemExit`.
+  - `read_csv_from_file()`:
+    - Parameter renamed from `logging` to `print_log`.
+  - `save_csv_to_file()`:
+    - Parameter renamed from `logging` to `print_log`.
+    - `rows` parameter type narrowed from `Sequence[Sequence[object]]` to `list[list[str]]`; validation updated accordingly.
+    - Append mode now checks file existence before switching to `append`; falls back to `write` mode if the file doesn't exist.
 
 ### Testing
 

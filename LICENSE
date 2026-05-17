@@ -33,6 +33,9 @@ https://docs.python.org/3/library/index.html
 - inspect — Inspect live objects
 - sys — System-specific parameters and functions
 - os — Miscellaneous operating system interfaces for file and directory management
+
+- unittest — Unit testing framework
+- unittest.mock — mock object library
 - tempfile — Generate temporary files and directories
 - shutil - High-level file operations
 
@@ -50,9 +53,6 @@ https://docs.python.org/3/library/index.html
 - sqlite3 — DB-API 2.0 interface for SQLite databases
 
 - winsound — Sound-playing interface for Windows only
-
-- unittest — Unit testing framework
-- unittest.mock — mock object library
 
 ================================================================================
 
