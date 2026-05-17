@@ -843,7 +843,7 @@ class TestExportSqlQueryToCsv:
             file_db = tmp.name
 
         with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
-            csv_path = csv_tmp.name
+            file_csv = csv_tmp.name
 
         try:
             # Create table and insert data
@@ -855,15 +855,15 @@ class TestExportSqlQueryToCsv:
             result = NewtSQL.export_sql_query_to_csv(
                 file_db,
                 "SELECT * FROM test ORDER BY id",
-                csv_path
+                file_csv
             )
             print("result:", result)
             assert result is True
-            assert os.path.exists(csv_path)
+            assert os.path.exists(file_csv)
             print()
 
             # Verify CSV content
-            csv_data = NewtFiles.read_csv_from_file(csv_path)
+            csv_data = NewtFiles.read_csv_from_file(file_csv)
             print("csv_data:", csv_data)
             assert isinstance(csv_data, list)
             assert len(csv_data) == 3  # Header + 2 rows
@@ -874,8 +874,8 @@ class TestExportSqlQueryToCsv:
             NewtSQL.db_delayed_close(file_db)
             if os.path.exists(file_db):
                 os.unlink(file_db)
-            if os.path.exists(csv_path):
-                os.unlink(csv_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -897,7 +897,7 @@ class TestExportSqlQueryToCsv:
             file_db = tmp.name
 
         with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
-            csv_path = csv_tmp.name
+            file_csv = csv_tmp.name
 
         try:
             # Create empty table
@@ -907,7 +907,7 @@ class TestExportSqlQueryToCsv:
             result = NewtSQL.export_sql_query_to_csv(
                 file_db,
                 "SELECT * FROM test",
-                csv_path
+                file_csv
             )
             print("result:", result)
             assert result is False
@@ -916,8 +916,8 @@ class TestExportSqlQueryToCsv:
             NewtSQL.db_delayed_close(file_db)
             if os.path.exists(file_db):
                 os.unlink(file_db)
-            if os.path.exists(csv_path):
-                os.unlink(csv_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -935,7 +935,7 @@ class TestExportSqlQueryToCsv:
             file_db = tmp.name
 
         with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
-            csv_path = csv_tmp.name
+            file_csv = csv_tmp.name
 
         try:
             # Create table and insert data
@@ -946,7 +946,7 @@ class TestExportSqlQueryToCsv:
             result = NewtSQL.export_sql_query_to_csv(
                 file_db,
                 "SELECT * FROM test",
-                csv_path,
+                file_csv,
                 delimiter=","
             )
             print("result:", result)
@@ -954,15 +954,15 @@ class TestExportSqlQueryToCsv:
             print()
 
             # Verify CSV content
-            csv_data = NewtFiles.read_csv_from_file(csv_path, ",")
+            csv_data = NewtFiles.read_csv_from_file(file_csv, ",")
             print("csv_data:", csv_data)
 
         finally:
             NewtSQL.db_delayed_close(file_db)
             if os.path.exists(file_db):
                 os.unlink(file_db)
-            if os.path.exists(csv_path):
-                os.unlink(csv_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -984,7 +984,7 @@ class TestExportSqlQueryToCsv:
             file_db = tmp.name
 
         with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
-            csv_path = csv_tmp.name
+            file_csv = csv_tmp.name
 
         try:
             # Create table and insert data
@@ -996,7 +996,7 @@ class TestExportSqlQueryToCsv:
             result = NewtSQL.export_sql_query_to_csv(
                 file_db,
                 "SELECT * FROM test WHERE id = ?",
-                csv_path,
+                file_csv,
                 params=(1,)
             )
             print("result:", result)
@@ -1004,15 +1004,15 @@ class TestExportSqlQueryToCsv:
             print()
 
             # Verify CSV content
-            csv_data = NewtFiles.read_csv_from_file(csv_path)
+            csv_data = NewtFiles.read_csv_from_file(file_csv)
             print("csv_data:", csv_data)
 
         finally:
             NewtSQL.db_delayed_close(file_db)
             if os.path.exists(file_db):
                 os.unlink(file_db)
-            if os.path.exists(csv_path):
-                os.unlink(csv_path)
+            if os.path.exists(file_csv):
+                os.unlink(file_csv)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
