@@ -28,8 +28,8 @@ class TestDbDelayedClose:
         """ Test behavior of db_delayed_close when closing an existing database. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create a simple database
@@ -71,8 +71,8 @@ class TestSqlExecuteQuery:
         """ Test creating a table. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             query = "CREATE TABLE test (id INTEGER PRIMARY KEY, name TEXT)"
@@ -98,8 +98,8 @@ class TestSqlExecuteQuery:
         """ Test INSERT query. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table
@@ -129,8 +129,8 @@ class TestSqlExecuteQuery:
         """ Test SELECT query. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table and insert data
@@ -166,8 +166,8 @@ class TestSqlExecuteQuery:
         """ Test UPDATE query. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table and insert data
@@ -206,8 +206,8 @@ class TestSqlExecuteQuery:
         """ Test DELETE query. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table and insert data
@@ -248,8 +248,8 @@ class TestSqlExecuteQuery:
         """ Test executemany with list of tuples. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table
@@ -342,8 +342,8 @@ class TestSqlSelectRows:
         """ Test basic select operation. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table and insert data
@@ -374,8 +374,8 @@ class TestSqlSelectRows:
         """ Test select with parameters. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table and insert data
@@ -406,8 +406,8 @@ class TestSqlSelectRows:
         """ Test select with no results. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table
@@ -435,8 +435,8 @@ class TestSqlSelectRows:
         """ Test select with invalid query. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             with pytest.raises(SystemExit) as exc_info:
@@ -470,8 +470,8 @@ class TestSqlInsertRow:
         """ Test inserting a single row from dict. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table
@@ -507,8 +507,8 @@ class TestSqlInsertRow:
         """ Test inserting multiple rows from list of dicts. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table
@@ -554,8 +554,8 @@ class TestSqlInsertRow:
         """ Test inserting with empty data. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
@@ -621,8 +621,8 @@ class TestSqlUpdateRows:
         """ Test basic update operation. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table and insert data
@@ -694,8 +694,8 @@ class TestSqlUpdateRows:
         """ Test updating multiple columns. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table and insert data
@@ -749,8 +749,8 @@ class TestSqlUpdateRows:
         """ Test update with no matching rows. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             # Create table
@@ -782,8 +782,8 @@ class TestSqlUpdateRows:
         """ Test update with empty data. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
         try:
             NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
@@ -839,11 +839,11 @@ class TestExportSqlQueryToCsv:
         """ Test basic CSV export. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
-        with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
-            file_csv = csv_tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            file_csv = tmpfile.name
 
         try:
             # Create table and insert data
@@ -893,11 +893,11 @@ class TestExportSqlQueryToCsv:
         """ Test export with empty query result. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
-        with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
-            file_csv = csv_tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            file_csv = tmpfile.name
 
         try:
             # Create empty table
@@ -931,11 +931,11 @@ class TestExportSqlQueryToCsv:
         """ Test export with custom delimiter. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
-        with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
-            file_csv = csv_tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            file_csv = tmpfile.name
 
         try:
             # Create table and insert data
@@ -980,11 +980,11 @@ class TestExportSqlQueryToCsv:
         """ Test export with query parameters. """
         print_my_func_name()
 
-        with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            file_db = tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
+            file_db = tmpfile.name
 
-        with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
-            file_csv = csv_tmp.name
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmpfile:
+            file_csv = tmpfile.name
 
         try:
             # Create table and insert data
