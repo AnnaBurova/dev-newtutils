@@ -294,13 +294,15 @@ class TestSqlExecuteQuery:
 
         with pytest.raises(SystemExit) as exc_info_1:
             NewtSQL.sql_execute_query(123, "SELECT 1")  # type: ignore
-            print("This line will not be printed 01")
+            print("This line will not be printed")
         assert exc_info_1.value.code == 1
+        print("exc_info_1:", exc_info_1.value.code)
 
         with pytest.raises(SystemExit) as exc_info_2:
             NewtSQL.sql_execute_query("test.db", 456)  # type: ignore
-            print("This line will not be printed 02")
+            print("This line will not be printed")
         assert exc_info_2.value.code == 1
+        print("exc_info_2:", exc_info_2.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -443,6 +445,7 @@ class TestSqlSelectRows:
                 NewtSQL.sql_select_rows(file_db, "INVALID SQL QUERY")
                 print("This line will not be printed")
             assert exc_info.value.code == 1
+            print("exc_info:", exc_info.value.code)
 
         finally:
             NewtSQL.db_delayed_close(file_db)
@@ -583,14 +586,16 @@ class TestSqlInsertRow:
 
         with pytest.raises(SystemExit) as exc_info_1:
             NewtSQL.sql_insert_row(123, "test", {"id": 1})  # type: ignore
-            print("This line will not be printed 01")
+            print("This line will not be printed")
         assert exc_info_1.value.code == 1
+        print("exc_info_1:", exc_info_1.value.code)
         print()
 
         with pytest.raises(SystemExit) as exc_info_2:
             NewtSQL.sql_insert_row("test.db", 456, {"id": 2})  # type: ignore
-            print("This line will not be printed 02")
+            print("This line will not be printed")
         assert exc_info_2.value.code == 1
+        print("exc_info_2:", exc_info_2.value.code)
         print()
 
         result_3 = NewtSQL.sql_insert_row("test.db", "test", "not a dict")  # type: ignore
@@ -819,6 +824,7 @@ class TestSqlUpdateRows:
             )
             print("This line will not be printed")
         assert exc_info.value.code == 1
+        print("exc_info:", exc_info.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -1036,8 +1042,9 @@ class TestExportSqlQueryToCsv:
                 "SELECT 1",
                 "test.csv"
             )
-            print("This line will not be printed 01")
+            print("This line will not be printed")
         assert exc_info_1.value.code == 1
+        print("exc_info_1:", exc_info_1.value.code)
         print()
 
         with pytest.raises(SystemExit) as exc_info_2:
@@ -1046,8 +1053,9 @@ class TestExportSqlQueryToCsv:
                 456,  # type: ignore
                 "test.csv"
             )
-            print("This line will not be printed 02")
+            print("This line will not be printed")
         assert exc_info_2.value.code == 1
+        print("exc_info_2:", exc_info_2.value.code)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
