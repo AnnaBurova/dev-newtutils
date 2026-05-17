@@ -1,5 +1,5 @@
 """
-Updated on 2026-02
+Updated on 2026-05
 Created on 2025-10
 
 @author: NewtCode Anna Burova
@@ -41,8 +41,9 @@ Functions:
 
 from __future__ import annotations
 
-import sqlite3
 import gc
+import sqlite3
+
 import newtutils.console as NewtCons
 import newtutils.utility as NewtUtil
 import newtutils.files as NewtFiles
