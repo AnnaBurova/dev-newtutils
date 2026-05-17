@@ -6,7 +6,8 @@ Created on 2025-10
 
 Functions:
     def db_delayed_close(
-        database: str
+        database: str,
+        print_log: bool = True
         ) -> bool
     def sql_execute_query(
         database: str,
@@ -51,7 +52,7 @@ import newtutils.files as NewtFiles
 
 def db_delayed_close(
         database: str,
-        logging: bool = True
+        print_log: bool = True
         ) -> bool:
     """
     Trigger garbage collection to release SQLite file handles.
@@ -72,7 +73,7 @@ def db_delayed_close(
             False if validation fails or exception occurs.
     """
 
-    if not NewtFiles.check_file_exists(database, stop=False, logging=logging):
+    if not NewtFiles.check_file_exists(database, stop=False, print_log=print_log):
         # Nothing to release; treat as success because there is no existing file.
         return True
 
@@ -86,7 +87,8 @@ def db_delayed_close(
 
     except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
-            f"Exception: {e} (found? write test!)",  # TODO
+            f"Found Error Msg: (found? write test!)",  # TODO
+            f"Exception: {e}",
             location="Newt.sql.db_delayed_close : Exception"
         )
 

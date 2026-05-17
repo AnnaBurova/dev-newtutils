@@ -5,6 +5,32 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ---
 
+## [vNext] — Upcoming
+
+### Added
+
+- *(add new features here)*
+
+### Changed
+
+- `newtutils/sql.py`:
+  - `db_delayed_close()`:
+    - Parameter renamed from `logging` to `print_log`.
+
+### Testing
+
+- *(list new tests or testing improvements)*
+
+### Fixed
+
+- *(list bug fixes or error corrections)*
+
+### Removed
+
+- *(note any removed or deprecated features)*
+
+---
+
 ## [0.3.3] — Reworked Module Files
 
 ### Added
