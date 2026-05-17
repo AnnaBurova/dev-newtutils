@@ -471,10 +471,10 @@ class TestSqlSelectRows:
 
 
 class TestSqlInsertRow:
-    """ Tests for sql_insert_row function. """
+    """ Tests for query_insert function. """
 
 
-    def test_sql_insert_row_single_dict(self, capsys):
+    def test_query_insert_single_dict(self, capsys):
         """ Test inserting a single row from dict. """
         print_my_func_name()
 
@@ -489,7 +489,7 @@ class TestSqlInsertRow:
             data = {"id": 1, "name": "Alice", "age": 30}
             print("data:", data)
 
-            insert_result = NewtSQL.sql_insert_row(file_db, "test", data)
+            insert_result = NewtSQL.query_insert(file_db, "test", data)
             print("insert_result:", insert_result)
             assert insert_result == 1
 
@@ -511,7 +511,7 @@ class TestSqlInsertRow:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_insert_row_multiple_dicts(self, capsys):
+    def test_query_insert_multiple_dicts(self, capsys):
         """ Test inserting multiple rows from list of dicts. """
         print_my_func_name()
 
@@ -530,7 +530,7 @@ class TestSqlInsertRow:
             ]
             print("data:", data)
 
-            insert_result = NewtSQL.sql_insert_row(file_db, "test", data)
+            insert_result = NewtSQL.query_insert(file_db, "test", data)
             print("insert_result:", insert_result)
             assert insert_result == 3
 
@@ -558,7 +558,7 @@ class TestSqlInsertRow:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_insert_row_empty_data(self, capsys):
+    def test_query_insert_empty_data(self, capsys):
         """ Test inserting with empty data. """
         print_my_func_name()
 
@@ -567,7 +567,7 @@ class TestSqlInsertRow:
 
         try:
             NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER)")
-            result = NewtSQL.sql_insert_row(file_db, "test", {})
+            result = NewtSQL.query_insert(file_db, "test", {})
             print("result:", result)
             assert result == 0
 
@@ -585,25 +585,25 @@ class TestSqlInsertRow:
         assert "\nValue: {}\n" in captured.out
 
 
-    def test_sql_insert_row_invalid_input(self, capsys):
+    def test_query_insert_invalid_input(self, capsys):
         """ Test inserting with invalid input. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info_1:
-            NewtSQL.sql_insert_row(123, "test", {"id": 1})  # type: ignore
+            NewtSQL.query_insert(123, "test", {"id": 1})  # type: ignore
             print("This line will not be printed")
         assert exc_info_1.value.code == 1
         print("exc_info_1:", exc_info_1.value.code)
         print()
 
         with pytest.raises(SystemExit) as exc_info_2:
-            NewtSQL.sql_insert_row("test.db", 456, {"id": 2})  # type: ignore
+            NewtSQL.query_insert("test.db", 456, {"id": 2})  # type: ignore
             print("This line will not be printed")
         assert exc_info_2.value.code == 1
         print("exc_info_2:", exc_info_2.value.code)
         print()
 
-        result_3 = NewtSQL.sql_insert_row("test.db", "test", "not a dict")  # type: ignore
+        result_3 = NewtSQL.query_insert("test.db", "test", "not a dict")  # type: ignore
         print("result:", result_3)
         assert result_3 == 0
 
@@ -643,7 +643,7 @@ class TestSqlUpdateRows:
                 {"id": 3, "name": "Charlie", "age": 40}
             ]
             print("data:", data)
-            NewtSQL.sql_insert_row(file_db, "test", data)
+            NewtSQL.query_insert(file_db, "test", data)
 
             # Select with no data
             select_result_1 = NewtSQL.query_select(file_db, "SELECT * FROM test")
@@ -716,7 +716,7 @@ class TestSqlUpdateRows:
                 {"id": 3, "name": "Charlie", "age": 40}
             ]
             print("data:", data)
-            NewtSQL.sql_insert_row(file_db, "test", data)
+            NewtSQL.query_insert(file_db, "test", data)
 
             # Update multiple columns
             update_result = NewtSQL.sql_update_rows(

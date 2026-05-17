@@ -53,7 +53,7 @@ from .sql import (
     db_delayed_close,
     query_execute,
     query_select,
-    sql_insert_row,
+    query_insert,
     sql_update_rows,
     export_sql_query_to_csv,
 )
@@ -93,7 +93,7 @@ __all__ = [
     "db_delayed_close",
     "query_execute",
     "query_select",
-    "sql_insert_row",
+    "query_insert",
     "sql_update_rows",
     "export_sql_query_to_csv",
     # Network ----------

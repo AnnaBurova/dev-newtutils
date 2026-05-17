@@ -19,7 +19,7 @@ Functions:
         query: str,
         params: tuple | None = None
         ) -> list[dict]
-    def sql_insert_row(
+    def query_insert(
         database: str,
         table: str,
         data: dict[str, object] | list[dict[str, object]]
@@ -280,7 +280,7 @@ def query_select(
     return []
 
 
-def sql_insert_row(
+def query_insert(
         database: str,
         table: str,
         data: dict[str, object] | list[dict[str, object]]
@@ -305,12 +305,12 @@ def sql_insert_row(
 
     NewtCons.validate_type(
         table, str, check_non_empty=True,
-        location="Newt.sql.sql_insert_row : table"
+        location="Newt.sql.query_insert : table"
     )
 
     if not NewtCons.validate_type(
         data, (dict, list), check_non_empty=True, stop=False,
-        location="Newt.sql.sql_insert_row : data"
+        location="Newt.sql.query_insert : data"
     ):
         return 0
 
@@ -320,7 +320,7 @@ def sql_insert_row(
 
     NewtCons.validate_type(
         data, list,
-        location="Newt.sql.sql_insert_row : data"
+        location="Newt.sql.query_insert : data"
     )
 
     # Validate that all dictionaries have the same keys and length
@@ -331,7 +331,7 @@ def sql_insert_row(
         NewtCons.error_msg(
             "All dictionaries must have identical keys and same length",
             f"Expected keys: {expected_keys}",
-            location="Newt.sql.sql_insert_row : expected_keys"
+            location="Newt.sql.query_insert : expected_keys"
         )
 
     # Build SQL template
@@ -352,7 +352,7 @@ def sql_insert_row(
 
     NewtCons.validate_type(
         result, int,
-        location="Newt.sql.sql_insert_row : result"
+        location="Newt.sql.query_insert : result"
     )
 
     return 0  # Default return value if no rows are inserted
