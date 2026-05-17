@@ -96,23 +96,18 @@ class TestObscureLogic:
         else:
             file_name = "/tmp/1234567890"
 
-        obscure_list = [
-            "C:\\Users\\",
-            "\\AppData\\Local\\Temp\\",
-            "/tmp/",
-            ]
         file_obscure_name = NewtFiles._obscure_logic(file_name, obscure_list)
-
-        if sys.platform == "win32" and os.name == "nt":
-            assert file_obscure_name == "C:\\Users\\*******\\AppData\\Local\\Temp\\**********"
-        else:
-            assert file_obscure_name == "/tmp/**********"
         print("file_obscure_name:", file_obscure_name)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_obscure_logic_masks_path_segments" \
+        if sys.platform == "win32" and os.name == "nt":
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\**********"
+        else:
+            file_obscure_name = "/tmp/**********"
+
+        assert "Function: test_obscure_logic_path_segments" \
         "\n============================================" \
         "\nfile_obscure_name: " + file_obscure_name + \
         "\n" == captured.out
@@ -129,8 +124,8 @@ class TestEnsureDirExists:
     """ Tests for ensure_dir_exists function. """
 
 
-    def test_ensure_dir_exists_empty_path(self, capsys):
-        """ Ensure NewtFiles.ensure_dir_exists() raises SystemExit on empty path. """
+    def test_ensure_dir_exists_empty_string_exit(self, capsys):
+        """ Ensure NewtFiles.ensure_dir_exists() raises SystemExit(1) for empty string. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info:
@@ -142,7 +137,7 @@ class TestEnsureDirExists:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_ensure_dir_exists_empty_path" \
+        assert "Function: test_ensure_dir_exists_empty_string_exit" \
         "\n============================================" \
         "\nexc_info: 1" \
         "\n" == captured.out
@@ -163,8 +158,8 @@ class TestEnsureDirExists:
         assert "This line will not be printed" not in captured.err
 
 
-    def test_ensure_dir_exists_current_directory(self, capsys):
-        """ Ensure NewtFiles.ensure_dir_exists() handles current-directory file paths without errors. """
+    def test_ensure_dir_exists_no_dir_created(self, capsys):
+        """ Ensure NewtFiles.ensure_dir_exists() skips creation for filename-only path. """
         print_my_func_name()
 
         file_path = "file.txt"
@@ -177,7 +172,7 @@ class TestEnsureDirExists:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_ensure_dir_exists_current_directory" \
+        assert "Function: test_ensure_dir_exists_no_dir_created" \
         "\n============================================" \
         "\ndirname_exists: False" \
         "\n" == captured.out
@@ -190,8 +185,8 @@ class TestEnsureDirExists:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_ensure_dir_exists_directory_exists(self, capsys):
-        """ Ensure NewtFiles.ensure_dir_exists() skips makedirs when directory already exists. """
+    def test_ensure_dir_exists_existing_dir(self, capsys):
+        """ Ensure NewtFiles.ensure_dir_exists() passes when directory already exists. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -214,7 +209,7 @@ class TestEnsureDirExists:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_ensure_dir_exists_directory_exists" \
+        assert "Function: test_ensure_dir_exists_existing_dir" \
         "\n============================================" \
         "\ndirname_exists: True" \
         "\ndirname_exists: True" \
@@ -229,8 +224,8 @@ class TestEnsureDirExists:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_ensure_dir_exists_nested_directory(self, capsys):
-        """ Ensure NewtFiles.ensure_dir_exists() creates nested parent directories. """
+    def test_ensure_dir_exists_nested_dirs_created(self, capsys):
+        """ Ensure NewtFiles.ensure_dir_exists() creates nested directories as needed. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -253,7 +248,7 @@ class TestEnsureDirExists:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_ensure_dir_exists_nested_directory" \
+        assert "Function: test_ensure_dir_exists_nested_dirs_created" \
         "\n============================================" \
         "\ndirname_exists: False" \
         "\ndirname_exists: True" \
@@ -272,8 +267,8 @@ class TestCheckFileExists:
     """ Tests for check_file_exists function. """
 
 
-    def test_check_file_exists_invalid_file_name(self, capsys):
-        """ Ensure NewtFiles.check_file_exists() raises SystemExit for invalid file names. """
+    def test_check_file_exists_invalid_input(self, capsys):
+        """ Ensure NewtFiles.check_file_exists() exits or returns False for invalid input. """
         print_my_func_name()
 
         file_name_1 = 123
@@ -305,20 +300,22 @@ class TestCheckFileExists:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_check_file_exists_invalid_file_name" \
+        assert "Function: test_check_file_exists_invalid_input" \
         "\n============================================" \
-        "\nfile_name_1: 123\nexc_info_1: 1\ncheck_1: False" \
-        "\nfile_name_2: \nexc_info_2: 1\ncheck_2: False" \
+        "\nfile_name_1: 123" \
+        "\nexc_info_1: 1" \
+        "\ncheck_1: False" \
+        "\nfile_name_2: " \
+        "\nexc_info_2: 1" \
+        "\ncheck_2: False" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.files.check_file_exists : file_path" \
-        " > Newt.console.validate_type" \
+        "\nLocation: Newt.files.check_file_exists : file_path > Newt.console.validate_type" \
         "\n::: ERROR :::" \
         "\nValue: 123\nReceived type: <class 'int'>" \
         "\nExpected type: <class 'str'>" \
         "\n\x1b[0m\n\x1b[1m\x1b[31m" \
-        "\nLocation: Newt.files.check_file_exists : file_path" \
-        " > Newt.console.validate_type" \
+        "\nLocation: Newt.files.check_file_exists : file_path > Newt.console.validate_type" \
         "\n::: ERROR :::" \
         "\nValue: 123\nReceived type: <class 'int'>" \
         "\nExpected type: <class 'str'>" \
@@ -345,8 +342,8 @@ class TestCheckFileExists:
         assert "This line will not be printed" not in captured.err
 
 
-    def test_check_file_exists_not_found(self, capsys):
-        """ Ensure NewtFiles.check_file_exists() returns False and exits for missing file. """
+    def test_check_file_exists_missing_file(self, capsys):
+        """ Ensure NewtFiles.check_file_exists() handles missing file with stop/print flags. """
         print_my_func_name()
 
         file_name = "file.txt"
@@ -375,7 +372,7 @@ class TestCheckFileExists:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_check_file_exists_not_found" \
+        assert "Function: test_check_file_exists_missing_file" \
         "\n============================================" \
         "\nfile_name: file.txt" \
         "\ncheck_1: False" \
@@ -406,8 +403,8 @@ class TestCheckFileExists:
         assert "This line will not be printed" not in captured.err
 
 
-    def test_check_file_exists_obscure(self, capsys):
-        """ Ensure NewtFiles.check_file_exists() obscures path in error output for missing file. """
+    def test_check_file_exists_temp_file_lifecycle(self, capsys):
+        """ Ensure NewtFiles.check_file_exists() detects file presence and absence correctly. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
@@ -426,12 +423,7 @@ class TestCheckFileExists:
             if os.path.exists(file_txt):
                 os.unlink(file_txt)
 
-        obscure_list = [
-            "C:\\Users\\",
-            "\\AppData\\Local\\Temp\\",
-            "/tmp/",
-            ]
-        check_3 = NewtFiles.check_file_exists(file_txt, obscure_list, stop=False)
+        check_3 = NewtFiles.check_file_exists(file_txt, obscure_list=obscure_list, stop=False)
         assert check_3 is False
         print("check_3:", check_3)
 
@@ -439,11 +431,11 @@ class TestCheckFileExists:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***************"
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.txt"
         else:
-            file_obscure_name = "/tmp/***************"
+            file_obscure_name = "/tmp/***********.txt"
 
-        assert "Function: test_check_file_exists_obscure" \
+        assert "Function: test_check_file_exists_temp_file_lifecycle" \
         "\n============================================" \
         "\ncheck_1: True" \
         "\ncheck_2: True" \
@@ -467,7 +459,7 @@ class TestChooseFileFromFolder:
 
 
     def test_choose_file_from_folder_invalid_input(self, capsys):
-        """ Ensure NewtFiles.choose_file_from_folder() raises SystemExit(1) for invalid folder path. """
+        """ Ensure NewtFiles.choose_file_from_folder() exits for empty or non-string input. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info_1:
@@ -513,8 +505,8 @@ class TestChooseFileFromFolder:
         assert "This line will not be printed" not in captured.err
 
 
-    def test_choose_file_from_folder_nonexistent_folder_raises_exit(self, capsys):
-        """ Ensure NewtFiles.choose_file_from_folder() raises SystemExit for nonexistent folder. """
+    def test_choose_file_from_folder_missing_folder(self, capsys):
+        """ Ensure NewtFiles.choose_file_from_folder() exits for nonexistent folder path. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info:
@@ -526,7 +518,7 @@ class TestChooseFileFromFolder:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_choose_file_from_folder_nonexistent_folder_raises_exit" \
+        assert "Function: test_choose_file_from_folder_missing_folder" \
         "\n============================================" \
         "\nexc_info: 1" \
         "\n" == captured.out
@@ -545,8 +537,8 @@ class TestChooseFileFromFolder:
         assert "This line will not be printed" not in captured.err
 
 
-    def test_choose_file_from_folder_empty_folder_exit(self, capsys):
-        """ Ensure NewtFiles.choose_file_from_folder() raises SystemExit for empty folder. """
+    def test_choose_file_from_folder_empty_folder(self, capsys):
+        """ Ensure NewtFiles.choose_file_from_folder() exits when folder has no files. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -559,7 +551,7 @@ class TestChooseFileFromFolder:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_choose_file_from_folder_empty_folder_exit" \
+        assert "Function: test_choose_file_from_folder_empty_folder" \
         "\n============================================" \
         "\nexc_info: 1" \
         "\n" == captured.out
@@ -579,8 +571,8 @@ class TestChooseFileFromFolder:
 
 
     @patch('newtutils.utility.input')
-    def test_choose_file_from_folder_cancel_x_raises_exit(self, mock_input, capsys):
-        """ Ensure NewtFiles.choose_file_from_folder() raises SystemExit when user inputs 'X'. """
+    def test_choose_file_from_folder_user_input(self, mock_input, capsys):
+        """ Ensure NewtFiles.choose_file_from_folder() handles user input and invalid choices. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -616,7 +608,7 @@ class TestChooseFileFromFolder:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_choose_file_from_folder_cancel_x_raises_exit" \
+        assert "Function: test_choose_file_from_folder_user_input" \
         "\n============================================" \
         "\n\n3 Available options to choose from:" \
         "\n  1: dummy_file_0.txt" \
@@ -663,29 +655,22 @@ class TestTextFiles:
     """ Tests for read_text_from_file and save_text_to_file functions. """
 
 
-    def test_save_and_read_text_file(self, capsys):
-        """ Ensure NewtFiles.save_text_to_file() and NewtFiles.read_text_from_file() work correctly. """
+    def test_save_and_read_text_from_file(self, capsys):
+        """ Ensure NewtFiles.save_text_to_file() and read_text_from_file() round-trip correctly. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
             file_txt = tmpfile.name
 
-        obscure_list = [
-            "C:\\Users\\",
-            "\\AppData\\Local\\Temp\\",
-            "/tmp/",
-            ".txt",
-            ]
-
         try:
             content = "Hello\nWorld!"
+            print("content:", repr(content))
+
             NewtFiles.save_text_to_file(file_txt, content, obscure_list=obscure_list)
 
             result = NewtFiles.read_text_from_file(file_txt, obscure_list=obscure_list)
-            print("result:", repr(result))
-
-            # Note: save_text_to_file() uses _normalize_newlines()
             assert result == content + "\n"
+            print("result:", repr(result))
 
         finally:
             if os.path.exists(file_txt):
@@ -695,13 +680,13 @@ class TestTextFiles:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            # On Windows
             file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.txt"
         else:
             file_obscure_name = "/tmp/***********.txt"
 
-        assert "Function: test_save_and_read_text_file" \
+        assert "Function: test_save_and_read_text_from_file" \
         "\n============================================" \
+        "\ncontent: 'Hello\\nWorld!'" \
         "\n[Newt.files.save_text_to_file] Saved text to file:" \
         "\n" + file_obscure_name + \
         "\n(length=13, mode=write)" \
@@ -719,28 +704,21 @@ class TestTextFiles:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_save_text_creates_directory(self, capsys):
-        """ Ensure NewtFiles.save_text_to_file() creates nested parent directories automatically. """
+    def test_save_text_to_file_creates_nested_dirs(self, capsys):
+        """ Ensure NewtFiles.save_text_to_file() creates nested dirs and saves content. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "level1", "level2", "file.txt")
 
-            obscure_list = [
-                "C:\\Users\\",
-                "\\AppData\\Local\\Temp\\",
-                "/tmp/",
-                "\\level1\\level2\\file.txt",
-                "/level1/level2/file.txt",
-                ]
-
             content = "Hello\nWorld!\n"
+            print("content:", repr(content))
+
             NewtFiles.save_text_to_file(file_path, content, obscure_list=obscure_list)
 
             result = NewtFiles.read_text_from_file(file_path, obscure_list=obscure_list)
-            print("result:", repr(result))
-
             assert result == content
+            print("result:", repr(result))
 
             file_exists = os.path.exists(file_path)
             assert file_exists is True
@@ -754,13 +732,13 @@ class TestTextFiles:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            # On Windows
             file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********\\level1\\level2\\file.txt"
         else:
             file_obscure_name = "/tmp/***********/level1/level2/file.txt"
 
-        assert "Function: test_save_text_creates_directory" \
+        assert "Function: test_save_text_to_file_creates_nested_dirs" \
         "\n============================================" \
+        "\ncontent: 'Hello\\nWorld!\\n'" \
         "\n[Newt.files.save_text_to_file] Saved text to file:" \
         "\n" + file_obscure_name + \
         "\n(length=13, mode=write)" \
@@ -780,33 +758,27 @@ class TestTextFiles:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_save_text_append_mode(self, capsys):
-        """ Ensure NewtFiles.save_text_to_file() appends content correctly with append=True. """
+    def test_save_text_to_file_append_mode(self, capsys):
+        """ Ensure NewtFiles.save_text_to_file() appends content correctly to existing file. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
             file_txt = tmpfile.name
 
-        obscure_list = [
-            "C:\\Users\\",
-            "\\AppData\\Local\\Temp\\",
-            "/tmp/",
-            ".txt",
-            ]
-
         try:
             content_1 = "Line 1"
             NewtFiles.save_text_to_file(
-                file_txt, content_1, append=False, obscure_list=obscure_list)
+                file_txt, content_1, append=False, obscure_list=obscure_list
+            )
 
             content_2 = "Line 2"
             NewtFiles.save_text_to_file(
-                file_txt, content_2, append=True, obscure_list=obscure_list)
+                file_txt, content_2, append=True, obscure_list=obscure_list
+            )
 
             result = NewtFiles.read_text_from_file(file_txt, obscure_list=obscure_list)
-            print("result:", repr(result))
-
             assert result == "Line 1\nLine 2\n"
+            print("result:", repr(result))
 
         finally:
             if os.path.exists(file_txt):
@@ -816,12 +788,11 @@ class TestTextFiles:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            # On Windows
             file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.txt"
         else:
             file_obscure_name = "/tmp/***********.txt"
 
-        assert "Function: test_save_text_append_mode" \
+        assert "Function: test_save_text_to_file_append_mode" \
         "\n============================================" \
         "\n[Newt.files.save_text_to_file] Saved text to file:" \
         "\n" + file_obscure_name + \
@@ -843,8 +814,8 @@ class TestTextFiles:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_read_text_from_nonexistent_file(self, capsys):
-        """ Ensure NewtFiles.read_text_from_file() returns None if file not found and stop=False. """
+    def test_read_text_from_file_missing_file(self, capsys):
+        """ Ensure NewtFiles.read_text_from_file() returns None for nonexistent file. """
         print_my_func_name()
 
         result = NewtFiles.read_text_from_file("/nonexistent/file.txt", stop=False)
@@ -853,7 +824,7 @@ class TestTextFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_read_text_from_nonexistent_file" \
+        assert "Function: test_read_text_from_file_missing_file" \
         "\n============================================" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
@@ -869,8 +840,8 @@ class TestTextFiles:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_save_text_invalid_input(self, capsys):
-        """ Ensure NewtFiles.save_text_to_file() raises SystemExit on invalid file or text input. """
+    def test_save_text_to_file_invalid_args(self, capsys):
+        """ Ensure NewtFiles.save_text_to_file() exits for invalid filename or text type. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
@@ -898,7 +869,7 @@ class TestTextFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_save_text_invalid_input" \
+        assert "Function: test_save_text_to_file_invalid_args" \
         "\n============================================" \
         "\nexc_info_1: 1" \
         "\nexc_info_2: 1" \
@@ -928,34 +899,34 @@ class TestConvertStrToJson:
     """ Tests for convert_str_to_json function. """
 
 
-    def test_convert_str_to_json_returns_none_invalid(self, capsys):
-        """ Ensure NewtFiles.convert_str_to_json() returns None for invalid or empty inputs. """
+    def test_convert_str_to_json_invalid_input(self, capsys):
+        """ Ensure NewtFiles.convert_str_to_json() returns None for invalid input types. """
         print_my_func_name()
 
         result_1 = NewtFiles.convert_str_to_json("")
-        print("result_1:", repr(result_1))
         assert result_1 is None
+        print("result_1:", result_1)
 
         result_2 = NewtFiles.convert_str_to_json("   ")
-        print("result_2:", repr(result_2))
         assert result_2 is None
+        print("result_2:", result_2)
 
         result_3 = NewtFiles.convert_str_to_json(None)  # type: ignore
-        print("result_3:", repr(result_3))
         assert result_3 is None
+        print("result_3:", result_3)
 
         result_4 = NewtFiles.convert_str_to_json(123)  # type: ignore
-        print("result_4:", repr(result_4))
         assert result_4 is None
+        print("result_4:", result_4)
 
         result_5 = NewtFiles.convert_str_to_json(["not", "a", "string"])  # type: ignore
-        print("result_5:", repr(result_5))
         assert result_5 is None
+        print("result_5:", result_5)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_convert_str_to_json_returns_none_invalid" \
+        assert "Function: test_convert_str_to_json_invalid_input" \
         "\n============================================" \
         "\nresult_1: None" \
         "\nresult_2: None" \
@@ -999,50 +970,46 @@ class TestConvertStrToJson:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_convert_str_to_json_valid_json(self, capsys):
-        """ Ensure NewtFiles.convert_str_to_json() parses valid JSON dict and list strings. """
+    def test_convert_str_to_json_valid_input(self, capsys):
+        """ Ensure NewtFiles.convert_str_to_json() parses valid JSON strings correctly. """
         print_my_func_name()
 
         json_str_1 = '{"name": "test", "value": 123, "items": [1, 2, 3]}'
         print("json_str_1:", repr(json_str_1))
 
         result_1 = NewtFiles.convert_str_to_json(json_str_1)
-        print("result_1:", repr(result_1))
-
         assert isinstance(result_1, dict)
         assert result_1 == {"name": "test", "value": 123, "items": [1, 2, 3]}
+        print("result_1:", result_1)
 
         json_str_2 = '[1, 2, 3, {"key": "value"}]'
         print("json_str_2:", repr(json_str_2))
 
         result_2 = NewtFiles.convert_str_to_json(json_str_2)
-        print("result_2:", repr(result_2))
-
         assert isinstance(result_2, list)
         assert result_2 == [1, 2, 3, {"key": "value"}]
+        print("result_2:", result_2)
 
         json_str_3 = '{"outer": {"inner": {"deep": [1, 2, 3]}}}'
         print("json_str_3:", repr(json_str_3))
 
         result_3 = NewtFiles.convert_str_to_json(json_str_3)
-        print("result_3:", repr(result_3))
-
         assert isinstance(result_3, dict)
         assert result_3 == {"outer": {"inner": {"deep": [1, 2, 3]}}}
+        print("result_3:", result_3)
 
         json_str_4 = '   {"key": "value"}   '
         print("json_str_4:", repr(json_str_4))
 
         result_4 = NewtFiles.convert_str_to_json(json_str_4)
-        print("result_4:", repr(result_4))
-
         assert isinstance(result_4, dict)
         assert result_4 == {"key": "value"}
+        print("result_4:", result_4)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_convert_str_to_json_valid_json" \
+        assert "Function: test_convert_str_to_json_valid_input" \
         "\n============================================" \
         "\njson_str_1: \'{\"name\": \"test\", \"value\": 123, \"items\": [1, 2, 3]}\'" \
         "\nresult_1: {\'name\': \'test\', \'value\': 123, \'items\': [1, 2, 3]}" \
@@ -1050,8 +1017,8 @@ class TestConvertStrToJson:
         "\nresult_2: [1, 2, 3, {\'key\': \'value\'}]" \
         "\njson_str_3: \'{\"outer\": {\"inner\": {\"deep\": [1, 2, 3]}}}\'" \
         "\nresult_3: {\'outer\': {\'inner\': {\'deep\': [1, 2, 3]}}}" \
-        "\njson_str_4: '   {\"key\": \"value\"}   '" \
-        "\nresult_4: {'key': 'value'}" \
+        "\njson_str_4: \'   {\"key\": \"value\"}   \'" \
+        "\nresult_4: {\'key\': \'value\'}" \
         "\n" == captured.out
         assert "" == captured.err
 
@@ -1062,32 +1029,30 @@ class TestConvertStrToJson:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_convert_str_to_json_single_quotes(self, capsys):
-        """ Ensure NewtFiles.convert_str_to_json() parses single-quoted dict and list strings. """
+    def test_convert_str_to_json_literals(self, capsys):
+        """ Ensure NewtFiles.convert_str_to_json() parses dict and list strings. """
         print_my_func_name()
 
         json_str_1 = "{'name': 'test', 'value': 123}"
         print("json_str_1:", repr(json_str_1))
 
         result_1 = NewtFiles.convert_str_to_json(json_str_1)
-        print("result_1:", repr(result_1))
-
         assert isinstance(result_1, dict)
         assert result_1 == {"name": "test", "value": 123}
+        print("result_1:", result_1)
 
         json_str_2 = "['item1', 'item2', 'item3']"
         print("json_str_2:", repr(json_str_2))
 
         result_2 = NewtFiles.convert_str_to_json(json_str_2)
-        print("result_2:", repr(result_2))
-
         assert isinstance(result_2, list)
         assert result_2 == ["item1", "item2", "item3"]
+        print("result_2:", result_2)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_convert_str_to_json_single_quotes" \
+        assert "Function: test_convert_str_to_json_literals" \
         "\n============================================" \
         "\njson_str_1: \"{\'name\': \'test\', \'value\': 123}\"" \
         "\nTrying to replace single quotes with double quotes..." \
@@ -1116,28 +1081,28 @@ class TestConvertStrToJson:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_invalid_json_prints_errors(self, capsys):
-        """ Ensure invalid JSON returns None and prints expected error messages. """
+    def test_convert_str_to_json_malformed_str(self, capsys):
+        """ Ensure NewtFiles.convert_str_to_json() returns None for malformed JSON strings. """
         print_my_func_name()
 
         json_str_1 = "{ invalid json }"
         print("json_str_1:", repr(json_str_1))
 
         result_1 = NewtFiles.convert_str_to_json(json_str_1)
-        print("result_1:", repr(result_1))
         assert result_1 is None
+        print("result_1:", result_1)
 
         json_str_2 = "not json at all"
         print("json_str_2:", repr(json_str_2))
 
         result_2 = NewtFiles.convert_str_to_json(json_str_2)
-        print("result_2:", repr(result_2))
         assert result_2 is None
+        print("result_2:", result_2)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_invalid_json_prints_errors" \
+        assert "Function: test_convert_str_to_json_malformed_str" \
         "\n============================================" \
         "\njson_str_1: '{ invalid json }'" \
         "\nTrying to replace single quotes with double quotes..." \
@@ -1189,33 +1154,26 @@ class TestJsonFiles:
     """ Tests for read_json_from_file and save_json_to_file functions. """
 
 
-    def test_save_and_read_json_file_dict(self, capsys):
-        """ Ensure NewtFiles.save_json_to_file() and NewtFiles.read_json_from_file() work with dict. """
+    def test_save_and_read_json_from_file(self, capsys):
+        """ Ensure NewtFiles.save_json_to_file() and read_json_from_file() round-trip correctly. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmpfile:
             file_json = tmpfile.name
 
-        obscure_list = [
-            "C:\\Users\\",
-            "\\AppData\\Local\\Temp\\",
-            "/tmp/",
-            ".json",
-            ]
-
         try:
             content = {"name": "test", "value": 123, "items": [1, 2, 3]}
-            print("content:", repr(content))
+            print("content:", content)
+
             NewtFiles.save_json_to_file(file_json, content, obscure_list=obscure_list)
 
             result_dict = NewtFiles.read_json_from_file(file_json, obscure_list=obscure_list)
-            print("result_dict:", repr(result_dict))
             assert isinstance(result_dict, dict)
-
             assert result_dict == content
+            print("result_dict:", result_dict)
 
             result_txt = NewtFiles.read_text_from_file(file_json, obscure_list=obscure_list)
-            print("result_txt:", repr(result_txt))
+            print("result_txt:", result_txt)
 
         finally:
             if os.path.exists(file_json):
@@ -1225,12 +1183,11 @@ class TestJsonFiles:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            # On Windows
             file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.json"
         else:
             file_obscure_name = "/tmp/***********.json"
 
-        assert "Function: test_save_and_read_json_file_dict" \
+        assert "Function: test_save_and_read_json_from_file" \
         "\n============================================" \
         "\ncontent: {\'name\': \'test\', \'value\': 123, \'items\': [1, 2, 3]}" \
         "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
@@ -1243,8 +1200,7 @@ class TestJsonFiles:
         "\n[Newt.files.read_text_from_file] Loaded text from file:" \
         "\n" + file_obscure_name + \
         "\n(length=75)" \
-        "\nresult_txt: \'{\\n  \"name\": \"test\",\\n  \"value\": 123,\\n  \"items\":" \
-        " [\\n    1,\\n    2,\\n    3\\n  ]\\n}\\n\'" \
+        "\nresult_txt: {\n  \"name\": \"test\",\n  \"value\": 123,\n  \"items\": [\n    1,\n    2,\n    3\n  ]\n}\n" \
         "\n" == captured.out
         assert "" == captured.err
 
@@ -1255,33 +1211,26 @@ class TestJsonFiles:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_save_and_read_json_file_list(self, capsys):
-        """ Ensure NewtFiles.save_json_to_file() and NewtFiles.read_json_from_file() work with list. """
+    def test_save_and_read_json_list_from_file(self, capsys):
+        """ Ensure NewtFiles.save_json_to_file() and read_json_from_file() handle list content. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmpfile:
             file_json = tmpfile.name
 
-        obscure_list = [
-            "C:\\Users\\",
-            "\\AppData\\Local\\Temp\\",
-            "/tmp/",
-            ".json",
-            ]
-
         try:
             content = [1, 2, 3, {"key": "value"}]
-            print("content:", repr(content))
+            print("content:", content)
+
             NewtFiles.save_json_to_file(file_json, content, obscure_list=obscure_list)
 
             result_list = NewtFiles.read_json_from_file(file_json, obscure_list=obscure_list)
-            print("result_list:", repr(result_list))
             assert isinstance(result_list, list)
-
             assert result_list == content
+            print("result_list:", result_list)
 
             result_txt = NewtFiles.read_text_from_file(file_json, obscure_list=obscure_list)
-            print("result_txt:", repr(result_txt))
+            print("result_txt:", result_txt)
 
         finally:
             if os.path.exists(file_json):
@@ -1291,12 +1240,11 @@ class TestJsonFiles:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            # On Windows
             file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.json"
         else:
             file_obscure_name = "/tmp/***********.json"
 
-        assert "Function: test_save_and_read_json_file_list" \
+        assert "Function: test_save_and_read_json_list_from_file" \
         "\n============================================" \
         "\ncontent: [1, 2, 3, {\'key\': \'value\'}]" \
         "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
@@ -1309,7 +1257,7 @@ class TestJsonFiles:
         "\n[Newt.files.read_text_from_file] Loaded text from file:" \
         "\n" + file_obscure_name + \
         "\n(length=46)" \
-        "\nresult_txt: \'[\\n  1,\\n  2,\\n  3,\\n  {\\n    \"key\": \"value\"\\n  }\\n]\\n\'" \
+        "\nresult_txt: [\n  1,\n  2,\n  3,\n  {\n    \"key\": \"value\"\n  }\n]\n" \
         "\n" == captured.out
         assert "" == captured.err
 
@@ -1320,33 +1268,25 @@ class TestJsonFiles:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_save_and_read_json_file_nested_dirs(self, capsys):
-        """ Ensure NewtFiles.save_json_to_file() works with nested directories. """
+    def test_save_json_to_file_creates_nested_dirs(self, capsys):
+        """ Ensure NewtFiles.save_json_to_file() creates nested dirs and saves JSON correctly. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "level1", "level2", "file.json")
 
-            obscure_list = [
-                "C:\\Users\\",
-                "\\AppData\\Local\\Temp\\",
-                "/tmp/",
-                "\\level1\\level2\\file.json",
-                "/level1/level2/file.json",
-                ]
-
             content = {"test": "data"}
-            print("content:", repr(content))
+            print("content:", content)
+
             NewtFiles.save_json_to_file(file_path, content, indent=4, obscure_list=obscure_list)
 
             result_dict = NewtFiles.read_json_from_file(file_path, obscure_list=obscure_list)
-            print("result_dict:", repr(result_dict))
             assert isinstance(result_dict, dict)
-
             assert result_dict == content
+            print("result_dict:", result_dict)
 
             result_txt = NewtFiles.read_text_from_file(file_path, obscure_list=obscure_list)
-            print("result_txt:", repr(result_txt))
+            print("result_txt:", result_txt)
 
             file_exists = os.path.exists(file_path)
             assert file_exists is True
@@ -1360,12 +1300,11 @@ class TestJsonFiles:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            # On Windows
             file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********\\level1\\level2\\file.json"
         else:
             file_obscure_name = "/tmp/***********/level1/level2/file.json"
 
-        assert "Function: test_save_and_read_json_file_nested_dirs" \
+        assert "Function: test_save_json_to_file_creates_nested_dirs" \
         "\n============================================" \
         "\ncontent: {\'test\': \'data\'}" \
         "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
@@ -1378,7 +1317,7 @@ class TestJsonFiles:
         "\n[Newt.files.read_text_from_file] Loaded text from file:" \
         "\n" + file_obscure_name + \
         "\n(length=23)" \
-        "\nresult_txt: \'{\\n    \"test\": \"data\"\\n}\\n\'" \
+        "\nresult_txt: {\n    \"test\": \"data\"\n}\n" \
         "\nfile_exists: True" \
         "\nfile_exists: False" \
         "\n" == captured.out
@@ -1391,18 +1330,18 @@ class TestJsonFiles:
         assert "::: ERROR :::" not in captured.err
 
 
-    def test_read_json_from_nonexistent_file(self, capsys):
+    def test_read_json_from_file_missing_file(self, capsys):
         """ Ensure NewtFiles.read_json_from_file() returns None for nonexistent file. """
         print_my_func_name()
 
         result = NewtFiles.read_json_from_file("/nonexistent/file.json", stop=False)
-        print("result:", repr(result))
-        assert result == None
+        assert result is None
+        print("result:", result)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_read_json_from_nonexistent_file" \
+        assert "Function: test_read_json_from_file_missing_file" \
         "\n============================================" \
         "\nresult: None" \
         "\n" == captured.out
@@ -1419,8 +1358,8 @@ class TestJsonFiles:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_read_json_invalid_file_content(self, capsys):
-        """ Ensure NewtFiles.read_json_from_file() raises SystemExit on invalid JSON. """
+    def test_read_json_from_file_invalid_json(self, capsys):
+        """ Ensure NewtFiles.read_json_from_file() exits or returns None for invalid JSON. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmpfile:
@@ -1435,8 +1374,8 @@ class TestJsonFiles:
             print("exc_info:", exc_info.value.code)
 
             result = NewtFiles.read_json_from_file(file_json, stop=False)
-            print("result:", repr(result))
-            assert result == None
+            assert result is None
+            print("result:", result)
 
         finally:
             if os.path.exists(file_json):
@@ -1445,7 +1384,7 @@ class TestJsonFiles:
         captured = capsys.readouterr()
         print_my_captured(captured)
 
-        assert "Function: test_read_json_invalid_file_content" \
+        assert "Function: test_read_json_from_file_invalid_json" \
         "\n============================================" \
         "\nexc_info: 1" \
         "\nresult: None" \
@@ -1471,35 +1410,33 @@ class TestJsonFiles:
         assert "This line will not be printed" not in captured.err
 
 
-    def test_read_json_from_file_non_dict(self, capsys):
-        """ Ensure NewtFiles.read_json_from_file() returns None for non-dict JSON. """
+    def test_read_json_from_file_non_dict_or_list(self, capsys):
+        """ Ensure NewtFiles.read_json_from_file() returns None for non-dict/list JSON content. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmpfile:
             json.dump("just a string", tmpfile)
             file_json = tmpfile.name
 
-        obscure_list = [
-            "C:\\Users\\",
-            "\\AppData\\Local\\Temp\\",
-            "/tmp/",
-            ".json",
-            ]
-
         try:
-            result = NewtFiles.read_json_from_file(file_json)
-            print("result:", repr(result))
-            assert result == None
+            result_1 = NewtFiles.read_json_from_file(file_json)
+            assert result_1 is None
+            print("result_1:", result_1)
 
             content = {"test": "data"}
+            print("content:", content)
+
             NewtFiles.save_json_to_file(
                 file_json, content, indent="text",  # type: ignore
                 obscure_list=obscure_list
             )
             NewtFiles.save_json_to_file(
-                file_json, content, indent=-8,
-                obscure_list=obscure_list
+                file_json, content, indent=-8, obscure_list=obscure_list
             )
+
+            result_2 = NewtFiles.read_json_from_file(file_json, obscure_list=obscure_list)
+            assert result_2 == content
+            print("result_2:", result_2)
 
         finally:
             if os.path.exists(file_json):
@@ -1509,20 +1446,24 @@ class TestJsonFiles:
         print_my_captured(captured)
 
         if sys.platform == "win32" and os.name == "nt":
-            # On Windows
             file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********.json"
         else:
             file_obscure_name = "/tmp/***********.json"
 
-        assert "Function: test_read_json_from_file_non_dict" \
+        assert "Function: test_read_json_from_file_non_dict_or_list" \
         "\n============================================" \
-        "\nresult: None" \
+        "\nresult_1: None" \
+        "\ncontent: {'test': 'data'}" \
         "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
         "\n" + file_obscure_name + \
         "\n(type=<class 'dict'>, indent=2)" \
         "\n[Newt.files.save_json_to_file] Saved JSON to file:" \
         "\n" + file_obscure_name + \
         "\n(type=<class 'dict'>, indent=2)" \
+        "\n[Newt.files.read_json_from_file] Loaded JSON from file:" \
+        "\n" + file_obscure_name + \
+        "\n(type=<class 'dict'>)" \
+        "\nresult_2: {'test': 'data'}" \
         "\n" == captured.out
         assert "\x1b[1m\x1b[31m" \
         "\nLocation: Newt.files.read_json_from_file : content > Newt.console.validate_type" \
@@ -1598,7 +1539,10 @@ class TestCsvFiles:
         "\n[Newt.files.read_csv_from_file] Loaded CSV from file:" \
         "\n" + file_obscure_name + \
         "\n(rows=3, delimiter=';')" \
-        "\nresult_csv: [['Name', 'Age', 'City'], ['Alice', '30', 'New York'], ['Bob', '25', 'London']]" \
+        "\nresult_csv:" \
+        " [['Name', 'Age', 'City']," \
+        " ['Alice', '30', 'New York']," \
+        " ['Bob', '25', 'London']]" \
         "\n[Newt.files.read_text_from_file] Loaded text from file:" \
         "\n" + file_obscure_name + \
         "\n(length=46)" \
@@ -1627,7 +1571,9 @@ class TestCsvFiles:
 
             NewtFiles.save_csv_to_file(file_csv, rows_1, delimiter=",", obscure_list=obscure_list)
 
-            result_csv_1 = NewtFiles.read_csv_from_file(file_csv, delimiter=",", obscure_list=obscure_list)
+            result_csv_1 = NewtFiles.read_csv_from_file(
+                file_csv, delimiter=",", obscure_list=obscure_list
+            )
             assert result_csv_1 == rows_1
             print("result_csv_1:", result_csv_1)
 
@@ -1637,9 +1583,13 @@ class TestCsvFiles:
             rows_2 = [["C", "D"], ["3", "4"]]
             print("rows_2:", rows_2)
 
-            NewtFiles.save_csv_to_file(file_csv, rows_2, append=True, delimiter=",", obscure_list=obscure_list)
+            NewtFiles.save_csv_to_file(
+                file_csv, rows_2, append=True, delimiter=",", obscure_list=obscure_list
+            )
 
-            result_csv_2 = NewtFiles.read_csv_from_file(file_csv, delimiter=",", obscure_list=obscure_list)
+            result_csv_2 = NewtFiles.read_csv_from_file(
+                file_csv, delimiter=",", obscure_list=obscure_list
+            )
             assert result_csv_2 == rows_1 + rows_2
             print("result_csv_2:", result_csv_2)
 
@@ -1966,7 +1916,9 @@ class TestCsvFiles:
 
         try:
             # Wrong delimiter
-            result = NewtFiles.read_csv_from_file(file_csv, delimiter=",", obscure_list=obscure_list)
+            result = NewtFiles.read_csv_from_file(
+                file_csv, delimiter=",", obscure_list=obscure_list
+            )
             assert result is not None
             assert isinstance(result, list)
             print("result:", result)
