@@ -624,10 +624,10 @@ class TestSqlInsertRow:
 
 
 class TestSqlUpdateRows:
-    """ Tests for sql_update_rows function. """
+    """ Tests for query_update function. """
 
 
-    def test_sql_update_rows_basic(self, capsys):
+    def test_query_update_basic(self, capsys):
         """ Test basic update operation. """
         print_my_func_name()
 
@@ -661,7 +661,7 @@ class TestSqlUpdateRows:
 
 
             # Update row
-            update_result = NewtSQL.sql_update_rows(
+            update_result = NewtSQL.query_update(
                 file_db,
                 "test",
                 {"age": 31},
@@ -700,7 +700,7 @@ class TestSqlUpdateRows:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_update_rows_multiple_columns(self, capsys):
+    def test_query_update_multiple_columns(self, capsys):
         """ Test updating multiple columns. """
         print_my_func_name()
 
@@ -719,7 +719,7 @@ class TestSqlUpdateRows:
             NewtSQL.query_insert(file_db, "test", data)
 
             # Update multiple columns
-            update_result = NewtSQL.sql_update_rows(
+            update_result = NewtSQL.query_update(
                 file_db, "test",
                 {"name": "Alice Updated", "age": 31},
                 "id = ?",
@@ -755,7 +755,7 @@ class TestSqlUpdateRows:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_update_rows_no_match(self, capsys):
+    def test_query_update_no_match(self, capsys):
         """ Test update with no matching rows. """
         print_my_func_name()
 
@@ -767,7 +767,7 @@ class TestSqlUpdateRows:
             NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
 
             # Update with no match
-            result = NewtSQL.sql_update_rows(
+            result = NewtSQL.query_update(
                 file_db, "test",
                 {"name": "Updated"},
                 "id = ?",
@@ -788,7 +788,7 @@ class TestSqlUpdateRows:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_update_rows_empty_data(self, capsys):
+    def test_query_update_empty_data(self, capsys):
         """ Test update with empty data. """
         print_my_func_name()
 
@@ -797,7 +797,7 @@ class TestSqlUpdateRows:
 
         try:
             NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER)")
-            result = NewtSQL.sql_update_rows(file_db, "test", {}, "id = ?", (1,))
+            result = NewtSQL.query_update(file_db, "test", {}, "id = ?", (1,))
             print("result:", result)
             assert result == 0
 
@@ -815,12 +815,12 @@ class TestSqlUpdateRows:
         assert "\nValue: {}\n" in captured.out
 
 
-    def test_sql_update_rows_invalid_input(self, capsys):
+    def test_query_update_invalid_input(self, capsys):
         """ Test update with invalid input. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info:
-            NewtSQL.sql_update_rows(
+            NewtSQL.query_update(
                 123,  # type: ignore
                 "test",
                 {"name": "test"},

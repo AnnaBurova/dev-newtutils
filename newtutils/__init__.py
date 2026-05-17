@@ -54,7 +54,7 @@ from .sql import (
     query_execute,
     query_select,
     query_insert,
-    sql_update_rows,
+    query_update,
     export_sql_query_to_csv,
 )
 
@@ -94,7 +94,7 @@ __all__ = [
     "query_execute",
     "query_select",
     "query_insert",
-    "sql_update_rows",
+    "query_update",
     "export_sql_query_to_csv",
     # Network ----------
     "fetch_data_from_url",

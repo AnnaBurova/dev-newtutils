@@ -25,6 +25,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - `query_insert()`:
     - Function renamed from `sql_insert_row()`.
     - Updated all calls from `sql_insert_row` to `query_insert`.
+  - `query_update()`:
+    - Function renamed from `sql_update_rows()`.
+    - Updated all calls from `sql_update_rows` to `query_update`.
 
 ### Testing
 

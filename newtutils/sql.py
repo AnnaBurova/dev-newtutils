@@ -24,7 +24,7 @@ Functions:
         table: str,
         data: dict[str, object] | list[dict[str, object]]
         ) -> int
-    def sql_update_rows(
+    def query_update(
         database: str,
         table: str,
         set_data: dict[str, object],
@@ -358,7 +358,7 @@ def query_insert(
     return 0  # Default return value if no rows are inserted
 
 
-def sql_update_rows(
+def query_update(
         database: str,
         table: str,
         set_data: dict[str, object],
@@ -390,18 +390,18 @@ def sql_update_rows(
 
     NewtCons.validate_type(
         table, str, check_non_empty=True,
-        location="Newt.sql.sql_update_rows : table"
+        location="Newt.sql.query_update : table"
     )
 
     if not NewtCons.validate_type(
         set_data, dict, check_non_empty=True, stop=False,
-        location="Newt.sql.sql_update_rows : set_data"
+        location="Newt.sql.query_update : set_data"
     ):
         return 0
 
     NewtCons.validate_type(
         where_condition, str, check_non_empty=True,
-        location="Newt.sql.sql_update_rows : where_condition"
+        location="Newt.sql.query_update : where_condition"
     )
 
     set_clause = ", ".join([f"{k} = ?" for k in set_data])
@@ -415,7 +415,7 @@ def sql_update_rows(
 
     NewtCons.validate_type(
         result, int,
-        location="Newt.sql.sql_update_rows : result"
+        location="Newt.sql.query_update : result"
     )
 
     return 0  # Default return value if no rows are updated
