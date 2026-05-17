@@ -14,7 +14,7 @@ Functions:
         query: str,
         params: tuple | list[tuple] | None = None
         ) -> list[dict] | int | None
-    def sql_select_rows(
+    def query_select(
         database: str,
         query: str,
         params: tuple | None = None
@@ -247,7 +247,7 @@ def query_execute(
     return None
 
 
-def sql_select_rows(
+def query_select(
         database: str,
         query: str,
         params: tuple | None = None
@@ -275,7 +275,7 @@ def sql_select_rows(
 
     NewtCons.validate_type(
         result, list,
-        location="Newt.sql.sql_select_rows : result"
+        location="Newt.sql.query_select : result"
     )
     return []
 
@@ -472,7 +472,7 @@ def export_sql_query_to_csv(
 
     try:
         # Step 1: run select query
-        result = sql_select_rows(database, query, params)
+        result = query_select(database, query, params)
 
         if result is None or len(result) == 0:
             NewtCons.error_msg(

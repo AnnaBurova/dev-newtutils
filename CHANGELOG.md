@@ -19,6 +19,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - `query_execute()`:
     - Function renamed from `sql_execute_query()`.
     - Updated all calls from `sql_execute_query` to `query_execute`.
+  - `query_select()`:
+    - Function renamed from `sql_select_rows()`.
+    - Updated all calls from `sql_select_rows` to `query_select`.
 
 ### Testing
 

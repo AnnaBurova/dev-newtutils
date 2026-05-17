@@ -342,10 +342,10 @@ class TestQueryExecute:
 
 
 class TestSqlSelectRows:
-    """ Tests for sql_select_rows function. """
+    """ Tests for query_select function. """
 
 
-    def test_sql_select_rows_basic(self, capsys):
+    def test_query_select_basic(self, capsys):
         """ Test basic select operation. """
         print_my_func_name()
 
@@ -359,7 +359,7 @@ class TestSqlSelectRows:
             NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Select rows
-            result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
+            result = NewtSQL.query_select(file_db, "SELECT * FROM test")
             print("result:", result)
             assert isinstance(result, list)
             assert len(result) == 2
@@ -377,7 +377,7 @@ class TestSqlSelectRows:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_select_rows_with_params(self, capsys):
+    def test_query_select_with_params(self, capsys):
         """ Test select with parameters. """
         print_my_func_name()
 
@@ -391,7 +391,7 @@ class TestSqlSelectRows:
             NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Select with WHERE clause
-            result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test WHERE id = ?", (1,))
+            result = NewtSQL.query_select(file_db, "SELECT * FROM test WHERE id = ?", (1,))
             print("result:", result)
             assert len(result) == 1
             assert result[0]["id"] == 1
@@ -409,7 +409,7 @@ class TestSqlSelectRows:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_select_rows_empty_result(self, capsys):
+    def test_query_select_empty_result(self, capsys):
         """ Test select with no results. """
         print_my_func_name()
 
@@ -421,7 +421,7 @@ class TestSqlSelectRows:
             NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER)")
 
             # Select with no data
-            result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
+            result = NewtSQL.query_select(file_db, "SELECT * FROM test")
             print("result:", result)
             assert result == []
 
@@ -438,7 +438,7 @@ class TestSqlSelectRows:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_select_rows_invalid_query(self, capsys):
+    def test_query_select_invalid_query(self, capsys):
         """ Test select with invalid query. """
         print_my_func_name()
 
@@ -447,7 +447,7 @@ class TestSqlSelectRows:
 
         try:
             with pytest.raises(SystemExit) as exc_info:
-                NewtSQL.sql_select_rows(file_db, "INVALID SQL QUERY")
+                NewtSQL.query_select(file_db, "INVALID SQL QUERY")
                 print("This line will not be printed")
             assert exc_info.value.code == 1
             print("exc_info:", exc_info.value.code)
@@ -494,7 +494,7 @@ class TestSqlInsertRow:
             assert insert_result == 1
 
             # Select with no data
-            select_result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
+            select_result = NewtSQL.query_select(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert len(select_result) == 1
 
@@ -535,7 +535,7 @@ class TestSqlInsertRow:
             assert insert_result == 3
 
             # Select with no data
-            select_result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
+            select_result = NewtSQL.query_select(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert len(select_result) == 3
             assert select_result[0]["id"] == 1
@@ -646,7 +646,7 @@ class TestSqlUpdateRows:
             NewtSQL.sql_insert_row(file_db, "test", data)
 
             # Select with no data
-            select_result_1 = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
+            select_result_1 = NewtSQL.query_select(file_db, "SELECT * FROM test")
             print("select_result_1:", select_result_1)
             assert len(select_result_1) == 3
             assert select_result_1[0]["id"] == 1
@@ -672,7 +672,7 @@ class TestSqlUpdateRows:
             assert update_result == 1
 
             # Verify update
-            select_result_2 = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
+            select_result_2 = NewtSQL.query_select(file_db, "SELECT * FROM test")
             print("select_result_2:", select_result_2)
             assert len(select_result_2) == 3
             assert select_result_2[0]["id"] == 1
@@ -729,7 +729,7 @@ class TestSqlUpdateRows:
             assert update_result == 1
 
             # Verify update
-            select_result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
+            select_result = NewtSQL.query_select(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert len(select_result) == 3
             assert select_result[0]["id"] == 1

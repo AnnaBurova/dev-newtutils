@@ -52,7 +52,7 @@ from .files import (
 from .sql import (
     db_delayed_close,
     query_execute,
-    sql_select_rows,
+    query_select,
     sql_insert_row,
     sql_update_rows,
     export_sql_query_to_csv,
@@ -92,7 +92,7 @@ __all__ = [
     # SQL ----------
     "db_delayed_close",
     "query_execute",
-    "sql_select_rows",
+    "query_select",
     "sql_insert_row",
     "sql_update_rows",
     "export_sql_query_to_csv",
