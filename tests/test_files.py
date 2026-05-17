@@ -16,6 +16,7 @@ Tests cover:
 - TestConvertStrToJson
 - TestJsonFiles
 - TestCsvFiles
+- TestLogging
 """
 
 import sys
@@ -34,8 +35,10 @@ obscure_list = [
     "C:\\Users\\",
     "\\AppData\\Local\\Temp\\",
     "/tmp/",
-    "\\level1\\level2\\file",
-    "/level1/level2/file",
+    "\\level1\\level2",
+    "/level1/level2",
+    "\\file",
+    "/file",
     ".txt",
     ".json",
     ".csv",
@@ -1945,6 +1948,52 @@ class TestCsvFiles:
         "\n(rows=2, delimiter=',')" \
         "\nresult: [['A;B'], ['1;2']]" \
         "\nresult[0][0]: 'A;B'" \
+        "\n" == captured.out
+        assert "" == captured.err
+
+        assert captured.err.count("\n::: ERROR :::\n") == 0
+
+        # Expected absence of result
+        assert "::: ERROR :::" not in captured.out
+        assert "::: ERROR :::" not in captured.err
+
+
+class TestLogging:
+    """ Tests for setup_logging and cleanup_logging functions. """
+
+
+    def test_setup_logging_and_cleanup_logging(self, capsys):
+        """ Ensure NewtFiles.setup_logging() and cleanup_logging() work correctly. """
+        print_my_func_name()
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            SETUP_LOGGING_DATA = NewtFiles.setup_logging(tmpdir)
+            time_file, file_content, origin_stdout = SETUP_LOGGING_DATA
+
+            print("test message")
+            assert os.path.exists(time_file)
+
+            file_path = os.path.join(tmpdir, "file.txt")
+            NewtFiles.cleanup_logging(
+                SETUP_LOGGING_DATA, file_path, obscure_list=obscure_list
+            )
+
+            result = NewtFiles.read_text_from_file(file_path, print_log=False)
+            print("result:", result)
+
+        captured = capsys.readouterr()
+        print_my_captured(captured)
+
+        if sys.platform == "win32" and os.name == "nt":
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********\\file.txt"
+        else:
+            file_obscure_name = "/tmp/***********/file.txt"
+
+        assert "Function: test_setup_logging_and_cleanup_logging" \
+        "\n============================================" \
+        "\ntest message" \
+        "\nLog moved to " + file_obscure_name + \
+        "\nresult: test message\n" \
         "\n" == captured.out
         assert "" == captured.err
 

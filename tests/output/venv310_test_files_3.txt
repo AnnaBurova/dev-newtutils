@@ -2,7 +2,7 @@
 platform win32 -- Python 3.10.11, pytest-9.0.3, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collected 36 items
+collected 37 items
 
 test_files.py 
 START=======================================
@@ -847,5 +847,18 @@ result[0][0]: 'A;B'
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_setup_logging_and_cleanup_logging
+============================================
+test message
+Log moved to C:\Users\*******\AppData\Local\Temp\***********\file.txt
+result: test message
 
-============================= 36 passed in 0.12s ==============================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================= 37 passed in 0.12s ==============================

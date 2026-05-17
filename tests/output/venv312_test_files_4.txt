@@ -3,7 +3,7 @@ platform win32 -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv
 cachedir: .pytest_cache
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collecting ... collected 36 items
+collecting ... collected 37 items
 
 test_files.py::TestNormalizeNewlines::test_normalize_newlines_mixed_endings 
 START=======================================
@@ -883,5 +883,19 @@ result[0][0]: 'A;B'
 (no stderr captured)
 END=========================================
 PASSED
+test_files.py::TestLogging::test_setup_logging_and_cleanup_logging 
+START=======================================
+=====captured.out=====
+Function: test_setup_logging_and_cleanup_logging
+============================================
+test message
+Log moved to C:\Users\*******\AppData\Local\Temp\***********\file.txt
+result: test message
 
-============================= 36 passed in 0.12s ==============================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================= 37 passed in 0.12s ==============================

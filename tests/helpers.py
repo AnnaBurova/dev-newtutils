@@ -46,9 +46,9 @@ Test example:
             ]
         if sys.platform == "win32" and os.name == "nt":
             # On Windows
-            file_not_found = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********"
+            file_obscure_name = "C:\\Users\\*******\\AppData\\Local\\Temp\\***********"
         else:
-            file_not_found = "/tmp/***********"
+            file_obscure_name = "/tmp/***********"
 
         captured = capsys.readouterr()
         print_my_captured(captured)

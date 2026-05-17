@@ -2,8 +2,8 @@
 platform win32 -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0
 rootdir: D:\VS_Code\dev-newtutils
 configfile: pyproject.toml
-collected 36 items
+collected 37 items
 
-test_files.py ....................................                       [100%]
+test_files.py .....................................                      [100%]
 
-============================= 36 passed in 0.13s ==============================
+============================= 37 passed in 0.48s ==============================

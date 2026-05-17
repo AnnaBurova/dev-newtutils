@@ -30,6 +30,8 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
   - `save_csv_to_file()`:
     - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
+  - `cleanup_logging()`:
+    - `obscure_list` parameter accepts a list of substrings to keep visible in log output, masking all other characters with `*`.
 
 ### Changed
 
@@ -71,6 +73,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
     - Parameter renamed from `logging` to `print_log`.
     - `rows` parameter type narrowed from `Sequence[Sequence[object]]` to `list[list[str]]`; validation updated accordingly.
     - Append mode now checks file existence before switching to `append`; falls back to `write` mode if the file doesn't exist.
+  - `setup_logging()`:
+    - Inline flush call after every write in the `Tee` class.
+    - Parameter renamed from `_dir` to `dir_global`.
 
 ### Testing
 
@@ -80,6 +85,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - Switched the test helper import to a relative import.
   - Reworked test suites to cover new cases.
   - Added `tempfile.TemporaryDirectory` lifecycle check helper to verify directory exists inside the context and is gone after.
+  - Added `TestLogging` test class with a test covering `setup_logging()` and `cleanup_logging()` end-to-end.
 
 ### Fixed
 

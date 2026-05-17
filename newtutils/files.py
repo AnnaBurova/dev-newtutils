@@ -75,11 +75,12 @@ Functions:
         ) -> None
     === LOG ===
     def setup_logging(
-        _dir: str
+        dir_global: str
         ) -> tuple[str, TextIO, object]
     def cleanup_logging(
         setup_data: tuple[str, TextIO, object],
-        file_target: str
+        file_target: str,
+        obscure_list: list = []
         ) -> None
 """
 
@@ -87,13 +88,12 @@ from __future__ import annotations
 
 import sys
 import os
+import shutil
 from typing import TextIO
-from collections.abc import Sequence
+from datetime import datetime, timedelta, timezone
 
 import csv
 import json
-import shutil
-from datetime import datetime, timedelta, timezone
 
 import newtutils.console as NewtCons
 import newtutils.utility as NewtUtil
@@ -750,8 +750,10 @@ def read_csv_from_file(
             Column separator character used in the CSV file.<br>
             Defaults to ";".
         obscure_list (list):
-            List of substrings used to obscure the file path in log output.<br>
-            Defaults to [] (no obscuring applied).
+            List of substrings to keep visible in log messages.<br>
+            All other characters in `file_path` will be masked with `*`.<br>
+            If empty, the full path is shown as-is.<br>
+            Defaults to [].
         stop (bool):
             If True, terminates execution when the file is not found.<br>
             Defaults to True.
@@ -828,8 +830,10 @@ def save_csv_to_file(
             Column separator character used in the CSV file.<br>
             Defaults to ";".
         obscure_list (list):
-            List of substrings used to obscure the file path in log output.<br>
-            Defaults to [] (no obscuring applied).
+            List of substrings to keep visible in log messages.<br>
+            All other characters in `file_path` will be masked with `*`.<br>
+            If empty, the full path is shown as-is.<br>
+            Defaults to [].
         print_log (bool):
             If True, prints a confirmation message with row count and mode after saving.<br>
             Defaults to True.
@@ -891,55 +895,63 @@ def save_csv_to_file(
 # === LOG ===
 
 def setup_logging(
-        _dir: str
+        dir_global: str
         ) -> tuple[str, TextIO, object]:
-    """
-    Set up logging by redirecting stdout and stderr to both console and a timestamped log file.
+    """ ## Set up logging by redirecting stdout and stderr to both console and a timestamped log file.
 
     Creates a log file with a name based on current UTC time in the specified directory,
     defines a Tee class to duplicate output to both console and file,
     replaces sys.stdout and sys.stderr with Tee instances.
 
     Args:
-        _dir (str):
+        dir_global (str):
             Directory path where the timestamped log file will be created.
 
     Returns:
         tuple[str, TextIO, object]:
-            Tuple containing log filename (str),
-            open file object (TextIO),
+            Tuple containing log filename (str),<br>
+            open file object (TextIO),<br>
             and original sys.stdout (object).
 
     Example:
-        >>> setup_data = setup_logging(_dir="path/to/log/directory")
+        >>> setup_data = setup_logging(dir_global="path/to/log/directory")
         >>> cleanup_logging(setup_data, "path/to/target/logfile.txt")
     """
 
     NewtCons.validate_type(
-        _dir, str, check_non_empty=True,
-        location="Newt.files.setup_logging : _dir"
+        dir_global, str, check_non_empty=True,
+        location="Newt.files.setup_logging : dir_global"
     )
 
     time_now = datetime.now(timezone.utc)
     time_file_name = time_now.strftime('%Y-%m-%d-%H-%M-%S') + ".txt"
 
     class Tee:
+        # a - console
+        # b - file
         def __init__(self, a, b):
             self.a, self.b = a, b
 
         def write(self, s: str) -> None:
             self.a.write(s)
             self.b.write(s)
+            self.flush()  # flush after every write
 
         def flush(self) -> None:
             self.a.flush()
             try:
                 self.b.flush()
-            except ValueError:
-                pass  # File already closed
+            # except ValueError:
+            #     pass  # File already closed
+            except Exception as e:  # pragma: no cover
+                NewtCons.error_msg(
+                    f"Found Error Msg: (found? write test!)",  # TODO
+                    f"Exception: {e}",
+                    location="Newt.files.setup_logging : Exception self.b.flush()"
+                )
 
     origin_stdout = sys.stdout
-    time_file = os.path.join(_dir, time_file_name)
+    time_file = os.path.join(dir_global, time_file_name)
     file_content: TextIO = open(time_file, "a", encoding="utf-8", newline="\n")
     sys.stdout = Tee(origin_stdout, file_content)
     sys.stderr = sys.stdout
@@ -949,19 +961,25 @@ def setup_logging(
 
 def cleanup_logging(
         setup_data: tuple[str, TextIO, object],
-        file_target: str
+        file_target: str,
+        obscure_list: list = []
         ) -> None:
-    """
-    Restore original stdout/stderr and move log file to target path file.
+    """ ## Restore original stdout/stderr and move log file to target path file.
 
     Closes the log file, restores original sys.stdout, moves the timestamped log
     to the specified target path, ensuring target directory exists.
 
     Args:
         setup_data (tuple[str, TextIO, object]):
-            Tuple returned from setup_logging() containing (log_filename, file, old_stdout).
+            Tuple returned from setup_logging() containing
+            (log_filename, file, old_stdout).
         file_target (str):
             Target path where the log file should be moved.
+        obscure_list (list):
+            List of substrings to keep visible in log messages.<br>
+            All other characters in `file_path` will be masked with `*`.<br>
+            If empty, the full path is shown as-is.<br>
+            Defaults to [].
     """
 
     NewtCons.validate_type(
@@ -969,10 +987,19 @@ def cleanup_logging(
         location="Newt.files.cleanup_logging : setup_data"
     )
 
+    NewtCons.validate_type(
+        file_target, str, check_non_empty=True,
+        location="Newt.files.cleanup_logging : file_target"
+    )
+
     time_file, file_content, origin_stdout = setup_data
+
+    msg_file_path = file_target
+    if obscure_list:
+        msg_file_path = _obscure_logic(file_target, obscure_list)
 
     sys.stdout = origin_stdout
     file_content.close()
-    print("Log moved to", file_target)
+    print("Log moved to", msg_file_path)
     ensure_dir_exists(file_target)
     shutil.move(time_file, file_target)

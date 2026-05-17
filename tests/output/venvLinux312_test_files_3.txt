@@ -8,7 +8,7 @@ Function _beep_boop will make no sound.
 Expected platform: win32 / Got: linux
 Expected OS name:  nt    / Got: posix
 
-collected 36 items
+collected 37 items
 
 test_files.py 
 START=======================================
@@ -853,5 +853,18 @@ result[0][0]: 'A;B'
 (no stderr captured)
 END=========================================
 .
+START=======================================
+=====captured.out=====
+Function: test_setup_logging_and_cleanup_logging
+============================================
+test message
+Log moved to /tmp/***********/file.txt
+result: test message
 
-============================== 36 passed in 0.29s ==============================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+.
+
+============================== 37 passed in 0.32s ==============================
