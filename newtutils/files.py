@@ -121,7 +121,7 @@ def _normalize_newlines(
         location="Newt.files._normalize_newlines"
     )
 
-    return content.rstrip().replace("\r\n", "\n").replace("\r", "\n")+"\n"
+    return content.rstrip().replace("\r\n", "\n").replace("\r", "\n")
 
 
 def _obscure_logic(
@@ -460,7 +460,7 @@ def save_text_to_file(
         location="Newt.files.save_text_to_file : content"
     )
 
-    content = _normalize_newlines(content)
+    content = _normalize_newlines(content)+"\n"
 
     ensure_dir_exists(file_name)
 
