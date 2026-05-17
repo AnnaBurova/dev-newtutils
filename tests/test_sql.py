@@ -322,12 +322,12 @@ class TestSqlExecuteQuery:
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            nested_path = os.path.join(tmpdir, "level1", "level2", "test.db")
+            file_path = os.path.join(tmpdir, "level1", "level2", "test.db")
             query = "CREATE TABLE test (id INTEGER)"
-            result = NewtSQL.sql_execute_query(nested_path, query)
+            result = NewtSQL.sql_execute_query(file_path, query)
             print("result:", result)
-            assert os.path.exists(nested_path)
-            NewtSQL.db_delayed_close(nested_path)
+            assert os.path.exists(file_path)
+            NewtSQL.db_delayed_close(file_path)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
