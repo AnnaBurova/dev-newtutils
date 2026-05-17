@@ -29,17 +29,17 @@ class TestDbDelayedClose:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create a simple database
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER)")
-            result = NewtSQL.db_delayed_close(db_path)
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
+            result = NewtSQL.db_delayed_close(file_db)
             assert result is True
 
         finally:
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -72,20 +72,20 @@ class TestSqlExecuteQuery:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             query = "CREATE TABLE test (id INTEGER PRIMARY KEY, name TEXT)"
-            result = NewtSQL.sql_execute_query(db_path, query)
+            result = NewtSQL.sql_execute_query(file_db, query)
             print("result:", result)
             # CREATE returns rowcount, typically -1
             assert isinstance(result, int)
             assert result == -1
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -99,24 +99,24 @@ class TestSqlExecuteQuery:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table
             create_query = "CREATE TABLE test (id INTEGER, name TEXT)"
-            NewtSQL.sql_execute_query(db_path, create_query)
+            NewtSQL.sql_execute_query(file_db, create_query)
             # Insert row
             insert_query = "INSERT INTO test (id, name) VALUES (?, ?)"
             insert_params = (1, "Test")
-            insert_result = NewtSQL.sql_execute_query(db_path, insert_query, insert_params)
+            insert_result = NewtSQL.sql_execute_query(file_db, insert_query, insert_params)
             print("result:", insert_result)
             assert isinstance(insert_result, int)
             assert insert_result == 1
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -130,17 +130,17 @@ class TestSqlExecuteQuery:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Select data
             query = "SELECT * FROM test"
-            result = NewtSQL.sql_execute_query(db_path, query)
+            result = NewtSQL.sql_execute_query(file_db, query)
             print("result:", result)
             assert isinstance(result, list)
             assert len(result) == 2
@@ -150,9 +150,9 @@ class TestSqlExecuteQuery:
             assert result[1]["name"] == "Bob"
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -167,32 +167,32 @@ class TestSqlExecuteQuery:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
 
             # Update data
             query = "UPDATE test SET name = ? WHERE id = ?"
             params = ("Alice Updated", 1)
-            update_result = NewtSQL.sql_execute_query(db_path, query, params)
+            update_result = NewtSQL.sql_execute_query(file_db, query, params)
             print("update_result:", update_result)
             assert isinstance(update_result, int)
             assert update_result == 1
 
             # Verify update
-            select_result = NewtSQL.sql_execute_query(db_path, "SELECT * FROM test")
+            select_result = NewtSQL.sql_execute_query(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert isinstance(select_result, list)
             assert len(select_result) > 0
             assert select_result[0]["name"] == "Alice Updated"
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -207,24 +207,24 @@ class TestSqlExecuteQuery:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Delete data
             query = "DELETE FROM test WHERE id = ?"
             params = (1,)
-            delete_result = NewtSQL.sql_execute_query(db_path, query, params)
+            delete_result = NewtSQL.sql_execute_query(file_db, query, params)
             print("delete_result:", delete_result)
             assert isinstance(delete_result, int)
             assert delete_result == 1
 
             # Verify deletion
-            select_result = NewtSQL.sql_execute_query(db_path, "SELECT * FROM test")
+            select_result = NewtSQL.sql_execute_query(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert isinstance(select_result, list)
             assert len(select_result) == 1
@@ -232,9 +232,9 @@ class TestSqlExecuteQuery:
             assert select_result[0]["name"] == "Bob"
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -249,22 +249,22 @@ class TestSqlExecuteQuery:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
 
             # Insert multiple rows
             query = "INSERT INTO test (id, name) VALUES (?, ?)"
             params = [(1, "Alice"), (2, "Bob"), (3, "Charlie")]
-            insert_result = NewtSQL.sql_execute_query(db_path, query, params)
+            insert_result = NewtSQL.sql_execute_query(file_db, query, params)
             print("result:", insert_result)
             assert isinstance(insert_result, int)
             assert insert_result == 3
 
             # Verify insertion
-            select_result = NewtSQL.sql_execute_query(db_path, "SELECT * FROM test")
+            select_result = NewtSQL.sql_execute_query(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert isinstance(select_result, list)
             assert len(select_result) == 3
@@ -276,9 +276,9 @@ class TestSqlExecuteQuery:
             assert select_result[2]["name"] == "Charlie"
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -343,24 +343,24 @@ class TestSqlSelectRows:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Select rows
-            result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
             print("result:", result)
             assert isinstance(result, list)
             assert len(result) == 2
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -375,24 +375,24 @@ class TestSqlSelectRows:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Select with WHERE clause
-            result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test WHERE id = ?", (1,))
+            result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test WHERE id = ?", (1,))
             print("result:", result)
             assert len(result) == 1
             assert result[0]["id"] == 1
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -407,21 +407,21 @@ class TestSqlSelectRows:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER)")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
 
             # Select with no data
-            result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
             print("result:", result)
             assert result == []
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -436,18 +436,18 @@ class TestSqlSelectRows:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             with pytest.raises(SystemExit) as exc_info:
-                NewtSQL.sql_select_rows(db_path, "INVALID SQL QUERY")
+                NewtSQL.sql_select_rows(file_db, "INVALID SQL QUERY")
                 print("This line will not be printed")
             assert exc_info.value.code == 1
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -471,29 +471,29 @@ class TestSqlInsertRow:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
 
             # Insert single row
             data = {"id": 1, "name": "Alice", "age": 30}
             print("data:", data)
 
-            insert_result = NewtSQL.sql_insert_row(db_path, "test", data)
+            insert_result = NewtSQL.sql_insert_row(file_db, "test", data)
             print("insert_result:", insert_result)
             assert insert_result == 1
 
             # Select with no data
-            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            select_result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert len(select_result) == 1
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -508,11 +508,11 @@ class TestSqlInsertRow:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
 
             # Insert multiple rows
             data = [
@@ -522,12 +522,12 @@ class TestSqlInsertRow:
             ]
             print("data:", data)
 
-            insert_result = NewtSQL.sql_insert_row(db_path, "test", data)
+            insert_result = NewtSQL.sql_insert_row(file_db, "test", data)
             print("insert_result:", insert_result)
             assert insert_result == 3
 
             # Select with no data
-            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            select_result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert len(select_result) == 3
             assert select_result[0]["id"] == 1
@@ -538,9 +538,9 @@ class TestSqlInsertRow:
             assert select_result[2]["name"] == "Charlie"
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -555,18 +555,18 @@ class TestSqlInsertRow:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER)")
-            result = NewtSQL.sql_insert_row(db_path, "test", {})
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
+            result = NewtSQL.sql_insert_row(file_db, "test", {})
             print("result:", result)
             assert result == 0
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -622,21 +622,21 @@ class TestSqlUpdateRows:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
             data = [
                 {"id": 1, "name": "Alice", "age": 30},
                 {"id": 2, "name": "Bob", "age": 35},
                 {"id": 3, "name": "Charlie", "age": 40}
             ]
             print("data:", data)
-            NewtSQL.sql_insert_row(db_path, "test", data)
+            NewtSQL.sql_insert_row(file_db, "test", data)
 
             # Select with no data
-            select_result_1 = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            select_result_1 = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
             print("select_result_1:", select_result_1)
             assert len(select_result_1) == 3
             assert select_result_1[0]["id"] == 1
@@ -652,7 +652,7 @@ class TestSqlUpdateRows:
 
             # Update row
             update_result = NewtSQL.sql_update_rows(
-                db_path,
+                file_db,
                 "test",
                 {"age": 31},
                 "id = ?",
@@ -662,7 +662,7 @@ class TestSqlUpdateRows:
             assert update_result == 1
 
             # Verify update
-            select_result_2 = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            select_result_2 = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
             print("select_result_2:", select_result_2)
             assert len(select_result_2) == 3
             assert select_result_2[0]["id"] == 1
@@ -676,9 +676,9 @@ class TestSqlUpdateRows:
             assert select_result_2[2]["age"] == 40
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -695,22 +695,22 @@ class TestSqlUpdateRows:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
             data = [
                 {"id": 1, "name": "Alice", "age": 30},
                 {"id": 2, "name": "Bob", "age": 35},
                 {"id": 3, "name": "Charlie", "age": 40}
             ]
             print("data:", data)
-            NewtSQL.sql_insert_row(db_path, "test", data)
+            NewtSQL.sql_insert_row(file_db, "test", data)
 
             # Update multiple columns
             update_result = NewtSQL.sql_update_rows(
-                db_path, "test",
+                file_db, "test",
                 {"name": "Alice Updated", "age": 31},
                 "id = ?",
                 (1,)
@@ -719,7 +719,7 @@ class TestSqlUpdateRows:
             assert update_result == 1
 
             # Verify update
-            select_result = NewtSQL.sql_select_rows(db_path, "SELECT * FROM test")
+            select_result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert len(select_result) == 3
             assert select_result[0]["id"] == 1
@@ -732,9 +732,9 @@ class TestSqlUpdateRows:
             assert select_result[2]["name"] == "Charlie"
             assert select_result[2]["age"] == 40
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -750,15 +750,15 @@ class TestSqlUpdateRows:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
 
             # Update with no match
             result = NewtSQL.sql_update_rows(
-                db_path, "test",
+                file_db, "test",
                 {"name": "Updated"},
                 "id = ?",
                 (999,)
@@ -767,9 +767,9 @@ class TestSqlUpdateRows:
             assert result == 0
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -783,18 +783,18 @@ class TestSqlUpdateRows:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         try:
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER)")
-            result = NewtSQL.sql_update_rows(db_path, "test", {}, "id = ?", (1,))
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
+            result = NewtSQL.sql_update_rows(file_db, "test", {}, "id = ?", (1,))
             print("result:", result)
             assert result == 0
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
 
         captured = capsys.readouterr()
         print_my_captured(captured)
@@ -840,20 +840,20 @@ class TestExportSqlQueryToCsv:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
             csv_path = csv_tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice', 30)")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob', 25)")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice', 30)")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob', 25)")
 
             # Export to CSV
             result = NewtSQL.export_sql_query_to_csv(
-                db_path,
+                file_db,
                 "SELECT * FROM test ORDER BY id",
                 csv_path
             )
@@ -871,9 +871,9 @@ class TestExportSqlQueryToCsv:
             assert "name" in csv_data[0]
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
             if os.path.exists(csv_path):
                 os.unlink(csv_path)
 
@@ -894,18 +894,18 @@ class TestExportSqlQueryToCsv:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
             csv_path = csv_tmp.name
 
         try:
             # Create empty table
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER)")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
 
             # Export empty result
             result = NewtSQL.export_sql_query_to_csv(
-                db_path,
+                file_db,
                 "SELECT * FROM test",
                 csv_path
             )
@@ -913,9 +913,9 @@ class TestExportSqlQueryToCsv:
             assert result is False
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
             if os.path.exists(csv_path):
                 os.unlink(csv_path)
 
@@ -932,19 +932,19 @@ class TestExportSqlQueryToCsv:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
             csv_path = csv_tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
 
             # Export with comma delimiter
             result = NewtSQL.export_sql_query_to_csv(
-                db_path,
+                file_db,
                 "SELECT * FROM test",
                 csv_path,
                 delimiter=","
@@ -958,9 +958,9 @@ class TestExportSqlQueryToCsv:
             print("csv_data:", csv_data)
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
             if os.path.exists(csv_path):
                 os.unlink(csv_path)
 
@@ -981,20 +981,20 @@ class TestExportSqlQueryToCsv:
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(suffix='.db', delete=False) as tmp:
-            db_path = tmp.name
+            file_db = tmp.name
 
         with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as csv_tmp:
             csv_path = csv_tmp.name
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(db_path, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(db_path, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Export with WHERE clause
             result = NewtSQL.export_sql_query_to_csv(
-                db_path,
+                file_db,
                 "SELECT * FROM test WHERE id = ?",
                 csv_path,
                 params=(1,)
@@ -1008,9 +1008,9 @@ class TestExportSqlQueryToCsv:
             print("csv_data:", csv_data)
 
         finally:
-            NewtSQL.db_delayed_close(db_path)
-            if os.path.exists(db_path):
-                os.unlink(db_path)
+            NewtSQL.db_delayed_close(file_db)
+            if os.path.exists(file_db):
+                os.unlink(file_db)
             if os.path.exists(csv_path):
                 os.unlink(csv_path)
 
