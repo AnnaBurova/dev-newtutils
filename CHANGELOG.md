@@ -16,6 +16,9 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 - `newtutils/sql.py`:
   - `db_delayed_close()`:
     - Parameter renamed from `logging` to `print_log`.
+  - `query_execute()`:
+    - Function renamed from `sql_execute_query()`.
+    - Updated all calls from `sql_execute_query` to `query_execute`.
 
 ### Testing
 

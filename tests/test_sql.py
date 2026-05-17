@@ -8,7 +8,7 @@ Comprehensive unit tests for newtutils.sql module.
 
 Tests cover:
 - TestDbDelayedClose
-- TestSqlExecuteQuery
+- TestQueryExecute
 - TestSqlSelectRows
 - TestSqlInsertRow
 - TestSqlUpdateRows
@@ -38,7 +38,7 @@ class TestDbDelayedClose:
 
         try:
             # Create a simple database
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER)")
             result = NewtSQL.db_delayed_close(file_db)
             assert result is True
 
@@ -68,11 +68,11 @@ class TestDbDelayedClose:
         assert "\nFile not found: /nonexistent/database.db\n" in captured.out
 
 
-class TestSqlExecuteQuery:
-    """ Tests for sql_execute_query function. """
+class TestQueryExecute:
+    """ Tests for query_execute function. """
 
 
-    def test_sql_execute_query_create_table(self, capsys):
+    def test_query_execute_create_table(self, capsys):
         """ Test creating a table. """
         print_my_func_name()
 
@@ -81,7 +81,7 @@ class TestSqlExecuteQuery:
 
         try:
             query = "CREATE TABLE test (id INTEGER PRIMARY KEY, name TEXT)"
-            result = NewtSQL.sql_execute_query(file_db, query)
+            result = NewtSQL.query_execute(file_db, query)
             print("result:", result)
             # CREATE returns rowcount, typically -1
             assert isinstance(result, int)
@@ -99,7 +99,7 @@ class TestSqlExecuteQuery:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_execute_query_insert(self, capsys):
+    def test_query_execute_insert(self, capsys):
         """ Test INSERT query. """
         print_my_func_name()
 
@@ -109,11 +109,11 @@ class TestSqlExecuteQuery:
         try:
             # Create table
             create_query = "CREATE TABLE test (id INTEGER, name TEXT)"
-            NewtSQL.sql_execute_query(file_db, create_query)
+            NewtSQL.query_execute(file_db, create_query)
             # Insert row
             insert_query = "INSERT INTO test (id, name) VALUES (?, ?)"
             insert_params = (1, "Test")
-            insert_result = NewtSQL.sql_execute_query(file_db, insert_query, insert_params)
+            insert_result = NewtSQL.query_execute(file_db, insert_query, insert_params)
             print("result:", insert_result)
             assert isinstance(insert_result, int)
             assert insert_result == 1
@@ -130,7 +130,7 @@ class TestSqlExecuteQuery:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_execute_query_select(self, capsys):
+    def test_query_execute_select(self, capsys):
         """ Test SELECT query. """
         print_my_func_name()
 
@@ -139,13 +139,13 @@ class TestSqlExecuteQuery:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Select data
             query = "SELECT * FROM test"
-            result = NewtSQL.sql_execute_query(file_db, query)
+            result = NewtSQL.query_execute(file_db, query)
             print("result:", result)
             assert isinstance(result, list)
             assert len(result) == 2
@@ -167,7 +167,7 @@ class TestSqlExecuteQuery:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_execute_query_update(self, capsys):
+    def test_query_execute_update(self, capsys):
         """ Test UPDATE query. """
         print_my_func_name()
 
@@ -176,19 +176,19 @@ class TestSqlExecuteQuery:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (1, 'Alice')")
 
             # Update data
             query = "UPDATE test SET name = ? WHERE id = ?"
             params = ("Alice Updated", 1)
-            update_result = NewtSQL.sql_execute_query(file_db, query, params)
+            update_result = NewtSQL.query_execute(file_db, query, params)
             print("update_result:", update_result)
             assert isinstance(update_result, int)
             assert update_result == 1
 
             # Verify update
-            select_result = NewtSQL.sql_execute_query(file_db, "SELECT * FROM test")
+            select_result = NewtSQL.query_execute(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert isinstance(select_result, list)
             assert len(select_result) > 0
@@ -207,7 +207,7 @@ class TestSqlExecuteQuery:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_execute_query_delete(self, capsys):
+    def test_query_execute_delete(self, capsys):
         """ Test DELETE query. """
         print_my_func_name()
 
@@ -216,20 +216,20 @@ class TestSqlExecuteQuery:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Delete data
             query = "DELETE FROM test WHERE id = ?"
             params = (1,)
-            delete_result = NewtSQL.sql_execute_query(file_db, query, params)
+            delete_result = NewtSQL.query_execute(file_db, query, params)
             print("delete_result:", delete_result)
             assert isinstance(delete_result, int)
             assert delete_result == 1
 
             # Verify deletion
-            select_result = NewtSQL.sql_execute_query(file_db, "SELECT * FROM test")
+            select_result = NewtSQL.query_execute(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert isinstance(select_result, list)
             assert len(select_result) == 1
@@ -249,7 +249,7 @@ class TestSqlExecuteQuery:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_execute_query_executemany(self, capsys):
+    def test_query_execute_executemany(self, capsys):
         """ Test executemany with list of tuples. """
         print_my_func_name()
 
@@ -258,18 +258,18 @@ class TestSqlExecuteQuery:
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
 
             # Insert multiple rows
             query = "INSERT INTO test (id, name) VALUES (?, ?)"
             params = [(1, "Alice"), (2, "Bob"), (3, "Charlie")]
-            insert_result = NewtSQL.sql_execute_query(file_db, query, params)
+            insert_result = NewtSQL.query_execute(file_db, query, params)
             print("result:", insert_result)
             assert isinstance(insert_result, int)
             assert insert_result == 3
 
             # Verify insertion
-            select_result = NewtSQL.sql_execute_query(file_db, "SELECT * FROM test")
+            select_result = NewtSQL.query_execute(file_db, "SELECT * FROM test")
             print("select_result:", select_result)
             assert isinstance(select_result, list)
             assert len(select_result) == 3
@@ -293,18 +293,18 @@ class TestSqlExecuteQuery:
         assert "::: ERROR :::" not in captured.out
 
 
-    def test_sql_execute_query_invalid_input(self, capsys):
+    def test_query_execute_invalid_input(self, capsys):
         """ Test with invalid input. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info_1:
-            NewtSQL.sql_execute_query(123, "SELECT 1")  # type: ignore
+            NewtSQL.query_execute(123, "SELECT 1")  # type: ignore
             print("This line will not be printed")
         assert exc_info_1.value.code == 1
         print("exc_info_1:", exc_info_1.value.code)
 
         with pytest.raises(SystemExit) as exc_info_2:
-            NewtSQL.sql_execute_query("test.db", 456)  # type: ignore
+            NewtSQL.query_execute("test.db", 456)  # type: ignore
             print("This line will not be printed")
         assert exc_info_2.value.code == 1
         print("exc_info_2:", exc_info_2.value.code)
@@ -322,14 +322,14 @@ class TestSqlExecuteQuery:
         assert "This line will not be printed" not in captured.out
 
 
-    def test_sql_execute_query_creates_directory(self, capsys):
-        """ Test that sql_execute_query creates parent directories. """
+    def test_query_execute_creates_directory(self, capsys):
+        """ Test that query_execute creates parent directories. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
             file_path = os.path.join(tmpdir, "level1", "level2", "test.db")
             query = "CREATE TABLE test (id INTEGER)"
-            result = NewtSQL.sql_execute_query(file_path, query)
+            result = NewtSQL.query_execute(file_path, query)
             print("result:", result)
             assert os.path.exists(file_path)
             NewtSQL.db_delayed_close(file_path)
@@ -354,9 +354,9 @@ class TestSqlSelectRows:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Select rows
             result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
@@ -386,9 +386,9 @@ class TestSqlSelectRows:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Select with WHERE clause
             result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test WHERE id = ?", (1,))
@@ -418,7 +418,7 @@ class TestSqlSelectRows:
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER)")
 
             # Select with no data
             result = NewtSQL.sql_select_rows(file_db, "SELECT * FROM test")
@@ -483,7 +483,7 @@ class TestSqlInsertRow:
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
 
             # Insert single row
             data = {"id": 1, "name": "Alice", "age": 30}
@@ -520,7 +520,7 @@ class TestSqlInsertRow:
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
 
             # Insert multiple rows
             data = [
@@ -566,7 +566,7 @@ class TestSqlInsertRow:
             file_db = tmpfile.name
 
         try:
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER)")
             result = NewtSQL.sql_insert_row(file_db, "test", {})
             print("result:", result)
             assert result == 0
@@ -636,7 +636,7 @@ class TestSqlUpdateRows:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
             data = [
                 {"id": 1, "name": "Alice", "age": 30},
                 {"id": 2, "name": "Bob", "age": 35},
@@ -709,7 +709,7 @@ class TestSqlUpdateRows:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
             data = [
                 {"id": 1, "name": "Alice", "age": 30},
                 {"id": 2, "name": "Bob", "age": 35},
@@ -764,7 +764,7 @@ class TestSqlUpdateRows:
 
         try:
             # Create table
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
 
             # Update with no match
             result = NewtSQL.sql_update_rows(
@@ -796,7 +796,7 @@ class TestSqlUpdateRows:
             file_db = tmpfile.name
 
         try:
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER)")
             result = NewtSQL.sql_update_rows(file_db, "test", {}, "id = ?", (1,))
             print("result:", result)
             assert result == 0
@@ -858,9 +858,9 @@ class TestExportSqlQueryToCsv:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice', 30)")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob', 25)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT, age INTEGER)")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (1, 'Alice', 30)")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (2, 'Bob', 25)")
 
             # Export to CSV
             result = NewtSQL.export_sql_query_to_csv(
@@ -912,7 +912,7 @@ class TestExportSqlQueryToCsv:
 
         try:
             # Create empty table
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER)")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER)")
 
             # Export empty result
             result = NewtSQL.export_sql_query_to_csv(
@@ -950,8 +950,8 @@ class TestExportSqlQueryToCsv:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (1, 'Alice')")
 
             # Export with comma delimiter
             result = NewtSQL.export_sql_query_to_csv(
@@ -999,9 +999,9 @@ class TestExportSqlQueryToCsv:
 
         try:
             # Create table and insert data
-            NewtSQL.sql_execute_query(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (1, 'Alice')")
-            NewtSQL.sql_execute_query(file_db, "INSERT INTO test VALUES (2, 'Bob')")
+            NewtSQL.query_execute(file_db, "CREATE TABLE test (id INTEGER, name TEXT)")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (1, 'Alice')")
+            NewtSQL.query_execute(file_db, "INSERT INTO test VALUES (2, 'Bob')")
 
             # Export with WHERE clause
             result = NewtSQL.export_sql_query_to_csv(

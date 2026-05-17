@@ -51,7 +51,7 @@ from .files import (
 # SQL
 from .sql import (
     db_delayed_close,
-    sql_execute_query,
+    query_execute,
     sql_select_rows,
     sql_insert_row,
     sql_update_rows,
@@ -91,7 +91,7 @@ __all__ = [
     "cleanup_logging",
     # SQL ----------
     "db_delayed_close",
-    "sql_execute_query",
+    "query_execute",
     "sql_select_rows",
     "sql_insert_row",
     "sql_update_rows",

@@ -30,6 +30,7 @@ IS_WSL=false
 # modules=("files")
 # modules=("console" "utility" "files")
 # modules=("sql")
+# modules=("console" "utility" "files" "sql")
 # modules=("network")
 modules=("console" "utility" "files" "sql" "network")
 

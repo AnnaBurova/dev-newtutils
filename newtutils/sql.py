@@ -9,7 +9,7 @@ Functions:
         database: str,
         print_log: bool = True
         ) -> bool
-    def sql_execute_query(
+    def query_execute(
         database: str,
         query: str,
         params: tuple | list[tuple] | None = None
@@ -95,7 +95,7 @@ def db_delayed_close(
     return False
 
 
-def sql_execute_query(
+def query_execute(
         database: str,
         query: str,
         params: tuple | list[tuple] | None = None
@@ -126,18 +126,18 @@ def sql_execute_query(
 
     NewtCons.validate_type(
         database, str, check_non_empty=True,
-        location="Newt.sql.sql_execute_query : database"
+        location="Newt.sql.query_execute : database"
     )
 
     NewtCons.validate_type(
         query, str, check_non_empty=True,
-        location="Newt.sql.sql_execute_query : query"
+        location="Newt.sql.query_execute : query"
     )
 
     if params is not None:
         NewtCons.validate_type(
             params, (list, tuple), check_non_empty=True,
-            location="Newt.sql.sql_execute_query : params"
+            location="Newt.sql.query_execute : params"
         )
 
     normalized_query = query.strip()
@@ -148,7 +148,7 @@ def sql_execute_query(
     if len(parts_query) != 1:
         NewtCons.error_msg(
             "SQL query must contain exactly one statement",
-            location="Newt.sql.sql_execute_query : parts_query"
+            location="Newt.sql.query_execute : parts_query"
         )
 
     lowered_query = normalized_query.lower()
@@ -175,7 +175,7 @@ def sql_execute_query(
         if token in f" {lowered_query} ":
             NewtCons.error_msg(
                 f"SQL query contains potentially dangerous token: {token.strip()}",
-                location="Newt.sql.sql_execute_query : dangerous_tokens"
+                location="Newt.sql.query_execute : dangerous_tokens"
             )
 
     # EXECUTEMANY - list of tuples
@@ -186,7 +186,7 @@ def sql_execute_query(
             NewtCons.error_msg(
                 "All items in 'params' list must be tuples for executemany().",
                 f"params: {params}",
-                location="Newt.sql.sql_execute_query : executemany"
+                location="Newt.sql.query_execute : executemany"
             )
 
     NewtFiles.ensure_dir_exists(database)
@@ -226,21 +226,21 @@ def sql_execute_query(
         if "syntax" in str(e).lower():
             NewtCons.error_msg(
                 f"Syntax error: {e}",
-                location="Newt.sql.sql_execute_query : OperationalError in Syntax",
+                location="Newt.sql.query_execute : OperationalError in Syntax",
                 stop=False
             )
 
         else:
             NewtCons.error_msg(
                 f"DB error: {e}",
-                location="Newt.sql.sql_execute_query : OperationalError in DB",
+                location="Newt.sql.query_execute : OperationalError in DB",
                 stop=False
             )
 
     except Exception as e:
         NewtCons.error_msg(
             f"Exception: {e}",
-            location="Newt.sql.sql_execute_query : Exception",
+            location="Newt.sql.query_execute : Exception",
             stop=False
         )
 
@@ -269,7 +269,7 @@ def sql_select_rows(
             or an empty list if no data or errors.
     """
 
-    result = sql_execute_query(database, query, params)
+    result = query_execute(database, query, params)
     if isinstance(result, list):
         return result
 
@@ -343,9 +343,9 @@ def sql_insert_row(
     query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
 
     if len(params) == 1:
-        result = sql_execute_query(database, query, params[0])
+        result = query_execute(database, query, params[0])
     else:
-        result = sql_execute_query(database, query, params)
+        result = query_execute(database, query, params)
 
     if isinstance(result, int):
         return result
@@ -408,7 +408,7 @@ def sql_update_rows(
     params = tuple(set_data.values()) + (where_params or ())
     query = f"UPDATE {table} SET {set_clause} WHERE {where_condition}"
 
-    result = sql_execute_query(database, query, params)
+    result = query_execute(database, query, params)
 
     if isinstance(result, int):
         return result
