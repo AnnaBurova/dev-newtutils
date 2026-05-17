@@ -9,26 +9,26 @@ Function _beep_boop will make no sound.
 Expected platform: win32 / Got: linux
 Expected OS name:  nt    / Got: posix
 
-collected 28 items
+collected 36 items
 
-test_files.py::TestNormalizeNewlines::test_normalize_newlines_converts_windows 
+test_files.py::TestNormalizeNewlines::test_normalize_newlines_mixed_endings 
 START=======================================
 =====captured.out=====
-Function: test_normalize_newlines_converts_windows
+Function: test_normalize_newlines_mixed_endings
 ============================================
 text_1: 'line1\r\nline2\r\nline3\r\nline4\r\nline5\r\n'
-result_1: 'line1\nline2\nline3\nline4\nline5\n'
+result_1: 'line1\nline2\nline3\nline4\nline5'
 text_2: '    line1\r\nline2\nline3\r\nline4\rline5\r\n'
-result_2: '    line1\nline2\nline3\nline4\nline5\n'
+result_2: '    line1\nline2\nline3\nline4\nline5'
 
 =====captured.err=====
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestObscureLogic::test_obscure_logic_masks_path_segments 
+test_files.py::TestObscureLogic::test_obscure_logic_path_segments 
 START=======================================
 =====captured.out=====
-Function: test_obscure_logic_masks_path_segments
+Function: test_obscure_logic_path_segments
 ============================================
 file_obscure_name: /tmp/**********
 
@@ -36,10 +36,10 @@ file_obscure_name: /tmp/**********
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_path 
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_empty_string_exit 
 START=======================================
 =====captured.out=====
-Function: test_ensure_dir_exists_empty_path
+Function: test_ensure_dir_exists_empty_string_exit
 ============================================
 exc_info: 1
 
@@ -54,10 +54,10 @@ Type: <class 'str'>
 
 END=========================================
 PASSED
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_current_directory 
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_no_dir_created 
 START=======================================
 =====captured.out=====
-Function: test_ensure_dir_exists_current_directory
+Function: test_ensure_dir_exists_no_dir_created
 ============================================
 dirname_exists: False
 
@@ -65,10 +65,10 @@ dirname_exists: False
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_directory_exists 
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_existing_dir 
 START=======================================
 =====captured.out=====
-Function: test_ensure_dir_exists_directory_exists
+Function: test_ensure_dir_exists_existing_dir
 ============================================
 dirname_exists: True
 dirname_exists: True
@@ -78,10 +78,10 @@ dirname_exists: False
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_directory 
+test_files.py::TestEnsureDirExists::test_ensure_dir_exists_nested_dirs_created 
 START=======================================
 =====captured.out=====
-Function: test_ensure_dir_exists_nested_directory
+Function: test_ensure_dir_exists_nested_dirs_created
 ============================================
 dirname_exists: False
 dirname_exists: True
@@ -91,10 +91,10 @@ dirname_exists: False
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestCheckFileExists::test_check_file_exists_invalid_file_name 
+test_files.py::TestCheckFileExists::test_check_file_exists_invalid_input 
 START=======================================
 =====captured.out=====
-Function: test_check_file_exists_invalid_file_name
+Function: test_check_file_exists_invalid_input
 ============================================
 file_name_1: 123
 exc_info_1: 1
@@ -135,10 +135,10 @@ Type: <class 'str'>
 
 END=========================================
 PASSED
-test_files.py::TestCheckFileExists::test_check_file_exists_not_found 
+test_files.py::TestCheckFileExists::test_check_file_exists_missing_file 
 START=======================================
 =====captured.out=====
-Function: test_check_file_exists_not_found
+Function: test_check_file_exists_missing_file
 ============================================
 file_name: file.txt
 check_1: False
@@ -165,10 +165,10 @@ File not found: file.txt
 
 END=========================================
 PASSED
-test_files.py::TestCheckFileExists::test_check_file_exists_obscure 
+test_files.py::TestCheckFileExists::test_check_file_exists_temp_file_lifecycle 
 START=======================================
 =====captured.out=====
-Function: test_check_file_exists_obscure
+Function: test_check_file_exists_temp_file_lifecycle
 ============================================
 check_1: True
 check_2: True
@@ -178,7 +178,7 @@ check_3: False
 [1m[31m
 Location: Newt.files.check_file_exists : print_log
 ::: ERROR :::
-File not found: /tmp/***************
+File not found: /tmp/***********.txt
 [0m
 
 END=========================================
@@ -209,10 +209,10 @@ Expected type: <class 'str'>
 
 END=========================================
 PASSED
-test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_nonexistent_folder_raises_exit 
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_missing_folder 
 START=======================================
 =====captured.out=====
-Function: test_choose_file_from_folder_nonexistent_folder_raises_exit
+Function: test_choose_file_from_folder_missing_folder
 ============================================
 exc_info: 1
 
@@ -225,10 +225,10 @@ Folder not found: /nonexistent/folder
 
 END=========================================
 PASSED
-test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_empty_folder_exit 
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_empty_folder 
 START=======================================
 =====captured.out=====
-Function: test_choose_file_from_folder_empty_folder_exit
+Function: test_choose_file_from_folder_empty_folder
 ============================================
 exc_info: 1
 
@@ -241,10 +241,10 @@ No files found in this folder.
 
 END=========================================
 PASSED
-test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_cancel_x_raises_exit 
+test_files.py::TestChooseFileFromFolder::test_choose_file_from_folder_user_input 
 START=======================================
 =====captured.out=====
-Function: test_choose_file_from_folder_cancel_x_raises_exit
+Function: test_choose_file_from_folder_user_input
 ============================================
 
 3 Available options to choose from:
@@ -286,11 +286,12 @@ Selection cancelled.
 
 END=========================================
 PASSED
-test_files.py::TestTextFiles::test_save_and_read_text_file 
+test_files.py::TestTextFiles::test_save_and_read_text_from_file 
 START=======================================
 =====captured.out=====
-Function: test_save_and_read_text_file
+Function: test_save_and_read_text_from_file
 ============================================
+content: 'Hello\nWorld!'
 [Newt.files.save_text_to_file] Saved text to file:
 /tmp/***********.txt
 (length=13, mode=write)
@@ -303,11 +304,12 @@ result: 'Hello\nWorld!\n'
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestTextFiles::test_save_text_creates_directory 
+test_files.py::TestTextFiles::test_save_text_to_file_creates_nested_dirs 
 START=======================================
 =====captured.out=====
-Function: test_save_text_creates_directory
+Function: test_save_text_to_file_creates_nested_dirs
 ============================================
+content: 'Hello\nWorld!\n'
 [Newt.files.save_text_to_file] Saved text to file:
 /tmp/***********/level1/level2/file.txt
 (length=13, mode=write)
@@ -322,10 +324,10 @@ file_exists: False
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestTextFiles::test_save_text_append_mode 
+test_files.py::TestTextFiles::test_save_text_to_file_append_mode 
 START=======================================
 =====captured.out=====
-Function: test_save_text_append_mode
+Function: test_save_text_to_file_append_mode
 ============================================
 [Newt.files.save_text_to_file] Saved text to file:
 /tmp/***********.txt
@@ -342,10 +344,10 @@ result: 'Line 1\nLine 2\n'
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestTextFiles::test_read_text_from_nonexistent_file 
+test_files.py::TestTextFiles::test_read_text_from_file_missing_file 
 START=======================================
 =====captured.out=====
-Function: test_read_text_from_nonexistent_file
+Function: test_read_text_from_file_missing_file
 ============================================
 
 =====captured.err=====
@@ -357,10 +359,10 @@ File not found: /nonexistent/file.txt
 
 END=========================================
 PASSED
-test_files.py::TestTextFiles::test_save_text_invalid_input 
+test_files.py::TestTextFiles::test_save_text_to_file_invalid_args 
 START=======================================
 =====captured.out=====
-Function: test_save_text_invalid_input
+Function: test_save_text_to_file_invalid_args
 ============================================
 exc_info_1: 1
 exc_info_2: 1
@@ -383,10 +385,10 @@ Expected type: <class 'str'>
 
 END=========================================
 PASSED
-test_files.py::TestConvertStrToJson::test_convert_str_to_json_returns_none_invalid 
+test_files.py::TestConvertStrToJson::test_convert_str_to_json_invalid_input 
 START=======================================
 =====captured.out=====
-Function: test_convert_str_to_json_returns_none_invalid
+Function: test_convert_str_to_json_invalid_input
 ============================================
 result_1: None
 result_2: None
@@ -433,10 +435,10 @@ Expected type: <class 'str'>
 
 END=========================================
 PASSED
-test_files.py::TestConvertStrToJson::test_convert_str_to_json_valid_json 
+test_files.py::TestConvertStrToJson::test_convert_str_to_json_valid_input 
 START=======================================
 =====captured.out=====
-Function: test_convert_str_to_json_valid_json
+Function: test_convert_str_to_json_valid_input
 ============================================
 json_str_1: '{"name": "test", "value": 123, "items": [1, 2, 3]}'
 result_1: {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
@@ -451,10 +453,10 @@ result_4: {'key': 'value'}
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestConvertStrToJson::test_convert_str_to_json_single_quotes 
+test_files.py::TestConvertStrToJson::test_convert_str_to_json_literals 
 START=======================================
 =====captured.out=====
-Function: test_convert_str_to_json_single_quotes
+Function: test_convert_str_to_json_literals
 ============================================
 json_str_1: "{'name': 'test', 'value': 123}"
 Trying to replace single quotes with double quotes...
@@ -479,10 +481,10 @@ Text size: 27
 
 END=========================================
 PASSED
-test_files.py::TestConvertStrToJson::test_invalid_json_prints_errors 
+test_files.py::TestConvertStrToJson::test_convert_str_to_json_malformed_str 
 START=======================================
 =====captured.out=====
-Function: test_invalid_json_prints_errors
+Function: test_convert_str_to_json_malformed_str
 ============================================
 json_str_1: '{ invalid json }'
 Trying to replace single quotes with double quotes...
@@ -529,10 +531,10 @@ Cannot convert STR to JSON.
 
 END=========================================
 PASSED
-test_files.py::TestJsonFiles::test_save_and_read_json_file_dict 
+test_files.py::TestJsonFiles::test_save_and_read_json_from_file 
 START=======================================
 =====captured.out=====
-Function: test_save_and_read_json_file_dict
+Function: test_save_and_read_json_from_file
 ============================================
 content: {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
 [Newt.files.save_json_to_file] Saved JSON to file:
@@ -545,16 +547,25 @@ result_dict: {'name': 'test', 'value': 123, 'items': [1, 2, 3]}
 [Newt.files.read_text_from_file] Loaded text from file:
 /tmp/***********.json
 (length=75)
-result_txt: '{\n  "name": "test",\n  "value": 123,\n  "items": [\n    1,\n    2,\n    3\n  ]\n}\n'
+result_txt: {
+  "name": "test",
+  "value": 123,
+  "items": [
+    1,
+    2,
+    3
+  ]
+}
+
 
 =====captured.err=====
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestJsonFiles::test_save_and_read_json_file_list 
+test_files.py::TestJsonFiles::test_save_and_read_json_list_from_file 
 START=======================================
 =====captured.out=====
-Function: test_save_and_read_json_file_list
+Function: test_save_and_read_json_list_from_file
 ============================================
 content: [1, 2, 3, {'key': 'value'}]
 [Newt.files.save_json_to_file] Saved JSON to file:
@@ -567,16 +578,24 @@ result_list: [1, 2, 3, {'key': 'value'}]
 [Newt.files.read_text_from_file] Loaded text from file:
 /tmp/***********.json
 (length=46)
-result_txt: '[\n  1,\n  2,\n  3,\n  {\n    "key": "value"\n  }\n]\n'
+result_txt: [
+  1,
+  2,
+  3,
+  {
+    "key": "value"
+  }
+]
+
 
 =====captured.err=====
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestJsonFiles::test_save_and_read_json_file_nested_dirs 
+test_files.py::TestJsonFiles::test_save_json_to_file_creates_nested_dirs 
 START=======================================
 =====captured.out=====
-Function: test_save_and_read_json_file_nested_dirs
+Function: test_save_json_to_file_creates_nested_dirs
 ============================================
 content: {'test': 'data'}
 [Newt.files.save_json_to_file] Saved JSON to file:
@@ -589,7 +608,10 @@ result_dict: {'test': 'data'}
 [Newt.files.read_text_from_file] Loaded text from file:
 /tmp/***********/level1/level2/file.json
 (length=23)
-result_txt: '{\n    "test": "data"\n}\n'
+result_txt: {
+    "test": "data"
+}
+
 file_exists: True
 file_exists: False
 
@@ -597,10 +619,10 @@ file_exists: False
 (no stderr captured)
 END=========================================
 PASSED
-test_files.py::TestJsonFiles::test_read_json_from_nonexistent_file 
+test_files.py::TestJsonFiles::test_read_json_from_file_missing_file 
 START=======================================
 =====captured.out=====
-Function: test_read_json_from_nonexistent_file
+Function: test_read_json_from_file_missing_file
 ============================================
 result: None
 
@@ -613,10 +635,10 @@ File not found: /nonexistent/file.json
 
 END=========================================
 PASSED
-test_files.py::TestJsonFiles::test_read_json_invalid_file_content 
+test_files.py::TestJsonFiles::test_read_json_from_file_invalid_json 
 START=======================================
 =====captured.out=====
-Function: test_read_json_invalid_file_content
+Function: test_read_json_from_file_invalid_json
 ============================================
 exc_info: 1
 result: None
@@ -635,18 +657,23 @@ Failed to parse content to JSON: Expecting property name enclosed in double quot
 
 END=========================================
 PASSED
-test_files.py::TestJsonFiles::test_read_json_from_file_non_dict 
+test_files.py::TestJsonFiles::test_read_json_from_file_non_dict_or_list 
 START=======================================
 =====captured.out=====
-Function: test_read_json_from_file_non_dict
+Function: test_read_json_from_file_non_dict_or_list
 ============================================
-result: None
+result_1: None
+content: {'test': 'data'}
 [Newt.files.save_json_to_file] Saved JSON to file:
 /tmp/***********.json
 (type=<class 'dict'>, indent=2)
 [Newt.files.save_json_to_file] Saved JSON to file:
 /tmp/***********.json
 (type=<class 'dict'>, indent=2)
+[Newt.files.read_json_from_file] Loaded JSON from file:
+/tmp/***********.json
+(type=<class 'dict'>)
+result_2: {'test': 'data'}
 
 =====captured.err=====
 [1m[31m
@@ -671,5 +698,196 @@ Indent must be a non-negative integer.
 
 END=========================================
 PASSED
+test_files.py::TestCsvFiles::test_save_and_read_csv_multirow 
+START=======================================
+=====captured.out=====
+Function: test_save_and_read_csv_multirow
+============================================
+rows: [['Name', 'Age', 'City'], ['Alice', '30', 'New York'], ['Bob', '25', 'London']]
+[Newt.files.save_csv_to_file] Saved CSV to file:
+/tmp/***********.csv
+(rows=3, mode=write, delimiter=';')
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+/tmp/***********.csv
+(rows=3, delimiter=';')
+result_csv: [['Name', 'Age', 'City'], ['Alice', '30', 'New York'], ['Bob', '25', 'London']]
+[Newt.files.read_text_from_file] Loaded text from file:
+/tmp/***********.csv
+(length=46)
+result_text_repr: 'Name;Age;City\nAlice;30;New York\nBob;25;London\n'
+result_text:
+Name;Age;City
+Alice;30;New York
+Bob;25;London
 
-============================== 28 passed in 0.29s ==============================
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestCsvFiles::test_save_and_read_csv_from_file 
+START=======================================
+=====captured.out=====
+Function: test_save_and_read_csv_from_file
+============================================
+rows_1: [['A', 'B'], ['1', '2']]
+[Newt.files.save_csv_to_file] Saved CSV to file:
+/tmp/***********.csv
+(rows=2, mode=write, delimiter=',')
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+/tmp/***********.csv
+(rows=2, delimiter=',')
+result_csv_1: [['A', 'B'], ['1', '2']]
+[Newt.files.read_text_from_file] Loaded text from file:
+/tmp/***********.csv
+(length=8)
+result_text_1: 'A,B\n1,2\n'
+rows_2: [['C', 'D'], ['3', '4']]
+[Newt.files.save_csv_to_file] Saved CSV to file:
+/tmp/***********.csv
+(rows=2, mode=append, delimiter=',')
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+/tmp/***********.csv
+(rows=4, delimiter=',')
+result_csv_2: [['A', 'B'], ['1', '2'], ['C', 'D'], ['3', '4']]
+[Newt.files.read_text_from_file] Loaded text from file:
+/tmp/***********.csv
+(length=16)
+result_text_2: 'A,B\n1,2\nC,D\n3,4\n'
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestCsvFiles::test_read_csv_from_file_missing_file 
+START=======================================
+=====captured.out=====
+Function: test_read_csv_from_file_missing_file
+============================================
+result: None
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.check_file_exists : print_log
+::: ERROR :::
+File not found: /nonexistent/file.csv
+[0m
+
+END=========================================
+PASSED
+test_files.py::TestCsvFiles::test_save_csv_to_file_creates_nested_dirs 
+START=======================================
+=====captured.out=====
+Function: test_save_csv_to_file_creates_nested_dirs
+============================================
+rows: [['Header'], ['Data']]
+[Newt.files.save_csv_to_file] Saved CSV to file:
+/tmp/***********/level1/level2/file.csv
+(rows=2, mode=write, delimiter=';')
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestCsvFiles::test_save_csv_to_file_normalizes_newlines 
+START=======================================
+=====captured.out=====
+Function: test_save_csv_to_file_normalizes_newlines
+============================================
+rows: [['Cell1\r\nLine2', 'Cell2']]
+[Newt.files.save_csv_to_file] Saved CSV to file:
+/tmp/***********.csv
+(rows=1, mode=write, delimiter=';')
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+/tmp/***********.csv
+(rows=1, delimiter=';')
+result_csv: [['Cell1\nLine2', 'Cell2']]
+result_csv: [['Cell1\nLine2', 'Cell2']]
+[Newt.files.read_text_from_file] Loaded text from file:
+/tmp/***********.csv
+(length=20)
+result_text: '"Cell1\nLine2";Cell2\n'
+result_text: "Cell1
+Line2";Cell2
+
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestCsvFiles::test_save_csv_to_file_mixed_types 
+START=======================================
+=====captured.out=====
+Function: test_save_csv_to_file_mixed_types
+============================================
+rows: [['String', 123, 45.67, True]]
+[Newt.files.save_csv_to_file] Saved CSV to file:
+/tmp/***********.csv
+(rows=1, mode=write, delimiter=';')
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+/tmp/***********.csv
+(rows=1, delimiter=';')
+result_csv: [['String', '123', '45.67', 'True']]
+[Newt.files.read_text_from_file] Loaded text from file:
+/tmp/***********.csv
+(length=22)
+result_text: 'String;123;45.67;True\n'
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_files.py::TestCsvFiles::test_save_csv_to_file_invalid_args 
+START=======================================
+=====captured.out=====
+Function: test_save_csv_to_file_invalid_args
+============================================
+exc_info_1: 1
+exc_info_2: 1
+exc_info_3: 1
+[Newt.files.read_text_from_file] Loaded text from file:
+/tmp/***********.csv
+(length=0)
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.ensure_dir_exists : file_path > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.files.save_csv_to_file : rows > Newt.console.validate_type
+::: ERROR :::
+Value: not a list
+Received type: <class 'str'>
+Expected type: <class 'list'>
+[0m
+[1m[31m
+Location: Newt.files.save_csv_to_file : delimiter > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+
+END=========================================
+PASSED
+test_files.py::TestCsvFiles::test_read_csv_from_file_wrong_delimiter 
+START=======================================
+=====captured.out=====
+Function: test_read_csv_from_file_wrong_delimiter
+============================================
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+/tmp/***********.csv
+(rows=2, delimiter=',')
+result: [['A;B'], ['1;2']]
+result[0][0]: 'A;B'
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+
+============================== 36 passed in 0.30s ==============================
