@@ -30,7 +30,7 @@ class TestDbDelayedClose:
 
 
     def test_db_delayed_close_existing_db(self, capsys):
-        """ Test behavior of db_delayed_close when closing an existing database. """
+        """ Ensure NewtSQL.db_delayed_close() returns True for an existing database. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -54,7 +54,7 @@ class TestDbDelayedClose:
 
 
     def test_db_delayed_close_nonexistent_db(self, capsys):
-        """ Test closing a non-existent database returns True. """
+        """ Ensure NewtSQL.db_delayed_close() returns True for a nonexistent database path. """
         print_my_func_name()
 
         result = NewtSQL.db_delayed_close("/nonexistent/database.db")
@@ -73,7 +73,7 @@ class TestQueryExecute:
 
 
     def test_query_execute_create_table(self, capsys):
-        """ Test creating a table. """
+        """ Ensure NewtSQL.query_execute() returns -1 rowcount on CREATE TABLE. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -100,7 +100,7 @@ class TestQueryExecute:
 
 
     def test_query_execute_insert(self, capsys):
-        """ Test INSERT query. """
+        """ Ensure NewtSQL.query_execute() returns 1 rowcount on INSERT. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -131,7 +131,7 @@ class TestQueryExecute:
 
 
     def test_query_execute_select(self, capsys):
-        """ Test SELECT query. """
+        """ Ensure NewtSQL.query_execute() returns correct rows list on SELECT. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -168,7 +168,7 @@ class TestQueryExecute:
 
 
     def test_query_execute_update(self, capsys):
-        """ Test UPDATE query. """
+        """ Ensure NewtSQL.query_execute() updates a row and returns 1 rowcount. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -208,7 +208,7 @@ class TestQueryExecute:
 
 
     def test_query_execute_delete(self, capsys):
-        """ Test DELETE query. """
+        """ Ensure NewtSQL.query_execute() deletes a row and returns 1 rowcount. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -250,7 +250,7 @@ class TestQueryExecute:
 
 
     def test_query_execute_executemany(self, capsys):
-        """ Test executemany with list of tuples. """
+        """ Ensure NewtSQL.query_execute() deletes a row and returns 1 rowcount. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -294,7 +294,7 @@ class TestQueryExecute:
 
 
     def test_query_execute_invalid_input(self, capsys):
-        """ Test with invalid input. """
+        """ Ensure NewtSQL.query_execute() raises SystemExit on invalid argument types. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info_1:
@@ -323,7 +323,7 @@ class TestQueryExecute:
 
 
     def test_query_execute_creates_directory(self, capsys):
-        """ Test that query_execute creates parent directories. """
+        """ Ensure NewtSQL.query_execute() creates missing nested directories automatically. """
         print_my_func_name()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -346,7 +346,7 @@ class TestSqlSelectRows:
 
 
     def test_query_select_basic(self, capsys):
-        """ Test basic select operation. """
+        """ Ensure NewtSQL.query_select() returns all rows as a list. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -378,7 +378,7 @@ class TestSqlSelectRows:
 
 
     def test_query_select_with_params(self, capsys):
-        """ Test select with parameters. """
+        """ Ensure NewtSQL.query_select() filters rows correctly using query params. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -410,7 +410,7 @@ class TestSqlSelectRows:
 
 
     def test_query_select_empty_result(self, capsys):
-        """ Test select with no results. """
+        """ Ensure NewtSQL.query_select() returns empty list when no rows exist. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -439,7 +439,7 @@ class TestSqlSelectRows:
 
 
     def test_query_select_invalid_query(self, capsys):
-        """ Test select with invalid query. """
+        """ Ensure NewtSQL.query_select() raises SystemExit on invalid SQL query. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -475,7 +475,7 @@ class TestSqlInsertRow:
 
 
     def test_query_insert_single_dict(self, capsys):
-        """ Test inserting a single row from dict. """
+        """ Ensure NewtSQL.query_insert() inserts a single dict row and returns 1. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -512,7 +512,7 @@ class TestSqlInsertRow:
 
 
     def test_query_insert_multiple_dicts(self, capsys):
-        """ Test inserting multiple rows from list of dicts. """
+        """ Ensure NewtSQL.query_insert() inserts multiple dict rows and returns count. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -559,7 +559,7 @@ class TestSqlInsertRow:
 
 
     def test_query_insert_empty_data(self, capsys):
-        """ Test inserting with empty data. """
+        """ Ensure NewtSQL.query_insert() returns 0 and logs error on empty data dict. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -586,7 +586,7 @@ class TestSqlInsertRow:
 
 
     def test_query_insert_invalid_input(self, capsys):
-        """ Test inserting with invalid input. """
+        """ Ensure NewtSQL.query_insert() returns 0 and logs error on empty data dict. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info_1:
@@ -628,7 +628,7 @@ class TestSqlUpdateRows:
 
 
     def test_query_update_basic(self, capsys):
-        """ Test basic update operation. """
+        """ Ensure NewtSQL.query_update() updates a row by condition and returns 1. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -658,7 +658,6 @@ class TestSqlUpdateRows:
             assert select_result_1[2]["id"] == 3
             assert select_result_1[2]["name"] == "Charlie"
             assert select_result_1[2]["age"] == 40
-
 
             # Update row
             update_result = NewtSQL.query_update(
@@ -701,7 +700,7 @@ class TestSqlUpdateRows:
 
 
     def test_query_update_multiple_columns(self, capsys):
-        """ Test updating multiple columns. """
+        """ Ensure NewtSQL.query_update() updates multiple columns in a single call. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -756,7 +755,7 @@ class TestSqlUpdateRows:
 
 
     def test_query_update_no_match(self, capsys):
-        """ Test update with no matching rows. """
+        """ Ensure NewtSQL.query_update() returns 0 when no rows match the condition. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -789,7 +788,7 @@ class TestSqlUpdateRows:
 
 
     def test_query_update_empty_data(self, capsys):
-        """ Test update with empty data. """
+        """ Ensure NewtSQL.query_update() returns 0 and logs error on empty data dict. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -816,7 +815,7 @@ class TestSqlUpdateRows:
 
 
     def test_query_update_invalid_input(self, capsys):
-        """ Test update with invalid input. """
+        """ Ensure NewtSQL.query_update() raises SystemExit on invalid argument types. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info:
@@ -847,7 +846,7 @@ class TestExportSqlQueryToCsv:
 
 
     def test_export_sql_query_to_csv_basic(self, capsys):
-        """ Test basic CSV export. """
+        """ Ensure NewtSQL.export_sql_query_to_csv() exports query results to a CSV file. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -901,7 +900,7 @@ class TestExportSqlQueryToCsv:
 
 
     def test_export_sql_query_to_csv_empty_result(self, capsys):
-        """ Test export with empty query result. """
+        """ Ensure NewtSQL.export_sql_query_to_csv() returns False when query yields no rows. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -939,7 +938,7 @@ class TestExportSqlQueryToCsv:
 
 
     def test_export_sql_query_to_csv_custom_delimiter(self, capsys):
-        """ Test export with custom delimiter. """
+        """ Ensure NewtSQL.export_sql_query_to_csv() writes CSV with a custom delimiter. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -988,7 +987,7 @@ class TestExportSqlQueryToCsv:
 
 
     def test_export_sql_query_to_csv_with_params(self, capsys):
-        """ Test export with query parameters. """
+        """ Ensure NewtSQL.export_sql_query_to_csv() exports filtered rows using query params. """
         print_my_func_name()
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.db') as tmpfile:
@@ -1038,7 +1037,7 @@ class TestExportSqlQueryToCsv:
 
 
     def test_export_sql_query_to_csv_invalid_input(self, capsys):
-        """ Test export with invalid input. """
+        """ Ensure NewtSQL.export_sql_query_to_csv() raises SystemExit on invalid argument types. """
         print_my_func_name()
 
         with pytest.raises(SystemExit) as exc_info_1:

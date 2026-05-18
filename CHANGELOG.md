@@ -14,6 +14,7 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 ### Changed
 
 - `newtutils/sql.py`:
+  - Docstring Formatting Improvements
   - `db_delayed_close()`:
     - Parameter renamed from `logging` to `print_log`.
   - `query_execute()`:
@@ -31,7 +32,8 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Testing
 
-- *(list new tests or testing improvements)*
+- `newtutils/test_sql.py`:
+  - Rewrote all test docstrings to follow a consistent `Ensure NewtSQL.<method>() <behavior>` pattern
 
 ### Fixed
 

@@ -54,8 +54,7 @@ def db_delayed_close(
         database: str,
         print_log: bool = True
         ) -> bool:
-    """
-    Trigger garbage collection to release SQLite file handles.
+    """ ## Trigger garbage collection to release SQLite file handles.
 
     Performs strict input validation, checks that the target path exists,
     then triggers Python's garbage collector to finalize any remaining
@@ -69,7 +68,7 @@ def db_delayed_close(
 
     Returns:
         out (bool):
-            True if the input is valid and garbage collection succeeds;
+            True if the input is valid and garbage collection succeeds;<br>
             False if validation fails or exception occurs.
     """
 
@@ -100,8 +99,7 @@ def query_execute(
         query: str,
         params: tuple | list[tuple] | None = None
         ) -> list[dict] | int | None:
-    """
-    Execute a SQL query and return its result or affected row count.
+    """ ## Execute a SQL query and return its result or affected row count.
 
     Automatically detects query type (SELECT, INSERT, UPDATE, DELETE)
     and executes it accordingly. SELECT queries return data as
@@ -113,14 +111,14 @@ def query_execute(
         query (str):
             SQL query to execute.
         params (tuple | list[tuple] | None):
-            Query parameters.
-            Use a list of tuples for batch operations (executemany).
+            Query parameters.<br>
+            Use a list of tuples for batch operations (executemany).<br>
             Defaults to None.
 
     Returns:
         out (list[dict] | int | None):
-            Query result as list of dicts for SELECT,
-            number of affected rows for DML,
+            Query result as list of dicts for SELECT,<br>
+            number of affected rows for DML,<br>
             or None if an error occurs.
     """
 
@@ -252,8 +250,7 @@ def query_select(
         query: str,
         params: tuple | None = None
         ) -> list[dict]:
-    """
-    Execute a SELECT query and return rows as a list of dictionaries.
+    """ ## Execute a SELECT query and return rows as a list of dictionaries.
 
     Args:
         database (str):
@@ -265,7 +262,7 @@ def query_select(
 
     Returns:
         out (list[dict]):
-            List of rows as dictionaries,
+            List of rows as dictionaries,<br>
             or an empty list if no data or errors.
     """
 
@@ -285,8 +282,7 @@ def query_insert(
         table: str,
         data: dict[str, object] | list[dict[str, object]]
         ) -> int:
-    """
-    Insert one or more rows into a database table.
+    """ ## Insert one or more rows into a database table.
 
     Args:
         database (str):
@@ -294,12 +290,11 @@ def query_insert(
         table (str):
             Name of the target table.
         data (dict[str, object] | list[dict[str, object]]):
-            One dictionary or a list of dictionaries
-            containing column-value pairs.
+            One dictionary or a list of dictionaries containing column-value pairs.
 
     Returns:
         out (int):
-            Number of inserted rows,
+            Number of inserted rows,<br>
             or 0 on failure.
     """
 
@@ -365,8 +360,7 @@ def query_update(
         where_condition: str,
         where_params: tuple | None = None
         ) -> int:
-    """
-    Update rows in a database table using a WHERE condition.
+    """ ## Update rows in a database table using a WHERE condition.
 
     Args:
         database (str):
@@ -379,12 +373,12 @@ def query_update(
             SQL WHERE clause:
             id = ? AND name = ?
         where_params (tuple | None):
-            Parameters for the WHERE clause.
+            Parameters for the WHERE clause.<br>
             Defaults to None.
 
     Returns:
         out (int):
-            Number of updated rows,
+            Number of updated rows,<br>
             or 0 on failure.
     """
 
@@ -428,8 +422,7 @@ def export_sql_query_to_csv(
         params: tuple | None = None,
         delimiter: str = ";"
         ) -> bool:
-    """
-    Run a SQL SELECT query and export the result to a CSV file.
+    """ ## Run a SQL SELECT query and export the result to a CSV file.
 
     Args:
         database (str):
@@ -439,14 +432,15 @@ def export_sql_query_to_csv(
         csv_file (str):
             Path to the CSV output file.
         params (tuple | None):
-            Query parameters. Defaults to None.
+            Query parameters.<br>
+            Defaults to None.
         delimiter (str):
-            CSV delimiter character.
+            CSV delimiter character.<br>
             Defaults to `;`.
 
     Returns:
         out (bool):
-            True if export succeeded,
+            True if export succeeded,<br>
             otherwise False.
     """
 
