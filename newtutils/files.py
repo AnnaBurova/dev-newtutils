@@ -77,6 +77,10 @@ Functions:
     def setup_logging(
         dir_global: str
         ) -> tuple[str, TextIO, object]
+            class Tee
+                def __init__()
+                def write()
+                def flush()
     def cleanup_logging(
         setup_data: tuple[str, TextIO, object],
         file_target: str,

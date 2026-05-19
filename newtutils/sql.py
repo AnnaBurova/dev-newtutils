@@ -16,13 +16,15 @@ Functions:
         ) -> list[dict] | int | None
     def query_select(
         database: str,
-        query: str,
+        table: str,
+        columns: str = "*",
+        query_str: str = "",
         params: tuple | None = None
         ) -> list[dict]
     def query_insert(
         database: str,
         table: str,
-        data: dict[str, object] | list[dict[str, object]]
+        insert_data: dict[str, object] | list[dict[str, object]]
         ) -> int
     def query_update(
         database: str,
@@ -33,10 +35,14 @@ Functions:
         ) -> int
     def export_sql_query_to_csv(
         database: str,
-        query: str,
         csv_file: str,
+        table: str,
+        columns: str = "*",
+        query_str: str = "",
         params: tuple | None = None,
-        delimiter: str = ";"
+        delimiter: str = ";",
+        obscure_list: list = [],
+        print_log: bool = True
         ) -> bool
 """
 
@@ -55,6 +61,9 @@ def db_delayed_close(
         print_log: bool = True
         ) -> bool:
     """ ## Trigger garbage collection to release SQLite file handles.
+
+    Opens and closes the target database file to ensure that all
+    pending transactions are committed and the file lock is released.
 
     Performs strict input validation, checks that the target path exists,
     then triggers Python's garbage collector to finalize any remaining
@@ -82,6 +91,12 @@ def db_delayed_close(
         # still hold a file handle to the database file.
         gc.collect()
 
+        # conn = sqlite3.connect(database)
+        # conn.commit()
+        # conn.close()
+
+        # gc.collect()
+
         return True
 
     except Exception as e:  # pragma: no cover
@@ -91,7 +106,7 @@ def db_delayed_close(
             location="Newt.sql.db_delayed_close : Exception"
         )
 
-    return False
+    return False  # pragma: no cover
 
 
 def query_execute(
@@ -138,12 +153,23 @@ def query_execute(
             location="Newt.sql.query_execute : params"
         )
 
+        # EXECUTEMANY - list of tuples
+        if isinstance(params, list):
+            if not all(NewtCons.validate_type(p, tuple, stop=False) for p in params):
+                NewtCons.error_msg(
+                    "All items in 'params' list must be tuples for executemany().",
+                    f"params: {params}",
+                    location="Newt.sql.query_execute : executemany"
+                )
+
     normalized_query = query.strip()
 
     # Very basic multiple-statement protection
     # Reject queries with more than one non-empty segment separated by ';'
     parts_query = [p.strip() for p in normalized_query.split(";") if p.strip()]
-    if len(parts_query) != 1:
+    if len(parts_query) == 1:
+        normalized_query = parts_query[0]
+    else:
         NewtCons.error_msg(
             "SQL query must contain exactly one statement",
             location="Newt.sql.query_execute : parts_query"
@@ -176,17 +202,6 @@ def query_execute(
                 location="Newt.sql.query_execute : dangerous_tokens"
             )
 
-    # EXECUTEMANY - list of tuples
-    if isinstance(params, list):
-        if not all(NewtCons.validate_type(
-            p, tuple, stop=False
-        ) for p in params):
-            NewtCons.error_msg(
-                "All items in 'params' list must be tuples for executemany().",
-                f"params: {params}",
-                location="Newt.sql.query_execute : executemany"
-            )
-
     NewtFiles.ensure_dir_exists(database)
 
     result = None
@@ -213,14 +228,15 @@ def query_execute(
             if query.strip().lower().startswith("select"):
                 result = [dict(row) for row in cursor.fetchall()]
 
-            # DML - INSERT, UPDATE, DELETE, etc.
+            # DML - INSERT, UPDATE, DELETE returns affected rows 0 or more
+            # DDL - CREATE, DROP, ALTER returns -1
             else:
                 conn.commit()
                 result = cursor.rowcount
-
-        return result
+        conn.close()
 
     except sqlite3.OperationalError as e:
+        conn.close()
         if "syntax" in str(e).lower():
             NewtCons.error_msg(
                 f"Syntax error: {e}",
@@ -229,58 +245,101 @@ def query_execute(
             )
 
         else:
-            NewtCons.error_msg(
+            NewtCons.error_msg(  # pragma: no cover
+                f"Found Error Msg: (found? write test!)",  # TODO
                 f"DB error: {e}",
                 location="Newt.sql.query_execute : OperationalError in DB",
                 stop=False
             )
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
+        conn.close()
         NewtCons.error_msg(
+            f"Found Error Msg: (found? write test!)",  # TODO
             f"Exception: {e}",
             location="Newt.sql.query_execute : Exception",
             stop=False
         )
 
-    return None
+    return result
 
 
 def query_select(
         database: str,
-        query: str,
+        table: str,
+        columns: str = "*",
+        query_str: str = "",
         params: tuple | None = None
         ) -> list[dict]:
-    """ ## Execute a SELECT query and return rows as a list of dictionaries.
+    """ ## Build and execute a SELECT query, returning rows as a list of dictionaries.
+
+    Constructs a SQL SELECT statement from the given table, columns, and optional
+    query string, then delegates execution to `query_execute`. Returns an empty
+    list if the result is invalid or no rows are found.
 
     Args:
         database (str):
             Path to the SQLite database file.
-        query (str):
-            SQL SELECT query to execute.
+        table (str):
+            Name of the table to query.
+        columns (str):
+            Comma-separated column names to select.<br>
+            Defaults to `"*"` (all columns).<br>
+            Example: `"id, name, email"`
+        query_str (str):
+            Optional SQL clause appended after the table name (e.g. WHERE, ORDER BY).<br>
+            Defaults to empty string.<br>
+            Example: `"WHERE id = ?" or "ORDER BY name ASC"`
         params (tuple | None):
-            Query parameters. Defaults to None.
+            Positional parameters bound to `?` placeholders in `query_str`.<br>
+            Defaults to None.<br>
+            Example: `(1,)` or `(1, "Alice")`
 
     Returns:
         out (list[dict]):
-            List of rows as dictionaries,<br>
-            or an empty list if no data or errors.
+            List of rows as dictionaries, where keys are column names.<br>
+            Returns an empty list if no data is found or an error occurs.
     """
 
-    result = query_execute(database, query, params)
-    if isinstance(result, list):
-        return result
+    NewtCons.validate_type(
+        columns, str, check_non_empty=True,
+        location="Newt.sql.query_select : columns"
+    )
 
     NewtCons.validate_type(
+        table, str, check_non_empty=True,
+        location="Newt.sql.query_select : table"
+    )
+
+    NewtCons.validate_type(
+        query_str, str,
+        location="Newt.sql.query_select : query_str"
+    )
+
+    query = f"SELECT {columns} FROM {table} {query_str};"
+
+    result = query_execute(database, query, params)
+
+    if NewtCons.validate_type(
         result, list,
         location="Newt.sql.query_select : result"
+    ):
+        if isinstance(result, list):
+            return result
+
+    NewtCons.error_msg(  # pragma: no cover
+        f"Found Error Msg: (found? write test!)",  # TODO
+        location="Newt.sql.query_select : error_msg",
+        stop=False
     )
-    return []
+
+    return []  # pragma: no cover
 
 
 def query_insert(
         database: str,
         table: str,
-        data: dict[str, object] | list[dict[str, object]]
+        insert_data: dict[str, object] | list[dict[str, object]]
         ) -> int:
     """ ## Insert one or more rows into a database table.
 
@@ -289,8 +348,9 @@ def query_insert(
             Path to the SQLite database file.
         table (str):
             Name of the target table.
-        data (dict[str, object] | list[dict[str, object]]):
-            One dictionary or a list of dictionaries containing column-value pairs.
+        insert_data (dict[str, object] | list[dict[str, object]]):
+            One dictionary or a list of dictionaries containing column-value pairs:
+            [{"id": 1, "name": "Alice", "age": 30}]
 
     Returns:
         out (int):
@@ -304,53 +364,78 @@ def query_insert(
     )
 
     if not NewtCons.validate_type(
-        data, (dict, list), check_non_empty=True, stop=False,
-        location="Newt.sql.query_insert : data"
+        insert_data, (dict, list), check_non_empty=True, stop=False,
+        location="Newt.sql.query_insert : insert_data"
     ):
         return 0
 
     # Normalize input to list[dict]
-    if isinstance(data, dict):
-        data = [data]
+    if isinstance(insert_data, dict):
+        insert_data = [insert_data]
 
     NewtCons.validate_type(
-        data, list,
-        location="Newt.sql.query_insert : data"
+        insert_data, list,
+        location="Newt.sql.query_insert : insert_data"
+    )
+
+    NewtCons.validate_type(
+        insert_data[0], dict, check_non_empty=True,
+        location="Newt.sql.query_insert : insert_data"
     )
 
     # Validate that all dictionaries have the same keys and length
-    expected_keys = set(data[0].keys())
-    if not all(NewtUtil.check_dict_keys(
-        row, expected_keys, stop=False
-    ) for row in data):
+    expected_keys = set(insert_data[0].keys())
+
+    keys_ok = True
+    for data_row in insert_data:
+        if not NewtCons.validate_type(
+            data_row, dict, check_non_empty=True, stop=False,
+            location="Newt.sql.query_insert : data_row"
+        ):
+            keys_ok = False
+            continue
+
+        if not NewtUtil.check_dict_keys(
+            data_row, expected_keys,
+            location="Newt.sql.query_insert : data_row",
+            stop=False
+        ):
+            keys_ok = False
+
+    if keys_ok is False:
         NewtCons.error_msg(
             "All dictionaries must have identical keys and same length",
-            f"Expected keys: {expected_keys}",
+            f"Expected keys: {', '.join(sorted(expected_keys))}",
             location="Newt.sql.query_insert : expected_keys"
         )
 
     # Build SQL template
-    columns = ", ".join(data[0].keys())
-    placeholders = ", ".join(["?"] * len(data[0]))
+    columns = ", ".join(insert_data[0].keys())
+    placeholders = ", ".join(["?"] * len(insert_data[0]))
+    params = [tuple(row.values()) for row in insert_data]
 
-    params = [tuple(row.values()) for row in data]
-
-    query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
+    query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders});"
 
     if len(params) == 1:
         result = query_execute(database, query, params[0])
     else:
         result = query_execute(database, query, params)
 
-    if isinstance(result, int):
-        return result
-
-    NewtCons.validate_type(
+    if NewtCons.validate_type(
         result, int,
         location="Newt.sql.query_insert : result"
+    ):
+        if isinstance(result, int):
+            return result
+
+    NewtCons.error_msg(  # pragma: no cover
+        f"Found Error Msg: (found? write test!)",  # TODO
+        location="Newt.sql.query_insert : error_msg",
+        stop=False
     )
 
-    return 0  # Default return value if no rows are inserted
+    # Default return value if no rows are inserted
+    return 0  # pragma: no cover
 
 
 def query_update(
@@ -368,14 +453,16 @@ def query_update(
         table (str):
             Table name.
         set_data (dict[str, object]):
-            Column-value pairs to update.
+            Specifies which columns to update and their new values.<br>
+            Column-value pairs to update:
+            {"age": 31}
         where_condition (str):
             SQL WHERE clause:
             id = ? AND name = ?
         where_params (tuple | None):
             Parameters for the WHERE clause.<br>
-            Defaults to None.
-
+            Defaults to None:
+            (1, "Alice")
     Returns:
         out (int):
             Number of updated rows,<br>
@@ -387,72 +474,98 @@ def query_update(
         location="Newt.sql.query_update : table"
     )
 
-    if not NewtCons.validate_type(
-        set_data, dict, check_non_empty=True, stop=False,
+    NewtCons.validate_type(
+        set_data, dict, check_non_empty=True,
         location="Newt.sql.query_update : set_data"
-    ):
-        return 0
+    )
 
     NewtCons.validate_type(
         where_condition, str, check_non_empty=True,
         location="Newt.sql.query_update : where_condition"
     )
 
+    NewtCons.validate_type(
+        where_params, (tuple, type(None)),
+        location="Newt.sql.query_update : where_params"
+    )
+
     set_clause = ", ".join([f"{k} = ?" for k in set_data])
+    # set_clause = "age = ?"
+
+    query = f"UPDATE {table} SET {set_clause} WHERE {where_condition};"
+    # UPDATE table SET age = ? WHERE id = ? AND name = ?
+
     params = tuple(set_data.values()) + (where_params or ())
-    query = f"UPDATE {table} SET {set_clause} WHERE {where_condition}"
+    # params = (31, 1, 'Alice')
 
     result = query_execute(database, query, params)
 
-    if isinstance(result, int):
-        return result
-
-    NewtCons.validate_type(
+    if NewtCons.validate_type(
         result, int,
         location="Newt.sql.query_update : result"
+    ):
+        if isinstance(result, int):
+            return result
+
+    NewtCons.error_msg(  # pragma: no cover
+        f"Found Error Msg: (found? write test!)",  # TODO
+        location="Newt.sql.query_update : error_msg",
+        stop=False
     )
 
-    return 0  # Default return value if no rows are updated
+    # Default return value if no rows are updated
+    return 0  # pragma: no cover
 
 
 def export_sql_query_to_csv(
         database: str,
-        query: str,
         csv_file: str,
+        table: str,
+        columns: str = "*",
+        query_str: str = "",
         params: tuple | None = None,
-        delimiter: str = ";"
+        delimiter: str = ";",
+        obscure_list: list = [],
+        print_log: bool = True
         ) -> bool:
     """ ## Run a SQL SELECT query and export the result to a CSV file.
 
     Args:
         database (str):
             Path to the SQLite database file.
-        query (str):
-            SQL SELECT query to execute.
         csv_file (str):
             Path to the CSV output file.
+        table (str):
+            Name of the table to query.
+        columns (str):
+            Comma-separated column names to select.<br>
+            Defaults to `"*"` (all columns).<br>
+            Example: `"id, name, email"`
+        query_str (str):
+            Optional SQL clause appended after the table name (e.g. WHERE, ORDER BY).<br>
+            Defaults to empty string.<br>
+            Example: `"WHERE id = ?" or "ORDER BY name ASC"`
         params (tuple | None):
             Query parameters.<br>
-            Defaults to None.
+            Defaults to None:
+            (1,) or (1, 2, 3)
         delimiter (str):
-            CSV delimiter character.<br>
-            Defaults to `;`.
+            Column separator character used in the CSV file.<br>
+            Defaults to ";".
+        obscure_list (list):
+            List of substrings to keep visible in log messages.<br>
+            All other characters in `file_path` will be masked with `*`.<br>
+            If empty, the full path is shown as-is.<br>
+            Defaults to [].
+        print_log (bool):
+            If True, prints a confirmation message with row count and mode after saving.<br>
+            Defaults to True.
 
     Returns:
         out (bool):
             True if export succeeded,<br>
             otherwise False.
     """
-
-    NewtCons.validate_type(
-        database, str, check_non_empty=True,
-        location="Newt.sql.export_sql_query_to_csv : database"
-    )
-
-    NewtCons.validate_type(
-        query, str, check_non_empty=True,
-        location="Newt.sql.export_sql_query_to_csv : query"
-    )
 
     NewtCons.validate_type(
         csv_file, str, check_non_empty=True,
@@ -466,27 +579,31 @@ def export_sql_query_to_csv(
 
     try:
         # Step 1: run select query
-        result = query_select(database, query, params)
+        result = query_select(database, table, columns, query_str, params)
 
-        if result is None or len(result) == 0:
-            NewtCons.error_msg(
-                f"Empty result: {result}",
-                location="Newt.sql.export_sql_query_to_csv : result",
-                stop=False
-            )
-            return False
+        NewtCons.validate_type(
+            result, list, check_non_empty=True,
+            location="Newt.sql.export_sql_query_to_csv : result"
+        )
 
         # Step 2: extract headers and rows for CSV
         headers = list(result[0].keys())
         rows = [list(row.values()) for row in result]
 
         # Step 3: save using newtutils/files.py
-        NewtFiles.save_csv_to_file(csv_file, [headers] + rows, delimiter=delimiter)
+        NewtFiles.save_csv_to_file(
+            csv_file,
+            [headers] + rows,
+            delimiter=delimiter,
+            obscure_list=obscure_list,
+            print_log=print_log
+        )
 
         return True
 
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         NewtCons.error_msg(
+            f"Found Error Msg: (found? write test!)",  # TODO
             f"Exception: {e}",
             location="Newt.sql.export_sql_query_to_csv : Exception",
             stop=False

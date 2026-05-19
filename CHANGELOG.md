@@ -9,7 +9,11 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Added
 
-- *(add new features here)*
+- `newtutils/sql.py`:
+  - `query_select()`:
+    - Now builds the SQL query from `table`, `columns`, and `query_st`r parameters instead of accepting a raw SQL string.
+  - `query_update()`:
+    - Inline comments illustrate how `set_clause`, `query`, and `params` are constructed.
 
 ### Changed
 
@@ -17,18 +21,40 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
   - Docstring Formatting Improvements
   - `db_delayed_close()`:
     - Parameter renamed from `logging` to `print_log`.
+    - Docstring extended to describe the open/close behavior.
   - `query_execute()`:
     - Function renamed from `sql_execute_query()`.
     - Updated all calls from `sql_execute_query` to `query_execute`.
+    - DML result comment updated — DDL (CREATE, DROP, ALTER) is noted to return -1.
+    - `conn.close()` called explicitly after DML/DDL and on OperationalError and Exception, replacing the previous return result inside the with-like block.
+    - Single-statement normalization now strips the trailing semicolon and assigns `normalized_query = parts_query[0]`.
+    - Multi-statement path raises an error.
+    - Executemany validation block moved earlier (before query normalization) so list-of-tuples check runs first.
   - `query_select()`:
     - Function renamed from `sql_select_rows()`.
     - Updated all calls from `sql_select_rows` to `query_select`.
+    - SQL template gains a trailing semicolon.
+    - Parameter renamed from `query` to `query_str`.
+    - New parameters added `table` and `columns`.
   - `query_insert()`:
     - Function renamed from `sql_insert_row()`.
     - Updated all calls from `sql_insert_row` to `query_insert`.
+    - Parameter renamed from `data` to `insert_data`.
+    - SQL template gains a trailing semicolon.
+    - key-mismatch error message now prints keys as a sorted, comma-joined string.
+    - Validates that the first element of the normalized list is a non-empty dict before processing.
+    - Validates each row individually in the key-consistency loop, collecting errors before raising.
   - `query_update()`:
     - Function renamed from `sql_update_rows()`.
     - Updated all calls from `sql_update_rows` to `query_update`.
+    - SQL template gains a trailing semicolon.
+    - Early-return on invalid set_data replaced with a hard validate_type (stop=True).
+  - `export_sql_query_to_csv()`:
+    - Removes redundant database and query type-validation calls (now handled downstream).
+    - Replaces the manual empty-result check with validate_type(..., check_non_empty=True).
+    - Parameter renamed from `query` to `query_str`.
+    - New parameters added `table` and `columns`.
+    - Passes `obscure_list` and `print_log` through to `save_csv_to_file()`.
 
 ### Testing
 
@@ -41,7 +67,11 @@ This project follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PA
 
 ### Removed
 
-- *(note any removed or deprecated features)*
+- `newtutils/sql.py`:
+  - `query_select()`:
+    - No longer accepts a raw SQL query string.
+  - `export_sql_query_to_csv()`:
+    - No longer accepts a raw SQL query string.
 
 ---
 
