@@ -1,0 +1,335 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.4, pytest-9.0.3, pluggy-1.6.0 -- D:\VS_Code\.venv314\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\VS_Code\dev-newtutils
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 13 items
+
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_existing_db 
+START=======================================
+=====captured.out=====
+Function: test_db_delayed_close_existing_db
+============================================
+result: -1
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_sql.py::TestDbDelayedClose::test_db_delayed_close_nonexistent_db 
+START=======================================
+=====captured.out=====
+Function: test_db_delayed_close_nonexistent_db
+============================================
+closed: True
+
+=====captured.err=====
+[1m[31m
+Location: Newt.files.check_file_exists : print_log
+::: ERROR :::
+File not found: /nonexistent/database.db
+[0m
+
+END=========================================
+PASSED
+test_sql.py::TestQueryExecute::test_query_execute_creates_directory 
+START=======================================
+=====captured.out=====
+Function: test_query_execute_creates_directory
+============================================
+result: -1
+dirname_exists: True
+dirname_exists: False
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_sql.py::TestQueryExecute::test_query_execute_crud_operations 
+START=======================================
+=====captured.out=====
+Function: test_query_execute_crud_operations
+============================================
+create_result: -1
+insert_result_1: 1
+insert_result_2: 1
+select_result_1: [{'id': 1, 'name': 'Test'}, {'id': 2, 'name': 'Bob'}]
+update_result: 1
+select_result_2: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
+insert_result_3: 3
+delete_result: 1
+select_result_3: [{'id': 1, 'name': 'Alice'}, {'id': 3, 'name': 'Aska'}, {'id': 4, 'name': 'Felicia'}, {'id': 5, 'name': 'Grace'}]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_sql.py::TestQueryExecute::test_query_execute_invalid_input 
+START=======================================
+=====captured.out=====
+Function: test_query_execute_invalid_input
+============================================
+exc_info_1: 1
+exc_info_2: 1
+exc_info_3: 1
+exc_info_4: 1
+exc_info_5: 1
+
+=====captured.err=====
+[1m[31m
+Location: Newt.sql.query_execute : database > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.sql.query_execute : query > Newt.console.validate_type
+::: ERROR :::
+Value: 456
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.console.validate_type
+::: ERROR :::
+Value: Test
+Received type: <class 'str'>
+Expected type: <class 'tuple'>
+[0m
+[1m[31m
+Location: Newt.sql.query_execute : executemany
+::: ERROR :::
+All items in 'params' list must be tuples for executemany().
+params: ['Test']
+[0m
+[1m[31m
+Location: Newt.sql.query_execute : parts_query
+::: ERROR :::
+SQL query must contain exactly one statement
+[0m
+[1m[31m
+Location: Newt.sql.query_execute : dangerous_tokens
+::: ERROR :::
+SQL query contains potentially dangerous token: alter
+[0m
+
+END=========================================
+PASSED
+test_sql.py::TestSqlSelectRows::test_query_select_basic 
+START=======================================
+=====captured.out=====
+Function: test_query_select_basic
+============================================
+select_result_1: []
+select_result_2: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
+select_result_3: [{'id': 1, 'name': 'Alice'}]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_sql.py::TestSqlSelectRows::test_query_select_invalid_query 
+START=======================================
+=====captured.out=====
+Function: test_query_select_invalid_query
+============================================
+exc_info_1: 1
+exc_info_2: 1
+
+=====captured.err=====
+[1m[31m
+Location: Newt.sql.query_execute : OperationalError in Syntax
+::: ERROR :::
+Syntax error: near "TABLE": syntax error
+[0m
+[1m[31m
+Location: Newt.sql.query_select : result > Newt.console.validate_type
+::: ERROR :::
+Value: None
+Received type: <class 'NoneType'>
+Expected type: <class 'list'>
+[0m
+[1m[31m
+Location: Newt.sql.query_execute : OperationalError in Syntax
+::: ERROR :::
+Syntax error: near "SQL": syntax error
+[0m
+[1m[31m
+Location: Newt.sql.query_select : result > Newt.console.validate_type
+::: ERROR :::
+Value: None
+Received type: <class 'NoneType'>
+Expected type: <class 'list'>
+[0m
+
+END=========================================
+PASSED
+test_sql.py::TestSqlInsertRow::test_query_insert_dict_and_list 
+START=======================================
+=====captured.out=====
+Function: test_query_insert_dict_and_list
+============================================
+insert_data_1: {'id': 1, 'name': 'Alice'}
+insert_result_1: 1
+insert_data_2: [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]
+insert_result_2: 3
+insert_data_3: {}
+insert_result_3: 0
+select_result: [{'id': 1, 'name': 'Alice'}, {'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}, {'id': 3, 'name': 'Charlie'}]
+
+=====captured.err=====
+[1m[31m
+Location: Newt.sql.query_insert : insert_data > Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: {}
+Type: <class 'dict'>
+[0m
+
+END=========================================
+PASSED
+test_sql.py::TestSqlInsertRow::test_query_insert_invalid_input 
+START=======================================
+=====captured.out=====
+Function: test_query_insert_invalid_input
+============================================
+exc_info_1: 1
+exc_info_2: 1
+result: 0
+exc_info_4: 1
+
+=====captured.err=====
+[1m[31m
+Location: Newt.sql.query_execute : database > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.sql.query_insert : table > Newt.console.validate_type
+::: ERROR :::
+Value: 456
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.sql.query_insert : insert_data > Newt.console.validate_type
+::: ERROR :::
+Value: not a dict
+Received type: <class 'str'>
+Expected type: (<class 'dict'>, <class 'list'>)
+[0m
+[1m[31m
+Location: Newt.sql.query_insert : data_row > Newt.console.validate_type
+::: ERROR :::
+Value: not a dict
+Received type: <class 'str'>
+Expected type: <class 'dict'>
+[0m
+[1m[31m
+Location: Newt.sql.query_insert : data_row > Newt.utility.check_dict_keys
+::: ERROR :::
+Data keys: id, name
+Missing keys: 
+Unexpected keys: id
+[0m
+[1m[31m
+Location: Newt.sql.query_insert : expected_keys
+::: ERROR :::
+All dictionaries must have identical keys and same length
+Expected keys: name
+[0m
+
+END=========================================
+PASSED
+test_sql.py::TestSqlUpdateRows::test_query_update_basic 
+START=======================================
+=====captured.out=====
+Function: test_query_update_basic
+============================================
+insert_data_1: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
+select_result_1: [{'id': 1, 'name': 'Alice', 'age': 30}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
+update_result_2: 1
+select_result_2: [{'id': 1, 'name': 'Alice', 'age': 31}, {'id': 2, 'name': 'Bob', 'age': 35}, {'id': 3, 'name': 'Charlie', 'age': 40}]
+update_result_3: 1
+update_result_4: 0
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_sql.py::TestSqlUpdateRows::test_query_update_invalid_input 
+START=======================================
+=====captured.out=====
+Function: test_query_update_invalid_input
+============================================
+exc_info_1: 1
+exc_info_2: 1
+
+=====captured.err=====
+[1m[31m
+Location: Newt.sql.query_update : set_data > Newt.console.validate_type : is_empty
+::: ERROR :::
+Value must not be empty
+Value: {}
+Type: <class 'dict'>
+[0m
+[1m[31m
+Location: Newt.sql.query_execute : database > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+
+END=========================================
+PASSED
+test_sql.py::TestExportSqlQueryToCsv::test_export_sql_query_to_csv_basic 
+START=======================================
+=====captured.out=====
+Function: test_export_sql_query_to_csv_basic
+============================================
+[Newt.files.save_csv_to_file] Saved CSV to file:
+C:\Users\*******\AppData\Local\Temp\***********.csv
+(rows=4, mode=write, delimiter=';')
+result: True
+[Newt.files.read_csv_from_file] Loaded CSV from file:
+C:\Users\*******\AppData\Local\Temp\***********.csv
+(rows=4, delimiter=';')
+csv_data: [['id', 'name', 'age'], ['1', 'Alice', '30'], ['2', 'Bob', '35'], ['3', 'Charlie', '40']]
+
+=====captured.err=====
+(no stderr captured)
+END=========================================
+PASSED
+test_sql.py::TestExportSqlQueryToCsv::test_export_sql_query_to_csv_invalid_input 
+START=======================================
+=====captured.out=====
+Function: test_export_sql_query_to_csv_invalid_input
+============================================
+exc_info_1: 1
+exc_info_2: 1
+
+=====captured.err=====
+[1m[31m
+Location: Newt.sql.query_execute : database > Newt.console.validate_type
+::: ERROR :::
+Value: 123
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+[1m[31m
+Location: Newt.sql.query_select : table > Newt.console.validate_type
+::: ERROR :::
+Value: 456
+Received type: <class 'int'>
+Expected type: <class 'str'>
+[0m
+
+END=========================================
+PASSED
+
+============================= 13 passed in 0.57s ==============================
